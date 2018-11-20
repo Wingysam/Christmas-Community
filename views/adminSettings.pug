@@ -1,0 +1,30 @@
+extends layout.pug
+
+block content
+  h2 Users
+  each user in users
+    span.is-size-6.inline= user.id
+    if !user.doc.admin
+      a(href=`/admin-settings/remove/${user.id}`)
+        span.is-size-7.icon.has-text-danger
+          i.fas.fa-times
+        span.is-sr-only
+          Remove
+    br
+  h3 Add user
+  form(action='/admin-settings/add', method='POST')
+    .field
+      label.label Username
+      .control.has-icons-left
+        input.input(type='text', name='newUserUsername', placeholder='john')
+        span.icon.is-small.is-left
+          i.fas.fa-user
+    .field
+      label.label Password
+      .control.has-icons-left
+        input.input(type='password', name='newUserPassword', placeholder='pa$$word!')
+        span.icon.is-small.is-left
+          i.fas.fa-lock
+    .field
+      .control
+        input.button.is-primary(type='submit' value='Add User')

@@ -1,0 +1,36 @@
+mixin navBarLink(href, title)
+  if href === req.path
+    a.is-active.navbar-item(href=href)= title
+  else
+    a.navbar-item(href=href)= title
+nav.navbar(role='navigation', aria-label='main navigation')
+  .navbar-brand
+    if '/' === req.path
+      a.is-active.navbar-item(href='/')
+        img(src='/img/logo.png', alt='')
+        span #{config.siteTitle}
+    else
+      a.navbar-item(href='/')
+        img(src='/img/logo.png', alt='')
+        span #{config.siteTitle}
+    a.navbar-burger#navBarBurger(role='button', aria-label='menu', aria-expanded='false')
+      span(aria-hidden='true')
+      span(aria-hidden='true')
+      span(aria-hidden='true')
+  .navbar-menu#navBarMenu
+    .navbar-start
+    .navbar-end
+      if req.isAuthenticated()
+        .navbar-item.has-dropdown.is-hoverable
+          a.navbar-link= req.user._id
+          .navbar-dropdown
+            +navBarLink(`/wishlist/${req.user._id}`, 'My Wishlist')
+            +navBarLink('/profile', 'Profile')
+            if req.user.admin
+              +navBarLink('/admin-settings', 'Admin settings')
+            hr.navbar-divider
+            .navbar-item
+              form#logoutForm(action='/logout', method='POST')
+                button.linkButton(type='submit') Log Out
+            //-+navBarLink('javascript:document.getElementById("logoutForm").submit()', 'Log Out')
+  script(src="/js/nav.js")

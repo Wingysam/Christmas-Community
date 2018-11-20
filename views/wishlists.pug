@@ -1,0 +1,12 @@
+extends layout.pug
+
+block content
+  ul.noStyle
+    each user in users
+      if req.user._id !== user.id
+        li
+          a(href=`/wishlist/${user.id}`)
+            .box
+              span= user.id
+              span= `: ${totals(user.doc.wishlist).pledged}/${user.doc.wishlist.length}`
+              progress.progress.is-info(value=totals(user.doc.wishlist).pledged, max=user.doc.wishlist.length)

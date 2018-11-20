@@ -1,0 +1,28 @@
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    if title
+      title #{config.siteTitle} - #{title}
+    else
+      title #{config.siteTitle}
+    link(rel='stylesheet', href='/css/main.css')
+    noscript
+      link(
+        rel='stylesheet',
+        href='https://use.fontawesome.com/releases/v5.0.10/css/all.css',
+        integrity='sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg',
+        crossorigin='anonymous'
+      )
+    script(defer, src='https://use.fontawesome.com/releases/v5.0.7/js/all.js')
+  body
+    include includes/navbar.pug
+    div.content#pageContent
+      section.section
+        div.container
+          if title
+            h1= config.siteTitle + ' - ' + title
+          else if title !== false
+            h1 #{config.siteTitle}
+          include includes/messages.pug
+          block content
