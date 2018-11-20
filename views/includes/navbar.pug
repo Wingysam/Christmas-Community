@@ -19,7 +19,6 @@ nav.navbar(role='navigation', aria-label='main navigation')
       span(aria-hidden='true')
   .navbar-menu#navBarMenu
     .navbar-start
-    .navbar-end
       if req.isAuthenticated()
         .navbar-item.has-dropdown.is-hoverable
           a.navbar-link= req.user._id
