@@ -4,9 +4,11 @@ block content
   for item in wishlist
     if req.user._id === item.addedBy || req.params.user !== req.user._id
       .box
-        if item.url
           span
-            a(href=item.url, rel='noopener noreferrer', target='_blank')= (item.name ? item.name : item.url)
+            if item.url
+              a(href=item.url, rel='noopener noreferrer', target='_blank')= (item.name ? item.name : item.url)
+            else
+              span= item.name
             if req.params.user !== req.user._id && !item.pledgedBy
               form(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
                 .field
@@ -22,8 +24,6 @@ block content
                 .field
                   .control
                     input.button.is-warning(type='submit' value='Remove')
-        else
-          span= item.name
   form(method='POST')
     .field
       label.label Item URL or Name
