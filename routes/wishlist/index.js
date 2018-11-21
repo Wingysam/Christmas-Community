@@ -2,6 +2,7 @@ const verifyAuth = require('../../middlewares/verifyAuth');
 const getProductName = require('get-product-name');
 const bcrypt = require('bcrypt-nodejs');
 const express = require('express');
+const config = require('../../config');
 const uuid = require('uuid/v4');
 
 const totals = wishlist => {
@@ -45,7 +46,7 @@ module.exports = (db) => {
     const item = {};
     let productData;
     try {
-      if (isUrl) productData = await getProductName(req.body.itemUrlOrName);
+      if (isUrl) productData = await getProductName(req.body.itemUrlOrName, config.proxyServer);
     } catch (err) {}
     item.name = (productData ? productData.name : req.body.itemUrlOrName);
     item.addedBy = req.user._id;
