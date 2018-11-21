@@ -1,6 +1,5 @@
 const verifyAuth = require('../../middlewares/verifyAuth');
 const getProductName = require('get-product-name');
-const bcrypt = require('bcrypt-nodejs');
 const express = require('express');
 const config = require('../../config');
 const uuid = require('uuid/v4');
