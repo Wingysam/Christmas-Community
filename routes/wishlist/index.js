@@ -86,7 +86,7 @@ module.exports = (db) => {
             return res.redirect(`/wishlist/${req.params.user}`);            
           }
           docs.rows[i].doc.wishlist[j].pledgedBy = undefined;
-          if (docs.rows[i].doc.wishlist[j].addedBy === req.user._id) docs.rows[i].doc.wishlist.pop(j);
+          if (docs.rows[i].doc.wishlist[j].addedBy === req.user._id) docs.rows[i].doc.wishlist.splice(j, 1);
           await db.put(docs.rows[i].doc);
           req.flash('success', 'Successfully unpledged for item');
           return res.redirect(`/wishlist/${req.params.user}`);
@@ -105,7 +105,7 @@ module.exports = (db) => {
     const doc = await db.get(req.user._id);
     for (let i = 0; i < doc.wishlist.length; i++) {
       if (doc.wishlist[i].id === req.params.itemId) {
-        doc.wishlist.pop(i);
+        doc.wishlist.splice(i, 1);
         await db.put(doc);
         req.flash('success', 'Successfully removed from wishlist');
         return res.redirect(`/wishlist/${req.params.user}`);
