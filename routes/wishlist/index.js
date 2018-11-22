@@ -46,7 +46,9 @@ module.exports = (db) => {
     let productData;
     try {
       if (isUrl) productData = await getProductName(req.body.itemUrlOrName, config.proxyServer);
-    } catch (err) {}
+    } catch (err) {
+      req.flash('error', err.toString());
+    }
     item.name = (productData ? productData.name : req.body.itemUrlOrName);
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
