@@ -638,9 +638,9 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-get-product-name@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/get-product-name/-/get-product-name-0.2.0.tgz#cac2415af2cff2e6496af3a99c58e19251fc86bd"
+get-product-name@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/get-product-name/-/get-product-name-0.2.2.tgz#afb763b338498beb7b3ad18876aa6263bc59b370"
   dependencies:
     cheerio "^1.0.0-rc.2"
     https-proxy-agent "^2.2.1"
