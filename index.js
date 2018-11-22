@@ -1,9 +1,12 @@
+const expressSessionLevel = require('express-session-level');
 const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
 const bcrypt = require('bcrypt-nodejs');
 const flash = require('connect-flash');
 const passport = require('passport');
 const express = require('express');
 const PouchDB = require('pouchdb');
+const level = require('level');
 
 const config = require('./config');
 
@@ -38,8 +41,17 @@ passport.deserializeUser((user, callback) => {
     .catch(err => callback(err));
 });
 
+
+const LevelStore = expressSessionLevel(session);
+const sessionDb = level('./sessions')
+
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: config.secret, resave: false, saveUninitialized: true }));
+app.use(session({
+  secret: config.secret,
+  resave: false,
+  saveUninitialized: true,
+  store: new LevelStore(sessionDb)
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

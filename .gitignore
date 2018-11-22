@@ -37,3 +37,7 @@ typings/
 
 # Database
 db/
+
+# Session store
+sessions/
+config/secret/secret.txt
