@@ -41,18 +41,19 @@ module.exports = (db) => {
   });
 
   router.post('/:user', verifyAuth(), async (req, res) => {
-    const isUrl = ValidURL(req.body.itemUrlOrName);
+    const potentialUrl = req.body.itemUrlOrName.split(' ').pop();
+    const isUrl = ValidURL(potentialUrl);
     const item = {};
     let productData;
     try {
-      if (isUrl) productData = await getProductName(req.body.itemUrlOrName, config.proxyServer);
+      if (isUrl) productData = await getProductName(potentialUrl, config.proxyServer);
     } catch (err) {
       req.flash('error', err.toString());
     }
     item.name = (productData ? productData.name : req.body.itemUrlOrName);
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
-    if (isUrl) item.url = req.body.itemUrlOrName;
+    if (isUrl) item.url = potentialUrl;
     item.id = uuid();
     const doc = await db.get(req.params.user);
     doc.wishlist.push(item);
