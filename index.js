@@ -50,7 +50,10 @@ app.use(session({
   secret: config.secret,
   resave: false,
   saveUninitialized: true,
-  store: new LevelStore(sessionDb)
+  store: new LevelStore(sessionDb),
+  cookie: {
+    maxAge: config.sessionMaxAge
+  }
 }));
 app.use(flash());
 app.use(passport.initialize());
