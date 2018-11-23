@@ -1,6 +1,9 @@
+- successes = req.flash('success');
+- errors = req.flash('error');
+
 if successes
   each success in successes
-    p.has-text-success= success
+    p.has-text-success= (success.toString().startsWith('[object ') ? JSON.stringify(success) : success.toString())
 if errors
   each error in errors
-    p.has-text-danger= error
+    p.has-text-danger= (error.toString().startsWith('[object ') ? JSON.stringify(error) : error.toString())
