@@ -4,7 +4,7 @@ block content
   each item, index in wishlist
     if req.user._id === item.addedBy || req.params.user !== req.user._id
       .box
-          span
+          span.overflowWrap
             if item.url
               a(href=item.url, rel='noopener noreferrer', target='_blank')= (item.name ? item.name : item.url)
             else

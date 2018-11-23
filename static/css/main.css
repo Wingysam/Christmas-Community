@@ -18,6 +18,10 @@
   margin-left: 0 !important;
 }
 
+.overflowWrap {
+  overflow-wrap: break-word;
+}
+
 ul.noStyle li {
   list-style-type: none;
 }
