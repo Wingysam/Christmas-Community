@@ -118,5 +118,25 @@ module.exports = (db) => {
     return res.redirect(`/wishlist/${req.params.user}`);
   });
 
+  router.post('/:user/move/:direction/:itemId', verifyAuth(), async (req, res) => {
+    if (req.user._id !== req.params.user) {
+      req.flash('error', 'Not correct user');
+      return res.redirect(`/wishlist/${req.params.user}`);
+    }
+    const doc = await db.get(req.user._id);
+    const wishlist = doc.wishlist;
+    if (req.params.direction === 'up') wishlist.reverse();
+    let moveFromIndex;
+    wishlist.forEach(wish => {
+      if (wish.id === req.params.itemId) return moveFromIndex = wishlist.indexOf(wish);
+    });
+    const moveToIndex = wishlist.findIndex(wish => ( wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id ));
+    [ wishlist[moveFromIndex], wishlist[moveToIndex] ] = [ wishlist[moveToIndex], wishlist[moveFromIndex] ];
+    if (req.params.direction === 'up') wishlist.reverse();
+    doc.wishlist = wishlist;
+    await db.put(doc);
+    req.flash('success', 'Successfully moved item!');
+    return res.redirect(`/wishlist/${req.params.user}`);
+  });
   return router;
 };

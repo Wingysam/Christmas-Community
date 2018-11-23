@@ -9,21 +9,31 @@ block content
               a(href=item.url, rel='noopener noreferrer', target='_blank')= (item.name ? item.name : item.url)
             else
               span= item.name
-            if req.params.user !== req.user._id && !item.pledgedBy
-              form(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
-                .field
-                  .control
-                    input.button.is-primary(type='submit' value='Pledge')
-            if item.pledgedBy === req.user._id
-              form(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
-                .field
-                  .control
-                    input.button(type='submit' value='Unpledge')
-            if req.user._id === req.params.user
-              form(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
-                .field
-                  .control
-                    input.button.is-warning(type='submit' value='Remove')
+            div
+              if req.params.user !== req.user._id && !item.pledgedBy
+                form(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
+                  .field
+                    .control
+                      input.button.is-primary(type='submit' value='Pledge')
+              if item.pledgedBy === req.user._id
+                form(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+                  .field
+                    .control
+                      input.button(type='submit' value='Unpledge')
+              if req.user._id === req.params.user
+                form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button.is-warning(type='submit' value='Remove')
+              if req.user._id === req.params.user
+                form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button(type='submit' value='Move up')
+                form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button(type='submit' value='Move down')
   form(method='POST')
     .field
       label.label Item URL or Name
