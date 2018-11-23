@@ -9,6 +9,15 @@
   border: none;
 }
 
+.fullwidth {
+  width: 100%;
+  max-width: none;
+}
+
+.noLeftMargin {
+  margin-left: 0 !important;
+}
+
 ul.noStyle li {
   list-style-type: none;
 }

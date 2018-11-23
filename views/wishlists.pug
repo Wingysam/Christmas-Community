@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   a.button(href=`/wishlist/${req.user._id}`) My Wishlist
-  ul.noStyle
+  ul.noStyle.noLeftMargin
     each user in users
       if req.user._id !== user.id
         li

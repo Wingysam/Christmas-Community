@@ -19,7 +19,7 @@ html(lang='en')
     include includes/navbar.pug
     div.content#pageContent
       section.section
-        div.container
+        div.container.is-marginless.fullwidth
           if title
             h1= config.siteTitle + ' - ' + title
           else if title !== false
