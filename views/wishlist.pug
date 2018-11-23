@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-  for item in wishlist
+  each item, index in wishlist
     if req.user._id === item.addedBy || req.params.user !== req.user._id
       .box
           span
@@ -25,15 +25,16 @@ block content
                   .field.inline
                     .control.inline
                       input.inline.button.is-warning(type='submit' value='Remove')
-              if req.user._id === req.params.user
+              - console.log(lastCanSee);
+              if req.user._id === req.params.user && index !== 0 && index !== lastCanSee
                 form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
                     .control.inline
-                      input.inline.button(type='submit' value='Move up')
+                      input.inline.button(type='submit' value='Move item up')
                 form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
                   .field.inline
                     .control.inline
-                      input.inline.button(type='submit' value='Move down')
+                      input.inline.button(type='submit' value='Move item down')
   form(method='POST')
     .field
       label.label Item URL or Name

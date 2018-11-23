@@ -34,9 +34,17 @@ module.exports = (db) => {
   router.get('/:user', verifyAuth(), async (req, res) => {
     try {
       const dbUser = await db.get(req.params.user);
-      res.render('wishlist', { title: `Wishlist - ${dbUser._id}`, wishlist: dbUser.wishlist });
+      const wishlistReverse = [...dbUser.wishlist].reverse();
+      const lastCanSeeValue = wishlistReverse.find(element => (element.addedBy === req.params.user));
+      const lastCanSee = dbUser.wishlist.indexOf(lastCanSeeValue);
+      res.render('wishlist', {
+        title: `Wishlist - ${dbUser._id}`,
+        wishlist: dbUser.wishlist,
+        lastCanSee
+      });
     } catch (error) {
-      res.redirect('/wishlist');
+      req.flash('error', error);
+      return res.redirect('/wishlist');
     }
   });
 
@@ -131,6 +139,11 @@ module.exports = (db) => {
       if (wish.id === req.params.itemId) return moveFromIndex = wishlist.indexOf(wish);
     });
     const moveToIndex = wishlist.findIndex(wish => ( wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id ));
+    if (moveToIndex < 0 || moveToIndex > wishlist.length) {
+      console.log(moveToIndex, '<', 0, '||', moveToIndex, '>', wishlist.length);
+      req.flash('error', 'Invalid move');
+      return res.redirect(`/wishlist/${req.params.user}`);
+    }
     [ wishlist[moveFromIndex], wishlist[moveToIndex] ] = [ wishlist[moveToIndex], wishlist[moveFromIndex] ];
     if (req.params.direction === 'up') wishlist.reverse();
     doc.wishlist = wishlist;
