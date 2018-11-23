@@ -26,7 +26,7 @@ block content
                     .control.inline
                       input.inline.button.is-warning(type='submit' value='Remove')
               if req.user._id === req.params.user
-                if index !== 0
+                if index !== firstCanSee
                   form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
                     .field.inline
                       .control.inline

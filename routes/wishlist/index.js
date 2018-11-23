@@ -34,12 +34,14 @@ module.exports = (db) => {
   router.get('/:user', verifyAuth(), async (req, res) => {
     try {
       const dbUser = await db.get(req.params.user);
+      const firstCanSee = dbUser.wishlist.findIndex(element => (element.addedBy === req.params.user));
       const wishlistReverse = [...dbUser.wishlist].reverse();
       const lastCanSeeValue = wishlistReverse.find(element => (element.addedBy === req.params.user));
       const lastCanSee = dbUser.wishlist.indexOf(lastCanSeeValue);
       res.render('wishlist', {
         title: `Wishlist - ${dbUser._id}`,
         wishlist: dbUser.wishlist,
+        firstCanSee,
         lastCanSee
       });
     } catch (error) {
