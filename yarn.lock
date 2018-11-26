@@ -1853,3 +1853,8 @@ yauzl@2.4.1:
   resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.4.1.tgz#9528f442dab1b2284e58b4379bb194e22e0c4005"
   dependencies:
     fd-slicer "~1.0.1"
+
+yes-no@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/yes-no/-/yes-no-0.0.1.tgz#c859d9bbc6557d99c4d8676b61a99280ceed6ee1"
+  integrity sha1-yFnZu8ZVfZnE2GdrYamSgM7tbuE=
