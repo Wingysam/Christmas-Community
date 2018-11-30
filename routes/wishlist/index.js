@@ -63,6 +63,7 @@ module.exports = (db) => {
     item.name = (productData ? productData.name : req.body.itemUrlOrName);
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
+    item.note = req.body.note;
     if (isUrl) item.url = potentialUrl;
     item.id = uuid();
     const doc = await db.get(req.params.user);
