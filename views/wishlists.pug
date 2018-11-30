@@ -9,5 +9,5 @@ block content
           a(href=`/wishlist/${user.id}`)
             .box
               span= user.id
-              span= `: ${totals(user.doc.wishlist).pledged}/${user.doc.wishlist.length}`
+              span : #{totals(user.doc.wishlist).pledged}/#{user.doc.wishlist.length}
               progress.progress.is-info(value=totals(user.doc.wishlist).pledged, max=user.doc.wishlist.length)

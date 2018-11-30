@@ -68,7 +68,14 @@ module.exports = (db) => {
     const doc = await db.get(req.params.user);
     doc.wishlist.push(item);
     await db.put(doc);
-    req.flash('success', (req.user._id === req.params.user ? 'Added item to wishlist' : `Pleged item for ${req.params.user}`));
+    req.flash(
+      'success',
+      (
+        req.user._id === req.params.user
+        ? 'Added item to wishlist'
+        : `Pleged item for ${req.params.user}`
+      )
+    );
     res.redirect(`/wishlist/${req.params.user}`);
   });
 
@@ -142,7 +149,6 @@ module.exports = (db) => {
     });
     const moveToIndex = wishlist.findIndex(wish => ( wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id ));
     if (moveToIndex < 0 || moveToIndex > wishlist.length) {
-      console.log(moveToIndex, '<', 0, '||', moveToIndex, '>', wishlist.length);
       req.flash('error', 'Invalid move');
       return res.redirect(`/wishlist/${req.params.user}`);
     }
@@ -153,5 +159,54 @@ module.exports = (db) => {
     req.flash('success', 'Successfully moved item!');
     return res.redirect(`/wishlist/${req.params.user}`);
   });
+
+  router.get('/:user/note/:id', verifyAuth(), (_, res) => {
+    res.render('note');
+  });
+  router.post('/:user/note/:id', verifyAuth(), async (req, res) => {
+    const doc = await db.get(req.params.user);
+    const wishlist = doc.wishlist;
+    for (let i=0; i < wishlist.length; i++) {
+      wishlistItem = wishlist[i];
+      if (wishlistItem.id !== req.params.id) continue;
+      if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
+        req.flash('error', 'Invalid user');
+        return res.redirect(`/wishlist/${req.params.user}`);
+      }
+      if (wishlistItem.note) {
+        req.flash('error', 'Already has a note');
+        return res.redirect(`/wishlist/${req.params.user}`);
+      } else {
+        wishlistItem.note = req.body.note;
+        wishlist[i] = wishlistItem;
+      }
+    }
+    doc.wishlist = wishlist;
+    await db.put(doc);
+    req.flash('success', 'Successfully added note!');
+    return res.redirect(`/wishlist/${req.params.user}`);
+  });
+  router.post('/:user/note/remove/:id', verifyAuth(), async (req, res) => {
+    const doc = await db.get(req.params.user);
+    const wishlist = doc.wishlist;
+    for (let i=0; i < wishlist.length; i++) {
+      wishlistItem = wishlist[i];
+      if (wishlistItem.id !== req.params.id) continue;
+      if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
+        req.flash('error', 'Invalid user');
+        return res.redirect(`/wishlist/${req.params.user}`);
+      }
+      if (wishlistItem.note) {
+        wishlistItem.note = undefined;
+        wishlist[i] = wishlistItem;
+      } else {
+        req.flash('error', 'Has no note');
+        return res.redirect(`/wishlist/${req.params.user}`);      }
+    }
+    doc.wishlist = wishlist;
+    await db.put(doc);
+    req.flash('success', 'Successfully removed note');
+    return res.redirect(`/wishlist/${req.params.user}`);
+  })
   return router;
 };

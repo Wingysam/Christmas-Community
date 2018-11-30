@@ -4,45 +4,78 @@ block content
   each item, index in wishlist
     if req.user._id === item.addedBy || req.params.user !== req.user._id
       .box
-          span.overflowWrap
-            if item.url
-              a(href=item.url, rel='noopener noreferrer', target='_blank')= (item.name ? item.name : item.url)
+        span.overflowWrap
+          if item.url
+            a(
+              href=item.url,
+              rel='noopener noreferrer',
+              target='_blank'
+            )= (item.name ? item.name : item.url)
+          else
+            span= item.name
+        hr
+        if item.note 
+          textarea.textarea.has-fixed-size(
+            rows=String(config.wishlist.note.rows),
+            readonly
+          )= item.note
+        span.overflowWrap Added by: #{item.addedBy}
+        hr
+        div
+          if req.params.user !== req.user._id && !item.pledgedBy
+            form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
+              .field.inline
+                .control.inline
+                  input.inline.button.is-primary(type='submit' value='Pledge')
+          if item.pledgedBy === req.user._id
+            form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+              .field.inline
+                .control.inline
+                  input.inline.button(type='submit' value='Unpledge')
+          if req.user._id === req.params.user
+            form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+              .field.inline
+                .control.inline
+                  input.inline.button.is-warning(type='submit' value='Remove')
+          if req.user._id === req.params.user || req.user._id === item.addedBy
+            if (item.note)
+              form.inline(method='POST', action=`/wishlist/${req.params.user}/note/remove/${item.id}`)
+                .field.inline
+                  .control.inline
+                    input.inline.button.is-warning(type='submit', value='Remove note')
             else
-              span= item.name
-            div
-              if req.params.user !== req.user._id && !item.pledgedBy
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      input.inline.button.is-primary(type='submit' value='Pledge')
-              if item.pledgedBy === req.user._id
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      input.inline.button(type='submit' value='Unpledge')
-              if req.user._id === req.params.user
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      input.inline.button.is-warning(type='submit' value='Remove')
-              if req.user._id === req.params.user
-                if index !== firstCanSee
-                  form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        input.inline.button(type='submit' value='Move item up')
-                if index !== lastCanSee
-                  form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        input.inline.button(type='submit' value='Move item down')
+              form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
+                .field.inline
+                  .control.inline
+                    input.inline.button(type='submit', value='Add note')
+            if index !== firstCanSee
+              form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                .field.inline
+                  .control.inline
+                    input.inline.button(type='submit' value='Move item up')
+            if index !== lastCanSee
+              form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                .field.inline
+                  .control.inline
+                    input.inline.button(type='submit' value='Move item down')
   form(method='POST')
     .field
       label.label Item URL or Name
       .control.has-icons-left
-        input.input(type='text', name='itemUrlOrName', placeholder='https://www.amazon.com/dp/B00ZV9RDKK')
+        input.input(
+          type='text',
+          name='itemUrlOrName',
+          placeholder='https://www.amazon.com/dp/B00ZV9RDKK'
+        )
         span.icon.is-small.is-left
           i.fas.fa-gift
+    .field
+      label.label Note
+      .control.has-icons-left
+        textarea.textarea(
+          name='note',
+          placeholder='Optional'
+        )
     .field
       .control
         input.button(type='submit' value=(req.user._id === req.params.user ? 'Add item to wishlist' : 'Pledge item'))

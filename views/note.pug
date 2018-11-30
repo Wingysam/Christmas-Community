@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+  form(method='POST', action=`/wishlist/${req.params.user}/note/${req.params.id}`)
+    .field
+      label.label Note
+      .control.has-icons-left
+        textarea.textarea(
+          name='note'
+        )
+    .field
+      .control
+        input.button.is-primary(type='submit' value='Add Note')
