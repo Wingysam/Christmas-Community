@@ -19,12 +19,12 @@ module.exports = (db) => {
     bcrypt.hash(req.body.newUserPassword, null, null, async (err, newUserPasswordHash) => {
       if (err) throw err;
       await db.put({
-        _id: req.body.newUserUsername,
+        _id: req.body.newUserUsername.trim(),
         password: newUserPasswordHash,
         admin: false,
         wishlist: []
       });
-      req.flash('success', `Successfully added user ${req.body.newUserUsername}!`);
+      req.flash('success', `Successfully added user ${req.body.newUserUsername.trim()}!`);
       res.redirect('/admin-settings');
     });
   });

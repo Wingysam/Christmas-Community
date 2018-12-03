@@ -22,7 +22,7 @@ module.exports = (db) => {
         bcrypt.hash(req.body.adminPassword, null, null, (err, adminPasswordHash) => {
           if (err) throw err;
           db.put({
-            _id: req.body.adminUsername,
+            _id: req.body.adminUsername.trim(),
             password: adminPasswordHash,
             admin: true,
             wishlist: []

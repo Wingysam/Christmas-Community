@@ -18,6 +18,7 @@ const db = new PouchDB(config.dbUrl);
 
 passport.use('local', new LocalStrategy(
   (username, password, done) => {
+    username = username.trim();
     db.get(username)
       .then(doc => {
         bcrypt.compare(password, doc.password, (err, correct) => {
