@@ -44,7 +44,7 @@ passport.deserializeUser((user, callback) => {
 
 
 const LevelStore = expressSessionLevel(session);
-const sessionDb = level('./sessions')
+const sessionDb = level(config.sessionStore)
 
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(session({
