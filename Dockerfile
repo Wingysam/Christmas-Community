@@ -8,7 +8,8 @@ RUN npm install --production --silent && mv node_modules ../
 
 COPY . .
 
-EXPOSE 3000
+ENV PORT 80
+EXPOSE 80
 
 RUN mkdir -p /data/db
 ENV DB_URL /data/db
