@@ -9,6 +9,12 @@ Web app for your family's Christmas shopping
 ## Purpose
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
 
+## Screenshots
+![Screenshot](screenshots/main.png)
+![Screenshot](screenshots/list.png)
+![Screenshot](screenshots/link-not-required.png)
+![Screenshot](screenshots/name-from-link.png)
+
 ## Docker
 ```
 docker run --detach --name christmas-community -p 80:80 --restart always wingysam/christmas-community
