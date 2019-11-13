@@ -15,6 +15,9 @@ To create a simple place for your entire family to use to find gifts that people
 ![Screenshot](screenshots/link-not-required.png)
 ![Screenshot](screenshots/name-from-link.png)
 
+## Amazon Smile
+By default, Christmas Community converts www.amazon.com links to smile.amazon.com. If you do not want this, set the environment variable SMILE to false (if you are using Docker Compose, make sure to put "false" in quotes).
+
 ## Docker
 ```
 docker run --detach --name christmas-community -p 80:80 --restart always wingysam/christmas-community
@@ -30,7 +33,13 @@ services:
     volumes:
       - ./data:/data
     ports:
+      # If you want to go to localhost:8080 to access Christmas Community,
+      # use - 8080:80 instead of
       - 80:80
+    environment:
+      # Amazon Smile, set to 'false' to disable www.amazon.com links
+      # turning into smile.amazon.com
+      SMILE: 'true'
     restart: always
 ```
 

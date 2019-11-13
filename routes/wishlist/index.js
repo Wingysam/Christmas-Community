@@ -16,8 +16,11 @@ const totals = wishlist => {
 
 const ValidURL = (string) => { // Ty SO
   try {
-    new URL(string);
-    return true;
+    const url = new URL(string)
+    if (process.env.SMILE !== 'false') {
+      if (url.hostname === 'www.amazon.com') url.hostname = 'smile.amazon.com'
+    }
+    if (url) return url;
   } catch (_) {
     return false;  
   }
@@ -52,11 +55,11 @@ module.exports = (db) => {
 
   router.post('/:user', verifyAuth(), async (req, res) => {
     const potentialUrl = req.body.itemUrlOrName.split(' ').pop();
-    const isUrl = ValidURL(potentialUrl);
+    const url = ValidURL(potentialUrl);
     const item = {};
     let productData;
     try {
-      if (isUrl) productData = await getProductName(potentialUrl, config.proxyServer);
+      if (url) productData = await getProductName(url, config.proxyServer);
     } catch (err) {
       req.flash('error', err.toString());
     }
@@ -64,7 +67,7 @@ module.exports = (db) => {
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
     item.note = req.body.note;
-    if (isUrl) item.url = potentialUrl;
+    if (url) item.url = url;
     item.id = uuid();
     const doc = await db.get(req.params.user);
     doc.wishlist.push(item);
