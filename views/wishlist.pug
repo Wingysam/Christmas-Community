@@ -74,16 +74,16 @@ block content
                       .control.inline
                         input.inline.button(type='submit' value='Unpledge')
             td(data-label='Delete Item')
-              if item.addedBy === req.user._id
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;'
-                      )
-                        span.icon
-                          i.fas.fa-trash
+              form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+                .field.inline
+                  .control.inline
+                    button.button.is-text(
+                      type='submit',
+                      style='text-decoration: none;',
+                      disabled=item.addedBy !== req.user._id
+                    )
+                      span.icon
+                        i.fas.fa-trash
 
   else
     each item, index in wishlist
