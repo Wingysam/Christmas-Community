@@ -2,89 +2,90 @@ extends layout.pug
 
 block content
   if process.env.TABLE !== 'false'
-    table.table.has-mobile-cards
-      thead
-        th Name
-        th(style='width: 50%;') Note
-        th Edit Note
-        if req.params.user === req.user._id
-          th Move Up
-          th Move Down
-        else
-          th Pledge
-        th Delete
-      tbody
-        each item, index in wishlist
-          if req.user._id === item.addedBy || req.params.user !== req.user._id
-            tr
-              if item.url
-                td(data-label='Name')
-                  a(
-                    href=item.url,
-                    rel='noopener noreferrer',
-                    target='_blank'
-                  )= (item.name ? item.name : item.url)
-              else
-                td(data-label='Name')= item.name
-              td(data-label='Note', style='white-space: pre-wrap;')= item.note
-              td(data-label='Edit Note')
-                form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
-                  input(type='hidden', name='current', value=item.note)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;'
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.far.fa-edit
-              if req.params.user === req.user._id
-                td(data-label='Move Item Up')
-                  form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+    .box
+      table.table.has-mobile-cards
+        thead
+          th Name
+          th(style='width: 50%;') Note
+          th Edit Note
+          if req.params.user === req.user._id
+            th Move Up
+            th Move Down
+          else
+            th Pledge
+          th Delete
+        tbody
+          each item, index in wishlist
+            if req.user._id === item.addedBy || req.params.user !== req.user._id
+              tr
+                if item.url
+                  td(data-label='Name')
+                    a(
+                      href=item.url,
+                      rel='noopener noreferrer',
+                      target='_blank'
+                    )= (item.name ? item.name : item.url)
+                else
+                  td.ugc(data-label='Name')= item.name
+                td.ugc(data-label='Note')= item.note
+                td(data-label='Edit Note')
+                  form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
+                    input(type='hidden', name='current', value=item.note)
+                    .field.inline
+                      .control.inline
+                        button.button.is-text(
+                          type='submit',
+                          style='text-decoration: none;'
+                          disabled=item.addedBy !== req.user._id
+                        )
+                          span.icon
+                            i.far.fa-edit
+                if req.params.user === req.user._id
+                  td(data-label='Move Item Up')
+                    form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                      .field.inline
+                        .control.inline
+                          button.button.is-text(
+                            type='submit',
+                            style='text-decoration: none;',
+                            disabled=index === firstCanSee
+                          )
+                            span.icon
+                              i.fas.fa-arrow-up
+                  td(data-label='Move Item Down')
+                    form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                      .field.inline
+                        .control.inline
+                          button.button.is-text(
+                            type='submit',
+                            style='text-decoration: none;',
+                            disabled=index === lastCanSee
+                          )
+                            span.icon
+                              i.fas.fa-arrow-down
+                else
+                  td(data-label='Pledge')
+                    if req.params.user !== req.user._id && !item.pledgedBy
+                      form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
+                        .field.inline
+                          .control.inline
+                            input.inline.button.is-primary(type='submit' value='Pledge')
+                    if item.pledgedBy === req.user._id
+                      form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+                        .field.inline
+                          .control.inline
+                            input.inline.button(type='submit' value='Unpledge')
+                td(data-label='Delete Item')
+                  form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
                     .field.inline
                       .control.inline
                         button.button.is-text(
                           type='submit',
                           style='text-decoration: none;',
-                          disabled=index === firstCanSee
+                          disabled=item.addedBy !== req.user._id
                         )
                           span.icon
-                            i.fas.fa-arrow-up
-                td(data-label='Move Item Down')
-                  form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=index === lastCanSee
-                        )
-                          span.icon
-                            i.fas.fa-arrow-down
-              else
-                td(data-label='Pledge')
-                  if req.params.user !== req.user._id && !item.pledgedBy
-                    form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
-                      .field.inline
-                        .control.inline
-                          input.inline.button.is-primary(type='submit' value='Pledge')
-                  if item.pledgedBy === req.user._id
-                    form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
-                      .field.inline
-                        .control.inline
-                          input.inline.button(type='submit' value='Unpledge')
-              td(data-label='Delete Item')
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;',
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.fas.fa-trash
+                            i.fas.fa-trash
 
   else
     each item, index in wishlist

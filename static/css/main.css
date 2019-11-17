@@ -37,3 +37,8 @@ ul.noStyle li {
 	.table.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td { display: -ms-flexbox; display: flex; width: auto; -ms-flex-pack: end; justify-content: flex-end; text-align: right; border-bottom: 1px solid #f5f5f5 }
 	.table.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td:before { content: attr(data-label); font-weight: 600; margin-right: auto; padding-right: .5em; text-align: left }
 }
+
+.ugc {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
