@@ -40,6 +40,8 @@ services:
       # Amazon Smile, set to 'false' to disable www.amazon.com links
       # turning into smile.amazon.com
       SMILE: 'true'
+      # Table mode, set to 'false' to revert to box mode
+      TABLE: 'true'
     restart: always
 ```
 
