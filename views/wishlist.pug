@@ -20,7 +20,7 @@ block content
             if req.user._id === item.addedBy || req.params.user !== req.user._id
               tr
                 if item.url
-                  td(data-label='Name')
+                  td.ugc(data-label='Name')
                     a(
                       href=item.url,
                       rel='noopener noreferrer',
