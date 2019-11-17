@@ -30,6 +30,6 @@ nav.navbar(role='navigation', aria-label='main navigation')
             hr.navbar-divider
             .navbar-item
               form#logoutForm(action='/logout', method='POST')
-                button.linkButton(type='submit') Log Out
+                button.button.is-warning(type='submit') Log Out
             //-+navBarLink('javascript:document.getElementById("logoutForm").submit()', 'Log Out')
   script(src="/js/nav.js")
