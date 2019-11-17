@@ -1,8 +1,13 @@
 extends layout.pug
 
 block content
-  a.button(href=`/wishlist/${req.user._id}`) My Wishlist
   ul.noStyle.noLeftMargin
+    li
+      a(href=`/wishlist/${req.user._id}`)
+        .box
+          span=req.user._id
+            span : ???/???
+            progress.progress(value=1, max=1)
     each user in users
       if req.user._id !== user.id
         li
