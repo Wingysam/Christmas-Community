@@ -23,3 +23,17 @@
 ul.noStyle li {
   list-style-type: none;
 }
+
+/* This is stolen from Buefy */ @media screen and (max-width: 768px) {
+	.table.has-mobile-cards thead { display: none }
+	.table.has-mobile-cards tfoot th { border: 0; display: inherit }
+	.table.has-mobile-cards tr { box-shadow: 0 2px 3px hsla(0,0%,4%,.1),0 0 0 1px hsla(0,0%,4%,.1); max-width: 100%; position: relative; display: block }
+	.table.has-mobile-cards tr td { border: 0; display: inherit }
+	.table.has-mobile-cards tr td:last-child { border-bottom: 0 }
+	.table.has-mobile-cards tr:not(:last-child) { margin-bottom: 1rem }
+	.table.has-mobile-cards tr:not([class*=is-]) { background: inherit }
+	.table.has-mobile-cards tr:not([class*=is-]):hover { background-color: inherit }
+	.table.has-mobile-cards tr.detail { margin-top: -1rem }
+	.table.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td { display: -ms-flexbox; display: flex; width: auto; -ms-flex-pack: end; justify-content: flex-end; text-align: right; border-bottom: 1px solid #f5f5f5 }
+	.table.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td:before { content: attr(data-label); font-weight: 600; margin-right: auto; padding-right: .5em; text-align: left }
+}
