@@ -3,7 +3,7 @@ mixin navBarLink(href, title)
     a.is-active.navbar-item(href=href)= title
   else
     a.navbar-item(href=href)= title
-nav.navbar(role='navigation', aria-label='main navigation')
+nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='box-shadow: 0px 0px 7px rgb(14, 15, 17);')
   .navbar-brand
     if '/' === req.path
       a.is-active.navbar-item(href='/')

@@ -25,7 +25,8 @@ html(lang='en')
     link(rel='stylesheet', href='/css/main.css')
   body
     include includes/navbar.pug
-    div.content#pageContent
+    div.content.has-navbar-fixed-top#pageContent
+      div(style='margin-top: 1.5em;')
       section.section
         div.container.is-marginless.fullwidth
           if title
