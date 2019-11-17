@@ -48,12 +48,12 @@ block content
                 .field.inline
                   .control.inline
                     input.inline.button(type='submit', value='Add note')
-            if index !== firstCanSee
+            if index !== firstCanSee && req.user._id === req.params.user
               form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
                 .field.inline
                   .control.inline
                     input.inline.button(type='submit' value='Move item up')
-            if index !== lastCanSee
+            if index !== lastCanSee && req.user._id === req.params.user
               form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
                 .field.inline
                   .control.inline
