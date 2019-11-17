@@ -43,7 +43,10 @@ module.exports = (db) => {
       const lastCanSee = dbUser.wishlist.indexOf(lastCanSeeValue);
       res.render('wishlist', {
         title: `Wishlist - ${dbUser._id}`,
-        wishlist: dbUser.wishlist,
+        wishlist: [
+          ...dbUser.wishlist.filter(item => item.addedBy === req.params.user),
+          ...dbUser.wishlist.filter(item => item.addedBy !== req.params.user)
+        ],
         firstCanSee,
         lastCanSee
       });
@@ -124,7 +127,7 @@ module.exports = (db) => {
   router.post('/:user/remove/:itemId', verifyAuth(), async (req, res) => {
     if (req.user._id !== req.params.user) {
       req.flash('error', 'Not correct user');
-      return res.redirect(`/wishlists/${req.params.user}`);
+      return res.redirect(`/wishlist/${req.params.user}`);
     }
     const doc = await db.get(req.user._id);
     for (let i = 0; i < doc.wishlist.length; i++) {
