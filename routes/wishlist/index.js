@@ -177,13 +177,8 @@ module.exports = (db) => {
         req.flash('error', 'Invalid user');
         return res.redirect(`/wishlist/${req.params.user}`);
       }
-      if (wishlistItem.note) {
-        req.flash('error', 'Already has a note');
-        return res.redirect(`/wishlist/${req.params.user}`);
-      } else {
         wishlistItem.note = req.body.note;
         wishlist[i] = wishlistItem;
-      }
     }
     doc.wishlist = wishlist;
     await db.put(doc);
