@@ -182,7 +182,7 @@ module.exports = (db) => {
     }
     doc.wishlist = wishlist;
     await db.put(doc);
-    req.flash('success', 'Successfully added note!');
+    req.flash('success', `Successfully saved note!`);
     return res.redirect(`/wishlist/${req.params.user}`);
   });
   router.post('/:user/note/remove/:id', verifyAuth(), async (req, res) => {
