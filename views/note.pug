@@ -1,13 +1,18 @@
 extends layout.pug
 
 block content
-  form(method='POST', action=`/wishlist/${req.params.user}/note/${req.params.id}`)
+  form.inline(method='POST', action=`/wishlist/${req.params.user}/note/${req.params.id}`)
     .field
       label.label Note
       .control
         textarea.textarea(
           name='note'
-        )
-    .field
-      .control
-        input.button.is-primary(type='submit' value='Add Note')
+        )= req.query.current
+    .field.inline
+      .control.inline
+        input.button.is-primary(type='submit' value='Save Note')
+  if req.query.current
+    form.inline(method='POST', action=``, style='margin-left: 1em;')
+      .field.inline
+        .control.inline
+          input.button.is-danger(type='submit', value='Delete Note')
