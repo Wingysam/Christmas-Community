@@ -10,6 +10,8 @@ block content
         if req.params.user === req.user._id
           th Move Up
           th Move Down
+        else
+          th Pledge
         th Delete
       tbody
         each item, index in wishlist
@@ -59,17 +61,29 @@ block content
                       )
                         span.icon
                           i.fas.fa-arrow-down
-              td(data-label='Delete Item')
-                if item.addedBy === req.user._id
-                  form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+            else
+              td(data-label='Pledge')
+                if req.params.user !== req.user._id && !item.pledgedBy
+                  form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
                     .field.inline
                       .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;'
-                        )
-                          span.icon
-                            i.fas.fa-trash
+                        input.inline.button.is-primary(type='submit' value='Pledge')
+                if item.pledgedBy === req.user._id
+                  form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+                    .field.inline
+                      .control.inline
+                        input.inline.button(type='submit' value='Unpledge')
+            td(data-label='Delete Item')
+              if item.addedBy === req.user._id
+                form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      button.button.is-text(
+                        type='submit',
+                        style='text-decoration: none;'
+                      )
+                        span.icon
+                          i.fas.fa-trash
 
   else
     each item, index in wishlist
