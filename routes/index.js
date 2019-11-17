@@ -22,6 +22,8 @@ module.exports = ({ db, config }) => {
     }
   );
 
+  router.use('/api', require('./api')({ db }))
+
   router.use('/setup', require('./setup')(db));
 
   router.use('/login', require('./login')());

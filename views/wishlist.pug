@@ -1,6 +1,7 @@
 extends layout.pug
 
 block content
+  script(type='data/user_id')= req.user._id
   if process.env.TABLE !== 'false'
     .box
       table.table.has-mobile-cards
@@ -18,7 +19,7 @@ block content
         tbody
           each item, index in wishlist
             if req.user._id === item.addedBy || req.params.user !== req.user._id
-              tr
+              tr(id=item.id)
                 if item.url
                   td.ugc(data-label='Name')
                     a(
@@ -44,7 +45,7 @@ block content
                 td.ugc(data-label='Added By')= item.addedBy
                 if req.params.user === req.user._id
                   td(data-label='Move Item Up')
-                    form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                    form.upForm.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
                       .field.inline
                         .control.inline
                           button.button.is-text(
@@ -55,7 +56,7 @@ block content
                             span.icon
                               i.fas.fa-arrow-up
                   td(data-label='Move Item Down')
-                    form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                    form.downForm.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
                       .field.inline
                         .control.inline
                           button.button.is-text(
@@ -173,3 +174,4 @@ block content
     .field
       .control
         input.button(type='submit' value=(req.user._id === req.params.user ? 'Add item to wishlist' : 'Pledge item'))
+  script(src='/js/wishlist.js')
