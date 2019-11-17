@@ -68,6 +68,6 @@ app.use((req, res, next) => {
 });
 
 app.set('view engine', 'pug');
-app.use('/', require('./routes')(db));
+app.use('/', require('./routes')({ db, config }));
 
 app.listen(config.port, () => logger.success('express', `Express server started on port ${config.port}!`))

@@ -11,6 +11,7 @@ module.exports = {
   sessionStore: process.env.SESSION_STORE || './sessions',
   sessionMaxAge: Number(process.env.SESSION_MAX_AGE) || 1000 * 60 * 60 * 24 * 7,
   siteTitle: process.env.SITE_TITLE || 'Christmas Community',
+  shortTitle: process.env.SHORT_TITLE || 'Christmas',
   useCDN: yesNo.parse(process.env.USE_CDN || true),
   wishlist: require('./wishlist')
 };

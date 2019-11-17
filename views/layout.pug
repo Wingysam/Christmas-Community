@@ -2,6 +2,10 @@ doctype html
 html(lang='en')
   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
+
+    link(rel='manifest', href='/manifest.json')
+    link(rel='apple-touch-icon', href='/img/logo.png', sizes='1280x1280')
+
     if title
       title #{config.siteTitle} - #{title}
     else

@@ -2,7 +2,7 @@ const verifyAuth = require('../middlewares/verifyAuth');
 const express = require('express');
 const path = require('path');
 
-module.exports = (db) => {
+module.exports = ({ db, config }) => {
   const router = express.Router();
 
   router.use('/', express.static(path.join(__dirname, '../static')));
@@ -32,6 +32,8 @@ module.exports = (db) => {
   router.use('/profile', require('./profile')(db));
 
   router.use('/admin-settings', require('./adminSettings')(db));
+
+  router.use('/manifest.json', require('./manifest.json')({ config }))
 
   return router;
 }
