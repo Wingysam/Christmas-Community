@@ -42,3 +42,9 @@ ul.noStyle li {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+img.emoji {
+	margin: 0px !important;
+	vertical-align: middle;
+	width: 2em !important;
+}
