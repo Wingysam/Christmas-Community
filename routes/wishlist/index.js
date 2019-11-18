@@ -193,8 +193,10 @@ module.exports = (db) => {
         req.flash('error', 'Invalid user');
         return res.redirect(`/wishlist/${req.params.user}`);
       }
-        wishlistItem.note = req.body.note;
-        wishlist[i] = wishlistItem;
+      wishlistItem.name = req.body.name;
+      wishlistItem.note = req.body.note;
+      wishlistItem.url = req.body.url;
+      wishlist[i] = wishlistItem;
     }
     doc.wishlist = wishlist;
     await db.put(doc);

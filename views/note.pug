@@ -3,17 +3,23 @@ extends layout.pug
 block content
   a(href='..') <i class="fas fa-arrow-left"></i> Back to #{req.params.user}'s wishlist
   form.inline(method='POST', action=`/wishlist/${req.params.user}/note/${req.params.id}`)
+    .columns
+      .column
+        .field
+          label.label Name
+          .control
+            input.input(name='name', value=req.query.name)
+      .column
+        .field
+          label.label URL
+          .control
+            input.input(name='url', value=req.query.url)
     .field
       label.label Note
       .control
         textarea.textarea(
           name='note'
-        )= req.query.current
+        )= req.query.note
     .field.inline
       .control.inline
-        input.button.is-primary(type='submit' value='Save Note')
-  if req.query.current
-    form.inline(method='POST', style='margin-left: 1em;')
-      .field.inline
-        .control.inline
-          input.button.is-danger(type='submit', value='Delete Note')
+        input.button.is-primary(type='submit' value='Save Item')

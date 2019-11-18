@@ -8,7 +8,7 @@ block content
         thead
           th(style='width: 25%;') Name
           th(style='width: 50%;') Note
-          th Edit Note
+          th Edit Item
           th Added By
           if req.params.user === req.user._id
             th Move Up
@@ -30,9 +30,11 @@ block content
                 else
                   td.ugc(data-label='Name')= item.name
                 td.ugc(data-label='Note')= item.note
-                td(data-label='Edit Note')
+                td(data-label='Edit Item')
                   form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
-                    input(type='hidden', name='current', value=item.note)
+                    input(type='hidden', name='name', value=item.name)
+                    input(type='hidden', name='note', value=item.note)
+                    input(type='hidden', name='url', value=item.url)
                     .field.inline
                       .control.inline
                         button.button.is-text(
@@ -133,16 +135,13 @@ block content
                   .control.inline
                     input.inline.button.is-warning(type='submit' value='Remove')
             if req.user._id === req.params.user || req.user._id === item.addedBy
-              if (item.note)
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/note/remove/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      input.inline.button.is-warning(type='submit', value='Remove note')
-              else
-                form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      input.inline.button(type='submit', value='Add note')
+              form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
+                input(type='hidden', name='name', value=item.name)
+                input(type='hidden', name='note', value=item.note)
+                input(type='hidden', name='url', value=item.url)
+                .field.inline
+                  .control.inline
+                    input.inline.button(type='submit', value='Edit item')
               if index !== firstCanSee && req.user._id === req.params.user
                 form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
