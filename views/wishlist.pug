@@ -5,7 +5,7 @@ block title
     .level
       .level-left
         .level-item
-          button.button.is-rounded(onclick='location.reload()')
+          button.button.is-rounded(onclick='this.firstChild.firstChild.classList.add("fa-pulse"); location.reload()')
             span.icon
               i.fas.fa-sync-alt
         .level-item
