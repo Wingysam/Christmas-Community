@@ -36,6 +36,3 @@ html(lang='en')
               h1 #{config.siteTitle}
           include includes/messages.pug
           block content
-  if config.useCDN
-    script(src='https://twemoji.maxcdn.com/v/latest/twemoji.min.js', crossorigin='anonymous')
-    script twemoji.parse(document.body)

@@ -70,7 +70,3 @@ yarn start
 
 ## Setup
 Visit `/` on the HTTP server to add an admin account.
-
-## Twemoji
-I use Twemoji in this project. Thanks Twitter!
-To use Twemoji, USE_CDN must be turned on (it is by default).
