@@ -1,5 +1,16 @@
 extends layout.pug
 
+block title
+  h1
+    .level
+      .level-left
+        .level-item
+          button.button.is-rounded(onclick='location.reload()')
+            span.icon
+              i.fas.fa-sync-alt
+        .level-item
+          span  #{config.siteTitle} - #{title} 
+
 block content
   script(type='data/user_id')= req.user._id
   if process.env.TABLE !== 'false'

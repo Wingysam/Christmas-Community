@@ -29,9 +29,10 @@ html(lang='en')
       div(style='margin-top: 1.5em;')
       section.section
         div.container.is-marginless.fullwidth
-          if title
-            h1= config.siteTitle + ' - ' + title
-          else if title !== false
-            h1 #{config.siteTitle}
+          block title
+            if title
+              h1= config.siteTitle + ' - ' + title
+            else if title !== false
+              h1 #{config.siteTitle}
           include includes/messages.pug
           block content
