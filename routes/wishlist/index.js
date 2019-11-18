@@ -180,8 +180,10 @@ module.exports = (db) => {
     return res.redirect(`/wishlist/${req.params.user}`);
   });
 
-  router.get('/:user/note/:id', verifyAuth(), (_, res) => {
-    res.render('note');
+  router.get('/:user/note/:id', verifyAuth(), async (req, res) => {
+    const doc = await db.get(req.params.user);
+    const item = doc.wishlist.find(item => item.id === req.params.id)
+    res.render('note', { item });
   });
   router.post('/:user/note/:id', verifyAuth(), async (req, res) => {
     const doc = await db.get(req.params.user);

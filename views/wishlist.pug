@@ -32,9 +32,6 @@ block content
                 td.ugc(data-label='Note')= item.note
                 td(data-label='Edit Item')
                   form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
-                    input(type='hidden', name='name', value=item.name)
-                    input(type='hidden', name='note', value=item.note)
-                    input(type='hidden', name='url', value=item.url)
                     .field.inline
                       .control.inline
                         button.button.is-text(
@@ -136,9 +133,6 @@ block content
                     input.inline.button.is-warning(type='submit' value='Remove')
             if req.user._id === req.params.user || req.user._id === item.addedBy
               form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
-                input(type='hidden', name='name', value=item.name)
-                input(type='hidden', name='note', value=item.note)
-                input(type='hidden', name='url', value=item.url)
                 .field.inline
                   .control.inline
                     input.inline.button(type='submit', value='Edit item')

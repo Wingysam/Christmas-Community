@@ -8,18 +8,18 @@ block content
         .field
           label.label Name
           .control
-            input.input(name='name', value=req.query.name)
+            input.input(name='name', value=item.name)
       .column
         .field
           label.label URL
           .control
-            input.input(name='url', value=req.query.url)
+            input.input(name='url', value=item.url)
     .field
       label.label Note
       .control
         textarea.textarea(
           name='note'
-        )= req.query.note
+        )= item.note
     .field.inline
       .control.inline
         input.button.is-primary(type='submit' value='Save Item')
