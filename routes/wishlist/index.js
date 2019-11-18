@@ -31,12 +31,25 @@ module.exports = (db) => {
 
   router.get('/', verifyAuth(), async (req, res) => {
     const docs = await db.allDocs({ include_docs: true })
+    if (process.env.SINGLE_LIST === 'true') {
+      for (row of docs.rows) {
+        if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+      }
+    }
     res.render('wishlists', { title: 'Wishlists', users: docs.rows, totals})
   });
 
   router.get('/:user', verifyAuth(), async (req, res) => {
     try {
       const dbUser = await db.get(req.params.user);
+      if (process.env.SINGLE_LIST === 'true') {
+        if (!dbUser.admin) {
+          const docs = await db.allDocs({ include_docs: true })
+          for (row of docs.rows) {
+            if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+          }
+        }
+      }
       const firstCanSee = dbUser.wishlist.findIndex(element => (element.addedBy === req.params.user));
       const wishlistReverse = [...dbUser.wishlist].reverse();
       const lastCanSeeValue = wishlistReverse.find(element => (element.addedBy === req.params.user));

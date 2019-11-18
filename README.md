@@ -42,6 +42,10 @@ services:
       SMILE: 'true'
       # Table mode, set to 'false' to revert to box mode
       TABLE: 'true'
+      # Single list mode
+      # (for weddings, birthdays, etc. only the admin account's list is accessible)
+      # Set to 'true' to enable
+      SINGLE_LIST: 'false'
     restart: always
 ```
 
