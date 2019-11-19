@@ -79,7 +79,7 @@ module.exports = (db) => {
     } catch (err) {
       req.flash('error', err.toString());
     }
-    item.name = (productData ? productData.name : req.body.itemUrlOrName);
+    item.name = (productData ? productData.name : '');
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
     item.note = req.body.note;
