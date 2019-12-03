@@ -57,3 +57,7 @@ img.emoji {
 	.notprint { display: none; }
 	.print { display: block; }
 }
+
+.print-gift:last-child {
+	margin-bottom: 0;
+}
