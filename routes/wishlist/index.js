@@ -84,6 +84,7 @@ module.exports = (db) => {
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
     item.note = req.body.note;
     if (url) item.url = url;
+    if (!url) item.name = potentialUrl
     item.id = uuid();
     const doc = await db.get(req.params.user);
     doc.wishlist.push(item);
