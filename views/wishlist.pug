@@ -179,3 +179,20 @@ block content
       .control
         input.button(type='submit' value=(req.user._id === req.params.user ? 'Add item to wishlist' : 'Pledge item'))
   script(src='/js/wishlist.js')
+
+block print
+  h1 #{req.params.user}'s Wishlist
+  each item, index in wishlist.filter(item => item.addedBy === req.params.user)
+    .print-gift
+      if index > 0
+        hr(style='background-color: black;')
+      .columns
+        .column.is-4
+          span.is-block.is-size-4.ugc= item.name
+          span.is-block.is-size-5.ugc.has-text-grey= item.url
+        .column
+          span.is-block.is-size-5 Added by: #{item.addedBy}
+          if item.note
+            br
+            .box
+              span.is-block.is-size-5.ugc= item.note

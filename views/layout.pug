@@ -24,15 +24,28 @@ html(lang='en')
       link(rel='stylesheet', href='/libraries/animate.min.css')
     link(rel='stylesheet', href='/css/main.css')
   body
-    include includes/navbar.pug
-    div.content.has-navbar-fixed-top#pageContent
-      div(style='margin-top: 1.5em;')
-      section.section
-        div.container.is-marginless.fullwidth
-          block title
-            if title
-              h1= config.siteTitle + ' - ' + title
-            else if title !== false
-              h1 #{config.siteTitle}
-          include includes/messages.pug
-          block content
+    .print
+      .content
+        section.section
+          .container.is-marginless.fullwidth
+            block print
+              style.
+                .print { display: none !important; }
+                .notprint { display: block !important; }
+                @media print {
+                  .notprint-padding { display: none; }
+                  nav { display: none}
+                }
+    .notprint
+      include includes/navbar.pug
+      div.content.has-navbar-fixed-top#pageContent
+        div.notprint-padding(style='margin-top: 1.5em;')
+        section.section
+          div.container.is-marginless.fullwidth
+            block title
+              if title
+                h1= config.siteTitle + ' - ' + title
+              else if title !== false
+                h1 #{config.siteTitle}
+            include includes/messages.pug
+            block content

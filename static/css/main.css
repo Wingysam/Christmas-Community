@@ -49,3 +49,11 @@ img.emoji {
 	width: 2em !important;
 	height: 2em !important;
 }
+
+.print {
+	display: none;
+}
+@media print {
+	.notprint { display: none; }
+	.print { display: block; }
+}
