@@ -185,7 +185,8 @@ block print
   .print-gifts
     each item, index in wishlist.filter(item => item.addedBy === req.params.user)
       .print-gift(style='page-break-inside: avoid;')
-        hr(style='margin-top: .5em; margin-bottom: .5em; background-color: black;')
+        if index > 0
+          hr(style='margin-top: .5em; margin-bottom: .5em; background-color: black;')
         span.is-size-6.ugc= item.name
         span= ' '
         span.ugc.has-text-grey= item.url
