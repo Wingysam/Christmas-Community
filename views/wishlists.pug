@@ -3,7 +3,7 @@ extends layout.pug
 block content
   ul.noStyle.noLeftMargin
     li
-      a(href=`/wishlist/${req.user._id}`)
+      a(href=`${_CC.config.base}wishlist/${req.user._id}`)
         .box
           span=req.user._id
             span : ???/???
@@ -11,7 +11,7 @@ block content
     each user in users
       if req.user._id !== user.id
         li
-          a(href=`/wishlist/${user.id}`)
+          a(href=`${_CC.config.base}wishlist/${user.id}`)
             .box
               span= user.id
               span : #{totals(user.doc.wishlist).pledged}/#{user.doc.wishlist.length}

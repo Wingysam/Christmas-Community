@@ -1,3 +1,4 @@
+global._CC = {}
 const expressSessionLevel = require('express-session-level');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -9,10 +10,12 @@ const PouchDB = require('pouchdb');
 const level = require('level');
 
 const config = require('./config');
+_CC.config = config
 
 const logger = require('./logger');
 
 const app = express();
+app.set('base', config.base)
 
 const db = new PouchDB(config.dbUrl);
 
@@ -54,7 +57,8 @@ app.use(session({
   store: new LevelStore(sessionDb),
   cookie: {
     maxAge: config.sessionMaxAge
-  }
+  },
+  name: 'christmas_community.connect.sid'
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -68,6 +72,6 @@ app.use((req, res, next) => {
 });
 
 app.set('view engine', 'pug');
-app.use('/', require('./routes')({ db, config }));
+app.use(config.base, require('./routes')({ db, config }));
 
 app.listen(config.port, () => logger.success('express', `Express server started on port ${config.port}!`))

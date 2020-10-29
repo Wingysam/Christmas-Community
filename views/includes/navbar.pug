@@ -5,13 +5,13 @@ mixin navBarLink(href, title)
     a.navbar-item(href=href)= title
 nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='box-shadow: 0px 0px 7px rgb(14, 15, 17);')
   .navbar-brand
-    if '/' === req.path
-      a.is-active.navbar-item(href='/')
-        img(src='/img/logo.png', alt='')
+    if _CC.config.base === req.path
+      a.is-active.navbar-item(href=_CC.config.base)
+        img(src=`${_CC.config.base}img/logo.png`, alt='')
         span #{config.siteTitle}
     else
-      a.navbar-item(href='/')
-        img(src='/img/logo.png', alt='')
+      a.navbar-item(href=_CC.config.base)
+        img(src=`${_CC.config.base}img/logo.png`, alt='')
         span #{config.siteTitle}
     a.navbar-burger#navBarBurger(role='button', aria-label='menu', aria-expanded='false')
       span(aria-hidden='true')
@@ -23,13 +23,13 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
         .navbar-item.has-dropdown.is-hoverable
           a.navbar-link= req.user._id
           .navbar-dropdown
-            +navBarLink(`/wishlist/${req.user._id}`, 'My Wishlist')
-            +navBarLink('/profile', 'Profile')
+            +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, 'My Wishlist')
+            +navBarLink(`${_CC.config.base}profile`, 'Profile')
             if req.user.admin
-              +navBarLink('/admin-settings', 'Admin settings')
+              +navBarLink(`${_CC.config.base}admin-settings`, 'Admin settings')
             hr.navbar-divider
             .navbar-item
-              form#logoutForm(action='/logout', method='POST')
+              form#logoutForm(action=`${_CC.config.base}logout`, method='POST')
                 button.button.is-warning(type='submit') Log Out
             //-+navBarLink('javascript:document.getElementById("logoutForm").submit()', 'Log Out')
-  script(src="/js/nav.js")
+  script(src=`${_CC.config.base}js/nav.js`)

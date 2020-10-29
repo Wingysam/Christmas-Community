@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   h2 Admin User
-  form(action='/setup', method='POST')
+  form(action=`${_CC.config.base}setup`, method='POST')
     .field
       label.label Username
       .control.has-icons-left

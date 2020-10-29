@@ -18,6 +18,9 @@ To create a simple place for your entire family to use to find gifts that people
 ## Amazon Smile
 By default, Christmas Community converts www.amazon.com links to smile.amazon.com. If you do not want this, set the environment variable SMILE to false (if you are using Docker Compose, make sure to put "false" in quotes).
 
+## Root Path
+If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_PATH` to that path.
+
 ## Docker
 ```
 docker run --detach --name christmas-community -p 80:80 --restart always wingysam/christmas-community

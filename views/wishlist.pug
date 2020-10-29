@@ -42,7 +42,7 @@ block content
                   td.ugc(data-label='Name')= item.name
                 td.ugc(data-label='Note')= item.note
                 td(data-label='Edit Item')
-                  form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
+                  form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                     .field.inline
                       .control.inline
                         button.button.is-text(
@@ -55,7 +55,7 @@ block content
                 td.ugc(data-label='Added By')= item.addedBy
                 if req.params.user === req.user._id
                   td(data-label='Move Item Up')
-                    form.upForm.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                    form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                       .field.inline
                         .control.inline
                           button.button.is-text(
@@ -66,7 +66,7 @@ block content
                             span.icon
                               i.fas.fa-arrow-up
                   td(data-label='Move Item Down')
-                    form.downForm.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                    form.downForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
                       .field.inline
                         .control.inline
                           button.button.is-text(
@@ -79,12 +79,12 @@ block content
                 else
                   td(data-label='Pledge')
                     if req.params.user !== req.user._id && !item.pledgedBy
-                      form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
+                      form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                         .field.inline
                           .control.inline
                             input.inline.button.is-primary(type='submit' value='Pledge')
                     if item.pledgedBy === req.user._id
-                      form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+                      form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
                         .field.inline
                           .control.inline
                             input.inline.button(type='submit' value='Unpledge')
@@ -93,7 +93,7 @@ block content
                 td(data-label='Delete Item')
                   form.inline(
                     method='POST',
-                    action=`/wishlist/${req.params.user}/${req.user._id === req.params.user ? 'remove' : 'unpledge'}/${item.id}`
+                    action=`${_CC.config.base}wishlist/${req.params.user}/${req.user._id === req.params.user ? 'remove' : 'unpledge'}/${item.id}`
                   )
                     .field.inline
                       .control.inline
@@ -128,32 +128,32 @@ block content
           hr
           div
             if req.params.user !== req.user._id && !item.pledgedBy
-              form.inline(method='POST', action=`/wishlist/${req.params.user}/pledge/${item.id}`)
+              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                 .field.inline
                   .control.inline
                     input.inline.button.is-primary(type='submit' value='Pledge')
             if item.pledgedBy === req.user._id
-              form.inline(method='POST', action=`/wishlist/${req.params.user}/unpledge/${item.id}`)
+              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
                 .field.inline
                   .control.inline
                     input.inline.button(type='submit' value='Unpledge')
             if req.user._id === req.params.user
-              form.inline(method='POST', action=`/wishlist/${req.params.user}/remove/${item.id}`)
+              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`)
                 .field.inline
                   .control.inline
                     input.inline.button.is-warning(type='submit' value='Remove')
             if req.user._id === req.params.user || req.user._id === item.addedBy
-              form.inline(method='GET', action=`/wishlist/${req.params.user}/note/${item.id}`)
+              form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                 .field.inline
                   .control.inline
                     input.inline.button(type='submit', value='Edit item')
               if index !== firstCanSee && req.user._id === req.params.user
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/move/up/${item.id}`)
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value='Move item up')
               if index !== lastCanSee && req.user._id === req.params.user
-                form.inline(method='POST', action=`/wishlist/${req.params.user}/move/down/${item.id}`)
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value='Move item down')
@@ -178,7 +178,7 @@ block content
     .field
       .control
         input.button(type='submit' value=(req.user._id === req.params.user ? 'Add item to wishlist' : 'Pledge item'))
-  script(src='/js/wishlist.js')
+  script(src=`${_CC.config.base}js/wishlist.js`)
 
 block print
   h1 #{req.params.user}'s Wishlist

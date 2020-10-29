@@ -13,5 +13,6 @@ module.exports = {
   siteTitle: process.env.SITE_TITLE || 'Christmas Community',
   shortTitle: process.env.SHORT_TITLE || 'Christmas',
   useCDN: yesNo.parse(process.env.USE_CDN || true),
-  wishlist: require('./wishlist')
+  wishlist: require('./wishlist'),
+  base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`
 };
