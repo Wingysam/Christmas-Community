@@ -12,7 +12,8 @@ block title
           span  #{config.siteTitle} - #{title} 
 
 block content
-  script(type='data/user_id')= req.user._id
+  if req.user
+    script(type='data/user_id')= req.user._id
   if process.env.TABLE !== 'false'
     .box
       table.table.has-mobile-cards
