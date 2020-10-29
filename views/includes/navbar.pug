@@ -23,17 +23,13 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
         .navbar-item.has-dropdown.is-hoverable
           a.navbar-link= req.user._id
           .navbar-dropdown
-            if req.user._id === 'Unknown'
-              .navbar-item
-                a.button.is-primary(href='/login') Log In
-            else
-              +navBarLink(`/wishlist/${req.user._id}`, 'My Wishlist')
-              +navBarLink('/profile', 'Profile')
-              if req.user.admin
-                +navBarLink('/admin-settings', 'Admin settings')
-              hr.navbar-divider
-              .navbar-item
-                form#logoutForm(action='/logout', method='POST')
-                  button.button.is-warning(type='submit') Log Out
+            +navBarLink(`/wishlist/${req.user._id}`, 'My Wishlist')
+            +navBarLink('/profile', 'Profile')
+            if req.user.admin
+              +navBarLink('/admin-settings', 'Admin settings')
+            hr.navbar-divider
+            .navbar-item
+              form#logoutForm(action='/logout', method='POST')
+                button.button.is-warning(type='submit') Log Out
             //-+navBarLink('javascript:document.getElementById("logoutForm").submit()', 'Log Out')
   script(src="/js/nav.js")

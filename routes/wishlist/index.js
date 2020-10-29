@@ -1,5 +1,4 @@
 const verifyAuth = require('../../middlewares/verifyAuth');
-const public = require('../../middlewares/public');
 const getProductName = require('get-product-name');
 const express = require('express');
 const config = require('../../config');
@@ -30,7 +29,7 @@ const ValidURL = (string) => { // Ty SO
 module.exports = (db) => {
   const router = express.Router();
 
-  router.get('/', public(), async (req, res) => {
+  router.get('/', verifyAuth(), async (req, res) => {
     const docs = await db.allDocs({ include_docs: true })
     if (process.env.SINGLE_LIST === 'true') {
       for (row of docs.rows) {
@@ -40,7 +39,7 @@ module.exports = (db) => {
     res.render('wishlists', { title: 'Wishlists', users: docs.rows, totals})
   });
 
-  router.get('/:user', public(), async (req, res) => {
+  router.get('/:user', verifyAuth(), async (req, res) => {
     try {
       const dbUser = await db.get(req.params.user);
       if (process.env.SINGLE_LIST === 'true') {
