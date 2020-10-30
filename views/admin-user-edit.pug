@@ -1,0 +1,53 @@
+extends layout.pug
+
+block title
+  h1(style="margin-bottom: 0;")
+    a(href='..') &lt;
+    | #{config.siteTitle}
+  p Editing user "#{user._id}"
+
+block content
+  .columns
+    .column
+      if user.signupToken
+        - const link = `${_CC.config.base}confirm-account/${user.signupToken}`
+        .box(style='overflow: hidden;')
+          .columns(style='margin-bottom: 0;')
+            .column.is-narrow(style='padding-bottom: 0;')
+              h2 Confirmation Link
+            .column(style='padding-bottom: 0;')
+              p
+                span This account hasn't been confirmed.
+                br
+                if user.expiry > new Date().getTime()
+                  span= `The following link expires ${_CC.require('moment')(user.expiry).fromNow()}`
+                else
+                  span.has-text-weight-bold(style='color: red;')= `The following link expired ${_CC.require('moment')(user.expiry).fromNow()}`
+          h3(style='margin-bottom: 0; margin-top: 0;')
+            .level
+              .level-left
+                .level-item
+                  form(method='POST', action=`${_CC.config.base}admin-settings/edit/refresh-signup-token/${user._id}`)
+                    input.button.is-rounded(type='submit', value='Generate New Link')
+                .level-item
+                  a(href=link, style='font-family: monospaced; word-break: break-all;')= link
+      h2 Change Name
+      form(action=`${_CC.config.base}admin-settings/edit/rename/${user._id}`, method='POST')
+        .field
+          label.label Username
+          .control.has-icons-left
+            input.input(type='text', name='newUsername', placeholder=user._id, value=user._id)
+            span.icon.is-small.is-left
+              i.fas.fa-user
+        .field
+          .control
+            input.button.is-primary(type='submit' value='Change Username')
+    .column.is-narrow
+      h2 Irreversible Deletion
+      form(method='POST', action=`${_CC.config.base}admin-settings/edit/remove/${user._id}`)
+        .field
+          .control
+            if user.admin
+              input.button.is-danger(disabled, type='submit' value=`User is admin`)
+            else
+              input.button.is-danger(type='submit' value=`Remove user ${user._id}`)

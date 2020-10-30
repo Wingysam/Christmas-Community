@@ -1,6 +1,16 @@
 const verifyAuth = require('../../middlewares/verifyAuth');
 const bcrypt = require('bcrypt-nodejs');
 const express = require('express');
+const { nanoid } = require('nanoid')
+
+const SIGNUP_TOKEN_LENGTH = 32
+const SIGNUP_TOKEN_LIFETIME =
+  // One week, approximately. Doesn't need to be perfect.
+  1000 // milliseconds
+  * 60 // seconds
+  * 60 // minutes
+  * 24 // hours
+  * 07 // days
 
 module.exports = (db) => {
   const router = express.Router();
@@ -16,25 +26,81 @@ module.exports = (db) => {
 
   router.post('/add', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/');
-    bcrypt.hash(req.body.newUserPassword, null, null, async (err, newUserPasswordHash) => {
-      if (err) throw err;
-      await db.put({
-        _id: req.body.newUserUsername.trim(),
-        password: newUserPasswordHash,
-        admin: false,
-        wishlist: []
-      });
-      req.flash('success', `Successfully added user ${req.body.newUserUsername.trim()}!`);
-      res.redirect('/admin-settings');
+    await db.put({
+      _id: req.body.newUserUsername.trim(),
+      admin: false,
+      wishlist: [],
+
+      signupToken: nanoid(SIGNUP_TOKEN_LENGTH),
+      expiry: new Date().getTime() + SIGNUP_TOKEN_LIFETIME
+        
     });
+    res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
   });
 
-  router.get('/remove/:userToRemove', verifyAuth(), (req, res) => {
+  router.get('/edit/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/');
-    res.render('remove', { userToRemove: req.params.userToRemove });
+    const doc = await db.get(req.params.userToEdit)
+    delete doc.password
+    res.render('admin-user-edit', { user: doc });
   });
 
-  router.post('/remove/:userToRemove', verifyAuth(), async (req, res) => {
+  router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/');
+    const doc = await db.get(req.params.userToEdit)
+    doc.signupToken = nanoid(SIGNUP_TOKEN_LENGTH)
+    doc.expiry = new Date().getTime() + SIGNUP_TOKEN_LIFETIME
+    await db.put(doc)
+    return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+  });
+
+  router.post('/edit/rename/:userToRename', verifyAuth(), async (req, res) => {
+    if (!req.user.admin && req.user._id !== req.params.userToRename) return res.redirect('/')
+    if (!req.body.newUsername) {
+      req.flash('error', 'No username provided')
+      return res.redirect(`/admin-settings/edit/${req.params.userToRename}`)
+    }
+    if (req.body.newUsername === req.params.userToRename) {
+      req.flash('error', 'Username is same as new username.')
+      return res.redirect(`/admin-settings/edit/${req.params.userToRename}`)
+    }
+
+    const oldName = req.params.userToRename
+    const newName = req.body.newUsername
+
+    const userDoc = await db.get(oldName)
+    userDoc._id = newName
+    delete userDoc._rev
+    try {
+      await db.put(userDoc)
+      try {
+        const usersBulk = []
+        const users = (await db.allDocs({ include_docs: true })).rows
+        for (const { doc: user } of users) {
+          for (const item of user.wishlist) {
+            if (item.pledgedBy === oldName) item.pledgedBy = newName
+            if (item.addedBy === oldName) item.addedBy = newName
+          }
+          usersBulk.push(user)
+        }
+
+        await db.bulkDocs(usersBulk)
+        await db.remove(await db.get(oldName))
+  
+        await req.flash('success', 'Renamed user!')
+        return res.redirect(`/wishlist/${newName}`)
+      } catch (error) {
+        console.log(error, error.stack)
+        await db.remove(await db.get(newName))
+        throw error
+      }
+    } catch (error) {
+      req.flash('error', error.message)
+      return res.redirect(`/admin-settings/edit/${oldName}`)
+    }
+  })
+
+  router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/');
     const doc = await db.get(req.params.userToRemove);
     if (doc.admin) {

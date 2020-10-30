@@ -4,12 +4,11 @@ block content
   h2 Users
   each user in users
     span.is-size-6.inline= user.id
-    if !user.doc.admin
-      a(href=`${_CC.config.base}admin-settings/remove/${user.id}`)
-        span.is-size-7.icon.has-text-danger
-          i.fas.fa-times
-        span.is-sr-only
-          Remove
+    a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
+      span.is-size-7.icon.has-text-info
+        i.fas.fa-edit
+      span.is-sr-only
+        | Edit
     br
   h3 Add user
   form(action=`${_CC.config.base}admin-settings/add`, method='POST')
@@ -20,11 +19,8 @@ block content
         span.icon.is-small.is-left
           i.fas.fa-user
     .field
-      label.label Password
-      .control.has-icons-left
-        input.input(type='password', name='newUserPassword', placeholder='pa$$word!')
-        span.icon.is-small.is-left
-          i.fas.fa-lock
-    .field
       .control
         input.button.is-primary(type='submit' value='Add User')
+  h3 Version Info
+  p Christmas Community: v#{_CC.require('./package.json').version}
+  p Node: #{process.version}

@@ -1,4 +1,4 @@
-global._CC = {}
+global._CC = { require }
 const expressSessionLevel = require('express-session-level');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -42,7 +42,7 @@ passport.serializeUser((user, callback) => callback(null, user._id));
 passport.deserializeUser((user, callback) => {
   db.get(user)
     .then(dbUser => callback(null, dbUser))
-    .catch(err => callback(err));
+    .catch(() => callback(null, null));
 });
 
 

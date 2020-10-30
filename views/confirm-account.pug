@@ -1,0 +1,34 @@
+extends layout.pug
+
+mixin icon(c, text)
+  .columns.is-vcentered.is-mobile
+    .column.is-narrow
+      span.icon.is-large
+        i.fa-3x(class=c)
+    .column #{text}
+
+block title
+  if doc
+    h1 #{config.siteTitle} | Confirm Account
+  else
+    h1 #{config.siteTitle} | Confirmation Link Invalid
+
+block content
+  if doc
+    if doc.expiry > new Date().getTime()
+      +icon('fas fa-smile-beam', `Hello ${doc._id}! Please set your password here.`)
+      form(method='POST')
+        .field
+          label.label Password
+          .control.has-icons-left
+            input.input(type='password', name='password', placeholder='pa$$word!')
+            span.icon.is-small.is-left
+              i.fas.fa-lock
+        .field
+          .control
+            input.button.is-primary(type='submit' value=`Join ${_CC.config.siteTitle}`)
+    else
+      +icon('fas fa-frown-open', 'Your confirmation link has expired. Please ask for a new one.')
+  else
+    +icon('fas fa-frown-open', "This confirmation link isn't valid, perhaps the account was deleted or some characters at the end got cut off?")
+          

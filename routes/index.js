@@ -28,6 +28,7 @@ module.exports = ({ db, config }) => {
 
   router.use('/login', require('./login')());
   router.use('/logout', require('./logout')());
+  router.use('/confirm-account', require('./confirm-account')(db));
 
   router.use('/wishlist', require('./wishlist')(db));
 
