@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt-nodejs');
 const express = require('express');
 const { nanoid } = require('nanoid')
 
-const SIGNUP_TOKEN_LENGTH = 32
-const SIGNUP_TOKEN_LIFETIME =
+const SECRET_TOKEN_LENGTH = 32
+const SECRET_TOKEN_LIFETIME =
   // One week, approximately. Doesn't need to be perfect.
   1000 // milliseconds
   * 60 // seconds
@@ -31,8 +31,8 @@ module.exports = (db) => {
       admin: false,
       wishlist: [],
 
-      signupToken: nanoid(SIGNUP_TOKEN_LENGTH),
-      expiry: new Date().getTime() + SIGNUP_TOKEN_LIFETIME
+      signupToken: nanoid(SECRET_TOKEN_LENGTH),
+      expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
         
     });
     res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
@@ -48,8 +48,26 @@ module.exports = (db) => {
   router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/');
     const doc = await db.get(req.params.userToEdit)
-    doc.signupToken = nanoid(SIGNUP_TOKEN_LENGTH)
-    doc.expiry = new Date().getTime() + SIGNUP_TOKEN_LIFETIME
+    doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
+    doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
+    await db.put(doc)
+    return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+  });
+
+  router.post('/edit/resetpw/:userToEdit', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/');
+    const doc = await db.get(req.params.userToEdit)
+    doc.pwToken = nanoid(SECRET_TOKEN_LENGTH)
+    doc.pwExpiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
+    await db.put(doc)
+    return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+  });
+
+  router.post('/edit/cancelresetpw/:userToEdit', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/');
+    const doc = await db.get(req.params.userToEdit)
+    delete doc.pwToken
+    delete doc.pwExpiry
     await db.put(doc)
     return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
   });

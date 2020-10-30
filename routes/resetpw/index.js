@@ -7,24 +7,25 @@ module.exports = (db) => {
   router.get('/:code', async (req, res) => {
     const row = (await db.allDocs({ include_docs: true }))
       .rows
-      .find(({ doc }) => doc.signupToken === req.params.code)
+      .find(({ doc }) => doc.pwToken === req.params.code)
 
-    res.render('confirm-account', { doc: row ? row.doc : undefined })
+
+    res.render('resetpw', { doc: row ? row.doc : undefined })
   });
 
   router.post('/:code', async (req, res) => {
     const { doc } = (await db.allDocs({ include_docs: true }))
       .rows
-      .find(({ doc }) => doc.signupToken === req.params.code)
+      .find(({ doc }) => doc.pwToken === req.params.code)
 
-    if (doc.expiry < new Date().getTime()) return res.redirect(`/confirm-account/${req.params.code}`)
+    if (doc.expiry < new Date().getTime()) return res.redirect(`/resetpw/${req.params.code}`)
 
     bcrypt.hash(req.body.password, null, null, async (err, passwordHash) => {
       if (err) throw err;
 
       doc.password = passwordHash
-      delete doc.signupToken
-      delete doc.expiry
+      delete doc.pwToken
+      delete doc.pwExpiry
 
       await db.put(doc)
 
