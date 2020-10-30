@@ -2,7 +2,7 @@ const verifyAuth = require('../../middlewares/verifyAuth');
 const getProductName = require('get-product-name');
 const express = require('express');
 const config = require('../../config');
-const uuid = require('uuid/v4');
+const { v4: uuid} = require('uuid');
 
 const totals = wishlist => {
   let unpledged = 0;
