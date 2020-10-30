@@ -9,7 +9,11 @@
     "start": "node index.js"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/wingysam/christmas-community"
+  },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
