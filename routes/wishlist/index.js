@@ -196,9 +196,15 @@ module.exports = (db) => {
         req.flash('error', 'Invalid user');
         return res.redirect(`/wishlist/${req.params.user}`);
       }
-      wishlistItem.name = req.body.name;
-      wishlistItem.note = req.body.note;
-      wishlistItem.url = req.body.url;
+      for (const type of [
+        'name', 'note', 'url', 'price'
+      ]) {
+        if (!req.body.hasOwnProperty(type)) {
+          req.flash('error', `Missing property ${type}`)
+          return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
+        }
+        wishlistItem[type] = req.body[type]
+      }
       wishlist[i] = wishlistItem;
     }
     doc.wishlist = wishlist;

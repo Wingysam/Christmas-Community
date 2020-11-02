@@ -19,6 +19,7 @@ block content
         thead
           th(style='width: 25%;') Name
           th(style='width: 50%;') Note
+          th(style='width: 10%;') Price
           th Edit Item
           th Added By
           if req.params.user === req.user._id
@@ -41,6 +42,7 @@ block content
                 else
                   td.ugc(data-label='Name')= item.name
                 td.ugc(data-label='Note')= item.note
+                td.ugc(data-label='Price')= item.price
                 td(data-label='Edit Item')
                   form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                     .field.inline
@@ -109,7 +111,13 @@ block content
     each item, index in wishlist
       if req.user._id === item.addedBy || req.params.user !== req.user._id
         .box
+          if item.price
+            .tag
+              i.fas.fa-tag(style='margin-right: .5em;')
+              span= item.price
           span.overflowWrap
+            if item.price
+              span= ' '
             if item.url
               a(
                 href=item.url,
@@ -187,6 +195,11 @@ block print
       .print-gift(style='page-break-inside: avoid;')
         if index > 0
           hr(style='margin-top: .5em; margin-bottom: .5em; background-color: black;')
+        if item.price
+          .tag
+            i.fas.fa-tag(style='margin-right: .5em;')
+            span= item.price
+          span= ' '
         span.is-size-6.ugc= item.name
         span= ' '
         span.ugc.has-text-grey= item.url
