@@ -206,7 +206,7 @@ module.exports = (db) => {
         return res.redirect(`/wishlist/${req.params.user}`);
       }
       for (const type of [
-        'name', 'note', 'url', 'price'
+        'name', 'note', 'url', 'price', 'image'
       ]) {
         if (!req.body.hasOwnProperty(type)) {
           req.flash('error', `Missing property ${type}`)

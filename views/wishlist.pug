@@ -17,6 +17,7 @@ block content
     .box
       table.table.has-mobile-cards
         thead
+          th(style='width: 15%;') Image
           th(style='width: 25%;') Name
           th(style='width: 50%;') Note
           th(style='width: 10%;') Price
@@ -32,6 +33,9 @@ block content
           each item, index in wishlist
             if req.user._id === item.addedBy || req.params.user !== req.user._id
               tr(id=item.id)
+                td
+                  figure(style='width: 100%; margin: 0;')
+                    img(src=item.image, style='width: 100%;')
                 if item.url
                   td.ugc(data-label='Name')
                     a(
@@ -127,11 +131,18 @@ block content
             else
               span= item.name
           hr
-          if item.note 
-            textarea.textarea.has-fixed-size(
-              rows=String(config.wishlist.note.rows),
-              readonly
-            )= item.note
+          if item.note || item.image
+            .columns
+              if item.image
+                .column
+                  figure(style='width: 100%; padding: 2em;')
+                    img(src=item.image, style='width: 100%;')
+              .column.is-three-quarters
+                if item.note
+                  textarea.textarea.has-fixed-size(
+                    style='height: 100%;'
+                    readonly
+                  )= item.note
           span.overflowWrap Added by: #{item.addedBy}
           hr
           div
