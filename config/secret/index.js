@@ -1,4 +1,4 @@
-const { v4: uuid} = require('uuid');
+const { nanoid } = require('nanoid')
 const path = require('path');
 const fs = require('fs');
 
@@ -7,7 +7,7 @@ const secretFilePath = path.join((process.env.SECRET_DIRNAME ? process.env.SECRE
 try {
   module.exports = fs.readFileSync(secretFilePath).toString();
 } catch (_) {
-  const secret = uuid();
+  const secret = nanoid(128);
   fs.writeFileSync(secretFilePath, secret);
   module.exports = secret;
 }

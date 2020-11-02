@@ -2,7 +2,7 @@ const verifyAuth = require('../../middlewares/verifyAuth');
 const getProductName = require('get-product-name');
 const express = require('express');
 const config = require('../../config');
-const { v4: uuid} = require('uuid');
+const u64 = require('u64')
 
 const totals = wishlist => {
   let unpledged = 0;
@@ -70,6 +70,10 @@ module.exports = (db) => {
   });
 
   router.post('/:user', verifyAuth(), async (req, res) => {
+    if (!req.body.itemUrlOrName) {
+      req.flash('error', 'Item URL or Name is required')
+      return res.redirect(`/wishlist/${req.params.user}`)
+    }
     const potentialUrl = req.body.itemUrlOrName.split(' ').pop();
     const url = ValidURL(potentialUrl);
     const item = {};
@@ -85,10 +89,15 @@ module.exports = (db) => {
     item.note = req.body.note;
     if (url) item.url = url;
     if (!url) item.name = req.body.itemUrlOrName
-    item.id = uuid();
+    item.id = u64.encode(new Date().getTime().toString());
     const doc = await db.get(req.params.user);
     doc.wishlist.push(item);
-    await db.put(doc);
+    try {
+      await db.put(doc);
+    } catch {
+      req.flash('error', 'Items are being added too quickly. Please try again.')
+      return res.redirect(`/wishlist/${req.params.user}`)
+    }
     req.flash(
       'success',
       (
