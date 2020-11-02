@@ -16,6 +16,7 @@ const logger = require('./logger');
 
 const app = express();
 app.set('base', config.base)
+app.set('trust proxy', config.trustProxy)
 
 const db = new PouchDB(config.dbUrl);
 
