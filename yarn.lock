@@ -559,10 +559,10 @@
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
   "version" "1.1.1"
 
-"get-product-name@^1.0.0":
-  "integrity" "sha512-8obi2ibxRgrL3JRMkMdTPYUt88OMlYwXJqlsP6OnAD8barlrUwf1D4xft7prfcAbVIdES/M/zAfW3BF2uP1lwA=="
-  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.6.0.tgz"
-  "version" "1.6.0"
+"get-product-name@1":
+  "integrity" "sha512-XPAQ+BbaCA4Fm+7uZtx3X3LCNriIZwKK8cGS6kbVCRrYPv2cQQOaZeu0rP2QgwFbKSGT1WLI26uiIiUaG06fgA=="
+  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.7.0.tgz"
+  "version" "1.7.0"
   dependencies:
     "cheerio" "^1.0.0-rc.3"
     "https-proxy-agent" "^2.2.1"
