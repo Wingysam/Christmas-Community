@@ -84,6 +84,8 @@ module.exports = (db) => {
       req.flash('error', err.toString());
     }
     item.name = (productData ? productData.name : '');
+    item.price = productData?.price
+    item.image = productData?.image
     item.addedBy = req.user._id;
     item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id);
     item.note = req.body.note;
