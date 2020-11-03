@@ -68,7 +68,7 @@ PORT=80
 
 ## Startup
 ```sh
-yarn start
+npm start
 ```
 
 ## Setup
