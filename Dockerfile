@@ -9,14 +9,15 @@ RUN npm install --production --silent
 COPY . .
 
 ENV PORT 80
+ENV DB_EXPOSE_PORT 8080
 EXPOSE 80
 
-RUN mkdir -p /data/db
-ENV DB_URL /data/db
+RUN mkdir -p /data/dbs
+ENV DB_PREFIX /data/dbs/
 
 RUN mkdir -p /data/sessions
 ENV SESSION_STORE /data/sessions
 
 ENV SECRET_DIRNAME /data
 
-CMD npm start
+CMD Dockerstart.sh

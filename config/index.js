@@ -3,9 +3,10 @@ require('dotenv').config();
 const yesNo = require('yes-no');
 
 module.exports = {
-  dbUrl: process.env.DB_URL || 'db',
+  dbPrefix: process.env.DB_URL || 'dbs/',
   defaultFailureRedirect: process.env.DEFAULT_FAILURE_REDIRECT || '/login',
   port: Number(process.env.PORT) || 3000,
+  dbExposePort: Number(process.env.DB_EXPOSE_PORT) || null,
   proxyServer: process.env.PROXY_SERVER || undefined,
   secret: process.env.SECRET || require('./secret'),
   sessionStore: process.env.SESSION_STORE || './sessions',

@@ -6,19 +6,26 @@ const bcrypt = require('bcrypt-nodejs');
 const flash = require('connect-flash');
 const passport = require('passport');
 const express = require('express');
-const PouchDB = require('pouchdb');
 const level = require('level');
 
 const config = require('./config');
 _CC.config = config
 
+if (!config.dbPrefix.startsWith('http')) {
+  const mkdirp = require('mkdirp').sync
+  mkdirp(config.dbPrefix)
+}
+
+const PouchDB = require('pouchdb').defaults({ prefix: config.dbPrefix });
+
 const logger = require('./logger');
+const { dbExposePort } = require('./config');
 
 const app = express();
 app.set('base', config.base)
 app.set('trust proxy', config.trustProxy)
 
-const db = new PouchDB(config.dbUrl);
+const db = new PouchDB('users');
 
 passport.use('local', new LocalStrategy(
   (username, password, done) => {
@@ -76,3 +83,10 @@ app.set('view engine', 'pug');
 app.use(config.base, require('./routes')({ db, config }));
 
 app.listen(config.port, () => logger.success('express', `Express server started on port ${config.port}!`))
+
+;(() => {
+  if (!dbExposePort) return
+  const dbExposeApp = express()
+  dbExposeApp.use('/', require('express-pouchdb')(PouchDB, { inMemoryConfig: true }));
+  dbExposeApp.listen(config.dbExposePort, () => logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`))
+})()
