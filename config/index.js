@@ -3,7 +3,7 @@ require('dotenv').config();
 const yesNo = require('yes-no');
 
 module.exports = {
-  dbPrefix: process.env.DB_URL || 'dbs/',
+  dbPrefix: process.env.DB_PREFIX || 'dbs/',
   defaultFailureRedirect: process.env.DEFAULT_FAILURE_REDIRECT || '/login',
   port: Number(process.env.PORT) || 3000,
   dbExposePort: Number(process.env.DB_EXPOSE_PORT) || null,
