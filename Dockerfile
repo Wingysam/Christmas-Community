@@ -20,4 +20,4 @@ ENV SESSION_STORE /data/sessions
 
 ENV SECRET_DIRNAME /data
 
-CMD Dockerstart.sh
+CMD ./Dockerstart.sh
