@@ -31,17 +31,25 @@ block content
                     input.button.is-rounded(type='submit', value='Generate New Link')
                 .level-item
                   a(href=signupLink, style='font-family: monospaced; word-break: break-all;')= signupLink
-      h2 Change Name
-      form(action=`${_CC.config.base}admin-settings/edit/rename/${user._id}`, method='POST')
-        .field
-          label.label Username
-          .control.has-icons-left
-            input.input(type='text', name='newUsername', placeholder=user._id, value=user._id)
-            span.icon.is-small.is-left
-              i.fas.fa-user
-        .field
-          .control
-            input.button.is-primary(type='submit' value='Change Username')
+      .columns
+        .column.is-narrow
+          h2 Change Name
+          form(action=`${_CC.config.base}admin-settings/edit/rename/${user._id}`, method='POST')
+            .field
+              label.label Username
+              .control.has-icons-left
+                input.input(type='text', name='newUsername', placeholder=user._id, value=user._id)
+                span.icon.is-small.is-left
+                  i.fas.fa-user
+            .field
+              .control
+                input.button.is-primary(type='submit' value='Change Username')
+        .column.is-narrow
+          h2 Impersonate
+            form(action=`${_CC.config.base}admin-settings/edit/impersonate/${user._id}`, method='POST')
+              .field
+                .control
+                  input.input.button.is-warning(type='submit', value=`Log in as ${user._id}`, style='margin-top: 1em;')
       h2(style='margin-bottom: 1em;') Reset Password
       if user.pwToken
         - const resetLink = `${_CC.config.base}resetpw/${user.pwToken}`

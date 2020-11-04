@@ -118,6 +118,18 @@ module.exports = (db) => {
     }
   })
 
+  router.post('/edit/impersonate/:userToEdit', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/');
+    req.login({ _id: req.params.userToEdit }, err => {
+      if (err) {
+        req.flash('error', err.message)
+        return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+      }
+      req.flash('success', `You are now ${req.params.userToEdit}.`)
+      res.redirect('/')
+    })
+  });
+
   router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/');
     const doc = await db.get(req.params.userToRemove);
