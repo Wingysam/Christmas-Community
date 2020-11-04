@@ -36,7 +36,7 @@ typings/
 .DS_Store
 
 # Database
-data/
+dbs/
 log.txt
 
 # Session store
