@@ -1,5 +1,5 @@
 global._CC = { require }
-const expressSessionLevel = require('express-session-level');
+const PouchSession  = require('session-pouchdb-store');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const bcrypt = require('bcrypt-nodejs');
@@ -19,7 +19,6 @@ if (!config.dbPrefix.startsWith('http')) {
 const PouchDB = require('pouchdb').defaults({ prefix: config.dbPrefix });
 
 const logger = require('./logger');
-const { dbExposePort } = require('./config');
 
 const app = express();
 app.set('base', config.base)
@@ -54,15 +53,12 @@ passport.deserializeUser((user, callback) => {
 });
 
 
-const LevelStore = expressSessionLevel(session);
-const sessionDb = level(config.sessionStore)
-
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(session({
   secret: config.secret,
   resave: false,
   saveUninitialized: true,
-  store: new LevelStore(sessionDb),
+  store: new PouchSession(new PouchDB('sessions')),
   cookie: {
     maxAge: config.sessionMaxAge
   },
@@ -85,7 +81,7 @@ app.use(config.base, require('./routes')({ db, config }));
 app.listen(config.port, () => logger.success('express', `Express server started on port ${config.port}!`))
 
 ;(() => {
-  if (!dbExposePort) return
+  if (!config.dbExposePort) return
   const dbExposeApp = express()
   dbExposeApp.use('/', require('express-pouchdb')(PouchDB, { inMemoryConfig: true }));
   dbExposeApp.listen(config.dbExposePort, () => logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`))

@@ -15,9 +15,6 @@ EXPOSE 80
 RUN mkdir -p /data/dbs
 ENV DB_PREFIX /data/dbs/
 
-RUN mkdir -p /data/sessions
-ENV SESSION_STORE /data/sessions
-
 ENV SECRET_DIRNAME /data
 
 CMD ./Dockerstart.sh
