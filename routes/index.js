@@ -32,6 +32,7 @@ module.exports = ({ db, config }) => {
   router.use('/confirm-account', require('./confirm-account')(db));
 
   router.use('/wishlist', require('./wishlist')(db));
+  router.use('/supported-sites', require('./supported-sites')())
 
   router.use('/profile', require('./profile')(db));
 

@@ -1,0 +1,9 @@
+extends layout.pug
+
+block content
+  if req.headers.referer
+    span.is-size-3(style='margin-top: 0; padding-top: 0;')
+      a(href=req.headers.referer) &lt; Back
+  ul
+    for site of _CC.require('get-product-name').sites
+      li= site.name
