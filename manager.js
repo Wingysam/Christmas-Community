@@ -11,7 +11,8 @@ async function isOutdated() {
 }
 
 async function updateGPD() {
-  const command = `npm update ${PACKAGENAME}`
+  // https://blog.cloud66.com/using-node-with-docker/
+  const command = `mv ./node_modules ./node_modules.tmp && mv ./node_modules.tmp ./node_modules && npm update ${PACKAGENAME}`
   await exec(command)
 }
 
@@ -27,7 +28,9 @@ async function updateGPD() {
   if (process.env.UPDATE_GPD !== 'false') {
     async function update() {
       if (await isOutdated()) {
-        await updateGPD()
+        try {
+          await updateGPD()
+        } catch {}
         if (cc) cc.kill('sigint')
         cc.once('exit', () => console.log(`Updated ${PACKAGENAME}`))
       }
