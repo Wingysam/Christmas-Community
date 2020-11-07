@@ -2,7 +2,8 @@ extends layout.pug
 
 block content
   a(href='..') <i class="fas fa-arrow-left"></i> Back to #{req.params.user}'s wishlist
-  form.inline(method='POST', action=`/wishlist/${req.params.user}/note/${req.params.id}`)
+  form(id='refreshform', method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/refresh/${req.params.id}`)
+  form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/note/${req.params.id}`)
     .columns
       .column
         .field
@@ -24,6 +25,10 @@ block content
           label.label Image URL
           .control
             input.input(name='image', value=item.image)
+      .column.is-narrow
+          .field
+            label.label Get Product Data
+            input.is-ghost.button(type='submit', value='Refresh Data' style='width: 100%;', form='refreshform')
     .field
       label.label Note
       .control

@@ -223,6 +223,34 @@ module.exports = (db) => {
     req.flash('success', `Successfully saved note!`);
     return res.redirect(`/wishlist/${req.params.user}`);
   });
+  router.post('/:user/refresh/:id', verifyAuth(), async (req, res) => {
+    const doc = await db.get(req.params.user);
+    const wishlist = doc.wishlist;
+    for (let i=0; i < wishlist.length; i++) {
+      wishlistItem = wishlist[i];
+      if (wishlistItem.id !== req.params.id) continue;
+      if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
+        req.flash('error', 'Invalid user');
+        return res.redirect(`/wishlist/${req.params.user}`);
+      }
+
+      if (!wishlistItem.url) {
+        req.flash('error', 'Item has no URL.')
+        return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
+      }
+
+      const productData = await getProductName(wishlistItem.url)
+      for (field of [ 'name', 'price', 'image' ]) {
+        if (productData[field]) wishlistItem[field] = productData[field]
+      }
+
+      wishlist[i] = wishlistItem;
+    }
+    doc.wishlist = wishlist;
+    await db.put(doc);
+    req.flash('success', `Successfully refreshed data!`);
+    return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`);
+  });
   router.post('/:user/note/remove/:id', verifyAuth(), async (req, res) => {
     const doc = await db.get(req.params.user);
     const wishlist = doc.wishlist;
