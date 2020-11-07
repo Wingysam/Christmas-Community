@@ -868,9 +868,9 @@
     "tiny-each-async" "2.0.3"
 
 "get-product-name@1":
-  "integrity" "sha512-l0wcyIrVb2KnGMIKuueK+zuDaXW+0K1FYsJDs53WwToRjM6v7uypf0hrIynifAEjzTxmZw4k+7oEgjY3l9mpXg=="
-  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.10.0.tgz"
-  "version" "1.10.0"
+  "integrity" "sha512-+ivby/551lfw1XD6CiQbgYR3Mq7x1ZGI5mOas1doF2C5O0qGtaY0gQN1U9tbVuoQY+c9TNBMGws7ex2xZLa2AQ=="
+  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.12.0.tgz"
+  "version" "1.12.0"
   dependencies:
     "cheerio" "^1.0.0-rc.3"
     "child-process-promise" "^2.2.1"
