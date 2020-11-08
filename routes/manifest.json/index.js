@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require('express')
 
 module.exports = ({ config }) => {
-  const router = express.Router();
+  const router = express.Router()
 
   router.get('/', (req, res) => {
     res.send({
@@ -19,7 +19,7 @@ module.exports = ({ config }) => {
         }
       ]
     })
-  });
+  })
 
-  return router;
-};
+  return router
+}

@@ -1,7 +1,7 @@
-const config = require('../config');
+const config = require('../config')
 module.exports = options => {
   return (req, res, next) => {
-    options = options ? options : {};
+    options = options || {}
     let authed = false
     try {
       authed = req.isAuthenticated()
@@ -10,5 +10,5 @@ module.exports = options => {
     }
     if (authed) return next()
     res.redirect(options.failureRedirect || config.defaultFailureRedirect)
-  };
+  }
 }

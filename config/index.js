@@ -1,6 +1,6 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const yesNo = require('yes-no');
+const yesNo = require('yes-no')
 
 module.exports = {
   dbPrefix: process.env.DB_PREFIX || 'dbs/',
@@ -16,4 +16,4 @@ module.exports = {
   wishlist: require('./wishlist'),
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
   trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback'
-};
+}

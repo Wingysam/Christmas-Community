@@ -1,37 +1,36 @@
-function animateCSS(node, animationName) {
+/* eslint-env browser */
+function animateCSS (node, animationName) {
   return new Promise(resolve => {
     node.classList.add('animated', animationName)
-  
-    function handleAnimationEnd() {
-        node.classList.remove('animated', animationName)
-        node.removeEventListener('animationend', handleAnimationEnd)
-  
-        resolve()
+
+    function handleAnimationEnd () {
+      node.classList.remove('animated', animationName)
+      node.removeEventListener('animationend', handleAnimationEnd)
+
+      resolve()
     }
-  
+
     node.addEventListener('animationend', handleAnimationEnd)
   })
 }
 
 // These move function are stolen from
 // https://stackoverflow.com/a/34914096
-function moveUp(element) {
-  if(element.previousElementSibling)
-    element.parentNode.insertBefore(element, element.previousElementSibling);
+function moveUp (element) {
+  if (element.previousElementSibling) { element.parentNode.insertBefore(element, element.previousElementSibling) }
 }
-function moveDown(element) {
-  if(element.nextElementSibling)
-    element.parentNode.insertBefore(element.nextElementSibling, element);
+function moveDown (element) {
+  if (element.nextElementSibling) { element.parentNode.insertBefore(element.nextElementSibling, element) }
 }
 
-function listen(element, upOrDown) {
+function listen (element, upOrDown) {
   element.addEventListener('submit', async event => {
     try {
       event.preventDefault()
 
       const tr = event.currentTarget.parentElement.parentElement
       const otherTr = upOrDown === 'up' ? tr.previousSibling : tr.nextSibling
-  
+
       await Promise.all([
         animateCSS(tr, 'zoomOut'),
         animateCSS(otherTr, 'zoomOut')
@@ -66,8 +65,8 @@ function listen(element, upOrDown) {
       return false
     } catch (error) {
       alert(error.message)
-      throw error
       location.reload()
+      throw error // probably useless but just in case reload doesn't do anything
     }
   })
 }

@@ -1,8 +1,6 @@
-const verifyAuth = require('../../../middlewares/verifyAuth')
 const express = require('express')
-const path = require('path')
 
-module.exports = ({ db, config }) => {
+module.exports = ({ db }) => {
   const router = express.Router()
 
   router.get('/', (req, res) => {
@@ -19,12 +17,12 @@ module.exports = ({ db, config }) => {
       if (req.params.direction === 'up') wishlist.reverse()
       let moveFromIndex
       wishlist.forEach(wish => {
-        if (wish.id === req.params.id) return moveFromIndex = wishlist.indexOf(wish)
+        if (wish.id === req.params.id) moveFromIndex = wishlist.indexOf(wish)
       })
       const moveToIndex = wishlist.findIndex(wish => {
-        return ( wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id )
+        return (wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id)
       })
-      if (moveToIndex < 0 || moveToIndex > wishlist.length) return res.send({ error: 'Invalid move '})
+      if (moveToIndex < 0 || moveToIndex > wishlist.length) return res.send({ error: 'Invalid move ' })
       const original = wishlist[moveToIndex]
       wishlist[moveToIndex] = wishlist[moveFromIndex]
       wishlist[moveFromIndex] = original

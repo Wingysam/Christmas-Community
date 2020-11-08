@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt-nodejs');
-const express = require('express');
+const bcrypt = require('bcrypt-nodejs')
+const express = require('express')
 
 module.exports = (db) => {
-  const router = express.Router();
+  const router = express.Router()
 
   router.get('/:code', async (req, res) => {
     const row = (await db.allDocs({ include_docs: true }))
@@ -10,7 +10,7 @@ module.exports = (db) => {
       .find(({ doc }) => doc.signupToken === req.params.code)
 
     res.render('confirm-account', { doc: row ? row.doc : undefined })
-  });
+  })
 
   router.post('/:code', async (req, res) => {
     const { doc } = (await db.allDocs({ include_docs: true }))
@@ -20,7 +20,7 @@ module.exports = (db) => {
     if (doc.expiry < new Date().getTime()) return res.redirect(`/confirm-account/${req.params.code}`)
 
     bcrypt.hash(req.body.password, null, null, async (err, passwordHash) => {
-      if (err) throw err;
+      if (err) throw err
 
       doc.password = passwordHash
       delete doc.signupToken
@@ -34,11 +34,11 @@ module.exports = (db) => {
           req.flash('error', err.message)
           return res.redirect('/')
         }
-        req.flash('success', `Welcome to ${_CC.config.siteTitle}!`);
-        res.redirect('/');
+        req.flash('success', `Welcome to ${_CC.config.siteTitle}!`)
+        res.redirect('/')
       })
-    });
-  });
+    })
+  })
 
-  return router;
-};
+  return router
+}

@@ -1,31 +1,30 @@
-const verifyAuth = require('../../middlewares/verifyAuth');
-const bcrypt = require('bcrypt-nodejs');
-const express = require('express');
+const verifyAuth = require('../../middlewares/verifyAuth')
+const express = require('express')
 const { nanoid } = require('nanoid')
 
 const SECRET_TOKEN_LENGTH = 32
 const SECRET_TOKEN_LIFETIME =
   // One week, approximately. Doesn't need to be perfect.
-  1000 // milliseconds
-  * 60 // seconds
-  * 60 // minutes
-  * 24 // hours
-  * 07 // days
+  1000 * // milliseconds
+  60 * // seconds
+  60 * // minutes
+  24 * // hours
+  7 // days
 
 module.exports = (db) => {
-  const router = express.Router();
+  const router = express.Router()
 
   router.get('/', verifyAuth(), (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     db.allDocs({ include_docs: true })
       .then(docs => {
         res.render('adminSettings', { title: 'Admin Settings', users: docs.rows })
       })
-      .catch(err => { throw err; });
-  });
+      .catch(err => { throw err })
+  })
 
   router.post('/add', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     await db.put({
       _id: req.body.newUserUsername.trim(),
       admin: false,
@@ -33,44 +32,44 @@ module.exports = (db) => {
 
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
       expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
-        
-    });
+
+    })
     res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
-  });
+  })
 
   router.get('/edit/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToEdit)
     delete doc.password
-    res.render('admin-user-edit', { user: doc });
-  });
+    res.render('admin-user-edit', { user: doc })
+  })
 
   router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToEdit)
     doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
     return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
-  });
+  })
 
   router.post('/edit/resetpw/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToEdit)
     doc.pwToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.pwExpiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
     return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
-  });
+  })
 
   router.post('/edit/cancelresetpw/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToEdit)
     delete doc.pwToken
     delete doc.pwExpiry
     await db.put(doc)
     return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
-  });
+  })
 
   router.post('/edit/rename/:userToRename', verifyAuth(), async (req, res) => {
     if (!req.user.admin && req.user._id !== req.params.userToRename) return res.redirect('/')
@@ -104,7 +103,7 @@ module.exports = (db) => {
 
         await db.bulkDocs(usersBulk)
         await db.remove(await db.get(oldName))
-  
+
         await req.flash('success', 'Renamed user!')
         return res.redirect(`/wishlist/${newName}`)
       } catch (error) {
@@ -119,7 +118,7 @@ module.exports = (db) => {
   })
 
   router.post('/edit/impersonate/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
+    if (!req.user.admin) return res.redirect('/')
     req.login({ _id: req.params.userToEdit }, err => {
       if (err) {
         req.flash('error', err.message)
@@ -128,29 +127,29 @@ module.exports = (db) => {
       req.flash('success', `You are now ${req.params.userToEdit}.`)
       res.redirect('/')
     })
-  });
+  })
 
   router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/');
-    const doc = await db.get(req.params.userToRemove);
+    if (!req.user.admin) return res.redirect('/')
+    const doc = await db.get(req.params.userToRemove)
     if (doc.admin) {
-      req.flash('error', 'Failed to remove: user is admin.');
-      return res.redirect('/admin-settings');
+      req.flash('error', 'Failed to remove: user is admin.')
+      return res.redirect('/admin-settings')
     }
-    await db.remove(doc);
-    const docs = await db.allDocs({ include_docs: true });
-    for (let i = 0; i < docs.length; i++) {
-      for (let j = 0; j < docs[i].doc.wishlist.length; j++) {
-        if (docs[i].doc.wishlist[j].pledgedBy === req.params.userToRemove) {
-          docs[i].doc.wishlist[j].pledgedBy === undefined;
-          if (docs[i].doc.wishlist[j].addedBy === req.params.userToRemove) await db.remove(doc);
-          else await db.put(docs[i].doc);
+    await db.remove(doc)
+    const { rows } = await db.allDocs({ include_docs: true })
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows[i].doc.wishlist.length; j++) {
+        if (rows[i].doc.wishlist[j].pledgedBy === req.params.userToRemove) {
+          rows[i].doc.wishlist[j].pledgedBy = undefined
+          if (rows[i].doc.wishlist[j].addedBy === req.params.userToRemove) rows[i].doc.wishlist.splice(j, 1)
+          await db.put(rows[i].doc)
         }
       }
     }
-    req.flash('success', `Successfully removed user ${req.params.userToRemove}`);
+    req.flash('success', `Successfully removed user ${req.params.userToRemove}`)
     res.redirect('/admin-settings')
-  });
+  })
 
-  return router;
-};
+  return router
+}
