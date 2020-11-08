@@ -1,4 +1,4 @@
-const verifyAuth = require('../middlewares/verifyAuth')
+const publicRoute = require('../middlewares/publicRoute')
 const express = require('express')
 const path = require('path')
 
@@ -16,7 +16,7 @@ module.exports = ({ db, config }) => {
         next()
       }
     },
-    verifyAuth(),
+    publicRoute(),
     (req, res) => {
       res.redirect('/wishlist')
     }

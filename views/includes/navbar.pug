@@ -20,16 +20,19 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
   .navbar-menu#navBarMenu
     .navbar-start
       if req.isAuthenticated()
-        .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link= req.user._id
-          .navbar-dropdown
-            +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, 'My Wishlist')
-            +navBarLink(`${_CC.config.base}profile`, 'Profile')
-            if req.user.admin
-              +navBarLink(`${_CC.config.base}admin-settings`, 'Admin settings')
-            hr.navbar-divider
-            .navbar-item
-              form#logoutForm(action=`${_CC.config.base}logout`, method='POST')
-                button.button.is-warning(type='submit') Log Out
-            //-+navBarLink('javascript:document.getElementById("logoutForm").submit()', 'Log Out')
+        if req.user._id === 'Unknown'
+          .navbar-item
+            a.button.is-primary(href='/login') Log In
+        else
+          .navbar-item.has-dropdown.is-hoverable
+            a.navbar-link= req.user._id
+            .navbar-dropdown
+              +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, 'My Wishlist')
+              +navBarLink(`${_CC.config.base}profile`, 'Profile')
+              if req.user.admin
+                +navBarLink(`${_CC.config.base}admin-settings`, 'Admin settings')
+              hr.navbar-divider
+              .navbar-item
+                form#logoutForm(action=`${_CC.config.base}logout`, method='POST')
+                  button.button.is-warning(type='submit') Log Out
   script(src=`${_CC.config.base}js/nav.js`)
