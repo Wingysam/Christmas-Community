@@ -1,6 +1,8 @@
 - successes = req.flash('success');
 - errors = req.flash('error');
 
+p.has-text-danger.is-size-4.has-text-weight-bold#securityNotice= _CC.securityNotice
+
 if successes
   each success in successes
     p.has-text-success= (success.toString().startsWith('[object ') ? JSON.stringify(success) : success.toString())

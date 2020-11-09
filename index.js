@@ -1,10 +1,14 @@
 global._CC = { require }
+
+_CC.package = require('./package.json')
+
 const PouchSession = require('session-pouchdb-store')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
 const bcrypt = require('bcrypt-nodejs')
 const flash = require('connect-flash')
 const passport = require('passport')
+const fetch = require('node-fetch')
 const express = require('express')
 
 const config = require('./config')
@@ -83,4 +87,17 @@ app.listen(config.port, () => logger.success('express', `Express server started 
   const dbExposeApp = express()
   dbExposeApp.use('/', require('express-pouchdb')(PouchDB, { inMemoryConfig: true }))
   dbExposeApp.listen(config.dbExposePort, () => logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`))
+})()
+
+;(() => {
+  async function getSecurityNotices () {
+    try {
+      const res = await fetch('https://gitlab.com/wingysam/christmas-community/-/raw/security-notices/security-notices.json')
+      const data = await res.json()
+      _CC.securityNotice = data[_CC.package.version]
+      if (_CC.securityNotice) console.error(_CC.securityNotice)
+    } catch (_) {}
+  }
+  getSecurityNotices()
+  setInterval(getSecurityNotices, 1000 * 60 * 60) // hour
 })()

@@ -23,6 +23,6 @@ block content
         input.button.is-primary(type='submit' value='Add User')
   h3 Version Info
   p Christmas Community: v#{_CC.require('./package.json').version}
-  p Get Product Data: v#{_CC.require('get-product-name/package.json').version}
+  p Get Product Data: v#{_CC.package.version}
   p Node: #{process.version}
   p PID: #{process.pid}
