@@ -45,7 +45,10 @@ block content
                     )= (item.name ? item.name : item.url)
                 else
                   td.ugc(data-label='Name')= item.name
-                td.ugc(data-label='Note')= item.note
+                if _CC.config.markdown
+                  td.ugc(data-label='Note')!= item.note
+                else
+                  td.ugc(data-label='Note')= item.note
                 td.ugc(data-label='Price')= item.price
                 td(data-label='Edit Item')
                   form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
@@ -217,4 +220,7 @@ block print
         span.is-block Added by: #{item.addedBy}
         if item.note
           .box
-            span.is-block.ugc= item.note
+            if _CC.config.markdown
+              span.is-block.ugc!= item.note
+            else
+              span.is-block.ugc= item.note

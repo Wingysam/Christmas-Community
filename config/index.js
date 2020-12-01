@@ -15,5 +15,6 @@ module.exports = {
   useCDN: yesNo.parse(process.env.USE_CDN || true),
   wishlist: require('./wishlist'),
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
-  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback'
+  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
+  markdown: yesNo.parse(process.env.MARKDOWN || false)
 }

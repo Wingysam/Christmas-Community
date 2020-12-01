@@ -1,9 +1,16 @@
-const verifyAuth = require('../../middlewares/verifyAuth')
-const publicRoute = require('../../middlewares/publicRoute')
-const getProductName = require('get-product-name')
+const createDOMPurify = require('dompurify')
 const express = require('express')
-const config = require('../../config')
+const getProductName = require('get-product-name')
+const { JSDOM } = require('jsdom')
+const marked = require('marked')
 const u64 = require('u64')
+
+const config = require('../../config')
+const publicRoute = require('../../middlewares/publicRoute')
+const verifyAuth = require('../../middlewares/verifyAuth')
+
+const window = new JSDOM('').window
+const DOMPurify = createDOMPurify(window)
 
 const totals = wishlist => {
   let unpledged = 0
@@ -55,6 +62,9 @@ module.exports = (db) => {
       const wishlistReverse = [...dbUser.wishlist].reverse()
       const lastCanSeeValue = wishlistReverse.find(element => (element.addedBy === req.params.user))
       const lastCanSee = dbUser.wishlist.indexOf(lastCanSeeValue)
+      for (const item of dbUser.wishlist) {
+        if (global._CC.config.markdown) item.note = DOMPurify.sanitize(marked(item.note))
+      }
       res.render('wishlist', {
         title: `Wishlist - ${dbUser._id}`,
         wishlist: [
