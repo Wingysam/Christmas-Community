@@ -14,12 +14,5 @@ module.exports = {
     _CC: 'readonly'
   },
   rules: {
-    'import/order': ['error', {
-      'newlines-between': 'always',
-      alphabetize: {
-        order: 'asc',
-        caseInsensitive: true
-      }
-    }]
   }
 }
