@@ -1,5 +1,7 @@
 FROM node:15-alpine
 
+RUN apk --no-cache add curl
+
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 
