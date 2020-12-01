@@ -35,7 +35,7 @@ block content
               tr(id=item.id)
                 td
                   figure(style='width: 100%; margin: 0;')
-                    img(src=item.image, style='width: 100%;')
+                    img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
                 if item.url
                   td.ugc(data-label='Name')
                     a(
