@@ -1,7 +1,5 @@
 require('dotenv').config()
 
-const yesNo = require('yes-no')
-
 module.exports = {
   dbPrefix: process.env.DB_PREFIX || 'dbs/',
   defaultFailureRedirect: process.env.DEFAULT_FAILURE_REDIRECT || '/login',
@@ -14,6 +12,5 @@ module.exports = {
   shortTitle: process.env.SHORT_TITLE || 'Christmas',
   wishlist: require('./wishlist'),
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
-  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
-  markdown: yesNo.parse(process.env.MARKDOWN || false)
+  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback'
 }

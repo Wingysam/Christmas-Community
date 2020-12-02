@@ -25,7 +25,7 @@ const totals = wishlist => {
 const ValidURL = (string) => { // Ty SO
   try {
     const url = new URL(string)
-    if (process.env.SMILE !== 'false') {
+    if (global._CC.config.wishlist.smile) {
       if (url.hostname === 'www.amazon.com') url.hostname = 'smile.amazon.com'
     }
     if (url) return url
@@ -39,7 +39,7 @@ module.exports = (db) => {
 
   router.get('/', publicRoute(), async (req, res) => {
     const docs = await db.allDocs({ include_docs: true })
-    if (process.env.SINGLE_LIST === 'true') {
+    if (global._CC.config.wishlist.singleList) {
       for (const row of docs.rows) {
         if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
       }
@@ -50,7 +50,7 @@ module.exports = (db) => {
   router.get('/:user', publicRoute(), async (req, res) => {
     try {
       const dbUser = await db.get(req.params.user)
-      if (process.env.SINGLE_LIST === 'true') {
+      if (global._CC.config.wishlist.singleList) {
         if (!dbUser.admin) {
           const docs = await db.allDocs({ include_docs: true })
           for (const row of docs.rows) {
@@ -63,7 +63,7 @@ module.exports = (db) => {
       const lastCanSeeValue = wishlistReverse.find(element => (element.addedBy === req.params.user))
       const lastCanSee = dbUser.wishlist.indexOf(lastCanSeeValue)
       for (const item of dbUser.wishlist) {
-        if (global._CC.config.markdown) item.note = DOMPurify.sanitize(marked(item.note))
+        if (global._CC.config.wishlist.note.markdown) item.note = DOMPurify.sanitize(marked(item.note))
       }
       res.render('wishlist', {
         title: `Wishlist - ${dbUser._id}`,

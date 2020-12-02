@@ -13,7 +13,7 @@ block title
 
 block content
   script(type='data/user_id')= req.user._id
-  if process.env.TABLE !== 'false'
+  if global._CC.config.wishlist.table
     .box
       table.table.has-mobile-cards
         thead
@@ -45,7 +45,7 @@ block content
                     )= (item.name ? item.name : item.url)
                 else
                   td.ugc(data-label='Name')= item.name
-                if _CC.config.markdown
+                if _CC.config.wishlist.note.markdown
                   td.ugc(data-label='Note')!= item.note
                 else
                   td.ugc(data-label='Note')= item.note
@@ -220,7 +220,7 @@ block print
         span.is-block Added by: #{item.addedBy}
         if item.note
           .box
-            if _CC.config.markdown
+            if _CC.config.wishlist.note.markdown
               span.is-block.ugc!= item.note
             else
               span.is-block.ugc= item.note

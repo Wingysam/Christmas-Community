@@ -61,9 +61,42 @@ yarn
 
 ## Configuration
 Add environment variables with a .env. Example:
-```env
-SITE_TITLE="Christmas Zone"
+```sh
+## Core Settings
+# Where to store databases, can be a CouchDB compatible server or directory.
+DB_PREFIX=dbs/
+# Where to send someone if they need to log in
+DEFAULT_FAILURE_REDIRECT=/login
+# Port to listen on
 PORT=80
+# Expose the internal PouchDB with CouchDB API and Fauxton browser. Mostly used for debugging. Leave empty to disable.
+DB_EXPOSE_PORT=
+# Proxy to send item data requests to. Leave emtpy to disable.
+PROXY_SERVER=
+# Secret string to store session cookies with. Automatically generated if not provided.
+SECRET=
+# How long a user is logged in (milliseconds). Defaults to one week.
+SESSION_MAX_AGE=604800000
+# The name of the site in the <title> and navigation bar
+SITE_TITLE=Christmas Community
+# Used when shared to home screen
+SHORT_TITLE=Christmas
+# The root path for forms, CSS, and a small amount of JS. Useful when proxying.
+ROOT_PATH=/
+# Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
+TRUST_PROXY=loopback
+
+## Wishlist Settings
+# Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.
+SINGLE_LIST=false
+# Set to false to allow viewing wishlists without logging in
+LISTS_PUBLIC=false
+# Defaults to true. Set to false for legacy cards view.
+TABLE=true
+# Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice. Defaults to true.
+SMILE=true
+# Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
+MARKDOWN=false
 ```
 
 ## Startup
