@@ -71,7 +71,7 @@ DEFAULT_FAILURE_REDIRECT=/login
 PORT=80
 # Expose the internal PouchDB with CouchDB API and Fauxton browser. Mostly used for debugging. Leave empty to disable.
 DB_EXPOSE_PORT=
-# Proxy to send item data requests to. Leave emtpy to disable.
+# Proxy to send item data requests to. Leave empty to disable.
 PROXY_SERVER=
 # Secret string to store session cookies with. Automatically generated if not provided.
 SECRET=
