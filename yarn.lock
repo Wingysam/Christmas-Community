@@ -1545,9 +1545,9 @@
     "has-symbols" "^1.0.1"
 
 "get-product-name@1":
-  "integrity" "sha512-+ivby/551lfw1XD6CiQbgYR3Mq7x1ZGI5mOas1doF2C5O0qGtaY0gQN1U9tbVuoQY+c9TNBMGws7ex2xZLa2AQ=="
-  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.12.0.tgz"
-  "version" "1.12.0"
+  "integrity" "sha512-Ma4kDySMtDt1s1kHK3ujqr3kf6Tku+yD5Hd8Pk/co9A8rrYvef6VMaSQbC5ZL0IrFfEGZ+6N/fsNK3GB1d6AOw=="
+  "resolved" "https://registry.npmjs.org/get-product-name/-/get-product-name-1.12.1.tgz"
+  "version" "1.12.1"
   dependencies:
     "cheerio" "^1.0.0-rc.3"
     "child-process-promise" "^2.2.1"
