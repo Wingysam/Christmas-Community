@@ -12,5 +12,6 @@ module.exports = {
   shortTitle: process.env.SHORT_TITLE || 'Christmas',
   wishlist: require('./wishlist'),
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
-  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback'
+  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
+  bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase()
 }

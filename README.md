@@ -85,6 +85,8 @@ SHORT_TITLE=Christmas
 ROOT_PATH=/
 # Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
 TRUST_PROXY=loopback
+# Any theme from https://jenil.github.io/bulmaswatch
+BULMASWATCH=default
 
 ## Wishlist Settings
 # Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.

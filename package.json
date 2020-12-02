@@ -17,6 +17,7 @@
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
+    "bulmaswatch": "^0.8.1",
     "chalk": "^4.1.0",
     "child-process-promise": "^2.2.1",
     "connect-flash": "^0.1.1",
