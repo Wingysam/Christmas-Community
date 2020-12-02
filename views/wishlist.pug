@@ -46,7 +46,8 @@ block content
                 else
                   td.ugc(data-label='Name')= item.name
                 if _CC.config.wishlist.note.markdown
-                  td.ugc(data-label='Note')!= item.note
+                  td.ugc(data-label='Note')
+                    div!= item.note
                 else
                   td.ugc(data-label='Note')= item.note
                 td.ugc(data-label='Price')= item.price
