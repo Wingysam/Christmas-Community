@@ -108,3 +108,11 @@ npm start
 
 ## Setup
 Visit `/` on the HTTP server to add an admin account.
+
+# About Developer
+Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
+
+# Contributors
+As of writing, there are no code contributors. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
