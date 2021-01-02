@@ -129,6 +129,50 @@ module.exports = (db) => {
     })
   })
 
+  router.post('/edit/promote/:userToPromote', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/')
+    const user = await db.get(req.params.userToPromote)
+    if (!user) {
+      req.flash('error', 'User not found.')
+      return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
+    }
+    if (user.admin) {
+      req.flash('error', 'user is already admin')
+      return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
+    }
+
+    user.admin = true
+    await db.put(user)
+
+    req.flash('success', `${user._id} is now an admin.`)
+    return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
+  })
+
+  router.post('/edit/demote/:userToDemote', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/')
+    if (req.user._id === req.params.userToDemote) {
+      req.flash('error', 'You cannot demote yourself.')
+      return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
+    }
+
+    const user = await db.get(req.params.userToDemote)
+
+    if (!user) {
+      req.flash('error', 'User not found.')
+      return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
+    }
+    if (!user.admin) {
+      req.flash('error', 'user is not an admin')
+      return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
+    }
+
+    user.admin = false
+    await db.put(user)
+
+    req.flash('success', `${user._id} is no longer an admin.`)
+    return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
+  })
+
   router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToRemove)

@@ -45,11 +45,32 @@ block content
               .control
                 input.button.is-primary(type='submit' value='Change Username')
         .column.is-narrow
-          h2 Impersonate
-            form(action=`${_CC.config.base}admin-settings/edit/impersonate/${user._id}`, method='POST')
+          h2 Admin
+          //- Yes, ternary exists, but I think the code is cleaner with a more "naive" style :)
+          //- p.is-marginless #{user._id} is #{user.admin ? '' : 'not '}an admin.
+          //- vs.
+          if user.admin
+            p.is-marginless #{user._id} is an admin.
+            form(action=`${_CC.config.base}admin-settings/edit/demote/${user._id}`, method='POST')
               .field
                 .control
-                  input.input.button.is-warning(type='submit', value=`Log in as ${user._id}`, style='margin-top: 1em;')
+                  if user._id === req.user._id
+                    input.input.button(disabled, type='submit', value=`You cannot demote yourself`, style='margin-top: 1em;')
+                  else
+                    input.input.button(type='submit', value=`Demote ${user._id}`, style='margin-top: 1em;')
+          else
+            p.is-marginless #{user._id} is not an admin.
+            form(action=`${_CC.config.base}admin-settings/edit/promote/${user._id}`, method='POST')
+              .field
+                .control
+                  input.input.button(type='submit', value=`Promote ${user._id}`, style='margin-top: 1em;')
+        if user._id !== req.user._id
+          .column.is-narrow
+            h2 Impersonate
+              form(action=`${_CC.config.base}admin-settings/edit/impersonate/${user._id}`, method='POST')
+                .field
+                  .control
+                    input.input.button.is-warning(type='submit', value=`Log in as ${user._id}`, style='margin-top: 1em;')
       h2(style='margin-bottom: 1em;') Reset Password
       if user.pwToken
         - const resetLink = `${_CC.config.base}resetpw/${user.pwToken}`
