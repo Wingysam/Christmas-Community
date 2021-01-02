@@ -184,19 +184,26 @@ module.exports = (db) => {
       return res.redirect(`/wishlist/${req.params.user}`)
     }
     const doc = await db.get(req.user._id)
-    const wishlist = doc.wishlist
-    if (req.params.direction === 'up') wishlist.reverse()
-    let moveFromIndex
-    wishlist.forEach(wish => {
-      if (wish.id === req.params.itemId) moveFromIndex = wishlist.indexOf(wish)
-    })
-    const moveToIndex = wishlist.findIndex(wish => (wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id))
-    if (moveToIndex < 0 || moveToIndex > wishlist.length) {
-      req.flash('error', 'Invalid move')
-      return res.redirect(`/wishlist/${req.params.user}`)
+    let wishlist = doc.wishlist
+    if (req.params.direction === 'top') {
+      const item = wishlist.find(item => item.id === req.params.itemId)
+      wishlist = wishlist.filter(item => item.id !== req.params.itemId)
+      wishlist.unshift(item)
+    } else {
+      if (req.params.direction === 'up') wishlist.reverse()
+      let moveFromIndex
+      wishlist.forEach(wish => {
+        if (wish.id === req.params.itemId) moveFromIndex = wishlist.indexOf(wish)
+      })
+      const moveToIndex = wishlist.findIndex(wish => (wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id))
+      if (moveToIndex < 0 || moveToIndex > wishlist.length) {
+        req.flash('error', 'Invalid move')
+        return res.redirect(`/wishlist/${req.params.user}`)
+      }
+      [wishlist[moveFromIndex], wishlist[moveToIndex]] = [wishlist[moveToIndex], wishlist[moveFromIndex]]
+      if (req.params.direction === 'up') wishlist.reverse()
     }
-    [wishlist[moveFromIndex], wishlist[moveToIndex]] = [wishlist[moveToIndex], wishlist[moveFromIndex]]
-    if (req.params.direction === 'up') wishlist.reverse()
+
     doc.wishlist = wishlist
     await db.put(doc)
     req.flash('success', 'Successfully moved item!')

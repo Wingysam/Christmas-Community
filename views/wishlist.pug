@@ -24,6 +24,7 @@ block content
           th Edit Item
           th Added By
           if req.params.user === req.user._id
+            th Move Top
             th Move Up
             th Move Down
           else
@@ -64,6 +65,17 @@ block content
                             i.far.fa-edit
                 td.ugc(data-label='Added By')= item.addedBy
                 if req.params.user === req.user._id
+                  td(data-label='Move Item Top')
+                    form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
+                      .field.inline
+                        .control.inline
+                          button.button.is-text(
+                            type='submit',
+                            style='text-decoration: none;',
+                            disabled=index === firstCanSee
+                          )
+                            span.icon
+                              i.fas.fa-angle-double-up
                   td(data-label='Move Item Up')
                     form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                       .field.inline
