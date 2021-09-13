@@ -21,6 +21,9 @@ block content
     .field
       .control
         input.button.is-primary(type='submit' value='Add User')
+  h3 Data Destruction
+  p <b>Warning</b>: These options <b>destroy data</b>! You may want to back up the database before using these options.
+  a.button.is-danger(href=`${_CC.config.base}admin-settings/clear-wishlists`) Clear Wishlists
   h3 Version Info
   p Christmas Community: v#{_CC.require('./package.json').version}
   p Get Product Data: v#{_CC.package.version}

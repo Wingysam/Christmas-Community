@@ -195,5 +195,21 @@ module.exports = (db) => {
     res.redirect('/admin-settings')
   })
 
+  router.get('/clear-wishlists', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/')
+    res.render('admin-clear-wishlists')
+  })
+
+  router.post('/clear-wishlists', verifyAuth(), async (req, res) => {
+    if (!req.user.admin) return res.redirect('/')
+    const { rows } = await db.allDocs({ include_docs: true })
+    for (const row of rows) {
+      row.doc.wishlist = []
+      await db.put(row.doc)
+    }
+    req.flash('success', 'Cleared all wishlists.')
+    res.redirect('/admin-settings')
+  })
+
   return router
 }
