@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "cp patched-express-response.js node_modules/express/lib/response.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node manager.js"
+    "start": "node manager.js",
+    "dev": "nodemon index.js"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
   "license": "AGPL-3.0",
@@ -46,6 +47,7 @@
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1"
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^2.0.12"
   }
 }
