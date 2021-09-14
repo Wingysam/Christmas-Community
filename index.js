@@ -90,14 +90,13 @@ app.listen(config.port, () => logger.success('express', `Express server started 
 })()
 
 ;(() => {
-  async function getSecurityNotices () {
+  async function checkUpdates () {
     try {
-      const res = await fetch('https://gitlab.com/wingysam/christmas-community/-/raw/security-notices/security-notices.json')
+      const res = await fetch('https://raw.githubusercontent.com/Wingysam/Christmas-Community/master/package.json')
       const data = await res.json()
-      _CC.securityNotice = data[_CC.package.version]
-      if (_CC.securityNotice) console.error(_CC.securityNotice)
+      _CC.updateNotice = data.version === _CC.package.version
     } catch (_) {}
   }
-  getSecurityNotices()
-  setInterval(getSecurityNotices, 1000 * 60 * 60) // hour
+  checkUpdates()
+  setInterval(checkUpdates, 1000 * 60 * 60) // hour
 })()
