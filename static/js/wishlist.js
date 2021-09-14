@@ -31,6 +31,11 @@ function listen (element, upOrDown) {
       const tr = event.currentTarget.parentElement.parentElement
       const otherTr = upOrDown === 'up' ? tr.previousSibling : tr.nextSibling
 
+      const res = fetch(`/api/wishlist/${document.querySelector('[type="data/user_id"]').textContent}/${tr.id}/move/${upOrDown}`, {
+        method: 'post',
+        credentials: 'include'
+      })
+
       await Promise.all([
         animateCSS(tr, 'zoomOut'),
         animateCSS(otherTr, 'zoomOut')
@@ -39,20 +44,31 @@ function listen (element, upOrDown) {
       tr.style.visibility = 'hidden'
       otherTr.style.visibility = 'hidden'
 
-      const data = await fetch(`/api/wishlist/${document.querySelector('[type="data/user_id"]').textContent}/${tr.id}/move/${upOrDown}`, {
-        method: 'post',
-        credentials: 'include'
-      })
-        .then(res => res.json())
-
+      const data = await (await res).json()
       if (data.error) throw new Error(data.error)
 
-      upOrDown === 'up' ? moveUp(tr) : moveDown(tr)
+      const rankEl1 = tr.querySelector('.rank')
+      const rankNum1 = Number(rankEl1.textContent)
+      const rankEl2 = otherTr.querySelector('.rank')
+      const rankNum2 = Number(rankEl2.textContent)
+      if (upOrDown === 'up') {
+        moveUp(tr)
+        if (rankNum1 === 2) tr.querySelectorAll('.topForm button').disabled = true
+        else tr.querySelector('.topForm button').disabled = false
+        rankEl1.textContent = rankNum1 - 1
+        rankEl2.textContent = rankNum2 + 1
+      } else if (upOrDown === 'down') {
+        moveDown(tr)
+        rankEl1.textContent = rankNum1 + 1
+        rankEl2.textContent = rankNum2 - 1
+      }
 
       for (const tr of document.querySelector('tbody').children) {
         tr.querySelector('.upForm > div > div > button').disabled = !tr.previousElementSibling
         tr.querySelector('.downForm > div > div > button').disabled = !tr.nextElementSibling
+        tr.querySelector('.topForm button').disabled = false
       }
+      document.querySelector('.topForm button').disabled = true
 
       tr.style.visibility = 'visible'
       otherTr.style.visibility = 'visible'
