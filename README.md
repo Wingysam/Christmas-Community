@@ -1,6 +1,6 @@
 # Christmas Community
 ![Docker Pulls](https://img.shields.io/docker/pulls/wingysam/christmas-community?style=for-the-badge)
-![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fgitlab.com%2Fwingysam%2Fchristmas-community%2Fraw%2Fmaster%2Fpackage.json&style=for-the-badge)
+![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
 
