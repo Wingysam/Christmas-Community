@@ -54,8 +54,8 @@ services:
 
 ## Install
 ```sh
-git clone https://gitlab.com/wingysam/christmas-community
-cd christmas-community
+git clone https://github.com/wingysam/Christmas-Community
+cd Christmas-Community
 yarn
 ```
 

@@ -13,7 +13,7 @@
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/wingysam/christmas-community"
+    "url": "https://github.com/wingysam/Christmas-Community"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
