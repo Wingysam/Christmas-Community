@@ -103,6 +103,9 @@ SMILE=true
 MARKDOWN=false
 ```
 
+## Default Profile Pictures
+To replace the default snowman profile pictures, replace the files in `static/img/default-pfps`. In docker, mount `/usr/src/app/static/img/default-pfps`.
+
 ## Startup
 ```sh
 npm start
