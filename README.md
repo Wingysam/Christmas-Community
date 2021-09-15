@@ -87,6 +87,8 @@ ROOT_PATH=/
 TRUST_PROXY=loopback
 # Any theme from https://jenil.github.io/bulmaswatch
 BULMASWATCH=default
+# Set to false to disable update notices
+UPDATE_CHECK=true
 
 ## Wishlist Settings
 # Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.
