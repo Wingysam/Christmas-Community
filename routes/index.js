@@ -6,7 +6,6 @@ const fs = require('fs/promises')
 module.exports = ({ db, config }) => {
   async function ensurePfp (username) {
     const user = await db.get(username)
-    console.log(user)
     if (user.pfp) return
 
     const { rows } = await db.allDocs({ include_docs: true })

@@ -9,12 +9,18 @@ module.exports = ({ db, ensurePfp }) => {
     await ensurePfp(req.user._id)
     res.render('profile', { title: `Profile Settings - ${req.user._id}` })
   })
+
   router.post('/pfp', verifyAuth(), async (req, res) => {
     req.user.pfp = req.body.image
     await db.put(req.user)
     if (!req.user.pfp) await ensurePfp(req.user._id)
     req.flash('success', 'Saved profile picture!')
     res.redirect(`${_CC.config.base}profile`)
+  })
+
+  router.get('/password', verifyAuth(), async (req, res) => {
+    await ensurePfp(req.user._id)
+    res.render('profile-password', { title: `Profile Settings - Password - ${req.user._id}` })
   })
   router.post('/password', verifyAuth(), (req, res) => {
     if (!req.body.oldPassword) {
