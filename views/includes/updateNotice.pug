@@ -1,0 +1,14 @@
+if req.user && req.user.admin && _CC.updateNotice
+  .columns
+    .column
+    .column.is-narrow
+      .box
+        span.has-text-danger.is-size-4.has-text-weight-bold Christmas Community is out of date. There may be new features or bug fixes. Consider updating! :)
+        br
+        span (you can turn this off with <code>UPDATE_CHECK=false</code>)
+        br
+        br
+        span Current: #{_CC.updateNotice.current}
+        br
+        span Latest: #{_CC.updateNotice.latest}
+        span.has-text-info(style='float: right;') This message is only visible to admins
