@@ -18,6 +18,13 @@ module.exports = ({ db, config }) => {
     await db.put(user)
   }
 
+  ;(async () => {
+    const { rows } = await db.allDocs({ include_docs: true })
+    for (const row of rows) {
+      await ensurePfp(row.id)
+    }
+  })()
+
   const router = express.Router()
 
   router.use('/', express.static(path.join(__dirname, '../static')))
