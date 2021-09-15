@@ -11,6 +11,8 @@ const passport = require('passport')
 const fetch = require('node-fetch')
 const express = require('express')
 
+_CC._ = require('lodash')
+
 const config = require('./config')
 _CC.config = config
 

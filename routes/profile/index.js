@@ -2,10 +2,20 @@ const verifyAuth = require('../../middlewares/verifyAuth')
 const bcrypt = require('bcrypt-nodejs')
 const express = require('express')
 
-module.exports = (db) => {
+module.exports = ({ db, ensurePfp }) => {
   const router = express.Router()
 
-  router.get('/', verifyAuth(), (req, res) => res.render('profile', { title: `Profile Settings - ${req.user._id}` }))
+  router.get('/', verifyAuth(), async (req, res) => {
+    await ensurePfp(req.user._id)
+    res.render('profile', { title: `Profile Settings - ${req.user._id}` })
+  })
+  router.post('/pfp', verifyAuth(), async (req, res) => {
+    req.user.pfp = req.body.image
+    await db.put(req.user)
+    if (!req.user.pfp) await ensurePfp(req.user._id)
+    req.flash('success', 'Saved profile picture!')
+    res.redirect(`${_CC.config.base}profile`)
+  })
   router.post('/', verifyAuth(), (req, res) => {
     if (req.body.oldPassword && req.body.newPassword) {
       bcrypt.compare(req.body.oldPassword, req.user.password, (err, correct) => {

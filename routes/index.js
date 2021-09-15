@@ -1,8 +1,24 @@
 const publicRoute = require('../middlewares/publicRoute')
 const express = require('express')
 const path = require('path')
+const fs = require('fs/promises')
 
 module.exports = ({ db, config }) => {
+  async function ensurePfp (username) {
+    const user = await db.get(username)
+    console.log(user)
+    if (user.pfp) return
+
+    const { rows } = await db.allDocs({ include_docs: true })
+
+    const unfilteredPool = await fs.readdir('static/img/default-pfps')
+    const filteredPool = unfilteredPool.filter(file => !rows.find(row => row.doc.pfp === `${_CC.config.base}img/default-pfps/${file}`))
+    const pool = filteredPool.length ? filteredPool : unfilteredPool
+
+    user.pfp = `${_CC.config.base}img/default-pfps/${_CC._.sample(pool)}`
+    await db.put(user)
+  }
+
   const router = express.Router()
 
   router.use('/', express.static(path.join(__dirname, '../static')))
@@ -26,7 +42,7 @@ module.exports = ({ db, config }) => {
 
   router.use('/setup', require('./setup')(db))
 
-  router.use('/login', require('./login')())
+  router.use('/login', require('./login')({ ensurePfp }))
   router.use('/logout', require('./logout')())
   router.use('/resetpw', require('./resetpw')(db))
   router.use('/confirm-account', require('./confirm-account')(db))
@@ -34,9 +50,9 @@ module.exports = ({ db, config }) => {
   router.use('/wishlist', require('./wishlist')(db))
   router.use('/supported-sites', require('./supported-sites')())
 
-  router.use('/profile', require('./profile')(db))
+  router.use('/profile', require('./profile')({ db, ensurePfp }))
 
-  router.use('/admin-settings', require('./adminSettings')(db))
+  router.use('/admin-settings', require('./adminSettings')({ db, ensurePfp }))
 
   router.use('/manifest.json', require('./manifest.json')({ config }))
 

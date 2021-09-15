@@ -11,7 +11,7 @@ const SECRET_TOKEN_LIFETIME =
   24 * // hours
   7 // days
 
-module.exports = (db) => {
+module.exports = ({ db, ensurePfp }) => {
   const router = express.Router()
 
   router.get('/', verifyAuth(), (req, res) => {
@@ -25,15 +25,16 @@ module.exports = (db) => {
 
   router.post('/add', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
+    const username = req.body.newUserUsername.trim()
     await db.put({
-      _id: req.body.newUserUsername.trim(),
+      _id: username,
       admin: false,
       wishlist: [],
 
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
       expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
-
     })
+    await ensurePfp(username)
     res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
   })
 
