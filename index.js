@@ -90,6 +90,7 @@ app.listen(config.port, () => logger.success('express', `Express server started 
 })()
 
 ;(() => {
+  if (process.env.UPDATE_CHECK === 'false') return
   async function checkUpdates () {
     try {
       const res = await fetch('https://raw.githubusercontent.com/Wingysam/Christmas-Community/master/package.json')
