@@ -94,7 +94,7 @@ app.listen(config.port, () => logger.success('express', `Express server started 
     try {
       const res = await fetch('https://raw.githubusercontent.com/Wingysam/Christmas-Community/master/package.json')
       const data = await res.json()
-      _CC.updateNotice = data.version === _CC.package.version
+      _CC.updateNotice = (data.version === _CC.package.version) ? false : { current: _CC.package.version, latest: data.version }
     } catch (_) {}
   }
   checkUpdates()
