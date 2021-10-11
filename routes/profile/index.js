@@ -2,7 +2,7 @@ const verifyAuth = require('../../middlewares/verifyAuth')
 const bcrypt = require('bcrypt-nodejs')
 const express = require('express')
 
-module.exports = ({ db, ensurePfp }) => {
+module.exports = ({ db, config, ensurePfp }) => {
   const router = express.Router()
 
   router.get('/', verifyAuth(), async (req, res) => {
@@ -11,10 +11,14 @@ module.exports = ({ db, ensurePfp }) => {
   })
 
   router.post('/pfp', verifyAuth(), async (req, res) => {
-    req.user.pfp = req.body.image
-    await db.put(req.user)
-    if (!req.user.pfp) await ensurePfp(req.user._id)
-    req.flash('success', 'Saved profile picture!')
+    if (config.pfp) {
+      req.user.pfp = req.body.image
+      await db.put(req.user)
+      if (!req.user.pfp) await ensurePfp(req.user._id)
+      req.flash('success', 'Saved profile picture!')
+    } else {
+      req.flash('error', 'Profile pictures are disabled.')
+    }
     res.redirect(`${_CC.config.base}profile`)
   })
 

@@ -5,6 +5,7 @@ const fs = require('fs/promises')
 
 module.exports = ({ db, config }) => {
   async function ensurePfp (username) {
+    if (!config.pfp) return
     const user = await db.get(username)
     if (user.pfp) return
 
@@ -56,7 +57,7 @@ module.exports = ({ db, config }) => {
   router.use('/wishlist', require('./wishlist')(db))
   router.use('/supported-sites', require('./supported-sites')())
 
-  router.use('/profile', require('./profile')({ db, ensurePfp }))
+  router.use('/profile', require('./profile')({ db, config, ensurePfp }))
 
   router.use('/admin-settings', require('./adminSettings')({ db, ensurePfp }))
 

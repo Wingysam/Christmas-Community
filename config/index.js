@@ -13,5 +13,6 @@ module.exports = {
   wishlist: require('./wishlist'),
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
   trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
-  bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase()
+  bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase(),
+  pfp: process.env.PFP !== 'false'
 }

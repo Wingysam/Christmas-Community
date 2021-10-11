@@ -7,9 +7,10 @@ block content
         a(href=`${_CC.config.base}wishlist/${req.user._id}`)
           .box
             .columns
-              .column.is-1(style='overflow: hidden;')
-                figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
-                  img.is-rounded.is-fullwidth(src=req.user.pfp, style='object-fit: cover;')
+              if config.pfp
+                .column.is-1(style='overflow: hidden;')
+                  figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
+                    img.is-rounded.is-fullwidth(src=req.user.pfp, style='object-fit: cover;')
               .column
                 span=req.user._id
                   span : ???/???
@@ -20,9 +21,10 @@ block content
           a(href=`${_CC.config.base}wishlist/${user.id}`)
             .box
               .columns
-                .column.is-1(style='overflow: hidden;')
-                  figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
-                    img.is-rounded.is-fullwidth(src=user.doc.pfp, style='object-fit: cover;')
+                if config.pfp
+                  .column.is-1(style='overflow: hidden;')
+                    figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
+                      img.is-rounded.is-fullwidth(src=user.doc.pfp, style='object-fit: cover;')
                 .column
                   span= user.id
                   span : #{totals(user.doc.wishlist).pledged}/#{user.doc.wishlist.length}
