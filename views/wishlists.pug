@@ -6,9 +6,9 @@ block content
       li
         a(href=`${_CC.config.base}wishlist/${req.user._id}`)
           .box
-            .columns
+            .columns.is-mobile
               if config.pfp
-                .column.is-1(style='overflow: hidden;')
+                .column.is-1(style='overflow: hidden; padding: 0 0.5rem 0 0;')
                   figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
                     img.is-rounded.is-fullwidth(src=req.user.pfp, style='object-fit: cover;')
               .column
@@ -20,9 +20,9 @@ block content
         li
           a(href=`${_CC.config.base}wishlist/${user.id}`)
             .box
-              .columns
+              .columns.is-mobile
                 if config.pfp
-                  .column.is-1(style='overflow: hidden;')
+                  .column.is-1(style='overflow: hidden; padding: 0 0.5rem 0 0;')
                     figure.image.is-square.is-fullwidth.is-marginless(style='display: inline-block;')
                       img.is-rounded.is-fullwidth(src=user.doc.pfp, style='object-fit: cover;')
                 .column
