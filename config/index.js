@@ -14,5 +14,6 @@ module.exports = {
   base: (process.env.ROOT_PATH || '/').endsWith('/') ? (process.env.ROOT_PATH || '/') : `${process.env.ROOT_PATH}/`,
   trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
   bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase(),
-  pfp: process.env.PFP !== 'false'
+  pfp: process.env.PFP !== 'false',
+  language: process.env.LANGUAGE?.toLowerCase() || 'en-us'
 }

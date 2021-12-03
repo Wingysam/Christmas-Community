@@ -91,6 +91,8 @@ BULMASWATCH=default
 UPDATE_CHECK=true
 # Set to false to disable the profile pictures feature
 PFP=true
+# Language of the interface, options listed in `languages` directory
+LANGUAGE=en-US
 
 ## Wishlist Settings
 # Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.

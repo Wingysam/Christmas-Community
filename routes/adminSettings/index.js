@@ -18,7 +18,7 @@ module.exports = ({ db, ensurePfp }) => {
     if (!req.user.admin) return res.redirect('/')
     db.allDocs({ include_docs: true })
       .then(docs => {
-        res.render('adminSettings', { title: 'Admin Settings', users: docs.rows })
+        res.render('adminSettings', { title: _CC.lang('ADMIN_SETTINGS_HEADER'), users: docs.rows })
       })
       .catch(err => { throw err })
   })
@@ -75,11 +75,11 @@ module.exports = ({ db, ensurePfp }) => {
   router.post('/edit/rename/:userToRename', verifyAuth(), async (req, res) => {
     if (!req.user.admin && req.user._id !== req.params.userToRename) return res.redirect('/')
     if (!req.body.newUsername) {
-      req.flash('error', 'No username provided')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED'))
       return res.redirect(`/admin-settings/edit/${req.params.userToRename}`)
     }
     if (req.body.newUsername === req.params.userToRename) {
-      req.flash('error', 'Username is same as new username.')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_SAME_NAME'))
       return res.redirect(`/admin-settings/edit/${req.params.userToRename}`)
     }
 
@@ -105,7 +105,7 @@ module.exports = ({ db, ensurePfp }) => {
         await db.bulkDocs(usersBulk)
         await db.remove(await db.get(oldName))
 
-        await req.flash('success', 'Renamed user!')
+        req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_RENAMED_USER'))
         return res.redirect(`/wishlist/${newName}`)
       } catch (error) {
         console.log(error, error.stack)
@@ -125,7 +125,7 @@ module.exports = ({ db, ensurePfp }) => {
         req.flash('error', err.message)
         return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
       }
-      req.flash('success', `You are now ${req.params.userToEdit}.`)
+      req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS', req.params.userToEdit))
       res.redirect('/')
     })
   })
@@ -134,43 +134,43 @@ module.exports = ({ db, ensurePfp }) => {
     if (!req.user.admin) return res.redirect('/')
     const user = await db.get(req.params.userToPromote)
     if (!user) {
-      req.flash('error', 'User not found.')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'))
       return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
     }
     if (user.admin) {
-      req.flash('error', 'user is already admin')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN'))
       return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
     }
 
     user.admin = true
     await db.put(user)
 
-    req.flash('success', `${user._id} is now an admin.`)
+    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS', user._id))
     return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
   })
 
   router.post('/edit/demote/:userToDemote', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
     if (req.user._id === req.params.userToDemote) {
-      req.flash('error', 'You cannot demote yourself.')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SELF'))
       return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
     }
 
     const user = await db.get(req.params.userToDemote)
 
     if (!user) {
-      req.flash('error', 'User not found.')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'))
       return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
     }
     if (!user.admin) {
-      req.flash('error', 'user is not an admin')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN'))
       return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
     }
 
     user.admin = false
     await db.put(user)
 
-    req.flash('success', `${user._id} is no longer an admin.`)
+    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS', user._id))
     return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
   })
 
@@ -178,7 +178,7 @@ module.exports = ({ db, ensurePfp }) => {
     if (!req.user.admin) return res.redirect('/')
     const doc = await db.get(req.params.userToRemove)
     if (doc.admin) {
-      req.flash('error', 'Failed to remove: user is admin.')
+      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
       return res.redirect('/admin-settings')
     }
     await db.remove(doc)
@@ -192,7 +192,7 @@ module.exports = ({ db, ensurePfp }) => {
         }
       }
     }
-    req.flash('success', `Successfully removed user ${req.params.userToRemove}`)
+    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.userToRemove))
     res.redirect('/admin-settings')
   })
 
@@ -208,7 +208,7 @@ module.exports = ({ db, ensurePfp }) => {
       row.doc.wishlist = []
       await db.put(row.doc)
     }
-    req.flash('success', 'Cleared all wishlists.')
+    req.flash('success', _CC.lang('ADMIN_SETTINGS_CLEARDB_SUCCESS'))
     res.redirect('/admin-settings')
   })
 

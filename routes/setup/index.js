@@ -8,7 +8,7 @@ module.exports = (db) => {
     async (req, res) => {
       const dbInfo = await db.info()
       if (dbInfo.doc_count === 0) {
-        res.render('setup', { title: 'Setup' })
+        res.render('setup', { title: _CC.lang('SETUP_HEADER') })
       } else {
         res.redirect('/')
       }

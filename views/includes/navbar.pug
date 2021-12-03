@@ -3,6 +3,7 @@ mixin navBarLink(href, title)
     a.is-active.navbar-item(href=href)= title
   else
     a.navbar-item(href=href)= title
+
 nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='box-shadow: 0px 0px 7px rgb(14, 15, 17);')
   .navbar-brand
     if _CC.config.base === req.path
@@ -22,17 +23,17 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
       if req.isAuthenticated()
         if req.user._id === 'Unknown'
           .navbar-item
-            a.button.is-primary(href='/login') Log In
+            a.button.is-primary(href='/login')= lang('NAVBAR_')
         else
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link= req.user._id
             .navbar-dropdown
-              +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, 'My Wishlist')
-              +navBarLink(`${_CC.config.base}profile`, 'Profile')
+              +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, lang('NAVBAR_WISHLIST'))
+              +navBarLink(`${_CC.config.base}profile`, lang('NAVBAR_PROFILE'))
               if req.user.admin
-                +navBarLink(`${_CC.config.base}admin-settings`, 'Admin settings')
+                +navBarLink(`${_CC.config.base}admin-settings`, lang('NAVBAR_ADMIN'))
               hr.navbar-divider
               .navbar-item
                 form#logoutForm(action=`${_CC.config.base}logout`, method='POST')
-                  button.button.is-warning(type='submit') Log Out
+                  button.button.is-warning(type='submit')= lang('NAVBAR_LOGOUT')
   script(src=`${_CC.config.base}js/nav.js`)

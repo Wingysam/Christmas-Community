@@ -3,18 +3,18 @@ extends layout.pug
 block content
   form(method='POST')
     .field
-      label.label Username
+      label.label= lang('LOGIN_USERNAME')
       .control.has-icons-left
-        input.input(type='text', name='username', placeholder='john')
+        input.input(type='text', name='username', placeholder=lang('LOGIN_USERNAME_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-user
     .field
-      label.label Password
+      label.label= lang('LOGIN_PASSWORD')
       .control.has-icons-left
-        input.input(type='password', name='password', placeholder='pa$$word!')
+        input.input(type='password', name='password', placeholder=lang('LOGIN_PASSWORD_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-lock
     .field
       .control
-        input.button.is-primary(type='submit' value='Log In')
+        input.button.is-primary(type='submit' value=lang('LOGIN_BUTTON'))
           

@@ -1,30 +1,30 @@
 extends layout.pug
 
 block content
-  h2 Users
+  h2= lang('ADMIN_SETTINGS_USERS_HEADER')
   each user in users
     span.is-size-6.inline= user.id
     a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
       span.is-size-7.icon.has-text-info
         i.fas.fa-edit
       span.is-sr-only
-        | Edit
+        = lang('ADMIN_SETTINGS_USERS_EDIT')
     br
-  h3 Add user
+  h3= lang('ADMIN_SETTINGS_USERS_ADD_HEADER')
   form(action=`${_CC.config.base}admin-settings/add`, method='POST')
     .field
-      label.label Username
+      label.label= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
       .control.has-icons-left
-        input.input(type='text', name='newUserUsername', placeholder='john')
+        input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-user
     .field
       .control
-        input.button.is-primary(type='submit' value='Add User')
-  h3 Data Destruction
-  p <b>Warning</b>: These options <b>destroy data</b>! You may want to back up the database before using these options.
-  a.button.is-danger(href=`${_CC.config.base}admin-settings/clear-wishlists`) Clear Wishlists
-  h3 Version Info
+        input.button.is-primary(type='submit' value=lang('ADMIN_SETTINGS_USERS_ADD_BUTTON'))
+  h3= lang('ADMIN_SETTINGS_CLEARDB_HEADER')
+  p!= lang('ADMIN_SETTINGS_CLEARDB_DESCRIPTION')
+  a.button.is-danger(href=`${_CC.config.base}admin-settings/clear-wishlists`)= lang('ADMIN_SETTINGS_CLEARDB_BUTTON')
+  h3= lang('ADMIN_SETTINGS_VERSION_INFO')
   p Christmas Community: v#{_CC.package.version}
   p Get Product Data: v#{_CC.require('get-product-name/package.json').version}
   p Node: #{process.version}

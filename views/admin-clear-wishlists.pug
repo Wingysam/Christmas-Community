@@ -1,9 +1,9 @@
 extends layout.pug
 
 block content
-  h2 Wishlist Deletion
-  p This will instantly <b>irreversibly delete all wishlists!</b> Consider making a backup of the database before using this.
+  h2= lang('ADMIN_CLEAR_WISHLISTS_HEADER')
+  p!= lang('ADMIN_CLEAR_WISHLISTS_DESCRIPTION')
   form(method='POST', action=`${_CC.config.base}admin-settings/clear-wishlists`)
     .field
       .control
-        input.button.is-danger(type='submit' value=`Clear all wishlists`)
+        input.button.is-danger(type='submit' value=lang('ADMIN_CLEAR_WISHLISTS_BUTTON'))

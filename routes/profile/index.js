@@ -7,7 +7,7 @@ module.exports = ({ db, config, ensurePfp }) => {
 
   router.get('/', verifyAuth(), async (req, res) => {
     await ensurePfp(req.user._id)
-    res.render('profile', { title: `Profile Settings - ${req.user._id}` })
+    res.render('profile', { title: _CC.lang('PROFILE_TITLE', req.user._id) })
   })
 
   router.post('/pfp', verifyAuth(), async (req, res) => {
@@ -15,24 +15,24 @@ module.exports = ({ db, config, ensurePfp }) => {
       req.user.pfp = req.body.image
       await db.put(req.user)
       if (!req.user.pfp) await ensurePfp(req.user._id)
-      req.flash('success', 'Saved profile picture!')
+      req.flash('success', _CC.lang('PROFILE_SAVE_PFP_SUCCESS'))
     } else {
-      req.flash('error', 'Profile pictures are disabled.')
+      req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
     }
     res.redirect(`${_CC.config.base}profile`)
   })
 
   router.get('/password', verifyAuth(), async (req, res) => {
     await ensurePfp(req.user._id)
-    res.render('profile-password', { title: `Profile Settings - Password - ${req.user._id}` })
+    res.render('profile-password', { title: _CC.lang('PROFILE_PASSWORD_TITLE', req.user._id) })
   })
   router.post('/password', verifyAuth(), (req, res) => {
     if (!req.body.oldPassword) {
-      req.flash('error', 'Old Password is required')
+      req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_OLD'))
       return res.redirect('/profile/password')
     }
     if (!req.body.newPassword) {
-      req.flash('error', 'New Password is required')
+      req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_NEW'))
       return res.redirect('/profile/password')
     }
     bcrypt.compare(req.body.oldPassword, req.user.password, (err, correct) => {
@@ -45,7 +45,7 @@ module.exports = ({ db, config, ensurePfp }) => {
               doc.password = hash
               db.put(doc)
                 .then(() => {
-                  req.flash('success', 'Changes saved successfully!')
+                  req.flash('success', _CC.lang('PROFILE_PASSWORD_SUCCESS'))
                   res.redirect('/profile/password')
                 })
                 .catch(err => { throw err })
@@ -53,7 +53,7 @@ module.exports = ({ db, config, ensurePfp }) => {
             .catch(err => { throw err })
         })
       } else {
-        req.flash('error', 'Incorrect old password')
+        req.flash('error', _CC.lang('PROFILE_PASSWORD_OLD_MISMATCH'))
         res.redirect('/profile/password')
       }
     })

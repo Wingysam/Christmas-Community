@@ -34,7 +34,7 @@ module.exports = (db) => {
           req.flash('error', err.message)
           return res.redirect('/')
         }
-        req.flash('success', `Welcome to ${_CC.config.siteTitle}!`)
+        req.flash('success', _CC.lang('CONFIRM_ACCOUNT_SUCCESS'))
         res.redirect('/')
       })
     })

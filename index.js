@@ -12,9 +12,33 @@ const fetch = require('node-fetch')
 const express = require('express')
 
 _CC._ = require('lodash')
+_CC.moment = require('moment/min/moment-with-locales')
 
 const config = require('./config')
 _CC.config = config
+
+;(() => {
+  let language
+  try {
+    language = require(`./languages/${config.language}`)
+  } catch (error) {
+    if (error.message.startsWith('Cannot find module')) console.error(`Language ${config.language} is not supported. If you know this language and would like to translate Christmas Community, please ask for help doing so here: https://github.com/Wingysam/Christmas-Community/issues/new`)
+    else console.error(`Failed to load language ${config.language} because of ${error}`)
+    process.exit(1)
+  }
+
+  if (_CC.moment.locale(language.momentLocale) !== language.momentLocale) {
+    console.error(`${_CC.moment.locale()} Failed to load language ${config.language}, moment locale missing. Valid locales: ${_CC.moment.locales().join(', ')}`)
+    process.exit(1)
+  }
+
+  _CC.lang = (key, ...args) => {
+    const lang = language.strings[key]
+    if (!lang) return language.strings._NOT_LOCALIZED(key)
+    if (typeof lang === 'function') return lang(...args)
+    return lang
+  }
+})()
 
 if (!config.dbPrefix.startsWith('http')) {
   const mkdirp = require('mkdirp').sync

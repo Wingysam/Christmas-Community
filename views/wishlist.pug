@@ -9,7 +9,7 @@ block title
             span.icon
               i.fas.fa-sync-alt
         .level-item
-          span  #{config.siteTitle} - #{title} 
+          span= lang('WISHLIST_TITLE', name)
 
 block content
   script(type='data/user_id')= req.user._id
@@ -18,19 +18,19 @@ block content
       table.table.has-mobile-cards
         thead
           th #
-          th(style='width: 15%;') Image
-          th(style='width: 25%;') Name
-          th(style='width: 50%;') Note
-          th(style='width: 10%;') Price
-          th Edit Item
-          th Added By
+          th(style='width: 15%;')= lang('WISHLIST_IMAGE')
+          th(style='width: 25%;')= lang('WISHLIST_NAME')
+          th(style='width: 50%;')= lang('WISHLIST_NOTE')
+          th(style='width: 10%;')= lang('WISHLIST_PRICE')
+          th= lang('WISHLIST_EDIT_ITEM')
+          th= lang('WISHLIST_ADDED_BY')
           if req.params.user === req.user._id
-            th Move Top
-            th Move Up
-            th Move Down
+            th= lang('WISHLIST_MOVE_TOP')
+            th= lang('WISHLIST_MOVE_UP')
+            th= lang('WISHLIST_MOVE_DOWN')
           else
-            th Pledge
-          th Delete
+            th= lang('WISHLIST_PLEDGE')
+          th= lang('WIDHLIST_DELETE')
         tbody
           each item, index in wishlist
             if req.user._id === item.addedBy || req.params.user !== req.user._id
@@ -47,14 +47,14 @@ block content
                       target='_blank'
                     )= (item.name ? item.name : item.url)
                 else
-                  td.ugc(data-label='Name')= item.name
+                  td.ugc(data-label=lang('WISHLIST_NAME'))= item.name
                 if _CC.config.wishlist.note.markdown
-                  td.ugc(data-label='Note')
+                  td.ugc(data-label=lang('WISHLIST_NOTE'))
                     div!= item.note
                 else
-                  td.ugc(data-label='Note')= item.note
-                td.ugc(data-label='Price')= item.price
-                td(data-label='Edit Item')
+                  td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
+                td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
+                td(data-label=lang('WISHLIST_EDIT_ITEM'))
                   form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                     .field.inline
                       .control.inline
@@ -65,9 +65,9 @@ block content
                         )
                           span.icon
                             i.far.fa-edit
-                td.ugc(data-label='Added By')= item.addedBy
+                td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
                 if req.params.user === req.user._id
-                  td(data-label='Move Item Top')
+                  td(data-label=lang('WISHLIST_MOVE_ITEM_TOP'))
                     form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
                       .field.inline
                         .control.inline
@@ -78,7 +78,7 @@ block content
                           )
                             span.icon
                               i.fas.fa-angle-double-up
-                  td(data-label='Move Item Up')
+                  td(data-label=lang('WISHLIST_MOVE_ITEM_UP'))
                     form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                       .field.inline
                         .control.inline
@@ -89,7 +89,7 @@ block content
                           )
                             span.icon
                               i.fas.fa-arrow-up
-                  td(data-label='Move Item Down')
+                  td(data-label=lang('WISHLIST_MOVE_ITEM_DOWN'))
                     form.downForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
                       .field.inline
                         .control.inline
@@ -101,7 +101,7 @@ block content
                             span.icon
                               i.fas.fa-arrow-down
                 else
-                  td(data-label='Pledge')
+                  td(data-label=lang('WISHLIST_PLEDGE'))
                     if req.params.user !== req.user._id && !item.pledgedBy
                       form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                         .field.inline
@@ -113,7 +113,7 @@ block content
                           .control.inline
                             input.inline.button(type='submit' value='Unpledge')
                     if item.pledgedBy && item.pledgedBy !== req.user._id
-                      span.ugc Pledged for by #{item.pledgedBy}
+                      span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
                 td(data-label='Delete Item')
                   form.inline(
                     method='POST',
@@ -161,60 +161,60 @@ block content
                     style='height: 100%;'
                     readonly
                   )= item.note
-          span.overflowWrap Added by: #{item.addedBy}
+          span.overflowWrap=lang('WISHLIST_ADDED_BY', item.addedBy)
           hr
           div
             if req.params.user !== req.user._id && !item.pledgedBy
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                 .field.inline
                   .control.inline
-                    input.inline.button.is-primary(type='submit' value='Pledge')
+                    input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE'))
             if item.pledgedBy === req.user._id
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
                 .field.inline
                   .control.inline
-                    input.inline.button(type='submit' value='Unpledge')
+                    input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
             if req.user._id === req.params.user
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`)
                 .field.inline
                   .control.inline
-                    input.inline.button.is-warning(type='submit' value='Remove')
+                    input.inline.button.is-warning(type='submit' value=lang('WISHLIST_DELETE'))
             if req.user._id === req.params.user || req.user._id === item.addedBy
               form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                 .field.inline
                   .control.inline
-                    input.inline.button(type='submit', value='Edit item')
+                    input.inline.button(type='submit', value=lang('WISHLIST_EDIT_ITEM'))
               if index !== firstCanSee && req.user._id === req.params.user
                 form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
                     .control.inline
-                      input.inline.button(type='submit' value='Move item up')
+                      input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_UP'))
               if index !== lastCanSee && req.user._id === req.params.user
                 form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
                   .field.inline
                     .control.inline
-                      input.inline.button(type='submit' value='Move item down')
+                      input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_DOWN'))
   form(method='POST')
     .field
-      label.label Item URL or Name (<a href="/supported-sites">Supported Sites</a>)
+      label.label!=lang('WISHLIST_URL_LABEL')
       .control.has-icons-left
         input.input(
           type='text',
           name='itemUrlOrName',
-          placeholder='https://www.amazon.com/dp/B00ZV9RDKK'
+          placeholder=lang('WISHLIST_URL_PLACEHOLDER')
         )
         span.icon.is-small.is-left
           i.fas.fa-gift
     .field
-      label.label Note
+      label.label= lang('WISHLIST_NOTE')
       .control
         textarea.textarea(
           name='note',
-          placeholder='Optional'
+          placeholder=lang('WISHLIST_OPTIONAL')
         )
     .field
       .control
-        input.button(type='submit' value=(req.user._id === req.params.user ? 'Add item to wishlist' : 'Pledge item'))
+        input.button(type='submit' value=(req.user._id === req.params.user ? lang('WISHLIST_ADD') : lang('WISHLIST_PLEDGE_ITEM')))
   script(src=`${_CC.config.base}js/wishlist.js`)
 
 block print

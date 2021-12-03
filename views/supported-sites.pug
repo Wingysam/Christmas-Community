@@ -3,8 +3,8 @@ extends layout.pug
 block content
   if req.headers.referer
     span.is-size-3(style='margin-top: 0; padding-top: 0;')
-      a(href=req.headers.referer) &lt; Back
+      a(href=req.headers.referer) &lt; #{lang('BACK_BUTTON')}
   ul
     for site of _CC.require('get-product-name').sites
       li= site.name
-  p Is a site missing or broken? Open an issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">here</a>! :)
+  p!= lang('SUPPORTED_SITES_TEXT')

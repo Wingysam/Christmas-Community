@@ -44,7 +44,7 @@ module.exports = (db) => {
         if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
       }
     }
-    res.render('wishlists', { title: 'Wishlists', users: docs.rows, totals })
+    res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
   })
 
   router.get('/:user', publicRoute(), async (req, res) => {
@@ -66,7 +66,8 @@ module.exports = (db) => {
         if (global._CC.config.wishlist.note.markdown) item.note = DOMPurify.sanitize(marked(item.note))
       }
       res.render('wishlist', {
-        title: `Wishlist - ${dbUser._id}`,
+        title: _CC.lang('WISHLIST_TITLE', dbUser._id),
+        name: dbUser._id,
         wishlist: [
           ...dbUser.wishlist.filter(item => item.addedBy === req.params.user),
           ...dbUser.wishlist.filter(item => item.addedBy !== req.params.user)
@@ -82,7 +83,7 @@ module.exports = (db) => {
 
   router.post('/:user', verifyAuth(), async (req, res) => {
     if (!req.body.itemUrlOrName) {
-      req.flash('error', 'Item URL or Name is required')
+      req.flash('error', _CC.lang('WISHLIST_URL_REQUIRED'))
       return res.redirect(`/wishlist/${req.params.user}`)
     }
     const potentialUrl = req.body.itemUrlOrName.split(' ').pop()
@@ -108,7 +109,7 @@ module.exports = (db) => {
     try {
       await db.put(doc)
     } catch {
-      req.flash('error', 'Items are being added too quickly. Please try again.')
+      req.flash('error', _CC.lang('WISHLIST_CONFLICT'))
       return res.redirect(`/wishlist/${req.params.user}`)
     }
     req.flash(
@@ -128,12 +129,12 @@ module.exports = (db) => {
       for (let j = 0; j < docs.rows[i].doc.wishlist.length; j++) {
         if (docs.rows[i].doc.wishlist[j].id === req.params.itemId) {
           if (docs.rows[i].doc.wishlist[j].pledgedBy !== undefined) {
-            req.flash('error', 'Item already pledged for')
+            req.flash('error', _CC.lang('WISHLIST_PLEDGE_DUPLICATE'))
             return res.redirect(`/wishlist/${req.params.user}`)
           }
           docs.rows[i].doc.wishlist[j].pledgedBy = req.user._id
           await db.put(docs.rows[i].doc)
-          req.flash('success', 'Successfully pledged for item!')
+          req.flash('success', _CC.lang('WISHLIST_PLEDGE_SUCCESS'))
           return res.redirect(`/wishlist/${req.params.user}`)
         }
       }
@@ -145,24 +146,24 @@ module.exports = (db) => {
       for (let j = 0; j < docs.rows[i].doc.wishlist.length; j++) {
         if (docs.rows[i].doc.wishlist[j].id === req.params.itemId) {
           if (docs.rows[i].doc.wishlist[j].pledgedBy !== req.user._id) {
-            req.flash('error', 'You did not pledge for this')
+            req.flash('error', _CC.lang('WISHLIST_UNPLEDGE_GUARD'))
             return res.redirect(`/wishlist/${req.params.user}`)
           }
           docs.rows[i].doc.wishlist[j].pledgedBy = undefined
           if (docs.rows[i].doc.wishlist[j].addedBy === req.user._id) docs.rows[i].doc.wishlist.splice(j, 1)
           await db.put(docs.rows[i].doc)
-          req.flash('success', 'Successfully unpledged for item')
+          req.flash('success', _CC.lang('WISHLIST_UNPLEDGE_SUCCESS'))
           return res.redirect(`/wishlist/${req.params.user}`)
         }
       }
     }
-    req.flash('error', 'Failed to find item')
+    req.flash('error', _CC.lang('WISHLIST_UNPLEDGE_MISSING'))
     return res.redirect(`/wishlist/${req.params.user}`)
   })
 
   router.post('/:user/remove/:itemId', verifyAuth(), async (req, res) => {
     if (req.user._id !== req.params.user) {
-      req.flash('error', 'Not correct user')
+      req.flash('error', _CC.lang('WISHLIST_REMOVE_GUARD'))
       return res.redirect(`/wishlist/${req.params.user}`)
     }
     const doc = await db.get(req.user._id)
@@ -170,17 +171,17 @@ module.exports = (db) => {
       if (doc.wishlist[i].id === req.params.itemId) {
         doc.wishlist.splice(i, 1)
         await db.put(doc)
-        req.flash('success', 'Successfully removed from wishlist')
+        req.flash('success', _CC.lang('WISHLIST_REMOVE_SUCCESS'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
     }
-    req.flash('error', 'Failed to find item')
+    req.flash('error', _CC.lang('WISHLIST_REMOVE_MISSING'))
     return res.redirect(`/wishlist/${req.params.user}`)
   })
 
   router.post('/:user/move/:direction/:itemId', verifyAuth(), async (req, res) => {
     if (req.user._id !== req.params.user) {
-      req.flash('error', 'Not correct user')
+      req.flash('error', _CC.lang('WISHLIST_MOVE_GUARD'))
       return res.redirect(`/wishlist/${req.params.user}`)
     }
     const doc = await db.get(req.user._id)
@@ -197,7 +198,7 @@ module.exports = (db) => {
       })
       const moveToIndex = wishlist.findIndex(wish => (wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id))
       if (moveToIndex < 0 || moveToIndex > wishlist.length) {
-        req.flash('error', 'Invalid move')
+        req.flash('error', _CC.lang('WISHLIST_MOVE_INVALID'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
       [wishlist[moveFromIndex], wishlist[moveToIndex]] = [wishlist[moveToIndex], wishlist[moveFromIndex]]
@@ -206,7 +207,7 @@ module.exports = (db) => {
 
     doc.wishlist = wishlist
     await db.put(doc)
-    req.flash('success', 'Successfully moved item!')
+    req.flash('success', _CC.lang('WISHLIST_MOVE_SUCCESS'))
     return res.redirect(`/wishlist/${req.params.user}`)
   })
 
@@ -222,14 +223,14 @@ module.exports = (db) => {
       const wishlistItem = wishlist[i]
       if (wishlistItem.id !== req.params.id) continue
       if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
-        req.flash('error', 'Invalid user')
+        req.flash('error', _CC.lang('NOTE_GUARD'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
       for (const type of [
         'name', 'note', 'url', 'price', 'image'
       ]) {
         if (!Object.prototype.hasOwnProperty.call(req.body, type)) {
-          req.flash('error', `Missing property ${type}`)
+          req.flash('error', _CC.lang('NOTE_MISSING_PROP', type))
           return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
         }
         wishlistItem[type] = req.body[type]
@@ -238,7 +239,7 @@ module.exports = (db) => {
     }
     doc.wishlist = wishlist
     await db.put(doc)
-    req.flash('success', 'Successfully saved note!')
+    req.flash('success', _CC.lang('NOTE_SUCCESS'))
     return res.redirect(`/wishlist/${req.params.user}`)
   })
   router.post('/:user/refresh/:id', verifyAuth(), async (req, res) => {
@@ -248,12 +249,12 @@ module.exports = (db) => {
       const wishlistItem = wishlist[i]
       if (wishlistItem.id !== req.params.id) continue
       if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
-        req.flash('error', 'Invalid user')
+        req.flash('error', _CC.lang('WISHLIST_REFRESH_GUARD'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
 
       if (!wishlistItem.url) {
-        req.flash('error', 'Item has no URL.')
+        req.flash('error', _CC.lang('WISHLIST_REFRESH_NO_URL'))
         return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
       }
 
@@ -266,7 +267,7 @@ module.exports = (db) => {
     }
     doc.wishlist = wishlist
     await db.put(doc)
-    req.flash('success', 'Successfully refreshed data!')
+    req.flash('success', _CC.lang('WISHLIST_REFRESH_SUCCESS'))
     return res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
   })
   router.post('/:user/note/remove/:id', verifyAuth(), async (req, res) => {
@@ -276,20 +277,20 @@ module.exports = (db) => {
       const wishlistItem = wishlist[i]
       if (wishlistItem.id !== req.params.id) continue
       if (req.user._id !== req.params.user && req.user._id !== wishlistItem.addedBy) {
-        req.flash('error', 'Invalid user')
+        req.flash('error', _CC.lang('NOTE_REMOVE_GUARD'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
       if (wishlistItem.note) {
         wishlistItem.note = undefined
         wishlist[i] = wishlistItem
       } else {
-        req.flash('error', 'Has no note')
+        req.flash('error', _CC.lang('NOTE_REMOVE_MISSING'))
         return res.redirect(`/wishlist/${req.params.user}`)
       }
     }
     doc.wishlist = wishlist
     await db.put(doc)
-    req.flash('success', 'Successfully removed note')
+    req.flash('success', _CC.lang('NOTE_REMOVE_SUCCESS'))
     return res.redirect(`/wishlist/${req.params.user}`)
   })
   return router

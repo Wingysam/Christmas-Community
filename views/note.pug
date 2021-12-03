@@ -1,40 +1,40 @@
 extends layout.pug
 
 block content
-  a(href='..') <i class="fas fa-arrow-left"></i> Back to #{req.params.user}'s wishlist
+  a(href='..') <i class="fas fa-arrow-left"></i> #{lang('NOTE_BACK', req.params.user)}
   form(id='refreshform', method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/refresh/${req.params.id}`)
   form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/note/${req.params.id}`)
     .columns
       .column
         .field
-          label.label Name
+          label.label= lang('NOTE_NAME')
           .control
             input.input(name='name', value=item.name)
       .column
         .field
-          label.label URL
+          label.label= lang('NOTE_URL')
           .control
             input.input(name='url', value=item.url)
       .column
         .field
-          label.label Price
+          label.label= lang('NOTE_PRICE')
           .control
             input.input(name='price', value=item.price)
       .column
         .field
-          label.label Image URL
+          label.label= lang('NOTE_IMAGE_URL')
           .control
             input.input(name='image', value=item.image)
       .column.is-narrow
           .field
-            label.label Get Product Data
-            input.is-ghost.button(type='submit', value='Refresh Data' style='width: 100%;', form='refreshform')
+            label.label= lang('NOTE_GET_PRODUCT_DATA')
+            input.is-ghost.button(type='submit', value=lang('NOTE_REFRESH_DATA') style='width: 100%;', form='refreshform')
     .field
-      label.label Note
+      label.label= lang('NOTE_NOTE')
       .control
         textarea.textarea(
           name='note'
         )= item.note
     .field.inline
       .control.inline
-        input.button.is-primary(type='submit' value='Save Item')
+        input.button.is-primary(type='submit' value=lang('NOTE_SAVE_BUTTON'))

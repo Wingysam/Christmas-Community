@@ -4,7 +4,7 @@ block title
   h1(style="margin-bottom: 0;")
     a(href='..') &lt;
     | #{config.siteTitle}
-  p Editing user "#{user._id}"
+  p= lang('ADMIN_USER_EDIT_EDITING_USER', user._id)
 
 block content
   .columns
@@ -14,94 +14,94 @@ block content
         .box(style='overflow: hidden;')
           .columns(style='margin-bottom: 0;')
             .column.is-narrow(style='padding-bottom: 0;')
-              h2 Confirmation Link
+              h2= lang('ADMIN_USER_EDIT_CONFIRMATION_LINK')
             .column(style='padding-bottom: 0;')
               p
-                span This account hasn't been confirmed.
+                span= lang('ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED')
                 br
                 if user.expiry > new Date().getTime()
-                  span= `The following link expires ${_CC.require('moment')(user.expiry).fromNow()}`
+                  span= lang('ADMIN_USER_EDIT_LINK_EXPIRY_FUTURE', _CC.moment(user.expiry).fromNow())
                 else
-                  span.has-text-weight-bold(style='color: red;')= `The following link expired ${_CC.require('moment')(user.expiry).fromNow()}`
+                  span.has-text-weight-bold(style='color: red;')= lang('ADMIN_USER_EDIT_LINK_EXPIRY_PAST', _CC.moment(user.expiry).fromNow())
           h3(style='margin-bottom: 0; margin-top: 0;')
             .level
               .level-left
                 .level-item
                   form(method='POST', action=`${_CC.config.base}admin-settings/edit/refresh-signup-token/${user._id}`)
-                    input.button.is-rounded(type='submit', value='Generate New Link')
+                    input.button.is-rounded(type='submit', value=lang('ADMIN_USER_EDIT_GENERATE_NEW_LINK'))
                 .level-item
                   a(href=signupLink, style='font-family: monospaced; word-break: break-all;')= signupLink
       .columns
         .column.is-narrow
-          h2 Change Name
+          h2= lang('ADMIN_USER_EDIT_CHANGE_NAME')
           form(action=`${_CC.config.base}admin-settings/edit/rename/${user._id}`, method='POST')
             .field
-              label.label Username
+              label.label= lang('ADMIN_USER_EDIT_USERNAME')
               .control.has-icons-left
                 input.input(type='text', name='newUsername', placeholder=user._id, value=user._id)
                 span.icon.is-small.is-left
                   i.fas.fa-user
             .field
               .control
-                input.button.is-primary(type='submit' value='Change Username')
+                input.button.is-primary(type='submit' value=lang('ADMIN_USER_EDIT_CHANGE_USERNAME'))
         .column.is-narrow
-          h2 Admin
+          h2= lang('ADMIN_USER_EDIT_ADMIN')
           //- Yes, ternary exists, but I think the code is cleaner with a more "naive" style :)
           //- p.is-marginless #{user._id} is #{user.admin ? '' : 'not '}an admin.
           //- vs.
           if user.admin
-            p.is-marginless #{user._id} is an admin.
+            p.is-marginless= lang('ADMIN_USER_EDIT_ADMIN_ISADMIN', user._id)
             form(action=`${_CC.config.base}admin-settings/edit/demote/${user._id}`, method='POST')
               .field
                 .control
                   if user._id === req.user._id
-                    input.input.button(disabled, type='submit', value=`You cannot demote yourself`, style='margin-top: 1em;')
+                    input.input.button(disabled, type='submit', value=lang('ADMIN_USER_EDIT_DEMOTE_SELF'), style='margin-top: 1em;')
                   else
-                    input.input.button(type='submit', value=`Demote ${user._id}`, style='margin-top: 1em;')
+                    input.input.button(type='submit', value=lang('ADMIN_USER_EDIT_DEMOTE', user._id), style='margin-top: 1em;')
           else
-            p.is-marginless #{user._id} is not an admin.
+            p.is-marginless= lang('ADMIN_USER_EDIT_ADMIN_NOTADMIN', user._id)
             form(action=`${_CC.config.base}admin-settings/edit/promote/${user._id}`, method='POST')
               .field
                 .control
-                  input.input.button(type='submit', value=`Promote ${user._id}`, style='margin-top: 1em;')
+                  input.input.button(type='submit', value=lang('ADMIN_USER_EDIT_PROMOTE', user._id), style='margin-top: 1em;')
         if user._id !== req.user._id
           .column.is-narrow
-            h2 Impersonate
+            h2= lang('ADMIN_USER_EDIT_IMPERSONATE_HEADER')
               form(action=`${_CC.config.base}admin-settings/edit/impersonate/${user._id}`, method='POST')
                 .field
                   .control
-                    input.input.button.is-warning(type='submit', value=`Log in as ${user._id}`, style='margin-top: 1em;')
-      h2(style='margin-bottom: 1em;') Reset Password
+                    input.input.button.is-warning(type='submit', value=lang('ADMIN_USER_EDIT_IMPERSONATE_BUTTON', user._id), style='margin-top: 1em;')
+      h2(style='margin-bottom: 1em;')= lang('ADMIN_USER_EDIT_RESET_PASSWORD_HEADER')
       if user.pwToken
         - const resetLink = `${_CC.config.base}resetpw/${user.pwToken}`
-        p There is a reset password link for this user. 
+        p= lang('ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK')
           if user.pwExpiry > new Date().getTime()
-            span It expires #{_CC.require('moment')(user.pwExpiry).fromNow()}
+            span= lang('ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_FUTURE', _CC.moment(user.pwExpiry).fromNow())
           else
-            span.has-text-weight-bold.has-text-danger It expired #{_CC.require('moment')(user.pwExpiry).fromNow()}
+            span.has-text-weight-bold.has-text-danger= lang('ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_PAST', _CC.moment(user.pwExpiry).fromNow())
         a(href=resetLink)= resetLink
         .columns
           .column.is-narrow
             form(method='POST', action=`${_CC.config.base}admin-settings/edit/resetpw/${user._id}`)
               .field
                 .control
-                    input.button.is-primary(type='submit' value='Refresh Password Reset Link')
+                    input.button.is-primary(type='submit' value=lang('ADMIN_USER_EDIT_RESET_PASSWORD_LINK_REFRESH'))
           .column.is-narrow
             form(method='POST', action=`${_CC.config.base}admin-settings/edit/cancelresetpw/${user._id}`)
               .field
                 .control
-                    input.button.is-info(type='submit' value='Cancel Password Reset Link')
+                    input.button.is-info(type='submit' value=lang('ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CANCEL'))
       else
         form(method='POST', action=`${_CC.config.base}admin-settings/edit/resetpw/${user._id}`)
           .field
             .control
-                input.button.is-danger(type='submit' value='Create Password Reset Link')
+                input.button.is-danger(type='submit' value=lang('ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CREATE'))
     .column.is-narrow
-      h2 Irreversible Deletion
+      h2= lang('ADMIN_USER_EDIT_DELETE_HEADER')
       form(method='POST', action=`${_CC.config.base}admin-settings/edit/remove/${user._id}`)
         .field
           .control
             if user.admin
-              input.button.is-danger(disabled, type='submit' value=`User is admin`)
+              input.button.is-danger(disabled, type='submit' value=lang('ADMIN_USER_EDIT_DELETE_ADMIN'))
             else
-              input.button.is-danger(type='submit' value=`Remove user ${user._id}`)
+              input.button.is-danger(type='submit' value=lang('ADMIN_USER_EDIT_DELETE_USER', user._id))

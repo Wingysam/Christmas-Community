@@ -9,26 +9,26 @@ mixin icon(c, text)
 
 block title
   if doc
-    h1 #{config.siteTitle} | Reset Password
+    h1= lang('RESET_PASSWORD_HEADER_VALID')
   else
-    h1 #{config.siteTitle} | Reset Link Invalid
+    h1= lang('RESET_PASSWORD_HEADER_INVALID')
 
 block content
   if doc
     if doc.pwExpiry > new Date().getTime()
-      +icon('fas fa-smile-beam', `Hello ${doc._id}! Please set your password here.`)
+      +icon('fas fa-smile-beam', lang('RESET_PASSWORD_GREETING_VALID', doc._id))
       form(method='POST')
         .field
-          label.label Password
+          label.label= lang('RESET_PASSWORD_PASSWORD')
           .control.has-icons-left
-            input.input(type='password', name='password', placeholder='pa$$word!')
+            input.input(type='password', name='password', placeholder=lang('RESET_PASSWORD_PASSWORD_PLACEHOLDER'))
             span.icon.is-small.is-left
               i.fas.fa-lock
         .field
           .control
             input.button.is-primary(type='submit' value=`Reset Password`)
     else
-      +icon('fas fa-frown-open', 'Your reset link has expired. Please ask for a new one.')
+      +icon('fas fa-frown-open', lang('RESET_PASSWORD_GREETING_EXPIRED'))
   else
-    +icon('fas fa-frown-open', "This reset link isn't valid, perhaps the link was canceled or some characters at the end got cut off?")
+    +icon('fas fa-frown-open', lang('RESET_PASSWORD_INVALID'))
           

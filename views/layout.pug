@@ -36,7 +36,7 @@ html(lang='en')
           div.container.is-marginless.fullwidth
             block title
               if title
-                h1= config.siteTitle + ' - ' + title
+                h1= title
               else if title !== false
                 h1 #{config.siteTitle}
             include includes/messages.pug

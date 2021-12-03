@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   if config.pfp
-    h2 Profile
+    h2= lang('PROFILE_HEADER')
     div(style='margin-top: 1em;')
       .columns(style='margin-top: 1em;')
         .column.is-narrow
@@ -17,7 +17,7 @@ block content
                 br
                 br
                 form(action=`${_CC.config.base}profile/pfp`, method='POST')
-                  label.label Image URL
+                  label.label= lang('PROFILE_PFP_IMAGE_URL')
                   .field.has-addons
                     .control
                       input.input(name='image', value=req.user.pfp)
@@ -25,8 +25,8 @@ block content
                       button.button.is-primary(type='submit')
                         span.icon
                           i.fas.fa-save
-  h2 Security
+  h2= lang('PROFILE_SECURITY')
   a.button.is-primary(href=`${_CC.config.base}profile/password`)
     span.icon
       i.fas.fa-shield-alt
-    span Change Password
+    span= lang('PROFILE_SECURITY_CHANGE_PASSWORD')
