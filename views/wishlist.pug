@@ -30,7 +30,7 @@ block content
             th= lang('WISHLIST_MOVE_DOWN')
           else
             th= lang('WISHLIST_PLEDGE')
-          th= lang('WIDHLIST_DELETE')
+          th= lang('WISHLIST_DELETE')
         tbody
           each item, index in wishlist
             if req.user._id === item.addedBy || req.params.user !== req.user._id
