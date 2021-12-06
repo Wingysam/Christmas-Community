@@ -23,7 +23,7 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
       if req.isAuthenticated()
         if req.user._id === 'Unknown'
           .navbar-item
-            a.button.is-primary(href='/login')= lang('NAVBAR_')
+            a.button.is-primary(href='/login')= lang('NAVBAR_LOGIN')
         else
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link= req.user._id
