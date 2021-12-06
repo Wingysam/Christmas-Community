@@ -1,4 +1,4 @@
-module.exports.momentLocale = 'en'
+module.exports.momentLocale = 'de'
 
 module.exports.strings = {
   _NOT_LOCALIZED: key => `${key} wurde noch nicht auf Deutsch übersetzt.`,
