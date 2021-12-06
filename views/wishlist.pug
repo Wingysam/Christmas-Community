@@ -106,12 +106,12 @@ block content
                       form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                         .field.inline
                           .control.inline
-                            input.inline.button.is-primary(type='submit' value='Pledge')
+                            input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE'))
                     if item.pledgedBy === req.user._id
                       form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
                         .field.inline
                           .control.inline
-                            input.inline.button(type='submit' value='Unpledge')
+                            input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
                     if item.pledgedBy && item.pledgedBy !== req.user._id
                       span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
                 td(data-label='Delete Item')
