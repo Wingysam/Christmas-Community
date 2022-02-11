@@ -125,3 +125,10 @@ Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xy
 
 # Contributors
 As of writing, there are no code contributors. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
+
+## Language Contributors
+* English: [dotromain](https://github.com/dotromain), [o-pteron](https://github.com/o-pteron)
+* Czech: [drSchaps](https://github.com/drSchaps)
+* German: [PeteS4](https://github.com/PeteS4)
+* French: [zethis](https://github.com/zethis)
+* Spanish: [CantisW](https://github.com/CantisW)
