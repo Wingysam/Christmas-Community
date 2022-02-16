@@ -124,8 +124,10 @@ Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xy
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
 
 # Contributors
-As of writing, there are no code contributors. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
+As of writing, there are no code contributors to the main project. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
 
+# Adding Sites
+Christmas Community gets data about products automatically with [Wingysam/get-product-data](https://github.com/Wingysam/get-product-data). Please submit pull requests for new sites or fixes for changes to existing sites!
 ## Language Contributors
 * English: [dotromain](https://github.com/dotromain), [o-pteron](https://github.com/o-pteron)
 * Czech: [drSchaps](https://github.com/drSchaps)
