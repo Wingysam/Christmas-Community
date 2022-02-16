@@ -4,7 +4,7 @@ const { spawn } = require('child_process')
 const PACKAGENAME = 'get-product-name'
 
 async function isOutdated () {
-  const command = `npm outdated ${PACKAGENAME} --json`
+  const command = `npm outdated ${PACKAGENAME} --json || true`
   const npm = await exec(command)
   const data = JSON.parse(npm.stdout)
   return data[PACKAGENAME]?.current !== data[PACKAGENAME]?.wanted
