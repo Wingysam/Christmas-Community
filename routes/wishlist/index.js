@@ -99,7 +99,7 @@ module.exports = (db) => {
     item.price = productData?.price
     item.image = productData?.image
     item.addedBy = req.user._id
-    item.pledgedBy = (req.user._id === req.params.user ? undefined : req.user._id)
+    item.pledgedBy = (req.user._id === req.params.user || req.body.suggest ? undefined : req.user._id)
     item.note = req.body.note
     if (url) item.url = url
     if (!url) item.name = req.body.itemUrlOrName
