@@ -17,4 +17,16 @@ block content
     .field
       .control
         input.button.is-primary(type='submit' value=lang('LOGIN_BUTTON'))
-          
+  if _CC.config.guestPassword
+    hr
+    h3= lang('LOGIN_GUEST')
+    form(method='POST', action='/login/guest')
+      .field
+        label.label= lang('LOGIN_GUEST_PASSWORD')
+        .control.has-icons-left
+          input.input(type='password', name='guestpassword', placeholder=lang('LOGIN_GUEST_PASSWORD_PLACEHOLDER'))
+          span.icon.is-small.is-left
+            i.fas.fa-lock
+      .field
+        .control
+          input.button.is-primary(type='submit', value=lang('LOGIN_BUTTON'))
