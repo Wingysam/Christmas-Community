@@ -150,7 +150,6 @@ module.exports = (db) => {
             return res.redirect(`/wishlist/${req.params.user}`)
           }
           docs.rows[i].doc.wishlist[j].pledgedBy = undefined
-          if (docs.rows[i].doc.wishlist[j].addedBy === req.user._id) docs.rows[i].doc.wishlist.splice(j, 1)
           await db.put(docs.rows[i].doc)
           req.flash('success', _CC.lang('WISHLIST_UNPLEDGE_SUCCESS'))
           return res.redirect(`/wishlist/${req.params.user}`)
