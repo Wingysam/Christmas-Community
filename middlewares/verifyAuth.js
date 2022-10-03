@@ -9,6 +9,7 @@ module.exports = options => {
       return res.send('auth fail')
     }
     if (authed) return next()
+    if (_CC.config.guestPassword && req.query.pw === _CC.config.guestPassword) return next()
     res.redirect(options.failureRedirect || config.defaultFailureRedirect)
   }
 }
