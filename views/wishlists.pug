@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   ul.noStyle.noLeftMargin
-    if req.user._id !== 'Unknown'
+    if req.user._id !== '_CCUNKNOWN'
       li
         a(href=`${_CC.config.base}wishlist/${req.user._id}`)
           .box

@@ -15,5 +15,6 @@ module.exports = {
   trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
   bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase(),
   pfp: process.env.PFP !== 'false',
-  language: process.env.LANGUAGE?.toLowerCase() || 'en-us'
+  language: process.env.LANGUAGE?.toLowerCase() || 'en-us',
+  guestPassword: process.env.GUEST_PASSWORD
 }

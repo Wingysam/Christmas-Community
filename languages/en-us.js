@@ -160,6 +160,7 @@ module.exports.strings = {
   WISHLIST_PLEDGE_SUCCESS: 'Successfully pledged for item!',
   WISHLIST_PLEDGE: 'Pledge',
   WISHLIST_PLEDGED: pledgedBy => `Pledged for by ${pledgedBy}`,
+  WISHLIST_PLEDGED_GUEST: 'Pledged for by a guest user',
   WISHLIST_PRICE: 'Price',
   WISHLIST_REFRESH_GUARD: 'Invalid user',
   WISHLIST_REFRESH_NO_URL: 'Item has no URL.',

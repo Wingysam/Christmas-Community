@@ -29,6 +29,7 @@ module.exports = ({ db, config }) => {
   const router = express.Router()
 
   router.use('/', express.static(path.join(__dirname, '../static')))
+  router.use(require('cookie-parser')())
 
   router.get('/',
     async (req, res, next) => {

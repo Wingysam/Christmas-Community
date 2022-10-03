@@ -113,7 +113,10 @@ block content
                           .control.inline
                             input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
                     if item.pledgedBy && item.pledgedBy !== req.user._id
-                      span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
+                      if item.pledgedBy === '_CCUNKNOWN'
+                        span.ugc=lang('WISHLIST_PLEDGED_GUEST')
+                      else
+                        span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
                 td(data-label='Delete Item')
                   form.inline(
                     method='POST',
