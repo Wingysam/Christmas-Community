@@ -9,4 +9,5 @@ services:
     ports:
       - 3000:3000
       - 9229:9229
+      - 80:80
     command: node --inspect=0.0.0.0:9229 index.js
