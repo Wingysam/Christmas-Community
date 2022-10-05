@@ -25,7 +25,10 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/add', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
+
     const username = req.body.newUserUsername.trim()
+    if (!username) return res.redirect("/admin-settings");
+
     await db.put({
       _id: username,
       admin: false,
