@@ -11,9 +11,9 @@ block content
         = lang('ADMIN_SETTINGS_USERS_EDIT')
     br
   h3= lang('ADMIN_SETTINGS_USERS_ADD_HEADER')
-  form(id='add-user', action=`${_CC.config.base}admin-settings/add`, method='POST')
+  form(action=`${_CC.config.base}admin-settings/add`, method='POST')
     .field
-      p.has-text-danger#error-label
+      p.has-text-danger#error-label= add_user_error
       label.label= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
       .control.has-icons-left
         input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
@@ -30,13 +30,3 @@ block content
   p Get Product Data: v#{_CC.require('get-product-name/package.json').version}
   p Node: #{process.version}
   p PID: #{process.pid}
-
-  script.
-    document.getElementById('add-user').addEventListener('submit', function(e) {
-      // Prevent the form from submitting if the username is empty
-      if (document.getElementsByName('newUserUsername')[0].value === '') {
-        // Display an error message
-        document.getElementById('error-label').innerHTML = `#{lang('ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY')}`;
-        e.preventDefault();
-      }
-    });
