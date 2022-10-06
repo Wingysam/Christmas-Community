@@ -14,6 +14,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Ajouter un utilisateur',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'jean',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: 'Nom d\'utilisateur',
+  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY: 'Le nom d\'utilisateur ne peut pas être vide.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN: 'Échec de la suppression : l\'utilisateur est un administrateur.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: name => `Utilisateur supprimé avec succès ${name}`,
   ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN: 'l\'utilisateur n\'est pas un administrateur',

@@ -25,7 +25,25 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/add', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
+
     const username = req.body.newUserUsername.trim()
+    if (!username) {
+      return db
+          .allDocs({ include_docs: true })
+          .then((docs) => {
+            res.render("adminSettings", {
+                add_user_error: _CC.lang(
+                    "ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY"
+                ),
+                title: _CC.lang("ADMIN_SETTINGS_HEADER"),
+                users: docs.rows,
+            });
+          })
+          .catch((err) => {
+              throw err;
+          });
+    }
+
     await db.put({
       _id: username,
       admin: false,

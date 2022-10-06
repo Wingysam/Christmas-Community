@@ -13,6 +13,7 @@ block content
   h3= lang('ADMIN_SETTINGS_USERS_ADD_HEADER')
   form(action=`${_CC.config.base}admin-settings/add`, method='POST')
     .field
+      p.has-text-danger#error-label= add_user_error
       label.label= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
       .control.has-icons-left
         input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))

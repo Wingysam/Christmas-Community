@@ -14,6 +14,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Přidat uživatele',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'Martin',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: 'Uživatelské jméno',
+  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY: 'Uživatelské jméno nesmí být prázdné.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN: 'Není možné odstanit uživatele s právy správce.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: name => `Uživatel ${name} úspěšně odstraněn`,
   ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN: 'uživatel nemá oprávnění správce',

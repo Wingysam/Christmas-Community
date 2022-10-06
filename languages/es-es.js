@@ -14,6 +14,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Agregar usuario',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'juan',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: 'Nombre de usuario',
+  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY: 'El nombre de usuario no puede estar vacío.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN: 'No se pudo eliminar: este usuario es administrador.',
   ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: name => `Se pudo eliminar ${name}`,
   ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN: 'Este usuario no es administrador.',
