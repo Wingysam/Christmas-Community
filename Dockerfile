@@ -10,9 +10,9 @@ RUN npm install --production --silent
 
 COPY . .
 
-ENV PORT 3000
+ENV PORT 80
 ENV DB_EXPOSE_PORT 8080
-EXPOSE 3000
+EXPOSE 80
 
 RUN mkdir -p /data/dbs
 ENV DB_PREFIX /data/dbs/

@@ -4,7 +4,7 @@ module.exports = {
     dbPrefix: process.env.DB_PREFIX || "dbs/",
     defaultFailureRedirect: process.env.DEFAULT_FAILURE_REDIRECT || "/login",
     port: Number(process.env.PORT) || 3000,
-    dbExposePort: Number(process.env.DB_EXPOSE_PORT) || 8080,
+    dbExposePort: Number(process.env.DB_EXPOSE_PORT) || null,
     proxyServer: process.env.PROXY_SERVER || undefined,
     secret: process.env.SECRET || require("./secret"),
     sessionMaxAge:
