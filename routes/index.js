@@ -48,7 +48,7 @@ module.exports = ({ db, config }) => {
 
   router.use('/api', require('./api')({ db }))
 
-  router.use('/setup', require('./setup')(db))
+  router.use('/setup', require('./setup')({ db, ensurePfp }))
 
   router.use('/login', require('./login')({ ensurePfp }))
   router.use('/logout', require('./logout')())
