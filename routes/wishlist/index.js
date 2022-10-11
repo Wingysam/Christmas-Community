@@ -161,13 +161,14 @@ module.exports = (db) => {
   })
 
   router.post('/:user/remove/:itemId', verifyAuth(), async (req, res) => {
-    if (req.user._id !== req.params.user) {
-      req.flash('error', _CC.lang('WISHLIST_REMOVE_GUARD'))
-      return res.redirect(`/wishlist/${req.params.user}`)
-    }
-    const doc = await db.get(req.user._id)
+    const doc = await db.get(req.params.user)
     for (let i = 0; i < doc.wishlist.length; i++) {
       if (doc.wishlist[i].id === req.params.itemId) {
+        if (req.user._id !== req.params.user && doc.wishlist[i].addedBy !== req.user._id) {
+          req.flash('error', _CC.lang('WISHLIST_REMOVE_GUARD'))
+          return res.redirect(`/wishlist/${req.params.user}`)
+        }
+
         doc.wishlist.splice(i, 1)
         await db.put(doc)
         req.flash('success', _CC.lang('WISHLIST_REMOVE_SUCCESS'))

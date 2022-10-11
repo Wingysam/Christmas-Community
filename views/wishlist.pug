@@ -120,7 +120,7 @@ block content
                 td(data-label='Delete Item')
                   form.inline(
                     method='POST',
-                    action=`${_CC.config.base}wishlist/${req.params.user}/${req.user._id === req.params.user ? 'remove' : 'unpledge'}/${item.id}`
+                    action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`
                   )
                     .field.inline
                       .control.inline
