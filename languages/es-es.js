@@ -161,6 +161,7 @@ module.exports.strings = {
   WISHLIST_PLEDGE_SUCCESS: '¡Producto comprometido!',
   WISHLIST_PLEDGE: 'Comprometer',
   WISHLIST_PLEDGED: pledgedBy => `Comprometido por ${pledgedBy}`,
+  WISHLIST_PLEDGED_GUEST: 'Comprometido por un usuario invitado',
   WISHLIST_PRICE: 'Precio',
   WISHLIST_REFRESH_GUARD: 'Usuario inválido',
   WISHLIST_REFRESH_NO_URL: 'Este producto no tiene URL.',
@@ -168,6 +169,7 @@ module.exports.strings = {
   WISHLIST_REMOVE_GUARD: 'Usuario no es correcto',
   WISHLIST_REMOVE_MISSING: 'No se pudo encontrar este producto',
   WISHLIST_REMOVE_SUCCESS: '¡Eliminado de la lista de deseos!',
+  WISHLIST_SUGGEST: 'Sugerir producto',
   WISHLIST_TITLE: name => `${_CC.config.siteTitle} - Lista de deseos - ${name}`,
   WISHLIST_UNPLEDGE_GUARD: 'No se comprometió a esto', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_MISSING: 'No se pudo encontrar producto',
