@@ -161,6 +161,7 @@ module.exports.strings = {
   WISHLIST_PLEDGE_SUCCESS: 'Eintrag erfolgreich reserviert!',
   WISHLIST_PLEDGE: 'Reservieren',
   WISHLIST_PLEDGED: pledgedBy => `Reserviert von ${pledgedBy}`,
+  WISHLIST_PLEDGED_GUEST: 'Reserviert von einem Gast Benutzer',
   WISHLIST_PRICE: 'Preis',
   WISHLIST_REFRESH_GUARD: 'Ungültiger Nutzer',
   WISHLIST_REFRESH_NO_URL: 'Eintrag hat keine URL.',
@@ -168,6 +169,7 @@ module.exports.strings = {
   WISHLIST_REMOVE_GUARD: 'Falscher Nutzer',
   WISHLIST_REMOVE_MISSING: 'Eintrag nicht gefunden',
   WISHLIST_REMOVE_SUCCESS: 'Erfolgreich von der Wunschliste entfernt',
+  WISHLIST_SUGGEST: 'Eintrag vorschlagen',
   WISHLIST_TITLE: name => `${_CC.config.siteTitle} - Wunschliste - ${name}`,
   WISHLIST_UNPLEDGE_GUARD: 'Du hast das nicht reserviert', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_MISSING: 'Eintrag nicht gefunden',
