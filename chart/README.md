@@ -4,6 +4,12 @@
 
 A Helm chart for Kubernetes
 
+To install:
+```
+helm repo add christmas-community-chart-release https://ndlanier.github.io/christmas-community-chart-release/
+helm install christmas-community christmas-community-chart-release/christmas-community
+```
+
 ## Values
 
 | Key | Type | Default | Description |
