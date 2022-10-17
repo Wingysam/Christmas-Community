@@ -4,17 +4,37 @@
 
 A Helm chart for Kubernetes
 
-To install:
+## Install
 ```
-helm repo add christmas-community-chart-release https://ndlanier.github.io/christmas-community-chart-release/
-helm install christmas-community christmas-community-chart-release/christmas-community
+helm repo add <helm repo name> <helm repo url>
+helm install christmas-community <helm repo>/christmas-community
 ```
+
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| env.BULMASWATCH | string | `"default"` | `Any theme from https://jenil.github.io/bulmaswatch` |
+| env.DB_EXPOSE_PORT | string | `""` | `Expose the internal PouchDB with CouchDB API and Fauxton browser. Mostly used for debugging. Leave empty to disable.` |
+| env.DB_PREFIX | string | `"dbs/"` | `Where to store databases, can be a CouchDB compatible server or directory.` |
+| env.DEFAULT_FAILURE_REDIRECT | string | `"/login"` | `Where to send someone if they need to log in` |
+| env.LANGUAGE | string | `"en-US"` | `Language of the interface, options listed in languages directory` |
+| env.LISTS_PUBLIC | bool | `false` | `Set to false to allow viewing wishlists without logging in` |
+| env.MARKDOWN | bool | `false` | `Allow Markdown in item notes. Does not work with TABLE=false.` |
+| env.PFP | bool | `true` | `Set to false to disable the profile pictures feature` |
+| env.PROXY_SERVER | string | `""` | `Proxy to send item data requests to. Leave empty to disable.` |
+| env.ROOT_PATH | string | `"/"` | `The root path for forms, CSS, and a small amount of JS. Useful when proxying` |
+| env.SECRET | string | `""` | `Secret string to store session cookies with. Automatically generated if not provided.` |
+| env.SESSION_MAX_AGE | int | `604800000` | `How long a user is logged in (milliseconds). Defaults to one week.` |
+| env.SHORT_TITLE | string | `"Christmas"` | `Used when shared to home screen` |
+| env.SINGLE_LIST | bool | `false` | `Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.` |
+| env.SITE_TITLE | string | `"Christmas Community"` | `The name of the site in the <title> and navigation bar` |
+| env.SMILE | bool | `true` | `Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice.` |
+| env.TABLE | bool | `true` | `Defaults to true. Set to false for legacy cards view.` |
+| env.TRUST_PROXY | string | `"loopback"` | `Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.` |
+| env.UPDATE_CHECK | bool | `true` | `Set to false to disable update notices` |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"wingysam/christmas-community"` |  |
