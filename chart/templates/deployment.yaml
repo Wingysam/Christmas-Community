@@ -37,68 +37,89 @@ spec:
           volumeMounts:
             - name: {{ include "christmas-community.fullname" . }}-pv
               mountPath: {{- toYaml .Values.persistence.mountPath | indent 8}}  
+          {{- if .Values.env}}
           env:
             {{- if .Values.env.DB_PREFIX }}
-            DB_PREFIX: {{ .Values.env.DB_PREFIX }}
+            - name: DB_PREFIX
+              value: {{ .Values.env.DB_PREFIX }}
             {{- end}}
             {{- if .Values.env.DEFAULT_FAILURE_REDIRECT }}
-            DEFAULT_FAILURE_REDIRECT: {{ .Values.env.DEFAULT_FAILURE_REDIRECT }}
+            - name: DEFAULT_FAILURE_REDIRECT
+              value: {{ .Values.env.DEFAULT_FAILURE_REDIRECT }}
             {{- end}}
             {{- if .Values.env.DB_EXPOSE_PORT }}
-            DB_EXPOSE_PORT: {{ .Values.env.DB_EXPOSE_PORT }}
+            - name: DB_EXPOSE_PORT
+              value: {{ .Values.env.DB_EXPOSE_PORT }}
             {{- end}}
             {{- if .Values.env.PROXY_SERVER }}
-            PROXY_SERVER: {{ .Values.env.PROXY_SERVER }}
+            - name: PROXY_SERVER
+              value: {{ .Values.env.PROXY_SERVER }}
             {{- end}}
             {{- if .Values.env.SECRET }}
-            SECRET: {{ .Values.env.SECRET }}
+            - name: SECRET
+              value: {{ .Values.env.SECRET }}
             {{- end}}
             {{- if .Values.env.SESSION_MAX_AGE }}
-            SESSION_MAX_AGE: {{ .Values.env.SESSION_MAX_AGE }}
+            - name: SESSION_MAX_AGE
+              value: {{ .Values.env.SESSION_MAX_AGE }}
             {{- end}}
             {{- if .Values.env.SITE_TITLE }}
-            SITE_TITLE: {{ .Values.env.SITE_TITLE }}
+            - name: SITE_TITLE
+              value: {{ .Values.env.SITE_TITLE }}
             {{- end}}
             {{- if .Values.env.SHORT_TITLE }}
-            SHORT_TITLE: {{ .Values.env.SHORT_TITLE }}
+            - name: SHORT_TITLE
+              value: {{ .Values.env.SHORT_TITLE }}
             {{- end}}
             {{- if .Values.env.ROOT_PATH }}
-            ROOT_PATH: {{ .Values.env.ROOT_PATH }}
+            - name: ROOT_PATH
+              value: {{ .Values.env.ROOT_PATH }}
             {{- end}}
             {{- if .Values.env.TRUST_PROXY }}
-            TRUST_PROXY: {{ .Values.env.TRUST_PROXY }}
+            - name: TRUST_PROXY
+              value: {{ .Values.env.TRUST_PROXY }}
             {{- end}}
             {{- if .Values.env.BULMASWATCH }}
-            BULMASWATCH: {{ .Values.env.BULMASWATCH }}
+            - name: BULMASWATCH
+              value: {{ .Values.env.BULMASWATCH }}
             {{- end}}
             {{- if .Values.env.DB_PREFIX }}
-            DB_PREFIX: {{ .Values.env.DB_PREFIX }}
+            - name: DB_PREFIX
+              value: {{ .Values.env.DB_PREFIX }}
             {{- end}}
             {{- if .Values.env.UPDATE_CHECK }}
-            UPDATE_CHECK: {{ .Values.env.UPDATE_CHECK }}
+            - name: UPDATE_CHECK
+              value: {{ .Values.env.UPDATE_CHECK }}
             {{- end}}
             {{- if .Values.env.PFP }}
-            PFP: {{ .Values.env.PFP }}
+            - name: PFP
+              value: {{ .Values.env.PFP }}
             {{- end}}
             {{- if .Values.env.LANGUAGE }}
-            LANGUAGE: {{ .Values.env.LANGUAGE }}
+            - name: LANGUAGE
+              value: {{ .Values.env.LANGUAGE }}
             {{- end}}
-            PORT: {{ .Values.service.port }}
             {{- if .Values.env.SINGLE_LIST }}
-            SINGLE_LIST: {{ .Values.env.SINGLE_LIST }}
+            - name: SINGLE_LIST
+              value: {{ .Values.env.SINGLE_LIST }}
             {{- end}}
             {{- if .Values.env.LISTS_PUBLIC }}
-            LISTS_PUBLIC: {{ .Values.env.LISTS_PUBLIC }}
+            - name: LISTS_PUBLIC
+              value: {{ .Values.env.LISTS_PUBLIC }}
             {{- end}}
             {{- if .Values.env.TABLE }}
-            TABLE: {{ .Values.env.TABLE }}
+            - name: TABLE
+              value: {{ .Values.env.TABLE }}
             {{- end}}
             {{- if .Values.env.SMILE }}
-            SMILE: {{ .Values.env.SMILE }}
+            - name: SMILE
+              value: {{ .Values.env.SMILE }}
             {{- end}}
             {{- if .Values.env.MARKDOWN }}
-            MARKDOWN: {{ .Values.env.MARKDOWN }}
-            {{- end}}
+            - name: MARKDOWN
+              value: {{ .Values.env.MARKDOWN }}
+            {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 80
