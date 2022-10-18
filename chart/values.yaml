@@ -1,0 +1,111 @@
+# Default values for christmas-community.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: wingysam/christmas-community
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "1.30.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+#Container ENV variables
+env: []
+  # ## Core Settings
+  # # Where to store databases, can be a CouchDB compatible server or directory.
+  # DB_PREFIX: "dbs/"
+  # # Where to send someone if they need to log in
+  # DEFAULT_FAILURE_REDIRECT: "/login"
+  # # Expose the internal PouchDB with CouchDB API and Fauxton browser. Mostly used for debugging. Leave empty to disable.
+  # DB_EXPOSE_PORT: ""
+  # # Proxy to send item data requests to. Leave empty to disable.
+  # PROXY_SERVER: ""
+  # # Secret string to store session cookies with. Automatically generated if not provided.
+  # SECRET: ""
+  # # How long a user is logged in (milliseconds). Defaults to one week.
+  # SESSION_MAX_AGE: 604800000
+  # # The name of the site in the <title> and navigation bar
+  # SITE_TITLE: "Christmas Community"
+  # # Used when shared to home screen
+  # SHORT_TITLE: "Christmas"
+  # # The root path for forms, CSS, and a small amount of JS. Useful when proxying.
+  # ROOT_PATH: "/"
+  # # Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
+  # TRUST_PROXY: "loopback"
+  # # Any theme from https://jenil.github.io/bulmaswatch
+  # BULMASWATCH: "default"
+  # # Set to false to disable update notices
+  # UPDATE_CHECK: true
+  # # Set to false to disable the profile pictures feature
+  # PFP: true
+  # # Language of the interface, options listed in `languages` directory
+  # LANGUAGE: "en-US"
+  # ## Wishlist Settings
+  # # Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.
+  # SINGLE_LIST: false
+  # # Set to false to allow viewing wishlists without logging in
+  # LISTS_PUBLIC: false
+  # # Defaults to true. Set to false for legacy cards view.
+  # TABLE: true
+  # # Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice. Defaults to true.
+  # SMILE: true
+  # # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
+  # MARKDOWN: false
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+persistence:
+  enabled: false
+  mountPath: /data
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

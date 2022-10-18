@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "christmas-community.fullname" . }}
+  labels:
+    {{- include "christmas-community.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "christmas-community.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "christmas-community.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "christmas-community.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: {{ include "christmas-community.fullname" . }}-pv
+          persistentVolumeClaim:
+            claimName: {{ include "christmas-community.fullname" . }}-pvc
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: {{ include "christmas-community.fullname" . }}-pv
+              mountPath: {{- toYaml .Values.persistence.mountPath | indent 8}}  
+          {{- if .Values.env}}
+          env:
+            {{- if .Values.env.DB_PREFIX }}
+            - name: DB_PREFIX
+              value: {{ .Values.env.DB_PREFIX }}
+            {{- end}}
+            {{- if .Values.env.DEFAULT_FAILURE_REDIRECT }}
+            - name: DEFAULT_FAILURE_REDIRECT
+              value: {{ .Values.env.DEFAULT_FAILURE_REDIRECT }}
+            {{- end}}
+            {{- if .Values.env.DB_EXPOSE_PORT }}
+            - name: DB_EXPOSE_PORT
+              value: {{ .Values.env.DB_EXPOSE_PORT }}
+            {{- end}}
+            {{- if .Values.env.PROXY_SERVER }}
+            - name: PROXY_SERVER
+              value: {{ .Values.env.PROXY_SERVER }}
+            {{- end}}
+            {{- if .Values.env.SECRET }}
+            - name: SECRET
+              value: {{ .Values.env.SECRET }}
+            {{- end}}
+            {{- if .Values.env.SESSION_MAX_AGE }}
+            - name: SESSION_MAX_AGE
+              value: {{ .Values.env.SESSION_MAX_AGE }}
+            {{- end}}
+            {{- if .Values.env.SITE_TITLE }}
+            - name: SITE_TITLE
+              value: {{ .Values.env.SITE_TITLE }}
+            {{- end}}
+            {{- if .Values.env.SHORT_TITLE }}
+            - name: SHORT_TITLE
+              value: {{ .Values.env.SHORT_TITLE }}
+            {{- end}}
+            {{- if .Values.env.ROOT_PATH }}
+            - name: ROOT_PATH
+              value: {{ .Values.env.ROOT_PATH }}
+            {{- end}}
+            {{- if .Values.env.TRUST_PROXY }}
+            - name: TRUST_PROXY
+              value: {{ .Values.env.TRUST_PROXY }}
+            {{- end}}
+            {{- if .Values.env.BULMASWATCH }}
+            - name: BULMASWATCH
+              value: {{ .Values.env.BULMASWATCH }}
+            {{- end}}
+            {{- if .Values.env.DB_PREFIX }}
+            - name: DB_PREFIX
+              value: {{ .Values.env.DB_PREFIX }}
+            {{- end}}
+            {{- if .Values.env.UPDATE_CHECK }}
+            - name: UPDATE_CHECK
+              value: {{ .Values.env.UPDATE_CHECK }}
+            {{- end}}
+            {{- if .Values.env.PFP }}
+            - name: PFP
+              value: {{ .Values.env.PFP }}
+            {{- end}}
+            {{- if .Values.env.LANGUAGE }}
+            - name: LANGUAGE
+              value: {{ .Values.env.LANGUAGE }}
+            {{- end}}
+            {{- if .Values.env.SINGLE_LIST }}
+            - name: SINGLE_LIST
+              value: {{ .Values.env.SINGLE_LIST }}
+            {{- end}}
+            {{- if .Values.env.LISTS_PUBLIC }}
+            - name: LISTS_PUBLIC
+              value: {{ .Values.env.LISTS_PUBLIC }}
+            {{- end}}
+            {{- if .Values.env.TABLE }}
+            - name: TABLE
+              value: {{ .Values.env.TABLE }}
+            {{- end}}
+            {{- if .Values.env.SMILE }}
+            - name: SMILE
+              value: {{ .Values.env.SMILE }}
+            {{- end}}
+            {{- if .Values.env.MARKDOWN }}
+            - name: MARKDOWN
+              value: {{ .Values.env.MARKDOWN }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
