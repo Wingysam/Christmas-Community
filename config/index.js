@@ -18,3 +18,5 @@ module.exports = {
   language: process.env.LANGUAGE?.toLowerCase() || 'en-us',
   guestPassword: process.env.GUEST_PASSWORD
 }
+
+if (module.exports.guestPassword) module.exports.wishlist.public = false
