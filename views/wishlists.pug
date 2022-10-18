@@ -1,32 +1,49 @@
 extends layout.pug
 
 mixin wishlistDetails(wishlist, onlyShowAddedByUser)
-  details.wishlist-details
-    summary
-    ul
+  .wishlist-dropdown-container.wishlist-dropdown-container-unloaded
+    button.wishlist-dropdown-button.button.is-rounded
+      span.icon.is-small
+        i.fas.fa-chevron-left
+        i.fas.fa-chevron-down
+    ul.wishlist-dropdown
       for item in wishlist
         if onlyShowAddedByUser === undefined || item.addedBy === onlyShowAddedByUser
           li= item.name
 
 block content
   style.
-    .wishlist-details > summary {
-      list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 512'%3E%3Cpath d='M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z'/%3E%3C/svg%3E")
+    .wishlist-dropdown-container-unloaded {
+      display: none;
     }
-    .wishlist-details[open] > summary {
-      list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z'/%3E%3C/svg%3E")
-    }
-    .wishlist-details li {
-      list-style-type: disc !important;
-    }
-    .wishlist-details summary {
-      font-size: 8em;
-      margin-top: -1em;
-      margin-bottom: -.5em;
+    .wishlist-dropdown-button {
       margin-left: auto;
       margin-right: 0;
-      width: .5em;
-    }   
+      display: block;
+    }
+    .wishlist-dropdown {
+      display: none;
+    }
+    .wishlist-dropdown li {
+      list-style-type: disc !important;
+    }
+    .wishlist-dropdown-container-active > .wishlist-dropdown {
+      display: block;
+    }
+    
+    .wishlist-dropdown-container .fa-chevron-left {
+      display: inline-block;
+    }
+    .wishlist-dropdown-container .fa-chevron-down {
+      display: none;
+    }
+    .wishlist-dropdown-container.wishlist-dropdown-container-active .fa-chevron-left {
+      display: none;
+    }
+    .wishlist-dropdown-container.wishlist-dropdown-container-active .fa-chevron-down {
+      display: inline-block;
+    }
+
   ul.noStyle.noLeftMargin
     if req.user._id !== '_CCUNKNOWN'
       li
@@ -56,3 +73,12 @@ block content
                   span= lang('WISHLISTS_COUNTS', user.id, totals(user.doc.wishlist).pledged, user.doc.wishlist.length)
                   progress.progress.is-info(value=totals(user.doc.wishlist).pledged, max=user.doc.wishlist.length)
             +wishlistDetails(user.doc.wishlist)
+  script.
+    document.querySelectorAll('.wishlist-dropdown-button')
+      .forEach(button => {
+        button.addEventListener('click', e => {
+          button.parentElement.classList.toggle('wishlist-dropdown-container-active')
+        })
+      })
+    document.querySelectorAll('.wishlist-dropdown-container-unloaded')
+      .forEach(container => container.classList.remove('wishlist-dropdown-container-unloaded'))
