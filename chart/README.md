@@ -1,6 +1,6 @@
 # christmas-community
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.30.0](https://img.shields.io/badge/AppVersion-1.30.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.30.1](https://img.shields.io/badge/AppVersion-1.30.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -38,7 +38,7 @@ helm install christmas-community <helm repo>/christmas-community
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"wingysam/christmas-community"` |  |
-| image.tag | string | `"1.30.0"` |  |
+| image.tag | string | `"1.30.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
