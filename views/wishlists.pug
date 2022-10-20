@@ -12,7 +12,14 @@ mixin wishlistDetails(wishlist, onlyShowAddedByUser)
           li= item.name
 
 block content
-  script(src=`${_CC.config.base}js/wishlists.js`)
+  unless config.alwaysShowProgressBars
+    style.
+      .hidden {
+        display: none
+      }
+    script(src=`${_CC.config.base}js/wishlists.js`)
+    #hideButton.button.hidden= lang('WISHLISTS_HIDE')
+    #showButton.button= lang('WISHLISTS_SHOW')
   style.
     .wishlist-dropdown-container-unloaded {
       display: none;
@@ -44,12 +51,6 @@ block content
     .wishlist-dropdown-container.wishlist-dropdown-container-active .fa-chevron-down {
       display: inline-block;
     }
-
-    .hidden {
-      display: none
-    }
-  #hideButton.button.hidden= lang('WISHLISTS_HIDE')
-  #showButton.button= lang('WISHLISTS_SHOW')
   ul.noStyle.noLeftMargin
     if req.user._id !== '_CCUNKNOWN'
       li

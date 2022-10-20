@@ -91,6 +91,8 @@ BULMASWATCH=default
 UPDATE_CHECK=true
 # Set to false to disable the profile pictures feature
 PFP=true
+# Set to true to never hide progress bars
+ALWAYS_SHOW_PROGRESS_BARS=false
 # Language of the interface, options listed in `languages` directory
 LANGUAGE=en-US
 
