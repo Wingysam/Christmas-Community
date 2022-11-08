@@ -168,6 +168,7 @@ module.exports.strings = {
   WISHLIST_REMOVE_GUARD: 'Utilisateur incorrect',
   WISHLIST_REMOVE_MISSING: "Impossible de trouver l'article",
   WISHLIST_REMOVE_SUCCESS: 'Supprimé avec succès de la liste de souhaits',
+  WISHLIST_SUGGEST: 'Suggérer un cadeau',
   WISHLIST_TITLE: name => `${_CC.config.siteTitle} - Liste d'envie - ${name}`,
   WISHLIST_UNPLEDGE_GUARD: 'Vous ne vous êtes pas engagé pour cela', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_MISSING: "Impossible de trouver l'article",
