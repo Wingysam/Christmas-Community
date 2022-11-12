@@ -15,7 +15,7 @@ module.exports = ({ config }) => {
       icons: [
         {
           sizes: '1280x1280',
-          src: '/img/logo.png'
+          src: `${_CC.config.base}img/logo.png`
         }
       ]
     })
