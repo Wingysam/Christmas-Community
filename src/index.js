@@ -82,6 +82,17 @@ passport.deserializeUser((user, callback) => {
     .catch(() => callback(null, null))
 })
 
+// https://stackoverflow.com/a/54426950
+app.use((req, res, next) => {
+  const redirector = res.redirect
+  res.redirect = function (url) {
+    const base = this.req.app.set('base')
+    if (base && url.startsWith('/')) url = base + url.substr(1)
+    redirector.call(this, url)
+  }
+  next()
+})
+
 app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(session({
   secret: config.secret,
