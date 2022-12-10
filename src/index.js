@@ -15,6 +15,7 @@ const path = require('path')
 _CC._ = require('lodash')
 _CC.moment = require('moment/min/moment-with-locales')
 
+const { WishlistManager } = require('./structures/WishlistManager')
 const config = require('./config')
 _CC.config = config
 
@@ -55,6 +56,9 @@ app.set('base', config.base)
 app.set('trust proxy', config.trustProxy)
 
 const db = new PouchDB('users')
+_CC.usersDb = db
+
+_CC.wishlistManager = new WishlistManager()
 
 passport.use('local', new LocalStrategy(
   (username, password, done) => {
