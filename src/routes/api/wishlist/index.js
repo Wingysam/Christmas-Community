@@ -9,31 +9,27 @@ module.exports = ({ db }) => {
     })
   })
 
-  router.post('/:user/:id/move/:direction', async (req, res) => {
+  router.post('/:user/:itemId/move/:direction', async (req, res) => {
     try {
-      if (req.user._id !== req.params.user) return res.json({ error: 'Not correct user' })
-      const doc = await db.get(req.user._id)
-      const wishlist = doc.wishlist
-      if (req.params.direction === 'up') wishlist.reverse()
-      let moveFromIndex
-      wishlist.forEach(wish => {
-        if (wish.id === req.params.id) moveFromIndex = wishlist.indexOf(wish)
-      })
-      const moveToIndex = wishlist.findIndex(wish => {
-        return (wishlist.indexOf(wish) > moveFromIndex && wish.addedBy === req.user._id)
-      })
-      if (moveToIndex < 0 || moveToIndex > wishlist.length) return res.send({ error: 'Invalid move ' })
-      const original = wishlist[moveToIndex]
-      wishlist[moveToIndex] = wishlist[moveFromIndex]
-      wishlist[moveFromIndex] = original
-      if (req.params.direction === 'up') wishlist.reverse()
-      doc.wishlist = wishlist
-      await db.put(doc)
-      res.send({ error: false })
+      if (req.user._id !== req.params.user) {
+        throw new Error(_CC.lang('WISHLIST_MOVE_GUARD'))
+      }
+
+      const wishlist = await _CC.wishlistManager.get(req.params.user)
+      if (req.params.direction === 'top') {
+        await wishlist.moveTop(req.params.itemId)
+      } else if (req.params.direction === 'up') {
+        await wishlist.move(req.params.itemId, -1)
+      } else if (req.params.direction === 'down') {
+        await wishlist.move(req.params.itemId, 1)
+      } else {
+        throw new Error(_CC.lang('WISHLIST_MOVE_UNKNOWN_DIRECTION'))
+      }
     } catch (error) {
-      console.error(error)
-      res.send({ error: error.message })
+      return res.send({ error: error.message })
     }
+
+    res.send({ error: false })
   })
 
   return router

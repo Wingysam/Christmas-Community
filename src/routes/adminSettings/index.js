@@ -29,19 +29,19 @@ module.exports = ({ db, ensurePfp }) => {
     const username = req.body.newUserUsername.trim()
     if (!username) {
       return db
-          .allDocs({ include_docs: true })
-          .then((docs) => {
-            res.render("adminSettings", {
-                add_user_error: _CC.lang(
-                    "ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY"
-                ),
-                title: _CC.lang("ADMIN_SETTINGS_HEADER"),
-                users: docs.rows,
-            });
+        .allDocs({ include_docs: true })
+        .then((docs) => {
+          res.render('adminSettings', {
+            add_user_error: _CC.lang(
+              'ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY'
+            ),
+            title: _CC.lang('ADMIN_SETTINGS_HEADER'),
+            users: docs.rows
           })
-          .catch((err) => {
-              throw err;
-          });
+        })
+        .catch((err) => {
+          throw err
+        })
     }
 
     await db.put({
@@ -123,6 +123,8 @@ module.exports = ({ db, ensurePfp }) => {
         await db.bulkDocs(usersBulk)
         await db.remove(await db.get(oldName))
 
+        await _CC.wishlistManager.clearCache()
+
         req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_RENAMED_USER'))
         return res.redirect(`/wishlist/${newName}`)
       } catch (error) {
@@ -193,24 +195,33 @@ module.exports = ({ db, ensurePfp }) => {
   })
 
   router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToRemove)
-    if (doc.admin) {
-      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
-      return res.redirect('/admin-settings')
-    }
-    await db.remove(doc)
-    const { rows } = await db.allDocs({ include_docs: true })
-    for (let i = 0; i < rows.length; i++) {
-      for (let j = 0; j < rows[i].doc.wishlist.length; j++) {
-        if (rows[i].doc.wishlist[j].pledgedBy === req.params.userToRemove) {
-          rows[i].doc.wishlist[j].pledgedBy = undefined
-          if (rows[i].doc.wishlist[j].addedBy === req.params.userToRemove) rows[i].doc.wishlist.splice(j, 1)
-          await db.put(rows[i].doc)
+    try {
+      if (!req.user.admin) return res.redirect('/')
+
+      const userToRemove = await db.get(req.params.userToRemove)
+      if (userToRemove.admin) {
+        req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
+        return res.redirect('/admin-settings')
+      }
+      await db.remove(userToRemove)
+
+      const { rows } = await db.allDocs()
+      for (const row of rows) {
+        const wishlist = await _CC.wishlistManager.get(row.id)
+        for (const item of wishlist.items) {
+          if (item.addedBy === userToRemove._id) {
+            await wishlist.remove(item.id)
+          } else if (item.pledgedBy === userToRemove._id) {
+            await wishlist.unpledge(item.id)
+          }
         }
       }
+
+      req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.userToRemove))
+    } catch (error) {
+      req.flash('error', `${error}`)
     }
-    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.userToRemove))
+
     res.redirect('/admin-settings')
   })
 
@@ -221,11 +232,17 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/clear-wishlists', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    const { rows } = await db.allDocs({ include_docs: true })
-    for (const row of rows) {
-      row.doc.wishlist = []
-      await db.put(row.doc)
+
+    const usersBulk = []
+    const { rows: users } = await db.allDocs({ include_docs: true })
+    for (const { doc: user } of users) {
+      user.wishlist = []
+      usersBulk.push(user)
     }
+    await db.bulkDocs(usersBulk)
+
+    await _CC.wishlistManager.clearCache()
+
     req.flash('success', _CC.lang('ADMIN_SETTINGS_CLEARDB_SUCCESS'))
     res.redirect('/admin-settings')
   })
