@@ -41,6 +41,6 @@ log.txt
 
 # Session store
 sessions/
-config/secret/secret.txt
+src/config/secret/secret.txt
 
 package-lock.json
