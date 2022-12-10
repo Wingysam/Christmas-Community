@@ -19,7 +19,7 @@ async function updateGPD () {
 ;(async () => {
   let cc = null
   function spawnCC () {
-    cc = spawn('node', ['index.js'], { env: process.env })
+    cc = spawn('node', ['src/index.js'], { env: process.env })
     cc.on('exit', spawnCC)
     cc.stdout.pipe(process.stdout)
     cc.stderr.pipe(process.stderr)

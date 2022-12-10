@@ -1,6 +1,6 @@
 global._CC = { require }
 
-_CC.package = require('./package.json')
+_CC.package = require('../package.json')
 
 const PouchSession = require('session-pouchdb-store')
 const LocalStrategy = require('passport-local').Strategy
@@ -10,6 +10,7 @@ const flash = require('connect-flash')
 const passport = require('passport')
 const fetch = require('node-fetch')
 const express = require('express')
+const path = require('path')
 
 _CC._ = require('lodash')
 _CC.moment = require('moment/min/moment-with-locales')
@@ -81,6 +82,17 @@ passport.deserializeUser((user, callback) => {
     .catch(() => callback(null, null))
 })
 
+// https://stackoverflow.com/a/54426950
+app.use((req, res, next) => {
+  const redirector = res.redirect
+  res.redirect = function (url) {
+    const base = this.req.app.set('base')
+    if (base && url.startsWith('/')) url = base + url.substr(1)
+    redirector.call(this, url)
+  }
+  next()
+})
+
 app.use(require('body-parser').urlencoded({ extended: true }))
 app.use(session({
   secret: config.secret,
@@ -104,6 +116,7 @@ app.use((req, res, next) => {
 })
 
 app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'))
 app.use(config.base, require('./routes')({ db, config }))
 
 app.listen(config.port, () => logger.success('express', `Express server started on port ${config.port}!`))

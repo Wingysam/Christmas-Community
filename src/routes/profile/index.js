@@ -19,7 +19,7 @@ module.exports = ({ db, config, ensurePfp }) => {
     } else {
       req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
     }
-    res.redirect(`${_CC.config.base}profile`)
+    res.redirect('/profile')
   })
 
   router.get('/password', verifyAuth(), async (req, res) => {

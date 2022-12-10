@@ -11,7 +11,7 @@ module.exports = ({ db, config }) => {
 
     const { rows } = await db.allDocs({ include_docs: true })
 
-    const unfilteredPool = await fs.readdir('static/img/default-pfps')
+    const unfilteredPool = await fs.readdir('src/static/img/default-pfps')
     const filteredPool = unfilteredPool.filter(file => !rows.find(row => row.doc.pfp === `${_CC.config.base}img/default-pfps/${file}`))
     const pool = filteredPool.length ? filteredPool : unfilteredPool
 
