@@ -5,7 +5,7 @@ RUN apk --no-cache add curl
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "patched-express-response.js", "./"]
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --production --silent
 
 COPY . .
