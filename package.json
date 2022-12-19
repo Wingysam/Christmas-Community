@@ -1,6 +1,6 @@
 {
   "name": "christmas-community",
-  "version": "1.30.2",
+  "version": "1.30.3",
   "description": "Christmas lists for communities",
   "main": "src/index.js",
   "scripts": {
