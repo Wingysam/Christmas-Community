@@ -133,7 +133,7 @@ module.exports = (db) => {
   router.post('/:user/remove/:itemId', verifyAuth(), async (req, res) => {
     try {
       const wishlist = await wishlistManager.get(req.params.user)
-      const item = wishlist.get(req.params.itemId)
+      const item = await wishlist.get(req.params.itemId)
 
       const isOwnWishlist = req.user._id === wishlist.username
       const addedByUser = item.addedBy === req.user._id
