@@ -154,7 +154,7 @@ module.exports.strings = {
   WISHLIST_MOVE_ITEM_TOP: 'Verplaats item naar bovenkant',
   WISHLIST_MOVE_ITEM_UP: 'Verplaats item naar boven',
   WISHLIST_MOVE_SUCCESS: 'Item verplaatst!',
-  WISHLIST_MOVE_TOP: 'Verplaats naar bovenkant',
+  WISHLIST_MOVE_TOP: 'Zet bovenaan',
   WISHLIST_MOVE_UNKNOWN_DIRECTION: 'Onbekende richting',
   WISHLIST_MOVE_UP: 'Verplaats omhoog',
   WISHLIST_NAME: 'Naam',
