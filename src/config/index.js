@@ -16,7 +16,11 @@ module.exports = {
   bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase(),
   pfp: process.env.PFP !== 'false',
   language: process.env.LANGUAGE?.toLowerCase() || 'en-us',
-  guestPassword: process.env.GUEST_PASSWORD
+  guestPassword: process.env.GUEST_PASSWORD,
+  customHtml: {
+    wishlists: process.env.CUSTOM_HTML_WISHLISTS,
+    login: process.env.CUSTOM_HTML_LOGIN
+  }
 }
 
 if (module.exports.guestPassword) module.exports.wishlist.public = false

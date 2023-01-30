@@ -105,6 +105,12 @@ TABLE=true
 SMILE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
+
+## Custom HTML Snippets
+# These are inserted into specific locations in the relevant page
+# HTML is not escaped. Don't put untrusted data here.
+# CUSTOM_HTML_LOGIN=<p style="margin-top: 1em;">Some custom text for the Login page</p>
+# CUSTOM_HTML_WISHLISTS=
 ```
 
 ## Default Profile Pictures

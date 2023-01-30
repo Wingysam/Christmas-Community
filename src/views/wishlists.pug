@@ -44,6 +44,9 @@ block content
       display: inline-block;
     }
 
+  if _CC.config.customHtml.wishlists
+    div!= _CC.config.customHtml.wishlists
+
   ul.noStyle.noLeftMargin
     if req.user._id !== '_CCUNKNOWN'
       li
