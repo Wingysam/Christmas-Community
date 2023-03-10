@@ -161,7 +161,7 @@ module.exports.strings = {
   WISHLIST_PLEDGE_SUCCESS: 'Eintrag erfolgreich reserviert!',
   WISHLIST_PLEDGE: 'Reservieren',
   WISHLIST_PLEDGED: pledgedBy => `Reserviert von ${pledgedBy}`,
-  WISHLIST_PLEDGED_GUEST: 'Reserviert von einem Gast Benutzer',
+  WISHLIST_PLEDGED_GUEST: 'Reserviert von einem Gastbenutzer',
   WISHLIST_PRICE: 'Preis',
   WISHLIST_REFRESH_GUARD: 'Ungültiger Nutzer',
   WISHLIST_REFRESH_NO_URL: 'Eintrag hat keine URL.',
