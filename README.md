@@ -93,6 +93,9 @@ UPDATE_CHECK=true
 PFP=true
 # Language of the interface, options listed in `languages` directory
 LANGUAGE=en-US
+# Password to enter guest mode,
+# e.g. https://wishes.example.com?pw=ReplaceWithYourGuestPassword
+GUEST_PASSWORD=ReplaceWithYourGuestPassword
 
 ## Wishlist Settings
 # Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.
