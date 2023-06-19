@@ -20,7 +20,8 @@ module.exports = {
   customHtml: {
     wishlists: process.env.CUSTOM_HTML_WISHLISTS,
     login: process.env.CUSTOM_HTML_LOGIN
-  }
+  },
+  customCSS: process.env.CUSTOM_CSS || null
 }
 
 if (module.exports.guestPassword) module.exports.wishlist.public = false
