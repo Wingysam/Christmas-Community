@@ -111,10 +111,15 @@ MARKDOWN=false
 # HTML is not escaped. Don't put untrusted data here.
 # CUSTOM_HTML_LOGIN=<p style="margin-top: 1em;">Some custom text for the Login page</p>
 # CUSTOM_HTML_WISHLISTS=
+
+# Custom CSS stylesheet
+# If you wish to include a custom stylesheet you can add the filename in the variable here.
+# Remember to add the stylesheet to the filesystem at `static/css/custom.css`. In docker, mount `/usr/src/app/src/static/css/custom.css`.
+# CUSTOM_CSS=custom.css
 ```
 
 ## Default Profile Pictures
-To replace the default snowman profile pictures, replace the files in `static/img/default-pfps`. In docker, mount `/usr/src/app/static/img/default-pfps`.
+To replace the default snowman profile pictures, replace the files in `static/img/default-pfps`. In docker, mount `/usr/src/app/src/static/img/default-pfps`.
 
 ## Startup
 ```sh

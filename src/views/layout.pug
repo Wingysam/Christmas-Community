@@ -15,6 +15,8 @@ html(lang='en')
     link(rel='stylesheet', href=`${_CC.config.base}libraries/fontawesome/css/all.css`)
     link(rel='stylesheet', href=`${_CC.config.base}libraries/animate.min.css`)
     link(rel='stylesheet', href=`${_CC.config.base}css/main.css`)
+    if _CC.config.customCSS
+      link(rel='stylesheet', href=`${_CC.config.base}css/${_CC.config.customCSS}`)
   body
     .print
       .content
