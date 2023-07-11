@@ -175,7 +175,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_MISSING: 'Nu s-a putut găsi produsul',
   WISHLIST_UNPLEDGE_SUCCESS: 'Ați anulat cu succes rezervarea cadoului!',
   WISHLIST_UNPLEDGE: 'Anulați rezervarea',
-  WISHLIST_URL_LABEL: 'URL-ul sau numele articolului (<a href="/supported-sites">Site-uri Suportate</a>)',
+  WISHLIST_URL_LABEL: `URL-ul sau numele articolului (<a href="${_CC.config.base}supported-sites">Site-uri Suportate</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'URL-ul sau numele articolului trebuie completat',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

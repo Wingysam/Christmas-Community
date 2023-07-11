@@ -178,7 +178,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_GUARD: 'Dit heb jij niet beloofd', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_SUCCESS: 'Belofte voor item verwijderd!',
   WISHLIST_UNPLEDGE: 'Verwijder belofte',
-  WISHLIST_URL_LABEL: 'Item URL of naam (<a href="/supported-sites">Ondersteunde websites</a>)',
+  WISHLIST_URL_LABEL: `Item URL of naam (<a href="${_CC.config.base}supported-sites">Ondersteunde websites</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.bol.com/nl/nl/p/mens-erger-je-niet-dobbelautomaat-bordspel/1004004000017412/',
   WISHLIST_URL_REQUIRED: 'Item URL of naam is verplicht',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

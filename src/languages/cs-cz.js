@@ -173,7 +173,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_MISSING: 'Položka nenalezena',
   WISHLIST_UNPLEDGE_SUCCESS: 'Rezervace zrušena!',
   WISHLIST_UNPLEDGE: 'Zrušit rezervaci',
-  WISHLIST_URL_LABEL: 'Jméno položky nebo odkaz na ni (odkazy na CZ obchody nefunkční) (<a href="/supported-sites">Podporované obchody</a>)',
+  WISHLIST_URL_LABEL: `Jméno položky nebo odkaz na ni (odkazy na CZ obchody nefunkční) (<a href="${_CC.config.base}supported-sites">Podporované obchody</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Nevyplněna položka nebo odkaz na ni.',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

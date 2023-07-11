@@ -178,7 +178,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_GUARD: 'Fejl - du har ikke reserveret denne gave', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_SUCCESS: 'Reservationen er nu fjernet',
   WISHLIST_UNPLEDGE: 'Fjern reservation',
-  WISHLIST_URL_LABEL: 'Link eller titel (<a href="/supported-sites">Supporterede hjemmesider</a>)',
+  WISHLIST_URL_LABEL: `Link eller titel (<a href="${_CC.config.base}supported-sites">Supporterede hjemmesider</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Link eller titel er påkrævet',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

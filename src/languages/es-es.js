@@ -175,7 +175,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_MISSING: 'No se pudo encontrar producto',
   WISHLIST_UNPLEDGE_SUCCESS: '¡Comprometido para producto eliminado!',
   WISHLIST_UNPLEDGE: 'Eliminar comprometido',
-  WISHLIST_URL_LABEL: 'Nombre de producto o URL (<a href="/supported-sites">Sitios web compatibles</a>)',
+  WISHLIST_URL_LABEL: `Nombre de producto o URL (<a href="${_CC.config.base}supported-sites">Sitios web compatibles</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Necesita un nombre de producto o URL',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
