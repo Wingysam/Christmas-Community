@@ -178,7 +178,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_GUARD: 'You did not pledge for this', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_SUCCESS: 'Successfully unpledged for item!',
   WISHLIST_UNPLEDGE: 'Unpledge',
-  WISHLIST_URL_LABEL: 'Item URL or Name (<a href="/supported-sites">Supported Sites</a>)',
+  WISHLIST_URL_LABEL: `Item URL or Name (<a href="${_CC.config.base}supported-sites">Supported Sites</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Item URL or Name is required',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

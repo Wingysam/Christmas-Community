@@ -178,7 +178,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_GUARD: 'Du hast das nicht reserviert', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_SUCCESS: 'Reservierung erfolgreich aufgehoben!',
   WISHLIST_UNPLEDGE: 'Reservierung aufheben',
-  WISHLIST_URL_LABEL: 'URL oder Name (<a href="/supported-sites">Unterstützte Seiten</a>)',
+  WISHLIST_URL_LABEL: `URL oder Name (<a href="${_CC.config.base}supported-sites">Unterstützte Seiten</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'URL oder Name wird benötigt',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,

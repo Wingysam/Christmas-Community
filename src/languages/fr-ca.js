@@ -174,7 +174,7 @@ module.exports.strings = {
   WISHLIST_UNPLEDGE_MISSING: 'Impossible de trouver l\'article',
   WISHLIST_UNPLEDGE_SUCCESS: 'L\'article a été annulé avec succès',
   WISHLIST_UNPLEDGE: 'Se désengager',
-  WISHLIST_URL_LABEL: 'URL ou nom de l\'article (<a href="/supported-sites">Sites supportés</a>)',
+  WISHLIST_URL_LABEL: 'URL ou nom de l\`article (<a href="${_CC.config.base}supported-sites">Sites supportés</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: "L'URL ou le nom de l'article est requis",
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
