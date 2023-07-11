@@ -23,7 +23,7 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
       if req.isAuthenticated()
         if req.user._id === '_CCUNKNOWN'
           .navbar-item
-            a.button.is-primary(href='/login')= lang('NAVBAR_LOGIN')
+            a.button.is-primary(href=`${_CC.config.base}login`)= lang('NAVBAR_LOGIN')
         else
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link= req.user._id
