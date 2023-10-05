@@ -25,3 +25,7 @@ module.exports = {
 }
 
 if (module.exports.guestPassword) module.exports.wishlist.public = false
+if (module.exports.guestPassword === 'ReplaceWithYourGuestPassword') {
+  console.error('Error: Guest password should be changed from default.')
+  process.exit(1)
+}
