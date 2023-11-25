@@ -49,6 +49,10 @@ services:
       # (for weddings, birthdays, etc. only the admin account's list is accessible)
       # Set to 'true' to enable
       SINGLE_LIST: 'false'
+      # Some websites (like walmart) send headers that are larger than 8MB in
+      # length. If issues are encountered, set the node.js limit to a higher
+      # number than 8192
+      #NODE_OPTIONS: "--max-http-header-size=32768"
     restart: always
 ```
 
