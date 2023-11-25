@@ -162,7 +162,7 @@ class Wishlist {
 
     const productData = await getProductData(item.url)
     for (const key of ['name', 'price', 'image']) {
-      if (productData[key]) item[key] = productData[key]
+      if (productData && productData[key]) item[key] = productData[key]
     }
 
     await this.save()
