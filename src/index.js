@@ -98,6 +98,7 @@ app.use((req, res, next) => {
 })
 
 app.use(require('body-parser').urlencoded({ extended: true }))
+app.use(require('cookie-parser')());
 app.use(session({
   secret: config.secret,
   resave: false,
@@ -108,6 +109,16 @@ app.use(session({
   },
   name: 'christmas_community.connect.sid'
 }))
+app.use((req, res, next) => {
+  let basepath = req.path.substring(0, req.path.lastIndexOf("/"));
+
+  // Clear cookies for paths that are not the base path. See #17
+  if(basepath.length > config.base.length) {
+    res.clearCookie('christmas_community.connect.sid', {path: req.path});
+    res.clearCookie('christmas_community.connect.sid', {path: basepath});
+  }
+  next();
+});
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
