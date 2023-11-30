@@ -34,6 +34,7 @@
     "memdown": "^6.0.0",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
+    "morgan": "^1.10.0",
     "nanoid": "^3.1.25",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

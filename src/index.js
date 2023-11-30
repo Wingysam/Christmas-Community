@@ -11,6 +11,7 @@ const passport = require('passport')
 const fetch = require('node-fetch')
 const express = require('express')
 const path = require('path')
+const morgan = require('morgan')
 
 _CC._ = require('lodash')
 _CC.moment = require('moment/min/moment-with-locales')
@@ -52,6 +53,7 @@ const PouchDB = require('pouchdb').defaults({ prefix: config.dbPrefix })
 const logger = require('./logger')
 
 const app = express()
+app.use(morgan('combined'))
 app.set('base', config.base)
 app.set('trust proxy', config.trustProxy)
 
@@ -126,7 +128,6 @@ app.use(passport.session())
 app.use(require('./middlewares/locals'))
 
 app.use((req, res, next) => {
-  logger.log('express', `${req.ip} - ${req.method} ${req.originalUrl}`)
   next()
 })
 

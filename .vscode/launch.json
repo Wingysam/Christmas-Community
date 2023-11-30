@@ -14,7 +14,8 @@
       "program": "${workspaceFolder}/src/index.js",
       "env": {
         "PORT": "8888"
-      }
+      },
+      "outputCapture": "std"
     }
   ]
 }
