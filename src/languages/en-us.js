@@ -181,7 +181,6 @@ module.exports.strings = {
   WISHLIST_URL_LABEL: `Item URL or Name (<a href="${_CC.config.base}supported-sites">Supported Sites</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Item URL or Name is required',
-  WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
 }
