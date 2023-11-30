@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'Martin',
   SETUP_USERNAME: 'Uživatelské jméno',
   SUPPORTED_SITES_HEADER: 'Podporované obchody',
-  SUPPORTED_SITES_TEXT: 'Nefunguje obchod nebo úplně chybí? Založ nový ticket <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">ZDE</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Nefunguje obchod nebo úplně chybí? Založ nový ticket <a href="https://github.com/Wingysam/get-product-data/issues/new">ZDE</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Nepoužíváte poslední verzi Christmas Community. V nové verzi mohou být nové funkce nebo opravy chyb. Zvžte aktualizaci :)

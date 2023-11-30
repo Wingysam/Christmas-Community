@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'ion',
   SETUP_USERNAME: 'Nume de utilizator',
   SUPPORTED_SITES_HEADER: 'Site-uri suportate',
-  SUPPORTED_SITES_TEXT: 'Este vreun site care lipsește sau nu funcționează corect? Sesizați problema <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">aici</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Este vreun site care lipsește sau nu funcționează corect? Sesizați problema <a href="https://github.com/Wingysam/get-product-data/issues/new">aici</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Folosiți o versiune învechită a Christmas Community. Este posibil să se fi adăugat noi funcții și rezolvat erori. Este recomandată actualizarea! :)
