@@ -13,7 +13,7 @@
       ],
       "program": "${workspaceFolder}/src/index.js",
       "env": {
-        "PORT": "3000"
+        "PORT": "8888"
       }
     }
   ]
