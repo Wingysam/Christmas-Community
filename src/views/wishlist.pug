@@ -40,11 +40,19 @@ block content
                   img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
               if item.url
                 td.ugc(data-label='Name')
-                  a(
-                    href=item.url,
-                    rel='noopener noreferrer',
-                    target='_blank'
-                  )= (item.name ? item.name : item.url)
+                  if item.pledgedBy
+                    strike 
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
+                  else
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
               else
                 td.ugc(data-label=lang('WISHLIST_NAME'))= item.name
               if _CC.config.wishlist.note.markdown
