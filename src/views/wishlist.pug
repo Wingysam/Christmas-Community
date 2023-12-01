@@ -39,7 +39,7 @@ block content
                 figure(style='width: 100%; margin: 0;')
                   img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
               if item.url
-                td.ugc(data-label='Name')
+                td.ugc(data-label=lang('WISHLIST_NAME'))
                   if item.pledgedBy
                     strike 
                       a(
