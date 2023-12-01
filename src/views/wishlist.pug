@@ -54,7 +54,12 @@ block content
                         target='_blank'
                       )= (item.name ? item.name : item.url)
               else
-                td.ugc(data-label=lang('WISHLIST_NAME'))= item.name
+                td.ugc(data-label='Name')
+                  if item.pledgedBy
+                    strike 
+                      span= item.name
+                  else 
+                    span= item.name
               if _CC.config.wishlist.note.markdown
                 td.ugc(data-label=lang('WISHLIST_NOTE'))
                   div!= item.note
