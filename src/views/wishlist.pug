@@ -151,13 +151,25 @@ block content
             if item.price
               span= ' '
             if item.url
-              a(
-                href=item.url,
-                rel='noopener noreferrer',
-                target='_blank'
-              )= (item.name ? item.name : item.url)
+              if item.pledgedBy 
+                strike 
+                  a(
+                    href=item.url,
+                    rel='noopener noreferrer',
+                    target='_blank'
+                  )= (item.name ? item.name : item.url)
+              else
+                a(
+                  href=item.url,
+                  rel='noopener noreferrer',
+                  target='_blank'
+                )= (item.name ? item.name : item.url)
             else
-              span= item.name
+              if item.pledgedBy
+                strike 
+                  span= item.name
+              else
+                span= item.name
           hr
           if item.note || item.image
             .columns
