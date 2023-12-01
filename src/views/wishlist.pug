@@ -183,7 +183,7 @@ block content
                     style='height: 100%;'
                     readonly
                   )= item.note
-          span.overflowWrap=lang('WISHLIST_ADDED_BY', item.addedBy)
+          span.overflowWrap=lang('WISHLIST_ADDED_BY_USER', item.addedBy)
           hr
           div
             if req.params.user !== req.user._id && !item.pledgedBy
