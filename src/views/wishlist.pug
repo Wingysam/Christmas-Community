@@ -40,7 +40,7 @@ block content
                   img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
               if item.url
                 td.ugc(data-label=lang('WISHLIST_NAME'))
-                  if item.pledgedBy
+                  if item.pledgedBy && item.addedBy != req.user._id
                     strike 
                       a(
                         href=item.url,
@@ -156,7 +156,7 @@ block content
             if item.price
               span= ' '
             if item.url
-              if item.pledgedBy 
+              if item.pledgedBy && item.addedBy != req.user._id
                 strike 
                   a(
                     href=item.url,
