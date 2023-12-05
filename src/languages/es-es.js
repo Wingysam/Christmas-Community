@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'juan',
   SETUP_USERNAME: 'Nombre de usuario',
   SUPPORTED_SITES_HEADER: 'Sitios web compatibles',
-  SUPPORTED_SITES_TEXT: '¿Hay un sitio ausente o roto? Abra una propuesta <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">aquí</a>! :)',
+  SUPPORTED_SITES_TEXT: '¿Hay un sitio ausente o roto? Abra una propuesta <a href="https://github.com/Wingysam/get-product-data/issues/new">aquí</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community es desactualizado. Puede haber nuevas functiones o correcciones. ¡Considera actualizar! :)

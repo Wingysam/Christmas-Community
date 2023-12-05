@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'john',
   SETUP_USERNAME: 'Brugernavn',
   SUPPORTED_SITES_HEADER: 'Supporterede hjemmesider',
-  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">here</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://github.com/Wingysam/get-product-data/issues/new">here</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community is out of date. There may be new features or bug fixes. Consider updating! :)
