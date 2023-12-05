@@ -16,6 +16,7 @@ EXPOSE 80
 
 RUN mkdir -p /data/dbs
 ENV DB_PREFIX /data/dbs/
+ENV DB_LOG_FILE /dev/null
 
 ENV SECRET_DIRNAME /data
 
