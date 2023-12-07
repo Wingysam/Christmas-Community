@@ -57,14 +57,11 @@ services:
 ```
 
 ## Install
-> [!IMPORTANT]  
-> If you're deploying/developing on Windows, replace the final line of the below code block with `New-Item -Path .\src\static\libraries\bulmaswatch -ItemType SymbolicLink -Value .\node_modules\bulmaswatch`. The command needs to be run from a priviledged Powershell.
 
 ```sh
 git clone https://github.com/wingysam/Christmas-Community
 cd Christmas-Community
-yarn
-ln -s node_modules/bulmaswatch src/static/libraries/bulmaswatch
+npm install
 ```
 
 ## Configuration
