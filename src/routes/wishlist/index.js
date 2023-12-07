@@ -52,13 +52,18 @@ module.exports = (db) => {
       const wishlist = await wishlistManager.get(req.params.user)
       const items = await wishlist.itemsVisibleToUser(req.user._id)
 
-      for (const item of items) {
-        if (_CC.config.wishlist.note.markdown) item.note = DOMPurify.sanitize(marked(item.note))
+      const compiledNotes = {}
+      if (_CC.config.wishlist.note.markdown) {
+        for (const item of items) {
+          compiledNotes[item.id] = DOMPurify.sanitize(marked(item.note))
+        }
       }
+
       res.render('wishlist', {
         title: _CC.lang('WISHLIST_TITLE', wishlist.username),
         name: wishlist.username,
-        items
+        items,
+        compiledNotes
       })
     } catch (error) {
       req.flash('error', error)
