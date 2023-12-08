@@ -12,7 +12,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 RUN npm install --production --silent \
-    && ln -s /usr/src/app/node_modules/bulmaswatch /usr/src/app/src/static/libraries/bulmaswatch  \
     && mkdir -p /data/dbs
 
 EXPOSE 80
