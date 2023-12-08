@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 if (process.platform !== "win32") {
-    fs.symlink('./node_modules/bulmaswatch', './src/static/libraries/bulmaswatch', (err) => { 
+    fs.symlink('../../../node_modules/bulmaswatch', './src/static/libraries/bulmaswatch', (err) => { 
         if (err) console.log(err); 
     }); 
 }
