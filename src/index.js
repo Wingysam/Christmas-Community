@@ -118,7 +118,7 @@ app.use(session({
     maxAge: config.sessionMaxAge
   },
   name: 'christmas_community.connect.sid',
-  genid: nanoidWithoutUnderscores
+  genid: () => nanoidWithoutUnderscores()
 }))
 app.use((req, res, next) => {
   const basepath = req.path.substring(0, req.path.lastIndexOf('/'))
