@@ -12,6 +12,10 @@ const fetch = require('node-fetch')
 const express = require('express')
 const path = require('path')
 
+// from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
+const { customAlphabet } = require('nanoid')
+const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
+
 _CC._ = require('lodash')
 _CC.moment = require('moment/min/moment-with-locales')
 
@@ -113,7 +117,8 @@ app.use(session({
   cookie: {
     maxAge: config.sessionMaxAge
   },
-  name: 'christmas_community.connect.sid'
+  name: 'christmas_community.connect.sid',
+  genid: nanoidWithoutUnderscores
 }))
 app.use((req, res, next) => {
   const basepath = req.path.substring(0, req.path.lastIndexOf('/'))
