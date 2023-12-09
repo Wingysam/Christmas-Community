@@ -41,7 +41,7 @@ block content
               if item.url
                 td.ugc(data-label=lang('WISHLIST_NAME'))
                   if item.pledgedBy && item.addedBy != req.user._id
-                    strike 
+                    strike
                       a(
                         href=item.url,
                         rel='noopener noreferrer',
@@ -56,7 +56,7 @@ block content
               else
                 td.ugc(data-label='Name')
                   if item.pledgedBy
-                    strike 
+                    strike
                       span= item.name
                   else 
                     span= item.name
@@ -157,7 +157,7 @@ block content
               span= ' '
             if item.url
               if item.pledgedBy && item.addedBy != req.user._id
-                strike 
+                strike
                   a(
                     href=item.url,
                     rel='noopener noreferrer',
@@ -171,7 +171,7 @@ block content
                 )= (item.name ? item.name : item.url)
             else
               if item.pledgedBy
-                strike 
+                strike
                   span= item.name
               else
                 span= item.name
