@@ -161,7 +161,7 @@ class Wishlist {
     }
 
     const productData = await getProductData(item.url)
-    if (!productData) return; // short-circuit when there's no data
+    if (!productData) return // short-circuit when there's no data
 
     for (const key of ['name', 'price', 'image']) {
       if (productData[key]) item[key] = productData[key]

@@ -1,4 +1,4 @@
-﻿module.exports.momentLocale = 'nb'
+module.exports.momentLocale = 'nb'
 
 module.exports.strings = {
   _NOT_LOCALIZED: key => `${key} har ikke blitt oversatt til norsk enda.`,
@@ -30,7 +30,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_EDIT: 'Rediger',
   ADMIN_SETTINGS_USERS_HEADER: 'Brukere',
   ADMIN_SETTINGS_VERSION_INFO: 'Versjonsinfo',
-  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "Denne kontoen er ikke bekreftet.",
+  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: 'Denne kontoen er ikke bekreftet.',
   ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} er en administrator.`,
   ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} er ikke en administrator.`,
   ADMIN_USER_EDIT_ADMIN: 'Administrator',
@@ -61,7 +61,7 @@ module.exports.strings = {
   CONFIRM_ACCOUNT_EXPIRED: 'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
   CONFIRM_ACCOUNT_HEADER_INVALID: `${_CC.config.siteTitle} | Ugyldig bekreftelseslenke`,
   CONFIRM_ACCOUNT_HEADER_VALID: `${_CC.config.siteTitle} | Bekreft konto`,
-  CONFIRM_ACCOUNT_INVALID: "Denne bekreftelseslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?",
+  CONFIRM_ACCOUNT_INVALID: 'Denne bekreftelseslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
   CONFIRM_ACCOUNT_SET_PW_BUTTON: `Bli medlem av ${_CC.config.siteTitle}`,
   CONFIRM_ACCOUNT_SET_PW_PLACEHOLDER: 'pa$$ord!',
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hei, ${name}! Vennligst sett ditt passord her.`,
@@ -110,7 +110,7 @@ module.exports.strings = {
   PROFILE_TITLE: name => `Profilinnstillinger - ${name}`,
   RESET_PASSWORD_BUTTON: 'Tilbakestill passord',
   RESET_PASSWORD_GREETING_EXPIRED: 'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
-  RESET_PASSWORD_GREETING_INVALID: "Denne gjenopprettingslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?",
+  RESET_PASSWORD_GREETING_INVALID: 'Denne gjenopprettingslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
   RESET_PASSWORD_GREETING_VALID: name => `Hei, ${name}! Vennligst sett ditt passord her.`,
   RESET_PASSWORD_HEADER_INVALID: `${_CC.config.siteTitle} | Ugyldig gjenopprettingslenke`,
   RESET_PASSWORD_HEADER_VALID: `${_CC.config.siteTitle} | Nullstill passord`,
