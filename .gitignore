@@ -44,4 +44,4 @@ sessions/
 src/config/secret/secret.txt
 
 package-lock.json
-src/static/librarires/bulmaswatch
+src/static/libraries/bulmaswatch
