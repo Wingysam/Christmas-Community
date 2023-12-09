@@ -48,7 +48,7 @@ module.exports.strings = {
   ADMIN_USER_EDIT_LINK_EXPIRY_FUTURE: fromNow => `Le lien suivant expire le ${fromNow}`, // fromNow is localized by moment
   ADMIN_USER_EDIT_LINK_EXPIRY_PAST: fromNow => `Le lien suivant a expiré le ${fromNow}`,
   ADMIN_USER_EDIT_PROMOTE: name => `Promouvoir ${name}`,
-  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_FUTURE: fromNow => 'expire le',
+  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_FUTURE: fromNow => `expire le ${fromNow}`,
   ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_PAST: fromNow => `a expiré le ${fromNow}`,
   ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK: 'Il y a un lien de réinitialisation de mot de passe pour cet utilisateur.',
   ADMIN_USER_EDIT_RESET_PASSWORD_HEADER: 'Réinitialiser le mot de passe',
