@@ -57,10 +57,11 @@ services:
 ```
 
 ## Install
+
 ```sh
 git clone https://github.com/wingysam/Christmas-Community
 cd Christmas-Community
-yarn
+npm install
 ```
 
 ## Configuration
