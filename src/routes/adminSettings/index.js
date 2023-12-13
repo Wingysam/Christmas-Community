@@ -17,12 +17,12 @@ const SECRET_TOKEN_LIFETIME =
 
 async function getAllDocumentIds() {
   try {
-    const result = await db.allDocs({ include_docs: false });
-    const allIds = result.rows.map(row => row.id);
-    console.log('All Document IDs:', allIds);
+    const result = await _CC.usersDb.allDocs({ include_docs: false })
+    const allIds = result.rows.map(row => row.id)
+    console.log('All Document IDs:', allIds)
     return allIds
   } catch (err) {
-    console.error('Error fetching document IDs:', err);
+    console.error('Error fetching document IDs:', err)
   }
 } 
 
@@ -35,7 +35,7 @@ function addAdditional(array, value){
 }
 
 function addAdditionalMulti(array1, array2){
-  return Array.from(new Set([...array1, ...array2]));
+  return Array.from(new Set([...array1, ...array2]))
 }
 
 function removeFromArray(array, value){
@@ -107,9 +107,9 @@ async function divorceUserFromGroup (db, dbG, userId, groupId){
   console.log("successfully divorced:" + userId + "obj", user, " and: " + groupId + "obj", group)
 }
 
-function registry_office(func,  userId, groupIdArray){
+async function registry_office(func,  userId, groupIdArray){
   for (groupId of groupIdArray){
-    func(CC.usersDb, _CC.groupsDb, userId, groupId)
+    await func(_CC.usersDb, _CC.groupsDb, userId, groupId)
   }
 }
 
@@ -121,25 +121,25 @@ module.exports = ({ db, ensurePfp }) => {
     if (_CC.config.wishlist.grouping) {
       db.allDocs({ include_docs: true })
         .then(users => {
-          console.log("pulled users from db");
-          userDocs = users;
+          console.log("pulled users from db")
+          userDocs = users
     
           _CC.groupsDb.allDocs({ include_docs: true })
             .then(groups => {
-              console.log("pulled groups from db");
-              res.render('adminSettings', { title: _CC.lang('ADMIN_SETTINGS_HEADER'), groups: groups.rows, users: userDocs.rows });
+              console.log("pulled groups from db")
+              res.render('adminSettings', { title: _CC.lang('ADMIN_SETTINGS_HEADER'), groups: groups.rows, users: userDocs.rows })
             })
             .catch(groupsErr => {
-              console.error("Error pulling groups from db:", groupsErr);
+              console.error("Error pulling groups from db:", groupsErr)
               // Handle error for groups
-              res.status(500).send("Internal Server Error");
-            });
+              res.status(500).send("Internal Server Error")
+            })
         })
         .catch(usersErr => {
-          console.error("Error pulling users from db:", usersErr);
+          console.error("Error pulling users from db:", usersErr)
           // Handle error for users
-          res.status(500).send("Internal Server Error");
-        });
+          res.status(500).send("Internal Server Error")
+        })
     }
     
     else{
@@ -196,7 +196,7 @@ module.exports = ({ db, ensurePfp }) => {
           .then((docs) => {
             res.render('adminSettings', {
               add_user_error: _CC.lang(
-                'ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY'
+                'ADMIN_SETTINGS_GROUPS_ADD_ERROR_GROUPNAME_EMPTY'
               ),
               title: _CC.lang('ADMIN_SETTINGS_HEADER'),
               users: docs.rows,
@@ -227,13 +227,13 @@ module.exports = ({ db, ensurePfp }) => {
         console.log("beta")
         const groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
         console.log("hi")
-        for (user of groupToRemove.users){
+        for (var user of groupToRemove.users){
           console.log("divorcing ", user, "and ", groupToRemove._id)
-          divorceUserFromGroup(_CC.usersDb, _CC.groupsDb, user, groupToRemove._id)
+          await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb, user, groupToRemove._id)
         }
         console.log("removing record")
         await _CC.groupsDb.remove(groupToRemove)
-        req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
+        req.flash('success', _CC.lang('ADMIN_SETTINGS_GROUPS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
       } catch (error) {
         req.flash('error', `${error}`)
       }
@@ -242,7 +242,7 @@ module.exports = ({ db, ensurePfp }) => {
     })
     router.post('/edit-group/marry-user-and-group/:groupToMarry', verifyAuth(), async (req, res) => {
       const username = req.body.marryingUserUsername.trim()
-      groupname  = req.params.groupToMarry
+      var groupname  = req.params.groupToMarry
       try {
         console.log("marry user:" + username + " to group:" + req.params.groupToMarry )
         if (!req.user.admin) return res.redirect('/')
@@ -253,7 +253,7 @@ module.exports = ({ db, ensurePfp }) => {
         if (userIndex.includes(username)){
           console.log(username+ "exists and marriage is possible")
           await marryUserToGroup(_CC.usersDb, _CC.groupsDb,username , groupname)
-          req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
+          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_MARRIAGE_SUCCESS', req.params.groupToRemove))
         }
         else{
           console.log(req.params.groupToMarry+ "does not exist can't marry")
@@ -266,9 +266,9 @@ module.exports = ({ db, ensurePfp }) => {
     })
     router.get('/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce', verifyAuth(), async (req, res) => {
       const username = req.params.userToDivorce
-      groupname  = req.params.groupToDivorce
+      var groupname  = req.params.groupToDivorce
       try {
-        console.log("divorce user:" + username + " to group:" + groupname)
+        console.log("divorce user:" + username + " from group:" + groupname)
         if (!req.user.admin) return res.redirect('/')
         userIndex = await getAllDocumentIds()
         console.log("successfully pulled index db: ")
@@ -276,10 +276,10 @@ module.exports = ({ db, ensurePfp }) => {
         if (userIndex.includes(username)){
           console.log(username+ "exists and divorce is possible")
           await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb,username , groupname)
-          req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', groupname))
+          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_DIVORCE_SUCCESS', groupname))
         }
         else{
-          console.log(groupname+ "does not exist can't divorce")
+          console.log(username+ "does not exist can't divorce")
         }
       } catch (error) {
         req.flash('error', `${error}`)
@@ -291,12 +291,13 @@ module.exports = ({ db, ensurePfp }) => {
       if (!req.user.admin) return res.redirect('/')
       res.render('admin-migrate-to-groups')
     })
-  
     router.post('/migrate-to-groups', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
       
       const dbInfo = await _CC.groupsDb.info()
+      console.log("migration initiated")
       if (dbInfo.doc_count === 0) {
+        console.log("no groups so far thus allowing for reset of groups and migartion")
         const usersBulk = []
         const { rows: users } = await db.allDocs({ include_docs: true })
         for (const { doc: user } of users) {
@@ -309,7 +310,7 @@ module.exports = ({ db, ensurePfp }) => {
     
         await _CC.wishlistManager.clearCache()
     
-        req.flash('success', _CC.lang('ADMIN_SETTINGS_CLEARDB_SUCCESS'))
+        req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_SUCCESS'))
       }
       res.redirect('/admin-settings')
     })
@@ -398,7 +399,7 @@ module.exports = ({ db, ensurePfp }) => {
 
     const userDoc = await db.get(oldName)
     if (_CC.config.wishlist.grouping){
-      registry_office(divorceUserFromGroup, user._id, user.groups )
+      await registry_office(divorceUserFromGroup, userDoc._id, userDoc.groups )
     }
     userDoc._id = newName
     delete userDoc._rev
@@ -420,7 +421,7 @@ module.exports = ({ db, ensurePfp }) => {
 
         await _CC.wishlistManager.clearCache()
         if (_CC.config.wishlist.grouping){
-          registry_office(marryUserToGroup, user._id, user.groups )
+          await registry_office(marryUserToGroup, userDoc._id, userDoc.groups )
         }
         req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_RENAMED_USER'))
         return res.redirect(`/wishlist/${newName}`)
@@ -495,14 +496,17 @@ module.exports = ({ db, ensurePfp }) => {
     try {
       if (!req.user.admin) return res.redirect('/')
 
+
       const userToRemove = await db.get(req.params.userToRemove)
+      console.log("initiated removal of user", userToRemove)
       if (userToRemove.admin) {
         req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
         return res.redirect('/admin-settings')
       }
       
+      console.log("removing user from all groups")
       if (_CC.config.wishlist.grouping){
-        registry_office(divorceUserFromGroup, userToRemove._id, user.groups )
+        await registry_office(divorceUserFromGroup, userToRemove._id, userToRemove.groups )
       }
       await db.remove(userToRemove)
       const { rows } = await db.allDocs()

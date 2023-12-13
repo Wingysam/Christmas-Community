@@ -3,7 +3,7 @@ extends layout.pug
 block content
   h2= lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_BUTTON')
   p!= lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_DESCRIPTION')
-  form(method='POST', action=`${_CC.config.base}admin-settings/clear-wishlists`)
+  form(method='POST', action=`${_CC.config.base}admin-settings/migrate-to-groups`)
     .field
       .control
         input.button.is-danger(type='submit' value=lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_BUTTON'))
