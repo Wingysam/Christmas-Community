@@ -27,49 +27,49 @@ module.exports = (db) => {
 
   const wishlistManager = _CC.wishlistManager
 
-
-  // Get all available withlists 
-  router.get('/', publicRoute(), async (req, res) => {
-    const docs = await db.allDocs({ include_docs: true })
-    if (global._CC.config.wishlist.singleList) {
-      for (const row of docs.rows) {
-        if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+  if (_CC.config.wishlist.grouping){
+    router.get('/', publicRoute(), async (req, res) => {
+      if (global._CC.config.wishlist.singleList) {
+        const docs = await db.allDocs({ include_docs: true })
+        for (const row of docs.rows) {
+          if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+        }
       }
-    }
-    res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
-  })
 
-  router.get('/rootg/', publicRoute(), async (req, res) => {
-    if (global._CC.config.wishlist.singleList) {
-      const docs = await db.allDocs({ include_docs: true })
-      for (const row of docs.rows) {
-        if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+      user_id = req.user._id
+      //console.log(req.user._id)
+      //console.log(_CC.usersDb.get(user_id)._id)
+      const dbUser = await db.get(user_id)
+      console.log("got user " , dbUser , "with  group bool" + dbUser.grouped )
+      if (dbUser.grouped){
+        //console.log("{user_id}") 
+        //console.log("/n")
+        //accessibleUsers = await db.get(user_id).groupedWith
+        accessibleUsers = dbUser.groupedWith
+        console.log("{grouped}") 
+        console.log(accessibleUsers) 
+        const docsTwo = await db.allDocs({ keys: accessibleUsers , include_docs: true })
+        console.log(docsTwo)
+        //res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), accesible_users , totals })
+        res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docsTwo.rows, totals })
       }
-    }
-
-    user_id = req.user._id
-    //console.log(req.user._id)
-    //console.log(_CC.usersDb.get(user_id)._id)
-    const dbUser = await db.get(user_id)
-    console.log("got user " , dbUser , "with  group bool" + dbUser.grouped )
-    if (dbUser.grouped){
-      //console.log("{user_id}") 
-      //console.log("/n")
-      //accessibleUsers = await db.get(user_id).groupedWith
-      accessibleUsers = dbUser.groupedWith
-      console.log("{grouped}") 
-      console.log(accessibleUsers) 
-      const docsTwo = await db.allDocs({ keys: accessibleUsers , include_docs: true })
-      console.log(docsTwo)
-      //res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), accesible_users , totals })
-      res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docsTwo.rows, totals })
-    }
-    else {
+      else {
+        const docs = await db.allDocs({ include_docs: true })
+        res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
+      }
+    })
+  }else{
+      // Get all available withlists 
+    router.get('/', publicRoute(), async (req, res) => {
       const docs = await db.allDocs({ include_docs: true })
+      if (global._CC.config.wishlist.singleList) {
+        for (const row of docs.rows) {
+          if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
+        }
+      }
       res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
-    }
-  })
-
+    })
+  }
 
   async function redirectIfSingleUserMode (req, res, next) {
     const dbUser = await db.get(req.params.user)
