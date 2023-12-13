@@ -12,6 +12,10 @@ const fetch = require('node-fetch')
 const express = require('express')
 const path = require('path')
 
+// from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
+const { customAlphabet } = require('nanoid')
+const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
+
 _CC._ = require('lodash')
 _CC.moment = require('moment/min/moment-with-locales')
 
@@ -54,6 +58,12 @@ const logger = require('./logger')
 const app = express()
 app.set('base', config.base)
 app.set('trust proxy', config.trustProxy)
+
+// https://github.com/Wingysam/Christmas-Community/issues/17#issuecomment-1824863081
+app.use((req, res, next) => {
+  if (!req.session?.passport || Object.keys(req.session?.passport)?.length === 0) { res.clearCookie('christmas_community.connect.sid', { path: '/wishlist' }) }
+  next()
+})
 
 const db = new PouchDB('users')
 _CC.usersDb = db
@@ -98,7 +108,7 @@ app.use((req, res, next) => {
 })
 
 app.use(require('body-parser').urlencoded({ extended: true }))
-app.use(require('cookie-parser')());
+app.use(require('cookie-parser')())
 app.use(session({
   secret: config.secret,
   resave: false,
@@ -107,18 +117,19 @@ app.use(session({
   cookie: {
     maxAge: config.sessionMaxAge
   },
-  name: 'christmas_community.connect.sid'
+  name: 'christmas_community.connect.sid',
+  genid: () => nanoidWithoutUnderscores()
 }))
 app.use((req, res, next) => {
-  let basepath = req.path.substring(0, req.path.lastIndexOf("/"));
+  const basepath = req.path.substring(0, req.path.lastIndexOf('/'))
 
   // Clear cookies for paths that are not the base path. See #17
-  if(basepath.length > config.base.length) {
-    res.clearCookie('christmas_community.connect.sid', {path: req.path});
-    res.clearCookie('christmas_community.connect.sid', {path: basepath});
+  if (basepath.length > config.base.length) {
+    res.clearCookie('christmas_community.connect.sid', { path: req.path })
+    res.clearCookie('christmas_community.connect.sid', { path: basepath })
   }
-  next();
-});
+  next()
+})
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())

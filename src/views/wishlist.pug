@@ -39,17 +39,30 @@ block content
                 figure(style='width: 100%; margin: 0;')
                   img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
               if item.url
-                td.ugc(data-label='Name')
-                  a(
-                    href=item.url,
-                    rel='noopener noreferrer',
-                    target='_blank'
-                  )= (item.name ? item.name : item.url)
+                td.ugc(data-label=lang('WISHLIST_NAME'))
+                  if item.pledgedBy && item.addedBy != req.user._id
+                    strike
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
+                  else
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
               else
-                td.ugc(data-label=lang('WISHLIST_NAME'))= item.name
+                td.ugc(data-label='Name')
+                  if item.pledgedBy
+                    strike
+                      span= item.name
+                  else 
+                    span= item.name
               if _CC.config.wishlist.note.markdown
                 td.ugc(data-label=lang('WISHLIST_NOTE'))
-                  div!= item.note
+                  div!= compiledNotes[item.id]
               else
                 td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
               td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
@@ -143,13 +156,25 @@ block content
             if item.price
               span= ' '
             if item.url
-              a(
-                href=item.url,
-                rel='noopener noreferrer',
-                target='_blank'
-              )= (item.name ? item.name : item.url)
+              if item.pledgedBy && item.addedBy != req.user._id
+                strike
+                  a(
+                    href=item.url,
+                    rel='noopener noreferrer',
+                    target='_blank'
+                  )= (item.name ? item.name : item.url)
+              else
+                a(
+                  href=item.url,
+                  rel='noopener noreferrer',
+                  target='_blank'
+                )= (item.name ? item.name : item.url)
             else
-              span= item.name
+              if item.pledgedBy
+                strike
+                  span= item.name
+              else
+                span= item.name
           hr
           if item.note || item.image
             .columns
@@ -163,7 +188,7 @@ block content
                     style='height: 100%;'
                     readonly
                   )= item.note
-          span.overflowWrap=lang('WISHLIST_ADDED_BY', item.addedBy)
+          span.overflowWrap=lang('WISHLIST_ADDED_BY_USER', item.addedBy)
           hr
           div
             if req.params.user !== req.user._id && !item.pledgedBy
@@ -241,6 +266,6 @@ block print
         if item.note
           .box
             if _CC.config.wishlist.note.markdown
-              span.is-block.ugc!= item.note
+              span.is-block.ugc!= compiledNotes[item.id]
             else
               span.is-block.ugc= item.note

@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'henk',
   SETUP_USERNAME: 'Gebruikersnaam',
   SUPPORTED_SITES_HEADER: 'Ondersteunde sites',
-  SUPPORTED_SITES_TEXT: 'Ontbreekt er een website of is er een kapot? Open een issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">hier</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Ontbreekt er een website of is er een kapot? Open een issue <a href="https://github.com/Wingysam/get-product-data/issues/new">hier</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community is niet meer up to date. Misschien zijn er nieuwe functies of bugfixes. Overweeg om te updaten :)

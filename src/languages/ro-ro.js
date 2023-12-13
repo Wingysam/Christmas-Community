@@ -30,7 +30,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_EDIT: 'Modificați',
   ADMIN_SETTINGS_USERS_HEADER: 'Utilizatori',
   ADMIN_SETTINGS_VERSION_INFO: 'Versiune',
-  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "Acest cont încă nu a fost confirmat.",
+  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: 'Acest cont încă nu a fost confirmat.',
   ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} este administrator.`,
   ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} nu este administrator.`,
   ADMIN_USER_EDIT_ADMIN: 'Administrator',
@@ -61,7 +61,7 @@ module.exports.strings = {
   CONFIRM_ACCOUNT_EXPIRED: 'Link-ul dvs. de confirmare a expirat. Vă rugăm solicitați unul nou.',
   CONFIRM_ACCOUNT_HEADER_INVALID: `${_CC.config.siteTitle} | Link de Confirmare invalid`,
   CONFIRM_ACCOUNT_HEADER_VALID: `${_CC.config.siteTitle} | Confirmați cont`,
-  CONFIRM_ACCOUNT_INVALID: "Acest link de confirmare nu este valabil, este posibil, contul să fi fost șters sau ca o parte din caractere să nu se fi copiat?",
+  CONFIRM_ACCOUNT_INVALID: 'Acest link de confirmare nu este valabil, este posibil, contul să fi fost șters sau ca o parte din caractere să nu se fi copiat?',
   CONFIRM_ACCOUNT_SET_PW_BUTTON: `Alăturați-vă ${_CC.config.siteTitle}`,
   CONFIRM_ACCOUNT_SET_PW_PLACEHOLDER: 'parolă!',
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Bună ziua, ${name}! Vă rugăm, setați-vă parola aici.`,
@@ -110,7 +110,7 @@ module.exports.strings = {
   PROFILE_TITLE: name => `Setări Profil - ${name}`,
   RESET_PASSWORD_BUTTON: 'Resetați parola',
   RESET_PASSWORD_GREETING_EXPIRED: 'Acest link de resetare a expirat. Vă rugăm solicitați unul nou.',
-  RESET_PASSWORD_GREETING_INVALID: "Acest link de resetare nu este valabil, este posibil ca link-ul să fi fost anulat sau ca o parte din caractere să nu se fi copiat?",
+  RESET_PASSWORD_GREETING_INVALID: 'Acest link de resetare nu este valabil, este posibil ca link-ul să fi fost anulat sau ca o parte din caractere să nu se fi copiat?',
   RESET_PASSWORD_GREETING_VALID: name => `Bună ziua, ${name}! Vă rugăm setați-vă parola.`,
   RESET_PASSWORD_HEADER_INVALID: `${_CC.config.siteTitle} | Link de resetare invalid`,
   RESET_PASSWORD_HEADER_VALID: `${_CC.config.siteTitle} | Resetați parola`,
@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'ion',
   SETUP_USERNAME: 'Nume de utilizator',
   SUPPORTED_SITES_HEADER: 'Site-uri suportate',
-  SUPPORTED_SITES_TEXT: 'Este vreun site care lipsește sau nu funcționează corect? Sesizați problema <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">aici</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Este vreun site care lipsește sau nu funcționează corect? Sesizați problema <a href="https://github.com/Wingysam/get-product-data/issues/new">aici</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Folosiți o versiune învechită a Christmas Community. Este posibil să se fi adăugat noi funcții și rezolvat erori. Este recomandată actualizarea! :)

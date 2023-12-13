@@ -9,7 +9,11 @@ mixin wishlistDetails(wishlist, onlyShowAddedByUser)
     ul.wishlist-dropdown
       for item in wishlist
         if onlyShowAddedByUser === undefined || item.addedBy === onlyShowAddedByUser
-          li= item.name
+          li
+            if item.pledgedBy && !onlyShowAddedByUser
+              strike= item.name
+            else
+              = item.name
 
 block content
   style.
