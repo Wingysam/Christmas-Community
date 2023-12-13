@@ -15,6 +15,16 @@ const SECRET_TOKEN_LIFETIME =
 
 
 
+async function getAllDocumentIds() {
+  try {
+    const result = await db.allDocs({ include_docs: false });
+    const allIds = result.rows.map(row => row.id);
+    console.log('All Document IDs:', allIds);
+    return allIds
+  } catch (err) {
+    console.error('Error fetching document IDs:', err);
+  }
+} 
 
 function addAdditional(array, value){
   if (!array.includes(value)){
@@ -141,16 +151,6 @@ module.exports = ({ db, ensurePfp }) => {
     }
   })
 
-  async function getAllDocumentIds() {
-    try {
-      const result = await _CC.usersDb.allDocs({ include_docs: false });
-      const allIds = result.rows.map(row => row.id);
-      console.log('All Document IDs:', allIds);
-      return allIds
-    } catch (err) {
-      console.error('Error fetching document IDs:', err);
-    }
-  } 
 
   if (_CC.config.wishlist.grouping){
     router.post('/add', verifyAuth(), async (req, res) => {
@@ -224,10 +224,14 @@ module.exports = ({ db, ensurePfp }) => {
     router.post('/edit-group/remove/:groupToRemove', verifyAuth(), async (req, res) => {
       try {
         if (!req.user.admin) return res.redirect('/')
+        console.log("beta")
         const groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
+        console.log("hi")
         for (user of groupToRemove.users){
+          console.log("divorcing ", user, "and ", groupToRemove._id)
           divorceUserFromGroup(_CC.usersDb, _CC.groupsDb, user, groupToRemove._id)
         }
+        console.log("removing record")
         await _CC.groupsDb.remove(groupToRemove)
         req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
       } catch (error) {
