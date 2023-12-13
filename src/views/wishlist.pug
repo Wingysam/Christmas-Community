@@ -55,7 +55,7 @@ block content
                       )= (item.name ? item.name : item.url)
               else
                 td.ugc(data-label='Name')
-                  if item.pledgedBy
+                  if item.pledgedBy && item.addedBy != req.user._id
                     strike
                       span= item.name
                   else 
@@ -170,7 +170,7 @@ block content
                   target='_blank'
                 )= (item.name ? item.name : item.url)
             else
-              if item.pledgedBy
+              if item.pledgedBy && item.addedBy != req.user._id
                 strike
                   span= item.name
               else
