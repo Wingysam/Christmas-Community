@@ -30,3 +30,28 @@ block content
   p Get Product Data: v#{_CC.require('get-product-name/package.json').version}
   p Node: #{process.version}
   p PID: #{process.pid}
+  if global._CC.config.wishlist.grouping
+    h2= lang('ADMIN_SETTINGS_GROUPS_HEADER')
+    each group in groups
+      span.is-size-6.inline= group.id
+      a(href=`${_CC.config.base}admin-settings/edit-group/${group.id}`)
+        span.is-size-7.icon.has-text-info
+          i.fas.fa-edit
+        span.is-sr-only
+          = lang('ADMIN_SETTINGS_GROUPS_EDIT')
+      br
+    h3= lang('ADMIN_SETTINGS_GROUPS_ADD_HEADER')
+    form(action=`${_CC.config.base}admin-settings/add-group`, method='POST')
+      .field
+        p.has-text-danger#error-label= add_user_error
+        label.label= lang('ADMIN_SETTINGS_GROUPS_ADD_GROUPNAME')
+        .control.has-icons-left
+          input.input(type='text', name='newGroupGroupname', placeholder=lang('ADMIN_SETTINGS_GROUPS_ADD_PLACEHOLDER'))
+          span.icon.is-small.is-left
+            i.fas.fa-user
+      .field
+        .control
+          input.button.is-primary(type='submit' value=lang('ADMIN_SETTINGS_GROUPS_ADD_BUTTON'))
+    p!= lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_DESCRIPTION')
+    a.button.is-danger(href=`${_CC.config.base}admin-settings/migrate-to-groups`)= lang('ADMIN_SETTINGS_GOUPS_MIGRATE_TO_BUTTON')
+  

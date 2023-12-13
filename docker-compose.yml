@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   christmas-community:
-    image: christmas-community
+    image: christmas-community-grouped
     build: .
     environment:
       NODE_ENV: production

@@ -68,6 +68,9 @@ app.use((req, res, next) => {
 const db = new PouchDB('users')
 _CC.usersDb = db
 
+const dbG = new PouchDB('groups')
+_CC.groupsDb = dbG
+
 _CC.wishlistManager = new WishlistManager()
 
 passport.use('local', new LocalStrategy(

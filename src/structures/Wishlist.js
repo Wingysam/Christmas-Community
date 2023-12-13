@@ -1,6 +1,8 @@
 const getProductData = require('get-product-name')
 const u64 = require('u64')
 
+
+// structure for single wishlist
 class Wishlist {
   static async new (username) {
     const instance = new this({ username })
@@ -13,6 +15,16 @@ class Wishlist {
   }
 
   async fetch () {
+    try {
+      this.doc = await _CC.usersDb.get(this.username)
+    } catch {
+      throw new Error(_CC.lang('WISHLIST_FETCH_FAIL'))
+    }
+    this.items = this.doc.wishlist
+  }
+
+
+  async fetchG () {
     try {
       this.doc = await _CC.usersDb.get(this.username)
     } catch {

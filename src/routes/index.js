@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs/promises')
 
 module.exports = ({ db, config }) => {
+  //ensure profile picture
   async function ensurePfp (username) {
     if (!config.pfp) return
     const user = await db.get(username)

@@ -1,0 +1,60 @@
+extends layout.pug
+
+
+block title
+  h1(style="margin-bottom: 0;")
+    a(href='..') &lt;
+    | #{config.siteTitle}
+  p= lang('ADMIN_GROUP_EDIT_EDITING_GROUP', group._id) 
+
+block content
+  .columns
+    //
+    //.column
+    //
+      .columns
+        // Consider adding renaimg in the future 
+          .column.is-narrow
+            h2= lang('ADMIN_USER_EDIT_CHANGE_NAME')
+            form(action=`${_CC.config.base}admin-settings/edit/rename/${group._id}`, method='POST')
+              .field
+                label.label= lang('ADMIN_USER_EDIT_USERNAME')
+                .control.has-icons-left
+                  input.input(type='text', name='newUsername', placeholder=group._id, value=group._id)
+                  span.icon.is-small.is-left
+                    i.fas.fa-group
+              .field
+                .control
+                  input.button.is-primary(type='submit' value=lang('ADMIN_USER_EDIT_CHANGE_USERNAME'))
+        
+      //h2(style='margin-bottom: 1em;')= lang('ADMIN_USER_EDIT_RESET_PASSWORD_HEADER')
+    .column.is-narrow
+      h2= lang('ADMIN_SETTINGS_GROUPS_USEERS_HEADER', group._id)
+      each user in group.users
+        span.is-size-6.inline= user
+        a(href=`${_CC.config.base}admin-settings/edit-group/divorce-user-and-group/${group._id}/${user}`)
+          span.is-size-7.icon.has-text-info
+            i.fas.fa-trash
+          span.is-sr-only
+            = lang('ADMIN_SETTINGS_GROUPS_REMOVE_FROM_GROUP')
+        br
+      h3= lang('ADMIN_SETTINGS_GROUPS_ADD_USER_HEADER')
+      form(action=`${_CC.config.base}admin-settings/edit-group/marry-user-and-group/${group._id}`, method='POST')
+        .field
+          p.has-text-danger#error-label= add_user_error
+          label.label= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
+          .control.has-icons-left
+            input.input(type='text', name='marryingUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
+            span.icon.is-small.is-left
+              i.fas.fa-user
+        .field
+          .control
+            input.button.is-primary(type='submit' value=lang('ADMIN_SETTINGS_GROUPS_ADD_USER_HEADER')) 
+
+      .column.is-narrow
+        h2= lang('ADMIN_USER_EDIT_DELETE_HEADER')
+        form(method='POST', action=`${_CC.config.base}admin-settings/edit-group/remove/${group._id}`)
+          .field
+            .control
+              input.button.is-danger(type='submit' value=lang('ADMIN_GROUP_EDIT_DELETE_GROUP', group._id))
+    
