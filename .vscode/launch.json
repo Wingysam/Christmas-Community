@@ -13,8 +13,7 @@
       ],
       "program": "${workspaceFolder}/src/index.js",
       "env": {
-        "PORT": "8888",
-        "GROUPING": "true"
+        "PORT": "8888"
       }
     }
   ]
