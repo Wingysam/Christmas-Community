@@ -3,7 +3,7 @@ on:
     # Pattern matched against refs/tags
     tags:        
       - '**'           # Push events to every 
-    branches: [ "master", "automation" ]
+    #branches: [ "master", "automation" ]
   #pull_request:
    # branches: [ "master" ]
     #types: [opened, synchronize, reopened]
