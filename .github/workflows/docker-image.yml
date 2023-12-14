@@ -1,4 +1,4 @@
- name: Build Dockerfile and Push to The Hub
+name: Build Dockerfile and Push to The Hub
   # You may pin to the exact commit or the version.
   # uses: beehivewarrior/docker-hub-builder@296a60202ffe4099d493f06f2105a4e481710c0d
   uses: beehivewarrior/docker-hub-builder@v1.0
