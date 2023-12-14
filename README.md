@@ -1,8 +1,13 @@
-# Christmas Community
-![Docker Pulls](https://img.shields.io/docker/pulls/wingysam/christmas-community?style=for-the-badge)
-![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
+> **_NOTE:_**  Currently in Beta
+
+# Christmas Community Groups
+In short a Fork of Christmas Community but with groups hacked in.
+
+![Docker Pulls](https://img.shields.io/docker/pulls/jskiddie/christmas-community-groups?style=for-the-badge)
+![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fjskidie%2FChristmas-Community-Groups%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
+[![.github/workflows/docker-image.yml](https://github.com/jskidie/Christmas-Community-Groups/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jskidie/Christmas-Community-Groups/actions/workflows/docker-image.yml)
 
 Web app for your family's Christmas shopping
 
@@ -113,6 +118,8 @@ TABLE=true
 SMILE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
+# Enable grouping for the wishlists, please read about Groups in README beforehand, TLDR: After seting to true  click "Migrate to Groups" in setings before any group work
+# GROUPING=false
 
 ## Custom HTML Snippets
 # These are inserted into specific locations in the relevant page
@@ -139,10 +146,26 @@ Visit `/` on the HTTP server to add an admin account.
 
 # Adding Sites
 Christmas Community gets data about products automatically with [Wingysam/get-product-data](https://github.com/Wingysam/get-product-data). Please submit pull requests for new sites or fixes for changes to existing sites!
-# About Developer
-Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
+# Grouping
+#### How to enable
+- Make and be shure it works
+- ADD an ENV GROUPING and set it to true
+- For existing setup continue on this sidequest
+	- it is reccomended nobody access the install in this state
+	- Go to Settings and click the "migrate to groups button"
+- Done
+
+#### Setup
+- By default grouping is disabled for everyone
+- create a new group under settings
+	- type in a group name
+	- click "add group"
+- add a user to the group by clicking "edit" on the corrosponding group
+	- type in the correct name of the user under "username"
+	- click "Add users to group"
+- once a user is added to a group grouping is disabled for them, they can only see lists of people in his group,
+  his lists can be seen by everyone he shares a group with as well as users for whom grouping is disabled
 
 # Contributors
 As of writing, there are no code contributors to the main project. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
