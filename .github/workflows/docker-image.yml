@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - '**'           # Push events to every 
+    #branches: [ "master", "automation" ]
+  #pull_request:
+   # branches: [ "master" ]
+    #types: [opened, synchronize, reopened]
+
+
+jobs:
+  docker:
+    environment: "Docker Hub"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - 
+        name: Test
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: jskiddie/christmas-community-groups:${{ env.RELEASE_VERSION }}
+
+
+          
