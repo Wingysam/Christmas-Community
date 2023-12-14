@@ -28,7 +28,7 @@ If you want put Christmas Community on a subdirectory, such as `/christmas-commu
 
 ## Docker
 ```
-docker run --detach --name christmas-community -p 80:80 --restart always wingysam/christmas-community
+docker run --detach --name christmas-community -p 80:80 --restart always jskiddie/christmas-community-groups
 ```
 
 ## Docker Compose
@@ -37,7 +37,7 @@ docker run --detach --name christmas-community -p 80:80 --restart always wingysa
 version: "3"
 services:
   christmas-community:
-    image: wingysam/christmas-community
+    image: jskiddie/christmas-community-groups
     volumes:
       - ./data:/data
     ports:
@@ -64,7 +64,7 @@ services:
 ## Install
 
 ```sh
-git clone https://github.com/wingysam/Christmas-Community
+git clone https://github.com/jskidie/Christmas-Community-Groups
 cd Christmas-Community
 npm install
 ```
