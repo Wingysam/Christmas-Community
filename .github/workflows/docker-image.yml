@@ -12,23 +12,23 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
-      #- uses: actions/checkout@v2
-      #- name: Set env
-      #  run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      #- name: Test
-      #  run: |
-      #    echo $RELEASE_VERSION
-      #    echo ${{ env.RELEASE_VERSION }}
-      - name: GitHub Tag Name example
+      - uses: actions/checkout@v2
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Test
         run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
+      #- name: GitHub Tag Name example
+      #  run: |
+      #    echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+      #    echo "Tag name from github.ref_name: ${{  github.ref_name }}"
       - name: Build and Push Container to docker.io
         uses: GlueOps/github-actions-build-push-containers@v0.3.5
         with:
           registry: "docker.io"
           image_name: "jskiddie/christmas-community-grouped"
-          tags: ${{  github.ref_name }}
+          tags: ${{ env.RELEASE_VERSION }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
