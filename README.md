@@ -1,4 +1,4 @@
-> **_NOTE:_**  Currently in Beta
+> **_NOTE:_**  Currently in Beta and no helm charts for now open an issue if you need them
 
 # Christmas Community Groups
 In short a Fork of Christmas Community but with groups hacked in.
