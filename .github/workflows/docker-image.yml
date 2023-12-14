@@ -28,7 +28,7 @@ jobs:
         uses: GlueOps/github-actions-build-push-containers@v0.3.5
         with:
           registry: "docker.io"
-          image_name: "jskiddie/christmas-community-groups"
+          image_name: "christmas-community-groups"
           tags: ${{ env.RELEASE_VERSION }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
