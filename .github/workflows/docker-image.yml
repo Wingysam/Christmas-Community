@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "automation" ]
     # Pattern matched against refs/tags
     tags:        
       - '**'           # Push events to every 
