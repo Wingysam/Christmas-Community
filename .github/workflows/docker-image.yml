@@ -1,9 +1,9 @@
 on:
   push:
-    branches: [ "master", "automation" ]
     # Pattern matched against refs/tags
     tags:        
       - '**'           # Push events to every 
+    branches: [ "master", "automation" ]
   #pull_request:
    # branches: [ "master" ]
     #types: [opened, synchronize, reopened]
