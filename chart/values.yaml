@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: jskidie/christmas-community-groups
+  repository: wingysam/christmas-community
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.30.1"

@@ -7,7 +7,7 @@ In short a Fork of Christmas Community but with groups hacked in.
 ![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fjskidie%2FChristmas-Community-Groups%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
-![Docker build](https://img.shields.io/github/actions/workflow/status/jskidie/Christmas-Community-Groups/docker-image.yml?style=for-the-badge&label=Docker%20build)
+![Docker build](https://img.shields.io/github/actions/workflow/status/jskiddie/Christmas-Community-Groups/docker-image.yml?style=for-the-badge&label=Docker%20build)
 
 
 Web app for your family's Christmas shopping
@@ -65,7 +65,7 @@ services:
 ## Install
 
 ```sh
-git clone https://github.com/jskidie/Christmas-Community-Groups
+git clone https://github.com/jskiddie/Christmas-Community-Groups
 cd Christmas-Community-Groups
 npm install
 ```
