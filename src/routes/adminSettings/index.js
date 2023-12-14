@@ -37,13 +37,18 @@ function addAdditional(array, value){
 function addAdditionalMulti(array1, array2){
   return Array.from(new Set([...array1, ...array2]))
 }
-
+/*
 function removeFromArray(array, value){
   var index =  array.indexOf(value)
   array.splice( index, 1)
   return array
 }
+*/
 
+function removeFromArray(array, value){
+  const newArray = array.filter(item => item !== value);
+  return newArray
+}
 async function marryUserToGroup (db, dbG, userId, groupId){
   console.log("[marryUserToGroup] marrying:" + userId + " and: " + groupId)
   // highest priority: put group name into user record.
@@ -158,7 +163,7 @@ module.exports = ({ db, ensurePfp }) => {
   if (_CC.config.wishlist.grouping){
     router.post('/add', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      const username = req.body.newUserUsername.trim()
+      var username = req.body.newUserUsername.trim()
       if (!username) {
         return db
           .allDocs({ include_docs: true })
@@ -192,7 +197,7 @@ module.exports = ({ db, ensurePfp }) => {
     })
     router.post('/add-group', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      const groupname = req.body.newGroupGroupname.trim()
+      var groupname = req.body.newGroupGroupname.trim()
       if (!groupname) {
         return db
           .allDocs({ include_docs: true })
@@ -215,13 +220,14 @@ module.exports = ({ db, ensurePfp }) => {
         _id: groupname,
         users: []
       })
+      console.log("[/add-group] saved to DB",groupname )
       // consider adding Profile Pictures for groups in the future
       // await ensurePfp(groupname)
       res.redirect(`/admin-settings/edit-group/${req.body.newGroupGroupname.trim()}`)
     })
     router.get('/edit-group/:groupToEdit', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      const doc = await  _CC.groupsDb.get(req.params.groupToEdit)
+      var doc = await  _CC.groupsDb.get(req.params.groupToEdit)
       res.render('admin-group-edit', { group: doc })
     })
     router.post('/edit-group/remove/:groupToRemove', verifyAuth(), async (req, res) => {
@@ -245,13 +251,13 @@ module.exports = ({ db, ensurePfp }) => {
       res.redirect('/admin-settings')
     })
     router.post('/edit-group/marry-user-and-group/:groupToMarry', verifyAuth(), async (req, res) => {
-      const username = req.body.marryingUserUsername.trim()
+      var username = req.body.marryingUserUsername.trim()
       var groupname  = req.params.groupToMarry
       try {
         console.log("[/edit-group/marry-user-and-group/:groupToMarry] marry user:" + username + " to group:" + req.params.groupToMarry )
         if (!req.user.admin) return res.redirect('/')
         
-        userIndex = await getAllDocumentIds()
+        var userIndex = await getAllDocumentIds()
         console.log("successfully pulled index db: ")
         console.log(userIndex)
         if (userIndex.includes(username)){
@@ -269,18 +275,18 @@ module.exports = ({ db, ensurePfp }) => {
       res.redirect('/admin-settings/edit-group/' + req.params.groupToMarry)
     })
     router.get('/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce', verifyAuth(), async (req, res) => {
-      const username = req.params.userToDivorce
+      var username = req.params.userToDivorce
       var groupname  = req.params.groupToDivorce
       try {
         console.log("divorce user:" + username + " from group:" + groupname)
         if (!req.user.admin) return res.redirect('/')
-        userIndex = await getAllDocumentIds()
+        var userIndex = await getAllDocumentIds()
         console.log("successfully pulled index db: ")
         console.log(userIndex)
         if (userIndex.includes(username)){
           console.log(username+ "exists and divorce is possible")
           await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb,username , groupname)
-          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_DIVORCE_SUCCESS', groupname))
+          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_DIVORCE_SUCCESS', username))
         }
         else{
           console.log(username+ "does not exist can't divorce")
@@ -298,7 +304,7 @@ module.exports = ({ db, ensurePfp }) => {
     router.post('/migrate-to-groups', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
       
-      const dbInfo = await _CC.groupsDb.info()
+      var dbInfo = await _CC.groupsDb.info()
       console.log("migration initiated")
       if (dbInfo.doc_count === 0) {
         console.log("no groups so far thus allowing for reset of groups and migartion")
@@ -322,7 +328,7 @@ module.exports = ({ db, ensurePfp }) => {
   else{
     router.post('/add', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      const username = req.body.newUserUsername.trim()
+      var username = req.body.newUserUsername.trim()
       if (!username) {
         return db
           .allDocs({ include_docs: true })
@@ -355,14 +361,14 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.get('/edit/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
+    var doc = await db.get(req.params.userToEdit)
     delete doc.password
     res.render('admin-user-edit', { user: doc })
   })
 
   router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
+    var doc = await db.get(req.params.userToEdit)
     doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
@@ -371,7 +377,7 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/edit/resetpw/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
+    var doc = await db.get(req.params.userToEdit)
     doc.pwToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.pwExpiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
@@ -380,7 +386,7 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/edit/cancelresetpw/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
+    var doc = await db.get(req.params.userToEdit)
     delete doc.pwToken
     delete doc.pwExpiry
     await db.put(doc)
@@ -510,7 +516,7 @@ module.exports = ({ db, ensurePfp }) => {
       if (_CC.config.wishlist.grouping){
         await registry_office(divorceUserFromGroup, userToRemove._id, userToRemove.groups)
       }
-      userToRemove = await db.get(req.params.userToRemove)
+        userToRemove = await db.get(req.params.userToRemove)
       await db.remove(userToRemove)
       console.log('[/edit/remove/:userToRemove] removed user from db')
       const { rows } = await db.allDocs()
