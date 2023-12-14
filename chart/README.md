@@ -37,7 +37,7 @@ helm install christmas-community <helm repo>/christmas-community
 | env.UPDATE_CHECK | bool | `true` | `Set to false to disable update notices` |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"wingysam/christmas-community"` |  |
+| image.repository | string | `"jskidie/christmas-community-groups"` |  |
 | image.tag | string | `"1.30.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |

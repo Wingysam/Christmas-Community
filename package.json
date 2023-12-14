@@ -8,14 +8,14 @@
     "start": "node src/manager.js",
     "dev": "nodemon",
     "postinstall": "node postinstall.js",
-    "build": "docker build . -t wingysam/christmas-community",
-    "publish": "npm run build && docker push wingysam/christmas-community"
+    "build": "docker build . -t jskiddie/christmas-community-groups",
+    "publish": "npm run build && docker push jskiddie/christmas-community-groups"
   },
-  "author": "Wingysam <wingysam+git@gmail.com>",
+  "author": "jskiddie",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wingysam/Christmas-Community"
+    "url": "https://github.com/jskidie/Christmas-Community-Groups"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
