@@ -3,6 +3,7 @@
 ![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
+[![.github/workflows/docker-image.yml](https://github.com/jskidie/Christmas-Community-Groups/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jskidie/Christmas-Community-Groups/actions/workflows/docker-image.yml)
 
 Web app for your family's Christmas shopping
 
