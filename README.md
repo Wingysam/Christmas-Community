@@ -15,6 +15,9 @@ Web app for your family's Christmas shopping
 ## Purpose
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
 
+## How to migrate from "normal" Christmas Community 
+docker-compose swap jskiddie/christmas-community-groups
+
 ## Screenshots
 ![Screenshot](screenshots/main.png)
 ![Screenshot](screenshots/list.png)
