@@ -24,11 +24,11 @@ To create a simple place for your entire family to use to find gifts that people
 By default, Christmas Community converts www.amazon.com links to smile.amazon.com. If you do not want this, set the environment variable SMILE to false (if you are using Docker Compose, make sure to put "false" in quotes).
 
 ## Root Path
-If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_PATH` to that path.
+If you want put Christmas Community on a subdirectory, such as `/christmas-community-groups`, set `ROOT_PATH` to that path.
 
 ## Docker
 ```
-docker run --detach --name christmas-community -p 80:80 --restart always jskiddie/christmas-community-groups
+docker run --detach --name christmas-community-groups -p 80:80 --restart always jskiddie/christmas-community-groups
 ```
 
 ## Docker Compose
@@ -36,7 +36,7 @@ docker run --detach --name christmas-community -p 80:80 --restart always jskiddi
 ---
 version: "3"
 services:
-  christmas-community:
+  christmas-community-groups:
     image: jskiddie/christmas-community-groups
     volumes:
       - ./data:/data
@@ -65,7 +65,7 @@ services:
 
 ```sh
 git clone https://github.com/jskidie/Christmas-Community-Groups
-cd Christmas-Community
+cd Christmas-Community-Groups
 npm install
 ```
 

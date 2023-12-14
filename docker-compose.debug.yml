@@ -1,8 +1,8 @@
 version: '2.1'
 
 services:
-  christmas-community:
-    image: christmas-community
+  christmas-community-groups:
+    image: christmas-community-groups
     build: .
     environment:
       NODE_ENV: development
