@@ -40,7 +40,7 @@
     "nanoid": "^3.1.25",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pouchdb": "^7.3.1",
+    "pouchdb": "^7.2.2",
     "pug": "^3.0.2",
     "session-pouchdb-store": "^0.4.1",
     "u64": "^1.0.1",

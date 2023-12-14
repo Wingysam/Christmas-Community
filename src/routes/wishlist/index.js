@@ -5,7 +5,6 @@ const marked = require('marked')
 
 const publicRoute = require('../../middlewares/publicRoute')
 const verifyAuth = require('../../middlewares/verifyAuth')
-const { sortedIndex, defaultsDeep } = require('lodash')
 
 const window = new JSDOM('').window
 const DOMPurify = createDOMPurify(window)

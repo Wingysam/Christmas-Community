@@ -1,8 +1,6 @@
 const verifyAuth = require('../../middlewares/verifyAuth')
 const express = require('express')
 const { nanoid } = require('nanoid')
-const { concat } = require('../../config/secret')
-const { use } = require('passport')
 
 const SECRET_TOKEN_LENGTH = 32
 const SECRET_TOKEN_LIFETIME =
@@ -14,11 +12,27 @@ const SECRET_TOKEN_LIFETIME =
   7 // days
 
 
+async function showStatus() {
+  console.log("user1:" ,await _CC.usersDb.get("e1"), "user2: ",await _CC.usersDb.get("e2"), "user3", await _CC.usersDb.get("e3"),"group1",await _CC.groupsDb.get("f1") )
+} 
+
+async function pullFromDB(dbGiven,idGiven) {
+  return await dbGiven.get(idGiven)
+} 
+
+async function pullUserFromDB(idGiven) {
+  return await pullFromDB(_CC.usersDb,idGiven)
+} 
+
+async function pullGroupFromDB(idGiven) {
+  return await pullFromDB(_CC.groupsDb,idGiven)
+}
+  
 
 async function getAllDocumentIds() {
   try {
-    var result = await _CC.usersDb.allDocs({ include_docs: false })
-    var allIds = result.rows.map(row => row.id)
+    const result = await _CC.usersDb.allDocs({ include_docs: false })
+    const allIds = result.rows.map(row => row.id)
     console.log('All Document IDs:', allIds)
     return allIds
   } catch (err) {
@@ -39,21 +53,30 @@ function addAdditionalMulti(array1, array2){
 }
 /*
 function removeFromArray(array, value){
-  var index =  array.indexOf(value)
+  const index =  array.indexOf(value)
   array.splice( index, 1)
   return array
 }
 */
-
 function removeFromArray(array, value){
-  const newArray = array.filter(item => item !== value);
+  console.log(`[removeFromArray] Removing ${value} from array: `, array)
+  const newArray = array.filter(item => item !== value)
+  console.log(`[removeFromArray] finished : `, newArray)
   return newArray
 }
+
+function elementsRemoved(from,newArray){
+  const divorcedFrom = from.filter( function( el ) {
+    return newArray.indexOf( el ) < 0
+  })
+  return divorcedFrom
+}
+
 async function marryUserToGroup (db, dbG, userId, groupId){
   console.log("[marryUserToGroup] marrying:" + userId + " and: " + groupId)
   // highest priority: put group name into user record.
-  var user = await db.get(userId)
-  var group = await dbG.get(groupId)
+  const user = await pullUserFromDB(userId)
+  const group = await pullGroupFromDB(groupId)
   console.log("[marryUserToGroup] retreived user", user, "and group",group," data scuccesfully")
   //enable grouping for this user
   user.grouped = true
@@ -64,9 +87,9 @@ async function marryUserToGroup (db, dbG, userId, groupId){
   user.groupedWith =  addAdditionalMulti(user.groupedWith,group.users)
   // make shure all the other users know they aree in a group with him as well
   await db.put(user) 
-  for (var userId of user.groupedWith) {
+  for (const userId of user.groupedWith) {
     console.log("got this uid",userId)
-    var otherUser = await db.get(userId)
+    const otherUser = await db.get(userId)
     otherUser.groupedWith = addAdditional(user.groupedWith,user._id )
     await db.put(otherUser)
   }
@@ -76,41 +99,43 @@ async function marryUserToGroup (db, dbG, userId, groupId){
 }
 
 async function divorceUserFromGroup (db, dbG, userId, groupId){
-  console.log("[divorceUserFromGroup] divcorcing:" + userId + " and: " + groupId)
+  console.log("[divorceUserFromGroup] divcorcing:" + userId + " and: " + groupId, "using", db, "and",dbG )
   // highest priority: remove group name from users group record.
-  var user = await db.get(userId)
-  var group = await dbG.get(groupId)
-  console.log("retreived user:", user," and group:", group, " data scuccesfully")
-  user.groups = removeFromArray(user.groups, group._id)
+  console.log("[divorceUserFromGroup]'] i cann pull these records at the start user:" , await _CC.usersDb.get(userId) , " and group:" , await _CC.groupsDb.get(groupId))
+  const userToDivorce = await db.get(userId)
+  const groupToDivorce = await dbG.get(groupId)
+  console.log("[divorceUserFromGroup] retreived user:", userToDivorce," and group:", groupToDivorce, " data scuccesfully")
+  userToDivorce.groups = removeFromArray(userToDivorce.groups, groupToDivorce._id) 
+  console.log("[divorceUserFromGroup] current user groups removed:",userToDivorce)
   groupedWith = []
   // completly recreate groupedWith fot the user
-  for (var groupId of user.groups){
+  for (const groupId of userToDivorce.groups){
     const otherGroup = await dbG.get(groupId) 
     groupedWith = addAdditionalMulti(groupedWith, otherGroup.users) 
   }
-  var exPartners = user.groupedWith
-  user.groupedWith = groupedWith
   // check out which users he doenst share a group with anymore
-  var divorcedFrom = exPartners.filter( function( el ) {
-    return user.groupedWith.indexOf( el ) < 0
-  })
-  console.log("user should be divorced from" , divorcedFrom)
+  const divorcedFrom = elementsRemoved(userToDivorce.groupedWith, groupedWith)
+  userToDivorce.groupedWith = groupedWith
+  console.log("[divorceUserFromGroup] current user:",userToDivorce)
+  console.log("[divorceUserFromGroup] user should be divorced from" , divorcedFrom)
   
-  if (user.groupedWith.length === 0){
-    console.log("user is not in any group anymore remving him from group functionality  ")
-    user.grouped = false
+  if (userToDivorce.groupedWith.length === 0){
+    console.log("[divorceUserFromGroup] user is not in any group anymore remving him from group functionality  ")
+    userToDivorce.grouped = false
   }
-  await db.put(user)
+  await db.put(userToDivorce)
   console.log("[divorceUserFromGroup] saved updatet user record in db")
   // make shure all the other users which who he doesnt share a group anymore know as well  
-  for (userId of divorcedFrom) {
-    const otherUser = await db.get(userId)
-    otherUser.groupedWith = removeFromArray(otherUser.groupedWith, userId)
+  for (userIdIterator of divorcedFrom) {
+    const otherUser = await db.get(userIdIterator)
+    otherUser.groupedWith = removeFromArray(otherUser.groupedWith, userIdIterator)
     await db.put(otherUser)
   }
-  group.users = removeFromArray(group.users, userId)
-  await dbG.put(group)
-  console.log("successfully divorced:" + userId + "obj", user, " and: " + groupId + "obj", group)
+  console.log("[divorceUserFromGroup] group before user removal", groupToDivorce)
+  groupToDivorce.users = removeFromArray(groupToDivorce.users, userId)
+  console.log("[divorceUserFromGroup] group after user removal", groupToDivorce)
+  await dbG.put(groupToDivorce)
+  console.log("[divorceUserFromGroup] successfully divorced:" + userId + "obj", userToDivorce, " and: " + groupId + "obj", groupToDivorce)
 }
 
 async function registry_office(func,  userId, groupIdArray){
@@ -130,7 +155,7 @@ module.exports = ({ db, ensurePfp }) => {
       db.allDocs({ include_docs: true })
         .then(users => {
           console.log("pulled users from db")
-          var userDocs = users
+          const userDocs = users
     
           _CC.groupsDb.allDocs({ include_docs: true })
             .then(groups => {
@@ -148,9 +173,7 @@ module.exports = ({ db, ensurePfp }) => {
           // Handle error for users
           res.status(500).send("Internal Server Error")
         })
-    }
-    
-    else{
+    }else{
       db.allDocs({ include_docs: true })
         .then(docs => {
           res.render('adminSettings', { title: _CC.lang('ADMIN_SETTINGS_HEADER'), users: docs.rows })
@@ -163,7 +186,7 @@ module.exports = ({ db, ensurePfp }) => {
   if (_CC.config.wishlist.grouping){
     router.post('/add', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      var username = req.body.newUserUsername.trim()
+      const username = req.body.newUserUsername.trim()
       if (!username) {
         return db
           .allDocs({ include_docs: true })
@@ -197,7 +220,7 @@ module.exports = ({ db, ensurePfp }) => {
     })
     router.post('/add-group', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      var groupname = req.body.newGroupGroupname.trim()
+      const groupname = req.body.newGroupGroupname.trim()
       if (!groupname) {
         return db
           .allDocs({ include_docs: true })
@@ -226,23 +249,28 @@ module.exports = ({ db, ensurePfp }) => {
       res.redirect(`/admin-settings/edit-group/${req.body.newGroupGroupname.trim()}`)
     })
     router.get('/edit-group/:groupToEdit', verifyAuth(), async (req, res) => {
-      if (!req.user.admin) return res.redirect('/')
-      var doc = await  _CC.groupsDb.get(req.params.groupToEdit)
+      if (!req.user.admin) {
+        console.log("[/edit-group/:groupToEdit] user not admin redirecting")
+        return res.redirect('/')
+      }
+      const doc = await  _CC.groupsDb.get(req.params.groupToEdit)
       res.render('admin-group-edit', { group: doc })
     })
     router.post('/edit-group/remove/:groupToRemove', verifyAuth(), async (req, res) => {
       try {
-        if (!req.user.admin) return res.redirect('/')
+        if (!req.user.admin){ 
+          console.log("failed to delete group missing admin privliges")
+          return res.redirect('/')
+        }
         console.log("beta")
-        var groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
+        const groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
         console.log("hi")
-        for (var user of groupToRemove.users){
+        for (const user of groupToRemove.users){
           console.log("[/edit-group/remove/:groupToRemove']divorcing ", user, "and ", groupToRemove._id)
           await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb, user, groupToRemove._id)
         }
         console.log("removing record")
-        groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
-        await _CC.groupsDb.remove(groupToRemove)
+        await _CC.groupsDb.remove(await _CC.groupsDb.get(req.params.groupToRemove))
         req.flash('success', _CC.lang('ADMIN_SETTINGS_GROUPS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
       } catch (error) {
         req.flash('error', `${error}`)
@@ -251,19 +279,19 @@ module.exports = ({ db, ensurePfp }) => {
       res.redirect('/admin-settings')
     })
     router.post('/edit-group/marry-user-and-group/:groupToMarry', verifyAuth(), async (req, res) => {
-      var username = req.body.marryingUserUsername.trim()
-      var groupname  = req.params.groupToMarry
+      const username = req.body.marryingUserUsername.trim()
+      const groupname  = req.params.groupToMarry
       try {
         console.log("[/edit-group/marry-user-and-group/:groupToMarry] marry user:" + username + " to group:" + req.params.groupToMarry )
         if (!req.user.admin) return res.redirect('/')
         
-        var userIndex = await getAllDocumentIds()
+        const userIndex = await getAllDocumentIds()
         console.log("successfully pulled index db: ")
         console.log(userIndex)
         if (userIndex.includes(username)){
           console.log(username+ "exists and marriage is possible")
           await marryUserToGroup(_CC.usersDb, _CC.groupsDb,username , groupname)
-          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_MARRIAGE_SUCCESS', req.params.groupToRemove))
+          req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_MARRIAGE_SUCCESS', username))
         }
         else{
           console.log(req.params.groupToMarry+ "does not exist can't marry")
@@ -275,16 +303,18 @@ module.exports = ({ db, ensurePfp }) => {
       res.redirect('/admin-settings/edit-group/' + req.params.groupToMarry)
     })
     router.get('/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce', verifyAuth(), async (req, res) => {
-      var username = req.params.userToDivorce
-      var groupname  = req.params.groupToDivorce
+      const username = req.params.userToDivorce
+      const groupname  = req.params.groupToDivorce
       try {
-        console.log("divorce user:" + username + " from group:" + groupname)
+        console.log("[/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce'] divorce user:" + username + " from group:" + groupname)
+        console.log("[/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce'] i cann pull these records at the start user:" , await _CC.usersDb.get(username) , " and group:" , await _CC.groupsDb.get(groupname))
         if (!req.user.admin) return res.redirect('/')
-        var userIndex = await getAllDocumentIds()
+        const userIndex = await getAllDocumentIds()
         console.log("successfully pulled index db: ")
         console.log(userIndex)
         if (userIndex.includes(username)){
           console.log(username+ "exists and divorce is possible")
+          console.log("[/edit-group/divorce-user-and-group/:groupToDivorce/:userToDivorce'] i cann pull these records before handing over:" , await _CC.usersDb.get(username) , " and group:" , await _CC.groupsDb.get(groupname))
           await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb,username , groupname)
           req.flash('success', _CC.lang('ADMIN_SETTINGS_GOUPS_DIVORCE_SUCCESS', username))
         }
@@ -304,7 +334,7 @@ module.exports = ({ db, ensurePfp }) => {
     router.post('/migrate-to-groups', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
       
-      var dbInfo = await _CC.groupsDb.info()
+      const dbInfo = await _CC.groupsDb.info()
       console.log("migration initiated")
       if (dbInfo.doc_count === 0) {
         console.log("no groups so far thus allowing for reset of groups and migartion")
@@ -328,7 +358,7 @@ module.exports = ({ db, ensurePfp }) => {
   else{
     router.post('/add', verifyAuth(), async (req, res) => {
       if (!req.user.admin) return res.redirect('/')
-      var username = req.body.newUserUsername.trim()
+      const username = req.body.newUserUsername.trim()
       if (!username) {
         return db
           .allDocs({ include_docs: true })
@@ -361,14 +391,14 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.get('/edit/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    var doc = await db.get(req.params.userToEdit)
+    const doc = await db.get(req.params.userToEdit)
     delete doc.password
     res.render('admin-user-edit', { user: doc })
   })
 
   router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    var doc = await db.get(req.params.userToEdit)
+    const doc = await db.get(req.params.userToEdit)
     doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
@@ -377,7 +407,7 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/edit/resetpw/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    var doc = await db.get(req.params.userToEdit)
+    const doc = await db.get(req.params.userToEdit)
     doc.pwToken = nanoid(SECRET_TOKEN_LENGTH)
     doc.pwExpiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
     await db.put(doc)
@@ -386,7 +416,7 @@ module.exports = ({ db, ensurePfp }) => {
 
   router.post('/edit/cancelresetpw/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
-    var doc = await db.get(req.params.userToEdit)
+    const doc = await db.get(req.params.userToEdit)
     delete doc.pwToken
     delete doc.pwExpiry
     await db.put(doc)
@@ -505,8 +535,7 @@ module.exports = ({ db, ensurePfp }) => {
   router.post('/edit/remove/:userToRemove', verifyAuth(), async (req, res) => {
     try {
       if (!req.user.admin) return res.redirect('/')
-
-      var userToRemove = await db.get(req.params.userToRemove)
+      const userToRemove = await db.get(req.params.userToRemove)
       console.log("initiated removal of user", userToRemove)
       if (userToRemove.admin) {
         req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
@@ -515,9 +544,10 @@ module.exports = ({ db, ensurePfp }) => {
       console.log("removing user from all groups")
       if (_CC.config.wishlist.grouping){
         await registry_office(divorceUserFromGroup, userToRemove._id, userToRemove.groups)
+        await db.remove(await db.get(req.params.userToRemove))
+      }else{
+        await db.remove(userToRemove)
       }
-        userToRemove = await db.get(req.params.userToRemove)
-      await db.remove(userToRemove)
       console.log('[/edit/remove/:userToRemove] removed user from db')
       const { rows } = await db.allDocs()
       for (const row of rows) {
