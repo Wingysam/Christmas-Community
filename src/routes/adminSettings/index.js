@@ -17,8 +17,8 @@ const SECRET_TOKEN_LIFETIME =
 
 async function getAllDocumentIds() {
   try {
-    const result = await _CC.usersDb.allDocs({ include_docs: false })
-    const allIds = result.rows.map(row => row.id)
+    var result = await _CC.usersDb.allDocs({ include_docs: false })
+    var allIds = result.rows.map(row => row.id)
     console.log('All Document IDs:', allIds)
     return allIds
   } catch (err) {
@@ -39,17 +39,17 @@ function addAdditionalMulti(array1, array2){
 }
 
 function removeFromArray(array, value){
-  index =  array.indexOf(value)
-  array = array.splice( index, index)
+  var index =  array.indexOf(value)
+  array.splice( index, 1)
   return array
 }
 
 async function marryUserToGroup (db, dbG, userId, groupId){
-  console.log("marrying:" + userId + " and: " + groupId)
+  console.log("[marryUserToGroup] marrying:" + userId + " and: " + groupId)
   // highest priority: put group name into user record.
-  user = await db.get(userId)
+  var user = await db.get(userId)
   var group = await dbG.get(groupId)
-  console.log("retreived user", user, "and group",group," data scuccesfully")
+  console.log("[marryUserToGroup] retreived user", user, "and group",group," data scuccesfully")
   //enable grouping for this user
   user.grouped = true
   user.groups = addAdditional(user.groups, groupId)
@@ -59,7 +59,7 @@ async function marryUserToGroup (db, dbG, userId, groupId){
   user.groupedWith =  addAdditionalMulti(user.groupedWith,group.users)
   // make shure all the other users know they aree in a group with him as well
   await db.put(user) 
-  for (userId of user.groupedWith) {
+  for (var userId of user.groupedWith) {
     console.log("got this uid",userId)
     var otherUser = await db.get(userId)
     otherUser.groupedWith = addAdditional(user.groupedWith,user._id )
@@ -71,22 +71,22 @@ async function marryUserToGroup (db, dbG, userId, groupId){
 }
 
 async function divorceUserFromGroup (db, dbG, userId, groupId){
-  console.log("divcorcing:" + userId + " and: " + groupId)
+  console.log("[divorceUserFromGroup] divcorcing:" + userId + " and: " + groupId)
   // highest priority: remove group name from users group record.
-  user = await db.get(userId)
-  group = await dbG.get(groupId)
+  var user = await db.get(userId)
+  var group = await dbG.get(groupId)
   console.log("retreived user:", user," and group:", group, " data scuccesfully")
-  user.groups = removeFromArray(user.groups, groupname)
+  user.groups = removeFromArray(user.groups, group._id)
   groupedWith = []
   // completly recreate groupedWith fot the user
-  for (groupId of user.groups){
+  for (var groupId of user.groups){
     const otherGroup = await dbG.get(groupId) 
     groupedWith = addAdditionalMulti(groupedWith, otherGroup.users) 
   }
-  exPartners = user.groupedWith
+  var exPartners = user.groupedWith
   user.groupedWith = groupedWith
   // check out which users he doenst share a group with anymore
-  divorcedFrom = exPartners.filter( function( el ) {
+  var divorcedFrom = exPartners.filter( function( el ) {
     return user.groupedWith.indexOf( el ) < 0
   })
   console.log("user should be divorced from" , divorcedFrom)
@@ -96,6 +96,7 @@ async function divorceUserFromGroup (db, dbG, userId, groupId){
     user.grouped = false
   }
   await db.put(user)
+  console.log("[divorceUserFromGroup] saved updatet user record in db")
   // make shure all the other users which who he doesnt share a group anymore know as well  
   for (userId of divorcedFrom) {
     const otherUser = await db.get(userId)
@@ -108,9 +109,11 @@ async function divorceUserFromGroup (db, dbG, userId, groupId){
 }
 
 async function registry_office(func,  userId, groupIdArray){
+  console.log("[registry_office] divorcing multiple marriages")
   for (groupId of groupIdArray){
     await func(_CC.usersDb, _CC.groupsDb, userId, groupId)
   }
+  console.log("[registry_office] finished")
 }
 
 module.exports = ({ db, ensurePfp }) => {
@@ -122,7 +125,7 @@ module.exports = ({ db, ensurePfp }) => {
       db.allDocs({ include_docs: true })
         .then(users => {
           console.log("pulled users from db")
-          userDocs = users
+          var userDocs = users
     
           _CC.groupsDb.allDocs({ include_docs: true })
             .then(groups => {
@@ -225,13 +228,14 @@ module.exports = ({ db, ensurePfp }) => {
       try {
         if (!req.user.admin) return res.redirect('/')
         console.log("beta")
-        const groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
+        var groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
         console.log("hi")
         for (var user of groupToRemove.users){
-          console.log("divorcing ", user, "and ", groupToRemove._id)
+          console.log("[/edit-group/remove/:groupToRemove']divorcing ", user, "and ", groupToRemove._id)
           await divorceUserFromGroup(_CC.usersDb, _CC.groupsDb, user, groupToRemove._id)
         }
         console.log("removing record")
+        groupToRemove = await _CC.groupsDb.get(req.params.groupToRemove)
         await _CC.groupsDb.remove(groupToRemove)
         req.flash('success', _CC.lang('ADMIN_SETTINGS_GROUPS_EDIT_DELETE_SUCCESS', req.params.groupToRemove))
       } catch (error) {
@@ -244,7 +248,7 @@ module.exports = ({ db, ensurePfp }) => {
       const username = req.body.marryingUserUsername.trim()
       var groupname  = req.params.groupToMarry
       try {
-        console.log("marry user:" + username + " to group:" + req.params.groupToMarry )
+        console.log("[/edit-group/marry-user-and-group/:groupToMarry] marry user:" + username + " to group:" + req.params.groupToMarry )
         if (!req.user.admin) return res.redirect('/')
         
         userIndex = await getAllDocumentIds()
@@ -496,19 +500,19 @@ module.exports = ({ db, ensurePfp }) => {
     try {
       if (!req.user.admin) return res.redirect('/')
 
-
-      const userToRemove = await db.get(req.params.userToRemove)
+      var userToRemove = await db.get(req.params.userToRemove)
       console.log("initiated removal of user", userToRemove)
       if (userToRemove.admin) {
         req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
         return res.redirect('/admin-settings')
       }
-      
       console.log("removing user from all groups")
       if (_CC.config.wishlist.grouping){
-        await registry_office(divorceUserFromGroup, userToRemove._id, userToRemove.groups )
+        await registry_office(divorceUserFromGroup, userToRemove._id, userToRemove.groups)
       }
+      userToRemove = await db.get(req.params.userToRemove)
       await db.remove(userToRemove)
+      console.log('[/edit/remove/:userToRemove] removed user from db')
       const { rows } = await db.allDocs()
       for (const row of rows) {
         const wishlist = await _CC.wishlistManager.get(row.id)
