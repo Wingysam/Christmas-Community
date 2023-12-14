@@ -1,19 +1,17 @@
-name: Build Dockerfile and Push to The Hub
-  # You may pin to the exact commit or the version.
-  # uses: beehivewarrior/docker-hub-builder@296a60202ffe4099d493f06f2105a4e481710c0d
-  uses: beehivewarrior/docker-hub-builder@v1.0
-  with:
-    # The username to authenticate with dockerhub
-    DOCKERHUB_USERNAME: 
-    # The token to authenticate with dockerhub
-    DOCKERHUB_TOKEN: 
-    # The tag of the base image
-    BASE_TAG: 
-    # ARG input into Dockerfile for tag
-    TAG_NAME: 
-    # Name of image to publish to dockerhub, e.g. 'user/my-image'
-    IMAGE_NAME: 
-    # Platforms to build for (i.e. linux/arm64)
-    PLATFORMS: # optional, default is linux/amd64
-          
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    types: [opened, synchronize, reopened]
 
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and Push Container to docker.io
+        uses: GlueOps/github-actions-build-push-containers@v0.3.5
+        with:
+          registry: "docker.io"
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
