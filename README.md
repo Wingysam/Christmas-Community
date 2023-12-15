@@ -24,7 +24,8 @@ make shure existing db is copied to or accessed from Christmas Community Grouped
 	- copy database back into container e.g. `docker cp  /tmp/dbs christmas-community-groups:/data/`
 
 **docker-compose:**  swap the image in your docker_compose.cml for  `jskiddie/christmas-community-groups`
- **npm** run install and copy the dbs folder from the christmas-communitys module folder to the christmas-community-groupss dbs folder
+
+**npm** run install and copy the dbs folder from the christmas-communitys module folder to the christmas-community-groupss dbs folder
 
 ## Screenshots
 ![Screenshot](screenshots/main.png)
