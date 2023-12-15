@@ -137,8 +137,14 @@ npm start
 ## Setup
 Visit `/` on the HTTP server to add an admin account.
 
-# Adding Sites
+## Adding Sites
 Christmas Community gets data about products automatically with [Wingysam/get-product-data](https://github.com/Wingysam/get-product-data). Please submit pull requests for new sites or fixes for changes to existing sites!
+
+## Groups
+Christmas Community does not yet support having multiple families in one instance. This is a planned feature that will, for example, allow you to have one group for your mom's side of the family and one group for your dad's side of the family, where both groups can access your wishlist but not each others' wishlists. A fork of Christmas Community that has this feature does exist, but most likely will not receive all new features added to the main project. It was not merged into this project because the architecture of Christmas Community prevented implementing it in a maintainable way before some refactoring is done.
+
+[Christmas-Community-Groups](https://github.com/jskiddie/Christmas-Community-Groups)
+
 # About Developer
 Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
 
