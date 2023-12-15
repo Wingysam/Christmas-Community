@@ -16,7 +16,15 @@ Web app for your family's Christmas shopping
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
 
 ## How to migrate from "normal" Christmas Community 
-docker-compose swap jskiddie/christmas-community-groups
+**TLDR:** 
+make shure existing db is copied to or accessed from Christmas Community Grouped
+**docker:**
+	- copy database from existing container to temporary folder e.g`. docker cp christmas-community:/data/dbs/ /tmp/dbs` 
+	- start the new container `See paragraph Docker` and stop it e.g.  `docker stop christmas-community-groups` 
+	- copy database back into container e.g. `docker cp  /tmp/dbs christmas-community-groups:/data/`
+
+**docker-compose:**  swap the image in your docker_compose.cml for  `jskiddie/christmas-community-groups`
+ **npm** run install and copy the dbs folder from the christmas-communitys module folder to the christmas-community-groupss dbs folder
 
 ## Screenshots
 ![Screenshot](screenshots/main.png)
@@ -180,3 +188,4 @@ As of writing, there are no code contributors to the main project. However, ther
 * German: [PeteS4](https://github.com/PeteS4)
 * French: [zethis](https://github.com/zethis)
 * Spanish: [CantisW](https://github.com/CantisW)
+

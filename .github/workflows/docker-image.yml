@@ -44,7 +44,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: jskiddie/christmas-community-groups:${{ env.RELEASE_VERSION }}
+          tags: |
+            jskiddie/christmas-community-groups:${{ env.RELEASE_VERSION }}
+            jskiddie/christmas-community-groups:latest
 
 
           
