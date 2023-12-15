@@ -8,8 +8,7 @@
     "start": "node src/manager.js",
     "dev": "nodemon",
     "postinstall": "node postinstall.js",
-    "build": "docker build . -t wingysam/christmas-community",
-    "publish": "npm run build && docker push wingysam/christmas-community"
+    "build": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community --push"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
   "license": "AGPL-3.0",
