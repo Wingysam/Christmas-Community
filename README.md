@@ -22,7 +22,7 @@ make shure existing db is copied to or accessed from Christmas Community Grouped
 
 **docker:**
 
-- copy database from existing container to temporary folder e.g`. docker cp christmas-community:/data/dbs/ /tmp/dbs` 
+- copy database from existing container to temporary folder e.g.`docker cp christmas-community:/data/dbs/ /tmp/dbs` 
 - start the new container `See paragraph Docker` and stop it e.g.  `docker stop christmas-community-groups` 
 - copy database back into container e.g. `docker cp  /tmp/dbs christmas-community-groups:/data/`
 
