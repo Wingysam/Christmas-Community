@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt-nodejs')
-const express = require('express')
+import bcrypt from 'bcrypt-nodejs'
+import express from 'express'
 
-module.exports = (db) => {
+export default function (db) {
   const router = express.Router()
 
   router.get('/:code', async (req, res) => {

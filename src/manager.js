@@ -1,5 +1,5 @@
-const { exec } = require('child-process-promise')
-const { spawn } = require('child_process')
+import { exec } from 'child-process-promise'
+import { spawn } from 'child_process'
 
 const PACKAGENAME = 'get-product-name'
 
@@ -16,28 +16,26 @@ async function updateGPD () {
   await exec(command)
 }
 
-;(async () => {
-  let cc = null
-  function spawnCC () {
-    cc = spawn('node', ['src/index.js'], { env: process.env })
-    cc.on('exit', spawnCC)
-    cc.stdout.pipe(process.stdout)
-    cc.stderr.pipe(process.stderr)
-  }
+let cc = null
+function spawnCC () {
+  cc = spawn('node', ['built/index.js'], { env: process.env })
+  cc.on('exit', spawnCC)
+  cc.stdout.pipe(process.stdout)
+  cc.stderr.pipe(process.stderr)
+}
 
-  if (process.env.UPDATE_GPD !== 'false') {
-    async function update () {
-      if (await isOutdated()) {
-        try {
-          await updateGPD()
-        } catch {}
-        if (cc) cc.kill('sigint')
-        cc.once('exit', () => console.log(`Updated ${PACKAGENAME}`))
-      }
+if (process.env.UPDATE_GPD !== 'false') {
+  async function update () {
+    if (await isOutdated()) {
+      try {
+        await updateGPD()
+      } catch {}
+      if (cc) cc.kill('sigint')
+      cc.once('exit', () => { console.log(`Updated ${PACKAGENAME}`) })
     }
-    update()
-    setInterval(update, 1000 * 60 * 60) // 1 hour
   }
+  void update()
+  setInterval(() => { void update() }, 1000 * 60 * 60) // 1 hour
+}
 
-  spawnCC()
-})()
+spawnCC()

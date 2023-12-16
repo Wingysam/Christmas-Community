@@ -1,9 +1,21 @@
-const publicRoute = require('../middlewares/publicRoute')
-const express = require('express')
-const path = require('path')
-const fs = require('fs/promises')
+import publicRoute from '../middlewares/publicRoute.js'
+import express from 'express'
+import path from 'path'
+import fs from 'fs/promises'
 
-module.exports = ({ db, config }) => {
+import Api from './api/index.js'
+import Setup from './setup/index.js'
+import Login from './login/index.js'
+import Logout from './logout/index.js'
+import ResetPw from './resetpw/index.js'
+import ConfirmAccount from './confirm-account/index.js'
+import Wishlist from './wishlist/index.js'
+import SupportedSites from './supported-sites/index.js'
+import Profile from './profile/index.js'
+import AdminSettings from './adminSettings/index.js'
+import ManifestJson from './manifest.json/index.js'
+
+export default ({ db, config }) => {
   async function ensurePfp (username) {
     if (!config.pfp) return
     const user = await db.get(username)
@@ -28,7 +40,7 @@ module.exports = ({ db, config }) => {
 
   const router = express.Router()
 
-  router.use('/', express.static(path.join(__dirname, '../static')))
+  router.use('/', express.static(path.resolve('./src/static')))
 
   router.get('/',
     async (req, res, next) => {
@@ -45,23 +57,23 @@ module.exports = ({ db, config }) => {
     }
   )
 
-  router.use('/api', require('./api')({ db }))
+  router.use('/api', Api({ db }))
 
-  router.use('/setup', require('./setup')({ db, ensurePfp }))
+  router.use('/setup', Setup({ db, ensurePfp }))
 
-  router.use('/login', require('./login')({ ensurePfp }))
-  router.use('/logout', require('./logout')())
-  router.use('/resetpw', require('./resetpw')(db))
-  router.use('/confirm-account', require('./confirm-account')(db))
+  router.use('/login', Login({ ensurePfp }))
+  router.use('/logout', Logout())
+  router.use('/resetpw', ResetPw(db))
+  router.use('/confirm-account', ConfirmAccount(db))
 
-  router.use('/wishlist', require('./wishlist')(db))
-  router.use('/supported-sites', require('./supported-sites')())
+  router.use('/wishlist', Wishlist(db))
+  router.use('/supported-sites', SupportedSites())
 
-  router.use('/profile', require('./profile')({ db, config, ensurePfp }))
+  router.use('/profile', Profile({ db, config, ensurePfp }))
 
-  router.use('/admin-settings', require('./adminSettings')({ db, ensurePfp }))
+  router.use('/admin-settings', AdminSettings({ db, ensurePfp }))
 
-  router.use('/manifest.json', require('./manifest.json')({ config }))
+  router.use('/manifest.json', ManifestJson({ config }))
 
   return router
 }

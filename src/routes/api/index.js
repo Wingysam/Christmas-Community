@@ -1,7 +1,9 @@
-const verifyAuth = require('../../middlewares/verifyAuth')
-const express = require('express')
+import Wishlist from './wishlist/index.js'
 
-module.exports = ({ db, config }) => {
+import verifyAuth from '../../middlewares/verifyAuth.js'
+import express from 'express'
+
+export default function ({ db, config }) {
   const router = express.Router()
 
   router.use(verifyAuth())
@@ -12,7 +14,7 @@ module.exports = ({ db, config }) => {
     })
   })
 
-  router.use('/wishlist', require('./wishlist')({ db }))
+  router.use('/wishlist', Wishlist({ db }))
 
   return router
 }

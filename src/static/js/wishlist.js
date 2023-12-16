@@ -1,6 +1,6 @@
 /* eslint-env browser */
-function animateCSS (node, animationName) {
-  return new Promise(resolve => {
+async function animateCSS (node, animationName) {
+  return await new Promise(resolve => {
     node.classList.add('animated', animationName)
 
     function handleAnimationEnd () {
@@ -88,6 +88,6 @@ function listen (element, upOrDown) {
 }
 
 setTimeout(() => {
-  document.querySelectorAll('.upForm').forEach(element => listen(element, 'up'))
-  document.querySelectorAll('.downForm').forEach(element => listen(element, 'down'))
+  document.querySelectorAll('.upForm').forEach(element => { listen(element, 'up') })
+  document.querySelectorAll('.downForm').forEach(element => { listen(element, 'down') })
 }, 0)

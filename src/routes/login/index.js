@@ -1,7 +1,7 @@
-const passport = require('passport')
-const express = require('express')
+import passport from 'passport'
+import express from 'express'
 
-module.exports = () => {
+export default function () {
   const router = express.Router()
 
   router.get('/',
