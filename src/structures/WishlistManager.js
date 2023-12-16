@@ -1,6 +1,6 @@
-const { Wishlist } = require('./Wishlist')
+import { Wishlist } from './Wishlist.js'
 
-class WishlistManager {
+export class WishlistManager {
   constructor () {
     this.wishlistsCache = new Map()
   }
@@ -18,5 +18,3 @@ class WishlistManager {
     this.wishlistsCache = new Map()
   }
 }
-
-module.exports = { WishlistManager }

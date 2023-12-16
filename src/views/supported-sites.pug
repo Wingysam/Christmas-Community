@@ -5,6 +5,6 @@ block content
     span.is-size-3(style='margin-top: 0; padding-top: 0;')
       a(href=req.headers.referer) &lt; #{lang('BACK_BUTTON')}
   ul
-    for site of _CC.require('get-product-name').sites
+    for site of _CC.GetProductData.sites
       li= site.name
   p!= lang('SUPPORTED_SITES_TEXT')

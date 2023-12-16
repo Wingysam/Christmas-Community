@@ -1,8 +1,8 @@
-const verifyAuth = require('../../middlewares/verifyAuth')
-const bcrypt = require('bcrypt-nodejs')
-const express = require('express')
+import verifyAuth from '../../middlewares/verifyAuth.js'
+import bcrypt from 'bcrypt-nodejs'
+import express from 'express'
 
-module.exports = ({ db, config, ensurePfp }) => {
+export default function ({ db, config, ensurePfp }) {
   const router = express.Router()
 
   router.get('/', verifyAuth(), async (req, res) => {
@@ -19,7 +19,7 @@ module.exports = ({ db, config, ensurePfp }) => {
     } else {
       req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
     }
-    res.redirect(`${_CC.config.base}profile`)
+    res.redirect('/profile')
   })
 
   const INFO_KEYS = [
@@ -38,7 +38,7 @@ module.exports = ({ db, config, ensurePfp }) => {
     }
     await db.put(req.user)
     req.flash('success', _CC.lang('PROFILE_UPDATE_INFO_SUCCESS'))
-    res.redirect(`${_CC.config.base}profile`)
+    res.redirect('/profile')
   })
 
   router.get('/password', verifyAuth(), async (req, res) => {
@@ -48,11 +48,11 @@ module.exports = ({ db, config, ensurePfp }) => {
   router.post('/password', verifyAuth(), (req, res) => {
     if (!req.body.oldPassword) {
       req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_OLD'))
-      return res.redirect(`${_CC.config.base}profile/password`)
+      return res.redirect('/profile/password')
     }
     if (!req.body.newPassword) {
       req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_NEW'))
-      return res.redirect(`${_CC.config.base}profile/password`)
+      return res.redirect('/profile/password')
     }
     bcrypt.compare(req.body.oldPassword, req.user.password, (err, correct) => {
       if (err) throw err
@@ -65,7 +65,7 @@ module.exports = ({ db, config, ensurePfp }) => {
               db.put(doc)
                 .then(() => {
                   req.flash('success', _CC.lang('PROFILE_PASSWORD_SUCCESS'))
-                  res.redirect(`${_CC.config.base}profile/password`)
+                  res.redirect('/profile/password')
                 })
                 .catch(err => { throw err })
             })
@@ -73,7 +73,7 @@ module.exports = ({ db, config, ensurePfp }) => {
         })
       } else {
         req.flash('error', _CC.lang('PROFILE_PASSWORD_OLD_MISMATCH'))
-        res.redirect(`${_CC.config.base}profile/password`)
+        res.redirect('/profile/password')
       }
     })
   })

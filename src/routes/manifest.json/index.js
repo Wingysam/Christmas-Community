@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-module.exports = ({ config }) => {
+export default function ({ config }) {
   const router = express.Router()
 
   router.get('/', (req, res) => {

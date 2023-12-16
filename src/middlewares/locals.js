@@ -1,6 +1,6 @@
-const config = require('../config')
+import config from '../config/index.js'
 
-module.exports = (req, res, next) => {
+export default function (req, res, next) {
   res.locals.config = config
   res.locals.req = req
   res.locals.lang = _CC.lang

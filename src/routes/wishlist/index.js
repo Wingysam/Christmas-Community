@@ -1,10 +1,10 @@
-const createDOMPurify = require('dompurify')
-const express = require('express')
-const { JSDOM } = require('jsdom')
-const marked = require('marked')
+import createDOMPurify from 'dompurify'
+import express from 'express'
+import { JSDOM } from 'jsdom'
+import marked from 'marked'
 
-const publicRoute = require('../../middlewares/publicRoute')
-const verifyAuth = require('../../middlewares/verifyAuth')
+import publicRoute from '../../middlewares/publicRoute.js'
+import verifyAuth from '../../middlewares/verifyAuth.js'
 
 const window = new JSDOM('').window
 const DOMPurify = createDOMPurify(window)
@@ -19,7 +19,7 @@ const totals = wishlist => {
   return { unpledged, pledged }
 }
 
-module.exports = (db) => {
+export default function (db) {
   const router = express.Router()
 
   const wishlistManager = _CC.wishlistManager

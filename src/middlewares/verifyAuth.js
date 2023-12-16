@@ -1,7 +1,7 @@
 const ROUGHLY_ONE_YEAR_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 30 * 12
 const COOKIE_NAME = 'christmas_community.guestpassword'
 
-module.exports = options => {
+export default function (options) {
   return (req, res, next) => {
     options = options || {}
     let authed = false
