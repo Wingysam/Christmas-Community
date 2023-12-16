@@ -19,7 +19,26 @@ module.exports = ({ db, config, ensurePfp }) => {
     } else {
       req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
     }
-    res.redirect('/profile')
+    res.redirect(`${_CC.config.base}profile`)
+  })
+
+  const INFO_KEYS = [
+    'shoeSize', 'ringSize', 'dressSize',
+    'sweaterSize', 'shirtSize', 'pantsSize',
+    'coatSize', 'hatSize', 'phoneModel'
+  ]
+  router.post('/info', verifyAuth(), async (req, res) => {
+    if (!req.user.info) {
+      req.user.info = {}
+    }
+    for (const [k, v] of Object.entries(req.body)) {
+      console.log({ k, v })
+      if (!INFO_KEYS.includes(k)) continue
+      req.user.info[k] = v
+    }
+    await db.put(req.user)
+    req.flash('success', _CC.lang('PROFILE_UPDATE_INFO_SUCCESS'))
+    res.redirect(`${_CC.config.base}profile`)
   })
 
   router.get('/password', verifyAuth(), async (req, res) => {
@@ -29,11 +48,11 @@ module.exports = ({ db, config, ensurePfp }) => {
   router.post('/password', verifyAuth(), (req, res) => {
     if (!req.body.oldPassword) {
       req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_OLD'))
-      return res.redirect('/profile/password')
+      return res.redirect(`${_CC.config.base}profile/password`)
     }
     if (!req.body.newPassword) {
       req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_NEW'))
-      return res.redirect('/profile/password')
+      return res.redirect(`${_CC.config.base}profile/password`)
     }
     bcrypt.compare(req.body.oldPassword, req.user.password, (err, correct) => {
       if (err) throw err
@@ -46,7 +65,7 @@ module.exports = ({ db, config, ensurePfp }) => {
               db.put(doc)
                 .then(() => {
                   req.flash('success', _CC.lang('PROFILE_PASSWORD_SUCCESS'))
-                  res.redirect('/profile/password')
+                  res.redirect(`${_CC.config.base}profile/password`)
                 })
                 .catch(err => { throw err })
             })
@@ -54,7 +73,7 @@ module.exports = ({ db, config, ensurePfp }) => {
         })
       } else {
         req.flash('error', _CC.lang('PROFILE_PASSWORD_OLD_MISMATCH'))
-        res.redirect('/profile/password')
+        res.redirect(`${_CC.config.base}profile/password`)
       }
     })
   })
