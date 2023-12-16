@@ -50,6 +50,7 @@ module.exports = (db) => {
   router.get('/:user', publicRoute(), redirectIfSingleUserMode, async (req, res) => {
     try {
       const wishlist = await wishlistManager.get(req.params.user)
+      await wishlist.fetch()
       const items = await wishlist.itemsVisibleToUser(req.user._id)
 
       const compiledNotes = {}
@@ -63,7 +64,8 @@ module.exports = (db) => {
         title: _CC.lang('WISHLIST_TITLE', wishlist.username),
         name: wishlist.username,
         items,
-        compiledNotes
+        compiledNotes,
+        sharedInfo: wishlist.doc?.info ?? {}
       })
     } catch (error) {
       req.flash('error', error)
