@@ -8,7 +8,7 @@
     "start": "node src/manager.js",
     "dev": "nodemon",
     "postinstall": "node postinstall.js",
-    "build": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community --push"
+    "build": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community -t wingysam/christmas-community:$(./node_modules/node-jq/bin/jq -r .version < package.json) --push"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
   "license": "AGPL-3.0",
@@ -51,6 +51,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "node-jq": "^4.2.2",
     "nodemon": "^2.0.12"
   }
 }
