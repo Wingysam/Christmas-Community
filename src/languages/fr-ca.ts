@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'fr-ca'
+export const momentLocale = 'fr-ca'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} n'a pas encore été traduit en français (Canada).`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Effacer toutes les listes de souhaits',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Ceci supprimera toutes les listes de souhaits. <b>Cette action est irréversible!</b> Peut-être devriez-vous faire une sauvegarde de la base de données avant de continuer.',
@@ -180,4 +180,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Listes de souhaits`
-}
+} as const

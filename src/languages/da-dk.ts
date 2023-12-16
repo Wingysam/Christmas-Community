@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'da'
+export const momentLocale = 'da'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} er ikke blevet oversat til dansk endnu.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Slet alle ønskelister',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: '<b>Advarsel</b>: Dette vil <b>slette alt data</b>! Foretag venligst backup inden du fortsætter.',
@@ -184,4 +184,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: 'Ønskelister'
-}
+} as const

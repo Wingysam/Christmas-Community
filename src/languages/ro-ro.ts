@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'ro-RO'
+export const momentLocale = 'ro-RO'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} încă nu a fost tradus în Română.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Ștergeți toate listele cu dorințe',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Această acțiune va <b>șterge toate listele cu dorințe definitiv!</b> Se recomandă exportarea unei copii de rezervă înainte de a utiliza această opțiune.',
@@ -181,4 +181,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Liste cu Dorințe`
-}
+} as const

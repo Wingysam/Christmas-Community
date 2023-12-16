@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'cs'
+export const momentLocale = 'cs'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} ještě nebylo přeloženo do češtiny.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Odstranit všechny seznamy',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Tohle obratem <b>odstraní všechny seznamy přání!</b> Zvažte vyvoření zálohy databáze, než budete pokračovat.',
@@ -179,4 +179,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Seznamy přání`
-}
+} as const

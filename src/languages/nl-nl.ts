@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'nl'
+export const momentLocale = 'nl'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} hasn't been translated to Dutch yet.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Leeg all verlanglijstjes',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Dit leegt <b>direct en permament alle verlanglijstjes!</b> Overweeg om een backup te maken van de database voordat je dit doet',
@@ -184,4 +184,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Verlanglijstjes`
-}
+} as const
