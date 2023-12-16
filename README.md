@@ -149,13 +149,3 @@ Christmas Community does not yet support having multiple families in one instanc
 Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
-
-# Contributors
-As of writing, there are no code contributors to the main project. However, there are issue contributors and I appreciate these! Ideas on which features to add and bug reports are very helpful. Thank you!
-
-## Language Contributors
-* English: [dotromain](https://github.com/dotromain), [o-pteron](https://github.com/o-pteron)
-* Czech: [drSchaps](https://github.com/drSchaps)
-* German: [PeteS4](https://github.com/PeteS4)
-* French: [zethis](https://github.com/zethis)
-* Spanish: [CantisW](https://github.com/CantisW)
