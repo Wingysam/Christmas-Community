@@ -1,7 +1,8 @@
 module.exports.momentLocale = 'en'
 
+module.exports.notTranslated = englishString => `${englishString} (not yet translated into English)`
+
 module.exports.strings = {
-  _NOT_LOCALIZED: key => `${key} hasn't been translated to English yet.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Clear all wishlists',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'This will instantly <b>irreversibly delete all wishlists!</b> Consider making a backup of the database before using this.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Wishlist Deletion',

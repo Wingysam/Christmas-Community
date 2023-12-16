@@ -24,6 +24,8 @@ const config = require('./config')
 _CC.config = config
 
 ;(() => {
+  const nativeLanguage = require('./languages/en-us')
+
   let language
   try {
     language = require(`./languages/${config.language}`)
@@ -40,7 +42,11 @@ _CC.config = config
 
   _CC.lang = (key, ...args) => {
     const lang = language.strings[key]
-    if (!lang) return language.strings._NOT_LOCALIZED(key)
+    if (!lang) {
+      const nativeString = nativeLanguage.strings[key] ?? key
+      if (language.notTranslated) return language.notTranslated(nativeString)
+      return nativeString
+    }
     if (typeof lang === 'function') return lang(...args)
     return lang
   }
