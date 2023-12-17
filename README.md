@@ -149,3 +149,13 @@ Christmas Community does not yet support having multiple families in one instanc
 Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
+
+## Collaborators
+
+<!-- readme: collaborators -start -->
+<!-- readme: collaborators -end -->
+
+## Contributors
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
