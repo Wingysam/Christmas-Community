@@ -146,7 +146,7 @@ Christmas Community does not yet support having multiple families in one instanc
 [Christmas-Community-Groups](https://github.com/jskiddie/Christmas-Community-Groups)
 
 # About Developer
-Hi, I'm Wingy. I made this app. My website is [wingysam.xyz](https://wingysam.xyz). Please [hire me](https://wingysam.xyz/hire).
+Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev). Please [hire me](https://wingysam.xyz/hire).
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)
 
