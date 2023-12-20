@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-module.exports = ({ db }) => {
+export default function ({ db }) {
   const router = express.Router()
 
   router.get('/', (req, res) => {

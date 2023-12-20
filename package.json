@@ -1,12 +1,16 @@
 {
   "name": "christmas-community",
-  "version": "1.32.0",
+  "version": "1.35.0",
   "description": "Christmas lists for communities",
-  "main": "src/index.js",
+  "type": "module",
+  "main": "built/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/manager.js",
-    "dev": "nodemon"
+    "start": "node built/manager.js",
+    "dev": "nodemon --watch src -e ts,js --exec 'npm run build && node built/index.js'",
+    "postinstall": "node postinstall.cjs",
+    "build": "tsc",
+    "release": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community -t wingysam/christmas-community:$(./node_modules/node-jq/bin/jq -r .version < package.json) --push"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
   "license": "AGPL-3.0",
@@ -36,6 +40,7 @@
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "nanoid": "^3.1.25",
+    "node-fetch": "^3.3.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pouchdb": "^7.2.2",
@@ -45,11 +50,18 @@
     "yes-no": "^0.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "nodemon": "^2.0.12"
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.10.4",
+    "@types/node-fetch": "^3.0.2",
+    "@types/pouchdb": "^6.4.2",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "eslint": "^8.56.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.4.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "node-jq": "^4.2.2",
+    "nodemon": "^2.0.12",
+    "typescript": "^5.3.3"
   }
 }

@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-module.exports = () => {
+export default function () {
   const router = express.Router()
 
   router.get('/', async (req, res) => {

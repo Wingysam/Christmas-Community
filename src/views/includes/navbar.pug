@@ -8,11 +8,11 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
   .navbar-brand
     if _CC.config.base === req.path
       a.is-active.navbar-item(href=_CC.config.base)
-        img(src=`${_CC.config.base}img/logo.png`, alt='')
+        img.logo-image(src=`${_CC.config.base}img/logo.transparent.png`, alt='')
         span #{config.siteTitle}
     else
       a.navbar-item(href=_CC.config.base)
-        img(src=`${_CC.config.base}img/logo.png`, alt='')
+        img.logo-image(src=`${_CC.config.base}img/logo.transparent.png`, alt='')
         span #{config.siteTitle}
     a.navbar-burger#navBarBurger(role='button', aria-label='menu', aria-expanded='false')
       span(aria-hidden='true')

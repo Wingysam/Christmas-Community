@@ -26,7 +26,7 @@ block content
   p!= lang('ADMIN_SETTINGS_CLEARDB_DESCRIPTION')
   a.button.is-danger(href=`${_CC.config.base}admin-settings/clear-wishlists`)= lang('ADMIN_SETTINGS_CLEARDB_BUTTON')
   h3= lang('ADMIN_SETTINGS_VERSION_INFO')
-  p Christmas Community: v#{_CC.package.version}
-  p Get Product Data: v#{_CC.require('get-product-name/package.json').version}
+  p Christmas Community: v#{_CC.packageJson.version}
+  p Get Product Data: v#{_CC.GetProductData.version}
   p Node: #{process.version}
   p PID: #{process.pid}

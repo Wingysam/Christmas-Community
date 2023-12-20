@@ -1,13 +1,18 @@
-const { nanoid } = require('nanoid')
-const path = require('path')
-const fs = require('fs')
+import { nanoid } from 'nanoid'
+import path from 'path'
+import fs from 'fs'
+import mkdirp from 'mkdirp'
 
-const secretFilePath = path.join((process.env.SECRET_DIRNAME ? process.env.SECRET_DIRNAME : __dirname), 'secret.txt')
+const secretFilePath = path.join((process.env.SECRET_DIRNAME ? process.env.SECRET_DIRNAME : 'dbs'), 'secret.txt')
+
+let secret
 
 try {
-  module.exports = fs.readFileSync(secretFilePath).toString()
+  secret = fs.readFileSync(secretFilePath).toString()
 } catch (_) {
-  const secret = nanoid(128)
+  secret = nanoid(128)
+  await mkdirp(path.join(secretFilePath, '..'))
   fs.writeFileSync(secretFilePath, secret)
-  module.exports = secret
 }
+
+export default secret

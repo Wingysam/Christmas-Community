@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'es'
+export const momentLocale = 'es'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} todavía no ha sido traducido al español.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Borrar todas las listas de deseos',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Esto va a, inmediatamente, <b>irreversiblemente borrar todas las listas de deseo!</b> Considere hacer una copia de la base de datos antes de hacer esto.',
@@ -30,7 +30,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_EDIT: 'Editar',
   ADMIN_SETTINGS_USERS_HEADER: 'Usuarios',
   ADMIN_SETTINGS_VERSION_INFO: 'Información de versión',
-  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "Esta cuenta ha sido confirmada.",
+  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: 'Esta cuenta ha sido confirmada.',
   ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} es administrador`,
   ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} no es administrador`,
   ADMIN_USER_EDIT_ADMIN: 'Administrador',
@@ -61,7 +61,7 @@ module.exports.strings = {
   CONFIRM_ACCOUNT_EXPIRED: 'Su enlace de confirmación se expiró. Por favor pide otra.',
   CONFIRM_ACCOUNT_HEADER_INVALID: `${_CC.config.siteTitle} | Enlace de confirmación inválido`,
   CONFIRM_ACCOUNT_HEADER_VALID: `${_CC.config.siteTitle} | Confirmar cuenta`,
-  CONFIRM_ACCOUNT_INVALID: "Este enlace de confirmación no es válido, ¿tal vez esta cuenta se borró o algunos carácteres al final se cortaron?",
+  CONFIRM_ACCOUNT_INVALID: 'Este enlace de confirmación no es válido, ¿tal vez esta cuenta se borró o algunos carácteres al final se cortaron?',
   CONFIRM_ACCOUNT_SET_PW_BUTTON: `Une ${_CC.config.siteTitle}`,
   CONFIRM_ACCOUNT_SET_PW_PLACEHOLDER: 'pa$$word!',
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hola ${name}! Por favor escribe su contraseña aquí.`,
@@ -110,7 +110,7 @@ module.exports.strings = {
   PROFILE_TITLE: name => `Ajustes de perfil - ${name}`,
   RESET_PASSWORD_BUTTON: 'Restablecer contraseñá',
   RESET_PASSWORD_GREETING_EXPIRED: 'Su enlace de restablecimiento se expiró. Por favor pide otra.',
-  RESET_PASSWORD_GREETING_INVALID: "Este enlace de restablecimiento no es válido, ¿tal vez el enlace se canceló o algunos carácteres se cortaron?",
+  RESET_PASSWORD_GREETING_INVALID: 'Este enlace de restablecimiento no es válido, ¿tal vez el enlace se canceló o algunos carácteres se cortaron?',
   RESET_PASSWORD_GREETING_VALID: name => `Hola ${name}! Por favor escribe su contraseña aquí.`,
   RESET_PASSWORD_HEADER_INVALID: `${_CC.config.siteTitle} | Enlace de restablecimiento inválido`,
   RESET_PASSWORD_HEADER_VALID: `${_CC.config.siteTitle} | Restablecer contraseña`,
@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'juan',
   SETUP_USERNAME: 'Nombre de usuario',
   SUPPORTED_SITES_HEADER: 'Sitios web compatibles',
-  SUPPORTED_SITES_TEXT: '¿Hay un sitio ausente o roto? Abra una propuesta <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">aquí</a>! :)',
+  SUPPORTED_SITES_TEXT: '¿Hay un sitio ausente o roto? Abra una propuesta <a href="https://github.com/Wingysam/get-product-data/issues/new">aquí</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community es desactualizado. Puede haber nuevas functiones o correcciones. ¡Considera actualizar! :)
@@ -181,4 +181,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Listas de deseo`
-}
+} as const

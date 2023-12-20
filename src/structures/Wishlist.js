@@ -1,7 +1,7 @@
-const getProductData = require('get-product-name')
-const u64 = require('u64')
+import getProductData from 'get-product-name'
+import u64 from 'u64'
 
-class Wishlist {
+export class Wishlist {
   static async new (username) {
     const instance = new this({ username })
     await instance.fetch()
@@ -50,7 +50,7 @@ class Wishlist {
         .filter(item => item.addedBy === username)
     }
 
-    return addedBySelfAtTop(this.items)
+    return await addedBySelfAtTop(this.items)
   }
 
   async add ({ itemUrlOrName, suggest, note, addedBy }) {
@@ -161,7 +161,7 @@ class Wishlist {
     }
 
     const productData = await getProductData(item.url)
-    if (!productData) return; // short-circuit when there's no data
+    if (!productData) return // short-circuit when there's no data
 
     for (const key of ['name', 'price', 'image']) {
       if (productData[key]) item[key] = productData[key]
@@ -180,5 +180,3 @@ function parseURL (string) {
     if (url) return url
   } catch {}
 }
-
-module.exports = { Wishlist }
