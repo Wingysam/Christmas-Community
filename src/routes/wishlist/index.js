@@ -9,15 +9,20 @@ import verifyAuth from '../../middlewares/verifyAuth.js'
 const window = new JSDOM('').window
 const DOMPurify = createDOMPurify(window)
 
-const totals = wishlist => {
-  let unpledged = 0
-  let pledged = 0
-  wishlist.forEach(wishItem => {
-    if (wishItem.pledgedBy) pledged += 1
-    else unpledged += 1
-  })
-  return { unpledged, pledged }
-}
+const totals = data => {
+  let unpledged = 0;
+  let pledged = 0;
+  let selfAdded = 0;
+  data.wishlist.forEach(wishItem => {
+      if (wishItem.addedBy === data._id)
+          selfAdded +=1;
+      if (wishItem.pledgedBy)
+          pledged += 1;
+      else
+          unpledged += 1;
+  });
+  return { unpledged, pledged, selfAdded };
+};
 
 export default function (db) {
   const router = express.Router()
