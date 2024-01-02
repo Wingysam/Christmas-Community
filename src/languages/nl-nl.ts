@@ -181,7 +181,6 @@ export const strings = {
   WISHLIST_URL_LABEL: `Item URL of naam (<a href="${_CC.config.base}supported-sites">Ondersteunde websites</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.bol.com/nl/nl/p/mens-erger-je-niet-dobbelautomaat-bordspel/1004004000017412/',
   WISHLIST_URL_REQUIRED: 'Item URL of naam is verplicht',
-  WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Verlanglijstjes`
 } as const
