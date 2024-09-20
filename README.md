@@ -156,10 +156,10 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/cj13579">
-            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
+        <a href="https://github.com/Wingysam">
+            <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
             <br />
-            <sub><b>cj13579</b></sub>
+            <sub><b>Wingysam</b></sub>
         </a>
     </td></tr>
 </table>
