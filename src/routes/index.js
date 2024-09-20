@@ -14,6 +14,7 @@ import SupportedSites from './supported-sites/index.js'
 import Profile from './profile/index.js'
 import AdminSettings from './adminSettings/index.js'
 import ManifestJson from './manifest.json/index.js'
+import Google from './google-auth/index.js'
 
 export default ({ db, config }) => {
   async function ensurePfp (username) {
@@ -74,6 +75,8 @@ export default ({ db, config }) => {
   router.use('/admin-settings', AdminSettings({ db, ensurePfp }))
 
   router.use('/manifest.json', ManifestJson({ config }))
+
+  router.use('/auth/google', Google({ ensurePfp }))
 
   return router
 }

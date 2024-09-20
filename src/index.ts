@@ -3,6 +3,7 @@ import './CC.js'
 
 import PouchSession from 'session-pouchdb-store'
 import { Strategy as LocalStrategy } from 'passport-local'
+import GoogleStrategy from 'passport-google-oidc'
 import session from 'express-session'
 import bcrypt from 'bcrypt-nodejs'
 import flash from 'connect-flash'
@@ -55,6 +56,40 @@ passport.use('local', new LocalStrategy(
       })
   }
 ))
+
+passport.use('google', new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/redirect',
+  },
+  (issuer, profile, done  ) => {
+    var username = profile.emails[0].value.trim()
+    db.get(username)
+      .then((doc: any) => {
+        console.log('this should work, but it isn\'t :(')
+        console.log(doc)
+        return done(null, doc)
+      })
+      .catch(err => {
+        if (err.message === 'missing') {
+          db.put({
+            _id: username,
+            admin: false,
+            pfp: '/img/default-pfps/1.png',
+            wishlist: []
+          })
+          db.get(username)
+            .then((doc: any) => {
+              return done(null, doc)
+            })
+            .catch(err => {
+              console.log(err)
+              return done(null, false, { message: err })
+            })          
+        }
+      })
+  }
+));
 
 passport.serializeUser((user, callback) => callback(null, user._id))
 
