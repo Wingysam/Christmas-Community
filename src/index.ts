@@ -66,12 +66,10 @@ passport.use('google', new GoogleStrategy({
     var username = profile.emails[0].value.trim()
     db.get(username)
       .then((doc: any) => {
-        console.log('this should work, but it isn\'t :(')
-        console.log(doc)
         return done(null, doc)
       })
       .catch(err => {
-        if (err.message === 'missing') {
+        if (err.message === 'missing' && config.addSSOUsers) {
           db.put({
             _id: username,
             admin: false,
@@ -86,6 +84,10 @@ passport.use('google', new GoogleStrategy({
               console.log(err)
               return done(null, false, { message: err })
             })          
+        }
+        else {
+          if (err.message === 'missing') return done(null, false, { message: 'Unknown user.' })
+          return done(err)          
         }
       })
   }
