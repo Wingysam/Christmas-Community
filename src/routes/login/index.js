@@ -4,12 +4,15 @@ import express from 'express'
 export default function () {
   const router = express.Router()
 
+  var showGoogleSSO = false
+  if ( process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET ){ showGoogleSSO = true }
+
   router.get('/',
     (req, res) => {
       if (req.isAuthenticated()) {
         res.redirect('/')
       } else {
-        res.render('login')
+        res.render('login',{ showGoogleSSO })
       }
     }
   )

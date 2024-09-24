@@ -57,41 +57,44 @@ passport.use('local', new LocalStrategy(
   }
 ))
 
-passport.use('google', new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/redirect',
-  },
-  (issuer, profile, done  ) => {
-    var username = profile.emails[0].value.trim()
-    db.get(username)
-      .then((doc: any) => {
-        return done(null, doc)
-      })
-      .catch(err => {
-        if (err.message === 'missing' && config.addSSOUsers) {
-          db.put({
-            _id: username,
-            admin: false,
-            pfp: '/img/default-pfps/1.png',
-            wishlist: []
-          })
-          db.get(username)
-            .then((doc: any) => {
-              return done(null, doc)
+if ( process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET ) {
+  passport.use('google', new GoogleStrategy({
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: '/auth/google/redirect',
+    },
+    (issuer, profile, done  ) => {
+      var username = profile.emails[0].value.trim()
+      db.get(username)
+        .then((doc: any) => {
+          return done(null, doc)
+        })
+        .catch(err => {
+          if (err.message === 'missing' && config.addSSOUsers) {
+            db.put({
+              _id: username,
+              admin: false,
+              pfp: '/img/default-pfps/1.png',
+              wishlist: []
             })
-            .catch(err => {
-              console.log(err)
-              return done(null, false, { message: err })
-            })          
-        }
-        else {
-          if (err.message === 'missing') return done(null, false, { message: 'Unknown user.' })
-          return done(err)          
-        }
-      })
-  }
-));
+            db.get(username)
+              .then((doc: any) => {
+                return done(null, doc)
+              })
+              .catch(err => {
+                console.log(err)
+                return done(null, false, { message: err })
+              })          
+          }
+          else {
+            if (err.message === 'missing') return done(null, false, { message: 'Unknown user.' })
+            return done(err)          
+          }
+        })
+    }
+  ));
+}
+
 
 passport.serializeUser((user, callback) => callback(null, user._id))
 
