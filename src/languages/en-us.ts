@@ -68,6 +68,7 @@ export const strings = {
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hello ${name}! Please set your password here.`,
   CONFIRM_ACCOUNT_SUCCESS: `Welcome to ${_CC.config.siteTitle}!`,
   LOGIN_BUTTON: 'Log In',
+  LOGIN_GOOGLE_BUTTON: 'Sign in with Google',
   LOGIN_PASSWORD_PLACEHOLDER: 'pa$$word!',
   LOGIN_PASSWORD: 'Password',
   LOGIN_USERNAME_PLACEHOLDER: 'john',

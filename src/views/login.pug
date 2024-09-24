@@ -17,5 +17,10 @@ block content
     .field
       .control
         input.button.is-primary(type='submit' value=lang('LOGIN_BUTTON'))
+  br
+  p
+    a.button.is-primary(href="/auth/google")
+      i.fab.fa-google 
+      | #{lang('LOGIN_GOOGLE_BUTTON')}
   if _CC.config.customHtml.login
     div!= _CC.config.customHtml.login
