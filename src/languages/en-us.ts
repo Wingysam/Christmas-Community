@@ -12,6 +12,7 @@ export const strings = {
   ADMIN_SETTINGS_CLEARDB_SUCCESS: 'Cleared all wishlists.',
   ADMIN_SETTINGS_HEADER: 'Admin Settings',
   ADMIN_SETTINGS_USERS_ADD_BUTTON: 'Add User',
+  ADMIN_SETTINGS_USERS_SSO_USER: 'Externally authenticated user?',
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Add user',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'john',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: 'Username',

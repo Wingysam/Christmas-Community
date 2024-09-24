@@ -20,7 +20,8 @@ const config = {
     login: process.env.CUSTOM_HTML_LOGIN
   },
   customCSS: process.env.CUSTOM_CSS || null,
-  updateCheck: process.env.UPDATE_CHECK !== 'false'
+  updateCheck: process.env.UPDATE_CHECK !== 'false',
+  addSSOUsers: process.env.ADD_SSO_USERS || false
 }
 
 if (config.guestPassword) config.wishlist.public = false

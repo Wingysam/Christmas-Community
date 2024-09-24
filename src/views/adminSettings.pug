@@ -19,6 +19,10 @@ block content
         input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-user
+    .field 
+      .control.has-icons-left
+        input(type="checkbox" id="isSSOUser" name="isSSOUser")
+        label(for="isSSOUser") #{lang('ADMIN_SETTINGS_USERS_SSO_USER')}
     .field
       .control
         input.button.is-primary(type='submit' value=lang('ADMIN_SETTINGS_USERS_ADD_BUTTON'))
