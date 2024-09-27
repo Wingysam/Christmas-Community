@@ -27,7 +27,7 @@ export default function ({ db, ensurePfp }) {
     if (!req.user.admin) return res.redirect('/')
 
     const username = req.body.newUserUsername.trim()
-    const ssoUser = req.body.isSSOUser
+    const ssoUser = req.body.isSSOUser === 'on'
     if (!username) {
       return db
         .allDocs({ include_docs: true })
@@ -45,7 +45,7 @@ export default function ({ db, ensurePfp }) {
         })
     }
 
-    if (ssoUser === 'on') {
+    if (ssoUser) {
       await db.put({
         _id: username,
         admin: false,
