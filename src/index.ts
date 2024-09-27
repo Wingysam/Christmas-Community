@@ -57,40 +57,47 @@ passport.use('local', new LocalStrategy(
   }
 ))
 
-if ( process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET ) {
+if ( config.googleSSOEnabled ) {
   passport.use('google', new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/redirect',
     },
-    (issuer, profile, done  ) => {
-      var username = profile.emails[0].value.trim()
-      db.get(username)
-        .then((doc: any) => {
-          return done(null, doc)
-        })
-        .catch(err => {
-          if (err.message === 'missing' && config.addSSOUsers) {
-            db.put({
+    async (issuer, profile, done) => {
+      const username = profile.emails[0].value.trim();
+      try {
+        // Try to get the user from the database
+        let doc = await db.get(username);
+        return done(null, doc);
+        
+      } catch (err) {
+        // Handle user not found error
+        if (err.message === 'missing' && config.addSSOUsers) {
+          try {
+            // Add new user if they don't exist
+            await db.put({
               _id: username,
               admin: false,
               pfp: '/img/default-pfps/1.png',
               wishlist: []
-            })
-            db.get(username)
-              .then((doc: any) => {
-                return done(null, doc)
-              })
-              .catch(err => {
-                console.log(err)
-                return done(null, false, { message: err })
-              })          
+            });
+
+            // Retrieve the newly created user
+            const newUser = await db.get(username);
+            return done(null, newUser);
+          } catch (putErr) {
+            // Handle errors while adding a new user
+            console.log(putErr);
+            return done(null, false, { message: putErr.message });
           }
-          else {
-            if (err.message === 'missing') return done(null, false, { message: 'Unknown user.' })
-            return done(err)          
+        } else {
+          // Handle other errors, including missing user
+          if (err.message === 'missing') {
+            return done(null, false, { message: 'Unknown user.' });
           }
-        })
+          return done(err);
+        }
+      }
     }
   ));
 }

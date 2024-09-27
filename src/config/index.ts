@@ -21,13 +21,20 @@ const config = {
   },
   customCSS: process.env.CUSTOM_CSS || null,
   updateCheck: process.env.UPDATE_CHECK !== 'false',
-  addSSOUsers: process.env.ADD_SSO_USERS || false
+  addSSOUsers: process.env.ADD_SSO_USERS || false,
+  googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
+  googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
+  googleSSOEnabled: false
 }
 
 if (config.guestPassword) config.wishlist.public = false
 if (config.guestPassword === 'ReplaceWithYourGuestPassword') {
   console.error('Error: Guest password should be changed from default.')
   process.exit(1)
+}
+
+if (config.googleSSOClientId != null && config.googleSSOClientSecret != null) {
+  config.googleSSOEnabled = true
 }
 
 export default config
