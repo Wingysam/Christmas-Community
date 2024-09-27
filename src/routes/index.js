@@ -62,7 +62,7 @@ export default ({ db, config }) => {
 
   router.use('/setup', Setup({ db, ensurePfp }))
 
-  router.use('/login', Login({ ensurePfp }))
+  router.use('/login', Login({ config }))
   router.use('/logout', Logout())
   router.use('/resetpw', ResetPw(db))
   router.use('/confirm-account', ConfirmAccount(db))
