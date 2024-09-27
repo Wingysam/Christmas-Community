@@ -45,6 +45,7 @@ block content
             th= lang('WISHLIST_MOVE_TOP')
             th= lang('WISHLIST_MOVE_UP')
             th= lang('WISHLIST_MOVE_DOWN')
+            th= lang('WISHLIST_MOVE_BOTTOM')
           else
             th= lang('WISHLIST_PLEDGE')
           th= lang('WISHLIST_DELETE')
@@ -129,6 +130,17 @@ block content
                         )
                           span.icon
                             i.fas.fa-arrow-down
+                td(data-label=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
+                  form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                    .field.inline
+                      .control.inline
+                        button.button.is-text(
+                          type='submit',
+                          style='text-decoration: none;',
+                          disabled=index === items.length - 1
+                        )
+                          span.icon
+                            i.fas.fa-angle-double-down
               else
                 td(data-label=lang('WISHLIST_PLEDGE'))
                   if req.params.user !== req.user._id && !item.pledgedBy
@@ -238,6 +250,11 @@ block content
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_DOWN'))
+              if index !== items.length - 1 && req.user._id === req.params.user
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
   form(method='POST')
     .field
       label.label!=lang('WISHLIST_URL_LABEL')
