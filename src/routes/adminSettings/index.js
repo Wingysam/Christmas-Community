@@ -1,6 +1,6 @@
-const verifyAuth = require('../../middlewares/verifyAuth')
-const express = require('express')
-const { nanoid } = require('nanoid')
+import verifyAuth from '../../middlewares/verifyAuth.js'
+import express from 'express'
+import { nanoid } from 'nanoid'
 
 const SECRET_TOKEN_LENGTH = 32
 const SECRET_TOKEN_LIFETIME =
@@ -11,7 +11,7 @@ const SECRET_TOKEN_LIFETIME =
   24 * // hours
   7 // days
 
-module.exports = ({ db, ensurePfp }) => {
+export default function ({ db, ensurePfp }) {
   const router = express.Router()
 
   router.get('/', verifyAuth(), (req, res) => {

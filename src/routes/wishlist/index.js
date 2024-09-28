@@ -1,10 +1,10 @@
-const createDOMPurify = require('dompurify')
-const express = require('express')
-const { JSDOM } = require('jsdom')
-const marked = require('marked')
+import createDOMPurify from 'dompurify'
+import express from 'express'
+import { JSDOM } from 'jsdom'
+import marked from 'marked'
 
-const publicRoute = require('../../middlewares/publicRoute')
-const verifyAuth = require('../../middlewares/verifyAuth')
+import publicRoute from '../../middlewares/publicRoute.js'
+import verifyAuth from '../../middlewares/verifyAuth.js'
 
 const window = new JSDOM('').window
 const DOMPurify = createDOMPurify(window)
@@ -19,7 +19,7 @@ const totals = wishlist => {
   return { unpledged, pledged }
 }
 
-module.exports = (db) => {
+export default function (db) {
   const router = express.Router()
 
   const wishlistManager = _CC.wishlistManager
@@ -50,15 +50,22 @@ module.exports = (db) => {
   router.get('/:user', publicRoute(), redirectIfSingleUserMode, async (req, res) => {
     try {
       const wishlist = await wishlistManager.get(req.params.user)
+      await wishlist.fetch()
       const items = await wishlist.itemsVisibleToUser(req.user._id)
 
-      for (const item of items) {
-        if (_CC.config.wishlist.note.markdown) item.note = DOMPurify.sanitize(marked(item.note))
+      const compiledNotes = {}
+      if (_CC.config.wishlist.note.markdown) {
+        for (const item of items) {
+          compiledNotes[item.id] = DOMPurify.sanitize(marked(item.note))
+        }
       }
+
       res.render('wishlist', {
         title: _CC.lang('WISHLIST_TITLE', wishlist.username),
         name: wishlist.username,
-        items
+        items,
+        compiledNotes,
+        sharedInfo: wishlist.doc?.info ?? {}
       })
     } catch (error) {
       req.flash('error', error)
@@ -161,7 +168,9 @@ module.exports = (db) => {
 
       if (req.params.direction === 'top') {
         await wishlist.moveTop(req.params.itemId)
-      } else if (req.params.direction === 'up') {
+      } else if (req.params.direction === 'bottom') {
+        await wishlist.moveBottom(req.params.itemId)
+      }else if (req.params.direction === 'up') {
         await wishlist.move(req.params.itemId, -1)
       } else if (req.params.direction === 'down') {
         await wishlist.move(req.params.itemId, 1)

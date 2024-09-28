@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'da'
+export const momentLocale = 'da'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} er ikke blevet oversat til dansk endnu.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Slet alle ønskelister',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: '<b>Advarsel</b>: Dette vil <b>slette alt data</b>! Foretag venligst backup inden du fortsætter.',
@@ -30,7 +30,7 @@ module.exports.strings = {
   ADMIN_SETTINGS_USERS_EDIT: 'Redigér',
   ADMIN_SETTINGS_USERS_HEADER: 'Brugere',
   ADMIN_SETTINGS_VERSION_INFO: 'Version',
-  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "Kontoen er ikke bekræftet.",
+  ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: 'Kontoen er ikke bekræftet.',
   ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} er administrator.`,
   ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} er ikke administrator.`,
   ADMIN_USER_EDIT_ADMIN: 'Administrator',
@@ -61,8 +61,8 @@ module.exports.strings = {
   CONFIRM_ACCOUNT_EXPIRED: 'Dit bekræftelseslink er udløbet. Kontakt venligst administoren for et nyt.',
   CONFIRM_ACCOUNT_HEADER_INVALID: `${_CC.config.siteTitle} | Bekræftelseslink er ugyldigt`,
   CONFIRM_ACCOUNT_HEADER_VALID: `${_CC.config.siteTitle} | Bekræft konto`,
-  CONFIRM_ACCOUNT_INVALID: "Bekræftelseslinket er ikke gyldigt - kontrollér venligst at linket er komplet.",
-  CONFIRM_ACCOUNT_SET_PW_BUTTON: `Opret bruger`,
+  CONFIRM_ACCOUNT_INVALID: 'Bekræftelseslinket er ikke gyldigt - kontrollér venligst at linket er komplet.',
+  CONFIRM_ACCOUNT_SET_PW_BUTTON: 'Opret bruger',
   CONFIRM_ACCOUNT_SET_PW_PLACEHOLDER: 'pa$$word!',
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hej ${name}! Vælg venligst din adgangskode her.`,
   CONFIRM_ACCOUNT_SUCCESS: `Velkommen til ${_CC.config.siteTitle}!`,
@@ -110,7 +110,7 @@ module.exports.strings = {
   PROFILE_TITLE: name => `Kontoindstillinger - ${name}`,
   RESET_PASSWORD_BUTTON: 'Gendan adgangskode',
   RESET_PASSWORD_GREETING_EXPIRED: 'Gendannelseslinket er udløbet. Kontakt administrator for at få et nyt.',
-  RESET_PASSWORD_GREETING_INVALID: "Ugyldigt gendannelseslink - kontrollér venligst at linket er komplet.",
+  RESET_PASSWORD_GREETING_INVALID: 'Ugyldigt gendannelseslink - kontrollér venligst at linket er komplet.',
   RESET_PASSWORD_GREETING_VALID: name => `Hej ${name}! Vælg din nye adgangskode her.`,
   RESET_PASSWORD_HEADER_INVALID: `${_CC.config.siteTitle} | Ugyldigt link`,
   RESET_PASSWORD_HEADER_VALID: `${_CC.config.siteTitle} | Gendan adgangskode`,
@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'john',
   SETUP_USERNAME: 'Brugernavn',
   SUPPORTED_SITES_HEADER: 'Supporterede hjemmesider',
-  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">here</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://github.com/Wingysam/get-product-data/issues/new">here</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community is out of date. There may be new features or bug fixes. Consider updating! :)
@@ -183,5 +183,5 @@ module.exports.strings = {
   WISHLIST_URL_REQUIRED: 'Link eller titel er påkrævet',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `Ønskelister`
-}
+  WISHLISTS_TITLE: 'Ønskelister'
+} as const

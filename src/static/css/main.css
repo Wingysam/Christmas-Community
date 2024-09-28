@@ -50,6 +50,10 @@ img.emoji {
 	height: 2em !important;
 }
 
+img.logo-image {
+	margin-right: .5em;
+}
+
 .print {
 	display: none;
 }

@@ -1,7 +1,8 @@
-module.exports.momentLocale = 'en'
+export const momentLocale = 'en' as const
 
-module.exports.strings = {
-  _NOT_LOCALIZED: key => `${key} hasn't been translated to English yet.`,
+export const notTranslated = englishString => `${englishString} (not yet translated into English)`
+
+export const strings = {
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Clear all wishlists',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'This will instantly <b>irreversibly delete all wishlists!</b> Consider making a backup of the database before using this.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Wishlist Deletion',
@@ -92,7 +93,11 @@ module.exports.strings = {
   NOTE_SAVE_BUTTON: 'Save Item',
   NOTE_SUCCESS: 'Successfully saved!',
   NOTE_URL: 'URL',
+  PROFILE_COAT_SIZE: 'Suit/Blazer/Coat Size',
+  PROFILE_DRESS_SIZE: 'Dress Size',
+  PROFILE_HAT_SIZE: 'Hat Size',
   PROFILE_HEADER: 'Profile',
+  PROFILE_PANTS_SIZE: 'Pants Size',
   PROFILE_PASSWORD_BUTTON: 'Save',
   PROFILE_PASSWORD_NEW: 'New Password',
   PROFILE_PASSWORD_OLD_MISMATCH: 'Incorrect old password',
@@ -103,11 +108,18 @@ module.exports.strings = {
   PROFILE_PASSWORD_SUCCESS: 'Changed saved successfully!',
   PROFILE_PASSWORD_TITLE: name => `Profile Settings - Password - ${name}`,
   PROFILE_PFP_IMAGE_URL: 'Image URL',
+  PROFILE_PHONE_MODEL: 'Phone Model',
+  PROFILE_RING_SIZE: 'Ring Size',
   PROFILE_SAVE_PFP_DISABLED: 'Profile pictures are disabled.',
   PROFILE_SAVE_PFP_SUCCESS: 'Saved profile picture!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Change Password',
   PROFILE_SECURITY: 'Security',
+  PROFILE_SHARED_INFORMATION: 'Shared Information',
+  PROFILE_SHIRT_SIZE: 'Shirt Size',
+  PROFILE_SHOE_SIZE: 'Shoe Size',
+  PROFILE_SWEATER_SIZE: 'Blouse/Sweater Size',
   PROFILE_TITLE: name => `Profile Settings - ${name}`,
+  PROFILE_UPDATE_INFO_SUCCESS: 'Updated shared information!',
   RESET_PASSWORD_BUTTON: 'Reset Password',
   RESET_PASSWORD_GREETING_EXPIRED: 'Your reset link has expired. Please ask for a new one.',
   RESET_PASSWORD_GREETING_INVALID: "This reset link isn't valid, perhaps the link was canceled or some characters at the end got cut off?",
@@ -125,7 +137,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'john',
   SETUP_USERNAME: 'Username',
   SUPPORTED_SITES_HEADER: 'Supported Sites',
-  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">here</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Is a site missing or broken? Open an issue <a href="https://github.com/Wingysam/get-product-data/issues/new">here</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community is out of date. There may be new features or bug fixes. Consider updating! :)
@@ -148,9 +160,11 @@ module.exports.strings = {
   WISHLIST_IMAGE: 'Image',
   WISHLIST_ITEM_MISSING: 'Failed to find item',
   WISHLIST_MOVE_DOWN: 'Move Down',
+  WISHLIST_MOVE_BOTTOM: 'Move Bottom',
   WISHLIST_MOVE_GUARD: 'Not correct user',
   WISHLIST_MOVE_INVALID: 'Invalid move',
   WISHLIST_MOVE_ITEM_DOWN: 'Move Item Down',
+  WISHLIST_MOVE_ITEM_BOTTOM: 'Move Item Bottom',
   WISHLIST_MOVE_ITEM_TOP: 'Move Item Top',
   WISHLIST_MOVE_ITEM_UP: 'Move Item Up',
   WISHLIST_MOVE_SUCCESS: 'Successfully moved item!',
@@ -184,4 +198,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
-}
+} as const

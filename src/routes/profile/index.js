@@ -1,8 +1,8 @@
-const verifyAuth = require('../../middlewares/verifyAuth')
-const bcrypt = require('bcrypt-nodejs')
-const express = require('express')
+import verifyAuth from '../../middlewares/verifyAuth.js'
+import bcrypt from 'bcrypt-nodejs'
+import express from 'express'
 
-module.exports = ({ db, config, ensurePfp }) => {
+export default function ({ db, config, ensurePfp }) {
   const router = express.Router()
 
   router.get('/', verifyAuth(), async (req, res) => {
@@ -19,6 +19,25 @@ module.exports = ({ db, config, ensurePfp }) => {
     } else {
       req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
     }
+    res.redirect('/profile')
+  })
+
+  const INFO_KEYS = [
+    'shoeSize', 'ringSize', 'dressSize',
+    'sweaterSize', 'shirtSize', 'pantsSize',
+    'coatSize', 'hatSize', 'phoneModel'
+  ]
+  router.post('/info', verifyAuth(), async (req, res) => {
+    if (!req.user.info) {
+      req.user.info = {}
+    }
+    for (const [k, v] of Object.entries(req.body)) {
+      console.log({ k, v })
+      if (!INFO_KEYS.includes(k)) continue
+      req.user.info[k] = v
+    }
+    await db.put(req.user)
+    req.flash('success', _CC.lang('PROFILE_UPDATE_INFO_SUCCESS'))
     res.redirect('/profile')
   })
 

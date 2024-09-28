@@ -1,4 +1,4 @@
-const verifyAuth = require('./verifyAuth')
+import verifyAuth from './verifyAuth.js'
 
 const publicMiddleware = () => global._CC.config.wishlist.public
   ? (req, res, next) => {
@@ -7,4 +7,4 @@ const publicMiddleware = () => global._CC.config.wishlist.public
     }
   : verifyAuth()
 
-module.exports = publicMiddleware
+export default publicMiddleware

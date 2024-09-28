@@ -1,5 +1,11 @@
 extends layout.pug
 
+mixin sharedInfoProp(key, label)
+  if sharedInfo[key] && sharedInfo[key].length > 0
+    tr
+      th= lang(label)
+      td= sharedInfo[key]
+
 block title
   h1
     .level
@@ -13,6 +19,17 @@ block title
 
 block content
   script(type='data/user_id')= req.user._id
+  table.table(style='width: fit-content;')
+    tbody
+        +sharedInfoProp('shoeSize', 'PROFILE_SHOE_SIZE')
+        +sharedInfoProp('ringSize', 'PROFILE_RING_SIZE')
+        +sharedInfoProp('dressSize', 'PROFILE_DRESS_SIZE')
+        +sharedInfoProp('sweaterSize', 'PROFILE_SWEATER_SIZE')
+        +sharedInfoProp('shirtSize', 'PROFILE_SHIRT_SIZE')
+        +sharedInfoProp('pantsSize', 'PROFILE_PANTS_SIZE')
+        +sharedInfoProp('coatSize', 'PROFILE_COAT_SIZE')
+        +sharedInfoProp('hatSize', 'PROFILE_HAT_SIZE')
+        +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
   if global._CC.config.wishlist.table
     .box
       table.table.has-mobile-cards
@@ -28,6 +45,7 @@ block content
             th= lang('WISHLIST_MOVE_TOP')
             th= lang('WISHLIST_MOVE_UP')
             th= lang('WISHLIST_MOVE_DOWN')
+            th= lang('WISHLIST_MOVE_BOTTOM')
           else
             th= lang('WISHLIST_PLEDGE')
           th= lang('WISHLIST_DELETE')
@@ -39,17 +57,30 @@ block content
                 figure(style='width: 100%; margin: 0;')
                   img(src=item.image, style='width: 100%; max-height: 20em; object-fit: contain;')
               if item.url
-                td.ugc(data-label='Name')
-                  a(
-                    href=item.url,
-                    rel='noopener noreferrer',
-                    target='_blank'
-                  )= (item.name ? item.name : item.url)
+                td.ugc(data-label=lang('WISHLIST_NAME'))
+                  if item.pledgedBy && item.addedBy != req.user._id
+                    strike
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
+                  else
+                      a(
+                        href=item.url,
+                        rel='noopener noreferrer',
+                        target='_blank'
+                      )= (item.name ? item.name : item.url)
               else
-                td.ugc(data-label=lang('WISHLIST_NAME'))= item.name
+                td.ugc(data-label='Name')
+                  if item.pledgedBy && item.addedBy != req.user._id
+                    strike
+                      span= item.name
+                  else 
+                    span= item.name
               if _CC.config.wishlist.note.markdown
                 td.ugc(data-label=lang('WISHLIST_NOTE'))
-                  div!= item.note
+                  div!= compiledNotes[item.id]
               else
                 td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
               td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
@@ -99,6 +130,17 @@ block content
                         )
                           span.icon
                             i.fas.fa-arrow-down
+                td(data-label=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
+                  form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                    .field.inline
+                      .control.inline
+                        button.button.is-text(
+                          type='submit',
+                          style='text-decoration: none;',
+                          disabled=index === items.length - 1
+                        )
+                          span.icon
+                            i.fas.fa-angle-double-down
               else
                 td(data-label=lang('WISHLIST_PLEDGE'))
                   if req.params.user !== req.user._id && !item.pledgedBy
@@ -143,13 +185,25 @@ block content
             if item.price
               span= ' '
             if item.url
-              a(
-                href=item.url,
-                rel='noopener noreferrer',
-                target='_blank'
-              )= (item.name ? item.name : item.url)
+              if item.pledgedBy && item.addedBy != req.user._id
+                strike
+                  a(
+                    href=item.url,
+                    rel='noopener noreferrer',
+                    target='_blank'
+                  )= (item.name ? item.name : item.url)
+              else
+                a(
+                  href=item.url,
+                  rel='noopener noreferrer',
+                  target='_blank'
+                )= (item.name ? item.name : item.url)
             else
-              span= item.name
+              if item.pledgedBy && item.addedBy != req.user._id
+                strike
+                  span= item.name
+              else
+                span= item.name
           hr
           if item.note || item.image
             .columns
@@ -163,7 +217,7 @@ block content
                     style='height: 100%;'
                     readonly
                   )= item.note
-          span.overflowWrap=lang('WISHLIST_ADDED_BY', item.addedBy)
+          span.overflowWrap=lang('WISHLIST_ADDED_BY_USER', item.addedBy)
           hr
           div
             if req.params.user !== req.user._id && !item.pledgedBy
@@ -196,6 +250,11 @@ block content
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_DOWN'))
+              if index !== items.length - 1 && req.user._id === req.params.user
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
   form(method='POST')
     .field
       label.label!=lang('WISHLIST_URL_LABEL')
@@ -241,6 +300,6 @@ block print
         if item.note
           .box
             if _CC.config.wishlist.note.markdown
-              span.is-block.ugc!= item.note
+              span.is-block.ugc!= compiledNotes[item.id]
             else
               span.is-block.ugc= item.note

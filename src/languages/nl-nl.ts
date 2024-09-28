@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'nl'
+export const momentLocale = 'nl'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} hasn't been translated to Dutch yet.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Leeg all verlanglijstjes',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Dit leegt <b>direct en permament alle verlanglijstjes!</b> Overweeg om een backup te maken van de database voordat je dit doet',
@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'henk',
   SETUP_USERNAME: 'Gebruikersnaam',
   SUPPORTED_SITES_HEADER: 'Ondersteunde sites',
-  SUPPORTED_SITES_TEXT: 'Ontbreekt er een website of is er een kapot? Open een issue <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">hier</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Ontbreekt er een website of is er een kapot? Open een issue <a href="https://github.com/Wingysam/get-product-data/issues/new">hier</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community is niet meer up to date. Misschien zijn er nieuwe functies of bugfixes. Overweeg om te updaten :)
@@ -184,4 +184,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Verlanglijstjes`
-}
+} as const

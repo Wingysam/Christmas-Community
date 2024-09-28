@@ -1,6 +1,6 @@
-module.exports.momentLocale = 'cs'
+export const momentLocale = 'cs'
 
-module.exports.strings = {
+export const strings = {
   _NOT_LOCALIZED: key => `${key} ještě nebylo přeloženo do češtiny.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Odstranit všechny seznamy',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Tohle obratem <b>odstraní všechny seznamy přání!</b> Zvažte vyvoření zálohy databáze, než budete pokračovat.',
@@ -125,7 +125,7 @@ module.exports.strings = {
   SETUP_USERNAME_PLACEHOLDER: 'Martin',
   SETUP_USERNAME: 'Uživatelské jméno',
   SUPPORTED_SITES_HEADER: 'Podporované obchody',
-  SUPPORTED_SITES_TEXT: 'Nefunguje obchod nebo úplně chybí? Založ nový ticket <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">ZDE</a>! :)',
+  SUPPORTED_SITES_TEXT: 'Nefunguje obchod nebo úplně chybí? Založ nový ticket <a href="https://github.com/Wingysam/get-product-data/issues/new">ZDE</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Nepoužíváte poslední verzi Christmas Community. V nové verzi mohou být nové funkce nebo opravy chyb. Zvžte aktualizaci :)
@@ -179,4 +179,4 @@ module.exports.strings = {
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Seznamy přání`
-}
+} as const
