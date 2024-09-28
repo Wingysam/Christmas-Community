@@ -168,7 +168,9 @@ export default function (db) {
 
       if (req.params.direction === 'top') {
         await wishlist.moveTop(req.params.itemId)
-      } else if (req.params.direction === 'up') {
+      } else if (req.params.direction === 'bottom') {
+        await wishlist.moveBottom(req.params.itemId)
+      }else if (req.params.direction === 'up') {
         await wishlist.move(req.params.itemId, -1)
       } else if (req.params.direction === 'down') {
         await wishlist.move(req.params.itemId, 1)
