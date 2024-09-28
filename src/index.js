@@ -128,7 +128,7 @@ app.listen(config.port, () => logger.success('express', `Express server started 
 ;(() => {
   if (!config.dbExposePort) return
   const dbExposeApp = express()
-  dbExposeApp.use('/', require('express-pouchdb')(PouchDB, { inMemoryConfig: true, logPath: process.env.DB_LOG_FILE  }))
+  dbExposeApp.use('/', require('express-pouchdb')(PouchDB, { inMemoryConfig: true, logPath: process.env.dbLogFile }))
   dbExposeApp.listen(config.dbExposePort, () => logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`))
 })()
 
