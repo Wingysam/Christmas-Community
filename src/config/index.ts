@@ -3,6 +3,7 @@ const config = {
   defaultFailureRedirect: process.env.DEFAULT_FAILURE_REDIRECT || '/login',
   port: Number(process.env.PORT) || 3000,
   dbExposePort: Number(process.env.DB_EXPOSE_PORT) || null,
+  dbLogFile: process.env.DB_LOG_FILE || '/dev/null',
   proxyServer: process.env.PROXY_SERVER || undefined,
   secret: process.env.SECRET || (await import('./secret/index.js')).default,
   sessionMaxAge: Number(process.env.SESSION_MAX_AGE) || 1000 * 60 * 60 * 24 * 7,

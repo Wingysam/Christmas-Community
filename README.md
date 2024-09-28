@@ -70,6 +70,8 @@ Add environment variables with a .env. Example:
 ## Core Settings
 # Where to store databases, can be a CouchDB compatible server or directory.
 DB_PREFIX=dbs/
+# Location of DB log file (if needed for debugging).
+DB_LOG_FILE=/dev/null
 # Where to send someone if they need to log in
 DEFAULT_FAILURE_REDIRECT=/login
 # Port to listen on
