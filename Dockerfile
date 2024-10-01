@@ -13,9 +13,10 @@ ENV SECRET_DIRNAME /data
 WORKDIR /usr/src/app
 
 COPY . .
-RUN npm install --production --silent &&
-    npm run build &&
-    mkdir -p /data/dbs
+RUN npm install --production --silent && \
+    npm install -g typescript && \
+    npm run build && \
+    mkdir -p /data/dbs 
 
 EXPOSE 80
 
