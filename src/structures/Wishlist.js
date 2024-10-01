@@ -138,6 +138,15 @@ export class Wishlist {
     await this.save()
   }
 
+  async moveBottom (id) {
+    const index = this.items.findIndex(item => item.id === id)
+    if (index === -1) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
+
+    const item = this.items.splice(index, 1)[0]
+    this.items.push(item)
+    await this.save()
+  }
+
   async setItemData (id, data) {
     const item = await this.get(id)
 
