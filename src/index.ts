@@ -46,12 +46,12 @@ passport.use('local', new LocalStrategy(
       .then((doc: any) => {
         bcrypt.compare(password, doc.password, (err, correct) => {
           if (err) return done(err)
-          if (!correct) return done(null, false, { message: 'Incorrect password' })
+          if (!correct) return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_PASSWORD') })
           if (correct) return done(null, doc)
         })
       })
       .catch(err => {
-        if (err.message === 'missing') return done(null, false, { message: 'Incorrect username.' })
+        if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
         return done(err)
       })
   }
@@ -93,7 +93,7 @@ if ( config.googleSSOEnabled ) {
         } else {
           // Handle other errors, including missing user
           if (err.message === 'missing') {
-            return done(null, false, { message: 'Unknown user.' });
+            return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
           }
           return done(err);
         }
