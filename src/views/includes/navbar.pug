@@ -26,7 +26,10 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
             a.button.is-primary(href=`${_CC.config.base}login`)= lang('NAVBAR_LOGIN')
         else
           .navbar-item.has-dropdown.is-hoverable
-            a.navbar-link= req.user._id
+            if req.user.displayName
+              a.navbar-link= req.user.displayName 
+            else 
+              a.navbar-link= req.user._id
             .navbar-dropdown
               +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, lang('NAVBAR_WISHLIST'))
               +navBarLink(`${_CC.config.base}profile`, lang('NAVBAR_PROFILE'))

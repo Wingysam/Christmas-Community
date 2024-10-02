@@ -19,12 +19,15 @@ block content
         .column.is-narrow
           .box
             .columns
-              .column
+              .column.is-narrow
                 figure.image.is-square(style='display: inline-block; width: 90%;')
                   img.is-rounded(src=req.user.pfp, style='object-fit: cover;')
               .column.is-narrow
               .column
-                span.is-size-3= req.user._id
+                if req.user.displayName
+                  span.is-size-3= req.user.displayName
+                else 
+                  span.is-size-3= req.user._id
                 br
                 br
                 form(action=`${_CC.config.base}profile/pfp`, method='POST')
@@ -32,6 +35,16 @@ block content
                   .field.has-addons
                     .control
                       input.input(name='image', value=req.user.pfp)
+                    .control
+                      button.button.is-primary(type='submit')
+                        span.icon
+                          i.fas.fa-save
+                
+                form(action=`${_CC.config.base}profile/displayName`, method='POST')
+                  label.label= lang('PROFILE_DISPLAY_NAME')
+                  .field.has-addons
+                    .control
+                      input.input(name='displayName', value=req.user.displayName)
                     .control
                       button.button.is-primary(type='submit')
                         span.icon

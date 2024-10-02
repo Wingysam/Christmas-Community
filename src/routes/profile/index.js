@@ -22,6 +22,12 @@ export default function ({ db, config, ensurePfp }) {
     res.redirect('/profile')
   })
 
+  router.post('/displayName', verifyAuth(), async (req, res) => {
+    req.user.displayName = req.body.displayName
+    await db.put(req.user)
+    res.redirect('/profile')
+  })
+
   const INFO_KEYS = [
     'shoeSize', 'ringSize', 'dressSize',
     'sweaterSize', 'shirtSize', 'pantsSize',
