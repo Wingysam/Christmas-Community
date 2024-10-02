@@ -91,3 +91,45 @@ setTimeout(() => {
   document.querySelectorAll('.upForm').forEach(element => { listen(element, 'up') })
   document.querySelectorAll('.downForm').forEach(element => { listen(element, 'down') })
 }, 0)
+
+function priceToFloat(price) {
+  let cleanPrice = price
+      .replace(/[^\d.,]/g, '')  // Remove everything except digits, periods, and commas
+      .replace(/,/g, '');       // Remove commas to standardize the number
+  // If there's more than one decimal separator (.), treat the last one as the decimal point
+  if ((cleanPrice.match(/\./g) || []).length > 1) {
+      cleanPrice = cleanPrice.replace(/\.(?=.*\.)/, '');  // Remove the first period if there are multiple
+  }
+  return parseFloat(cleanPrice);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  let sortOrderPrice = 'asc';
+  const priceArrow = document.getElementById('price-arrow');
+  const sortByPrice = document.getElementById('sort-price');
+
+  function updateArrow(column, order) {
+    if (column === 'price') {
+      priceArrow.className = order === 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+    }
+  }
+
+  sortByPrice.addEventListener('click', function(e){
+    e.preventDefault();
+
+    const table = document.getElementById('wishlist-table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    sortOrderPrice = sortOrderPrice === 'asc' ? 'desc' : 'asc';
+
+    const sortedRows = rows.sort((a,b) => {
+      priceA = priceToFloat(a.cells[4].textContent)
+      priceB = priceToFloat(b.cells[4].textContent)
+      return sortOrderPrice === 'asc' ? priceA - priceB : priceB - priceA;
+    });
+
+    tbody.innerHTML = '';
+    sortedRows.forEach(row => tbody.appendChild(row));
+    updateArrow('price', sortOrderPrice);
+  })
+})

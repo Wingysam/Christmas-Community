@@ -19,13 +19,6 @@ block title
 
 block content
   script(type='data/user_id')= req.user._id
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js")
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js")
-  script.
-    $(function() {
-      $("#sortable").tablesorter();
-    })
-  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css")
   table.table(style='width: fit-content;')
     tbody
         +sharedInfoProp('shoeSize', 'PROFILE_SHOE_SIZE')
@@ -39,13 +32,16 @@ block content
         +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
   if global._CC.config.wishlist.table
     .box
-      table.table.has-mobile-cards#sortable.tablesorter
+      table.table.has-mobile-cards#wishlist-table
         thead
           th #
           th(style='width: 15%;')= lang('WISHLIST_IMAGE')
           th(style='width: 25%;')= lang('WISHLIST_NAME')
           th(style='width: 50%;')= lang('WISHLIST_NOTE')
-          th(style='width: 10%;')= lang('WISHLIST_PRICE')
+          th(style='width: 10%;')
+            a(href="#", id="sort-price")= lang('WISHLIST_PRICE')
+            |&nbsp; 
+            span#price-arrow
           th= lang('WISHLIST_EDIT_ITEM')
           th= lang('WISHLIST_ADDED_BY')
           if req.params.user === req.user._id
