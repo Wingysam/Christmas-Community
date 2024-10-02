@@ -59,8 +59,8 @@ passport.use('local', new LocalStrategy(
 
 if ( config.googleSSOEnabled ) {
   passport.use('google', new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID: config.googleSSOClientId,
+      clientSecret: config.googleSSOClientSecret,
       callbackURL: '/auth/google/redirect',
     },
     async (issuer, profile, done) => {
