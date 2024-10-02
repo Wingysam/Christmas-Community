@@ -70,6 +70,8 @@ Add environment variables with a .env. Example:
 ## Core Settings
 # Where to store databases, can be a CouchDB compatible server or directory.
 DB_PREFIX=dbs/
+# Location of DB log file (if needed for debugging).
+DB_LOG_FILE=/dev/null
 # Where to send someone if they need to log in
 DEFAULT_FAILURE_REDIRECT=/login
 # Port to listen on
@@ -199,13 +201,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/frostyfrog">
-            <img src="https://avatars.githubusercontent.com/u/509363?v=4" width="100;" alt="frostyfrog"/>
-            <br />
-            <sub><b>frostyfrog</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/dbarenholz">
             <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
             <br />
@@ -218,13 +213,27 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>Laeborg</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/LarsStegman">
             <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
             <br />
             <sub><b>LarsStegman</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/jskiddie">
+            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
+            <br />
+            <sub><b>jskiddie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/bsiddans">
+            <img src="https://avatars.githubusercontent.com/u/96931223?v=4" width="100;" alt="bsiddans"/>
+            <br />
+            <sub><b>bsiddans</b></sub>
         </a>
     </td>
     <td align="center">
@@ -254,15 +263,15 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>mtrunt</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Na0mir">
             <img src="https://avatars.githubusercontent.com/u/6453724?v=4" width="100;" alt="Na0mir"/>
             <br />
             <sub><b>Na0mir</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/ndlanier">
             <img src="https://avatars.githubusercontent.com/u/14913926?v=4" width="100;" alt="ndlanier"/>
@@ -297,20 +306,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>CantisW</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/StS82">
             <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
             <br />
             <sub><b>StS82</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jskiddie">
-            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
-            <br />
-            <sub><b>jskiddie</b></sub>
         </a>
     </td>
     <td align="center">

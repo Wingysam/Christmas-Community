@@ -165,6 +165,6 @@ app.listen(config.port, () => { logger.success('express', `Express server starte
 ;(() => {
   if (!config.dbExposePort) return
   const dbExposeApp = express()
-  dbExposeApp.use('/', ExpressPouchDB(PouchDB, { inMemoryConfig: true }))
+  dbExposeApp.use('/', ExpressPouchDB(PouchDB, { inMemoryConfig: true, logPath: config.dbLogFile }))
   dbExposeApp.listen(config.dbExposePort, () => { logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`) })
 })()
