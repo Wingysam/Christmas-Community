@@ -27,7 +27,8 @@ export default function ({ db, ensurePfp }) {
     if (!req.user.admin) return res.redirect('/')
 
     const username = req.body.newUserUsername.trim()
-    const ssoUser = req.body.isSSOUser === 'on'
+    const displayName = req.body.newUserDisplayName.trim()
+
     if (!username) {
       return db
         .allDocs({ include_docs: true })
@@ -45,23 +46,16 @@ export default function ({ db, ensurePfp }) {
         })
     }
 
-    if (ssoUser) {
-      await db.put({
-        _id: username,
-        admin: false,
-        wishlist: []
-      })
-    }
-    else {
-      await db.put({
-        _id: username,
-        admin: false,
-        wishlist: [],
-  
-        signupToken: nanoid(SECRET_TOKEN_LENGTH),
-        expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
-      })
-    }
+    await db.put({
+      _id: username,
+      admin: false,
+      wishlist: [],
+      displayName: displayName,
+
+      signupToken: nanoid(SECRET_TOKEN_LENGTH),
+      expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
+    })
+
     await ensurePfp(username)
     res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
   })

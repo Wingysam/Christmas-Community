@@ -53,12 +53,12 @@ passport.use('local', new LocalStrategy(
       .catch(err => {
         if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
         return done(err)
-      })
+      })  
   }
 ))
 
 if ( config.googleSSOEnabled ) {
-  passport.use('google', new GoogleStrategy({
+  passport.use('google-login', new GoogleStrategy({
       clientID: config.googleSSOClientId,
       clientSecret: config.googleSSOClientSecret,
       callbackURL: '/auth/google/redirect',
@@ -67,36 +67,42 @@ if ( config.googleSSOEnabled ) {
       const username = profile.emails[0].value.trim();
       try {
         // Try to get the user from the database
-        let doc = await db.get(username);
-        return done(null, doc);
-        
-      } catch (err) {
-        // Handle user not found error
-        if (err.message === 'missing' && config.addSSOUsers) {
-          try {
-            // Add new user if they don't exist
-            await db.put({
-              _id: username,
-              admin: false,
-              pfp: '/img/default-pfps/1.png',
-              wishlist: []
-            });
-
-            // Retrieve the newly created user
-            const newUser = await db.get(username);
-            return done(null, newUser);
-          } catch (putErr) {
-            // Handle errors while adding a new user
-            console.log(putErr);
-            return done(null, false, { message: putErr.message });
-          }
+        let docs = await db.find({
+            selector: { idpGoogle: { $eq: username } }
+        });
+        if (docs.docs.length == 1 ){
+            return done(null, docs.docs[0])
         } else {
+            // Handle other errors, including missing user
+            return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
+        }
+      }
+      catch (err) {
           // Handle other errors, including missing user
           if (err.message === 'missing') {
-            return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
+              return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
           }
           return done(err);
-        }
+      }
+    }
+  ));
+
+  passport.use('google-link', new GoogleStrategy({
+    clientID: config.googleSSOClientId,
+    clientSecret: config.googleSSOClientSecret,
+    callbackURL: '/auth/google/link/redirect',
+    passReqToCallback: true
+  },
+    async (req, issuer, profile, done) => {
+      const googleEmail = profile.emails[0].value.trim();  // Get Google email
+
+      try {
+        const doc = await db.get(req.session.passport.user)
+        doc.idpGoogle = googleEmail
+        await db.put(doc)
+        return done(null, doc);
+      } catch (err) {
+        return done(err);
       }
     }
   ));

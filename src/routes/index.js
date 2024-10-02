@@ -76,7 +76,7 @@ export default ({ db, config }) => {
 
   router.use('/manifest.json', ManifestJson({ config }))
 
-  router.use('/auth/google', Google({ ensurePfp }))
+  router.use('/auth/google', Google({ db }))
 
   return router
 }
