@@ -2,13 +2,24 @@ extends layout.pug
 
 block content
   h2= lang('ADMIN_SETTINGS_USERS_HEADER')
-  each user in users
-    span.is-size-6.inline= user.id
-    a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
-      span.is-size-7.icon.has-text-info
-        i.fas.fa-edit
-      span.is-sr-only
-        = lang('ADMIN_SETTINGS_USERS_EDIT')
+  table.table 
+    thead   
+      th=lang('ADMIN_SETTINGS_TABLE_USERNAME')
+      th=lang('ADMIN_SETTINGS_TABLE_ADMIN_USER')
+      th=lang('ADMIN_SETTINGS_TABLE_WISHLIST_COUNT')
+      th=lang('ADMIN_SETTINGS_TABLE_EDIT')
+    tbody 
+      each user in users
+        tr(id=user.id)
+          td=user.id
+          td=user.doc.admin 
+          td=Object.keys(user.doc.wishlist).length
+          td
+            a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
+              span.is-size-7.icon.has-text-info
+                i.fas.fa-edit
+              span.is-sr-only
+                = lang('ADMIN_SETTINGS_USERS_EDIT')
     br
   h3= lang('ADMIN_SETTINGS_USERS_ADD_HEADER')
   form(action=`${_CC.config.base}admin-settings/add`, method='POST')
