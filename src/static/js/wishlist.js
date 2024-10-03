@@ -131,8 +131,8 @@ document.addEventListener('DOMContentLoaded', function(){
     sortOrderPrice = sortOrderPrice === 'asc' ? 'desc' : 'asc';
 
     const sortedRows = rows.sort((a,b) => {
-      priceA = priceToFloat(a.querySelector('.price').textContent)
-      priceB = priceToFloat(b.querySelector('.price').textContent)
+      const priceA = priceToFloat(a.querySelector('.price').textContent)
+      const priceB = priceToFloat(b.querySelector('.price').textContent)
       return sortOrderPrice === 'asc' ? priceA - priceB : priceB - priceA;
     });
 
