@@ -92,15 +92,23 @@ setTimeout(() => {
   document.querySelectorAll('.downForm').forEach(element => { listen(element, 'down') })
 }, 0)
 
-function priceToFloat(price) {
-  let cleanPrice = price
-      .replace(/[^\d.,]/g, '')  // Remove everything except digits, periods, and commas
-      .replace(/,/g, '');       // Remove commas to standardize the number
-  // If there's more than one decimal separator (.), treat the last one as the decimal point
-  if ((cleanPrice.match(/\./g) || []).length > 1) {
-      cleanPrice = cleanPrice.replace(/\.(?=.*\.)/, '');  // Remove the first period if there are multiple
+function priceToFloat(input) {
+  let cleanedInput = input.replace(/[^\d.,-]/g, '');
+
+  // Handle European decimal format where comma is used as decimal separator
+  if (cleanedInput.includes(',')) {
+    if (cleanedInput.includes('.')) {
+      // If both comma and dot exist, assume dot is for thousands and comma is for decimals
+      cleanedInput = cleanedInput.replace(/\./g, '').replace(',', '.');
+    } else {
+      // If only comma exists, replace it with a dot for decimal conversion
+      cleanedInput = cleanedInput.replace(',', '.');
+    }
   }
-  return parseFloat(cleanPrice);
+  // Parse and convert to float
+  let result = parseFloat(cleanedInput);
+  // Return NaN if the result is not a valid number
+  return isNaN(result) ? null : result;
 }
 
 document.addEventListener('DOMContentLoaded', function(){
