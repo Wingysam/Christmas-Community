@@ -123,8 +123,8 @@ document.addEventListener('DOMContentLoaded', function(){
     sortOrderPrice = sortOrderPrice === 'asc' ? 'desc' : 'asc';
 
     const sortedRows = rows.sort((a,b) => {
-      priceA = priceToFloat(a.cells[4].textContent)
-      priceB = priceToFloat(b.cells[4].textContent)
+      priceA = priceToFloat(a.querySelector('.price').textContent)
+      priceB = priceToFloat(b.querySelector('.price').textContent)
       return sortOrderPrice === 'asc' ? priceA - priceB : priceB - priceA;
     });
 

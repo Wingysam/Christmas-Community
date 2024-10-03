@@ -86,7 +86,7 @@ block content
                   div!= compiledNotes[item.id]
               else
                 td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
-              td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
+              td.price.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
               td(data-label=lang('WISHLIST_EDIT_ITEM'))
                 form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                   .field.inline
