@@ -27,8 +27,6 @@ export default function ({ db, ensurePfp }) {
     if (!req.user.admin) return res.redirect('/')
 
     const username = req.body.newUserUsername.trim()
-    const displayName = req.body.newUserDisplayName.trim()
-
     if (!username) {
       return db
         .allDocs({ include_docs: true })
@@ -50,7 +48,6 @@ export default function ({ db, ensurePfp }) {
       _id: username,
       admin: false,
       wishlist: [],
-      displayName: displayName,
 
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
       expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME

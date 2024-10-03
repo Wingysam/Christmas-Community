@@ -1,11 +1,6 @@
 extends layout.pug
 
 block content
-  style.
-    .required:after {
-      content:" *";
-      color: red;
-    }
   h2= lang('ADMIN_SETTINGS_USERS_HEADER')
   each user in users
     span.is-size-6.inline= user.id
@@ -19,15 +14,9 @@ block content
   form(action=`${_CC.config.base}admin-settings/add`, method='POST')
     .field
       p.has-text-danger#error-label= add_user_error
-      label.label.required= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
+      label.label= lang('ADMIN_SETTINGS_USERS_ADD_USERNAME')
       .control.has-icons-left
         input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
-        span.icon.is-small.is-left
-          i.fas.fa-user
-    .field 
-      label.label= lang('ADMIN_SETTINGS_USERS_ADD_DISPLAY_NAME')
-      .control.has-icons-left
-        input.input(type='text', name='newUserDisplayName', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_DISPLAY_NAME_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-user
     .field
