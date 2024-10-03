@@ -22,7 +22,6 @@ const config = {
   },
   customCSS: process.env.CUSTOM_CSS || null,
   updateCheck: process.env.UPDATE_CHECK !== 'false',
-  addSSOUsers: process.env.ADD_SSO_USERS || false,
   googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
   googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
   googleSSOEnabled: false
