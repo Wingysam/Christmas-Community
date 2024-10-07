@@ -68,7 +68,7 @@ if ( config.googleSSOEnabled ) {
       try {
         // Try to get the user from the database
         let docs = await db.find({
-            selector: { idpGoogle: { $eq: username } }
+            selector: { "oauthConnections.google": { $eq: username } }
         });
         if (docs.docs.length == 1 ){
             return done(null, docs.docs[0])
@@ -98,10 +98,18 @@ if ( config.googleSSOEnabled ) {
 
       try {
         const doc = await db.get(req.session.passport.user)
-        doc.idpGoogle = googleEmail
+        if (doc.oauthConnections) {
+          doc.oauthConnections.google = googleEmail
+        }
+        else {
+          doc.oauthConnections = {}
+          doc.oauthConnections.google = googleEmail
+        }
         await db.put(doc)
+        req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS') )
         return done(null, doc);
       } catch (err) {
+        req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
         return done(err);
       }
     }

@@ -58,7 +58,7 @@ block content
       i.fas.fa-shield-alt
     span= lang('PROFILE_SECURITY_CHANGE_PASSWORD')
   | &nbsp;
-  if req.user && req.user.idpGoogle
+  if req.user.oauthConnections.google
     a.button.is-danger(href=`${_CC.config.base}auth/google/unlink`)
       span.icon
         i.fab.fa-google 

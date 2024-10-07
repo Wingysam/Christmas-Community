@@ -30,9 +30,15 @@ export default function ({db}) {
   );
 
   router.get('/unlink', async (req, res) => {
-    const doc = await db.get(req.session.passport.user)
-    delete doc.idpGoogle
-    await db.put(doc)
+    try {
+      const doc = await db.get(req.session.passport.user)
+      delete doc.oauthConnections.google
+      await db.put(doc)
+      req.flash('success', _CC.lang('LOGIN_SSO_UNLINK_SUCCESS') )
+    }
+    catch(err) {
+      req.flash('error', _CC.lang('LOGIN_SSO_UNLINK_FAILURE'))
+    }
     res.redirect('/profile');
   })
 
