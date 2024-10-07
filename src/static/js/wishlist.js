@@ -91,3 +91,53 @@ setTimeout(() => {
   document.querySelectorAll('.upForm').forEach(element => { listen(element, 'up') })
   document.querySelectorAll('.downForm').forEach(element => { listen(element, 'down') })
 }, 0)
+
+function priceToFloat(input) {
+  let cleanedInput = input.replace(/[^\d.,-]/g, '');
+
+  // Handle European decimal format where comma is used as decimal separator
+  if (cleanedInput.includes(',')) {
+    if (cleanedInput.includes('.')) {
+      // If both comma and dot exist, assume dot is for thousands and comma is for decimals
+      cleanedInput = cleanedInput.replace(/\./g, '').replace(',', '.');
+    } else {
+      // If only comma exists, replace it with a dot for decimal conversion
+      cleanedInput = cleanedInput.replace(',', '.');
+    }
+  }
+  // Parse and convert to float
+  let result = parseFloat(cleanedInput);
+  // Return NaN if the result is not a valid number
+  return isNaN(result) ? null : result;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let sortOrderPrice = 'asc';
+  const priceArrow = document.getElementById('price-arrow');
+  const sortByPrice = document.getElementById('sort-price');
+
+  function updateArrow(column, order) {
+    if (column === 'price') {
+      priceArrow.className = order === 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+    }
+  }
+
+  sortByPrice.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const table = document.getElementById('wishlist-table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    sortOrderPrice = sortOrderPrice === 'asc' ? 'desc' : 'asc';
+
+    const sortedRows = rows.sort((a,b) => {
+      const priceA = priceToFloat(a.querySelector('.price').textContent)
+      const priceB = priceToFloat(b.querySelector('.price').textContent)
+      return sortOrderPrice === 'asc' ? priceA - priceB : priceB - priceA;
+    });
+
+    tbody.innerHTML = '';
+    sortedRows.forEach(row => tbody.appendChild(row));
+    updateArrow('price', sortOrderPrice);
+  })
+})
