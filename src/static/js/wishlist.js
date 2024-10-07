@@ -111,7 +111,7 @@ function priceToFloat(input) {
   return isNaN(result) ? null : result;
 }
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', () => {
   let sortOrderPrice = 'asc';
   const priceArrow = document.getElementById('price-arrow');
   const sortByPrice = document.getElementById('sort-price');
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  sortByPrice.addEventListener('click', function(e){
+  sortByPrice.addEventListener('click', (e) => {
     e.preventDefault();
 
     const table = document.getElementById('wishlist-table');
