@@ -52,7 +52,7 @@ block content
     div!= _CC.config.customHtml.wishlists
 
   ul.noStyle.noLeftMargin
-    if req.user._id !== '_CCUNKNOWN'
+    if req.user._id !== '_CCUNKNOWN' && req.user.pledgeOnly != true
       li
         .box
           a(href=`${_CC.config.base}wishlist/${req.user._id}`, style='color: #4a4a4a;')
@@ -67,7 +67,7 @@ block content
                   progress.progress(value=1, max=1)
           +wishlistDetails(req.user.wishlist, req.user._id)
     each user in users
-      if req.user._id !== user.id
+      if req.user._id !== user.id && user.doc.pledgeOnly != true
         li
           .box
             a(href=`${_CC.config.base}wishlist/${user.id}`, style='color: #4a4a4a;')

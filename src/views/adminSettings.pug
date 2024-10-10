@@ -6,13 +6,15 @@ block content
     thead   
       th=lang('ADMIN_SETTINGS_TABLE_USERNAME')
       th=lang('ADMIN_SETTINGS_TABLE_ADMIN_USER')
+      th=lang('ADMIN_SETTINGS_TABLE_PLEDGE_ONLY')
       th=lang('ADMIN_SETTINGS_TABLE_WISHLIST_COUNT')
       th=lang('ADMIN_SETTINGS_TABLE_EDIT')
     tbody 
       each user in users
         tr(id=user.id)
           td=user.id
-          td=user.doc.admin 
+          td=user.doc.admin
+          td=user.doc.pledgeOnly
           td=Object.keys(user.doc.wishlist).length
           td
             a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
@@ -30,6 +32,10 @@ block content
         input.input(type='text', name='newUserUsername', placeholder=lang('ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER'))
         span.icon.is-small.is-left
           i.fas.fa-user
+    .field
+      label.label= lang('ADMIN_SETTINGS_USERS_ADD_PLEDGE_ONLY')
+      .control.has-icons-left
+        input(type='checkbox', name='newPledgeOnlyUser')
     .field
       .control
         input.button.is-primary(type='submit' value=lang('ADMIN_SETTINGS_USERS_ADD_BUTTON'))

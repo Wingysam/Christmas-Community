@@ -28,7 +28,8 @@ nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation',style='b
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link= req.user._id
             .navbar-dropdown
-              +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, lang('NAVBAR_WISHLIST'))
+              if req.user.pledgeOnly != true
+                +navBarLink(`${_CC.config.base}wishlist/${req.user._id}`, lang('NAVBAR_WISHLIST'))
               +navBarLink(`${_CC.config.base}profile`, lang('NAVBAR_PROFILE'))
               if req.user.admin
                 +navBarLink(`${_CC.config.base}admin-settings`, lang('NAVBAR_ADMIN'))

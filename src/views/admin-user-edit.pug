@@ -45,6 +45,15 @@ block content
               .control
                 input.button.is-primary(type='submit' value=lang('ADMIN_USER_EDIT_CHANGE_USERNAME'))
         .column.is-narrow
+          h2= lang('ADMIN_USER_EDIT_PLEDGE_ONLY')
+          form(action=`${_CC.config.base}admin-settings/edit/pledgeOnly/${user._id}`, method='POST')
+            .field
+              .control
+                input(type='checkbox', name='editPledgeOnlyUser', checked=user.pledgeOnly)
+            .field
+              .control                
+                input.input.button(type='submit', value=lang('ADMIN_USER_EDIT_PLEDGE_ONLY_BUTTON'), style='margin-top: 1em;')        
+        .column.is-narrow
           h2= lang('ADMIN_USER_EDIT_ADMIN')
           //- Yes, ternary exists, but I think the code is cleaner with a more "naive" style :)
           //- p.is-marginless #{user._id} is #{user.admin ? '' : 'not '}an admin.

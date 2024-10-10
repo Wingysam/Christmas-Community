@@ -36,21 +36,22 @@ block content
                       button.button.is-primary(type='submit')
                         span.icon
                           i.fas.fa-save
-  h2= lang('PROFILE_SHARED_INFORMATION')
-  form(action=`${_CC.config.base}profile/info`, method='POST')
-    .columns.is-multiline.is-mobile
-      .column.is-narrow
-        +sharedInfoProp('shoeSize', 'PROFILE_SHOE_SIZE')
-        +sharedInfoProp('ringSize', 'PROFILE_RING_SIZE')
-        +sharedInfoProp('dressSize', 'PROFILE_DRESS_SIZE')
-      .column.is-narrow
-        +sharedInfoProp('sweaterSize', 'PROFILE_SWEATER_SIZE')
-        +sharedInfoProp('shirtSize', 'PROFILE_SHIRT_SIZE')
-        +sharedInfoProp('pantsSize', 'PROFILE_PANTS_SIZE')
-      .column.is-narrow
-        +sharedInfoProp('coatSize', 'PROFILE_COAT_SIZE')
-        +sharedInfoProp('hatSize', 'PROFILE_HAT_SIZE')
-        +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
+  if req.user.pledgeOnly != true
+    h2= lang('PROFILE_SHARED_INFORMATION')
+    form(action=`${_CC.config.base}profile/info`, method='POST')
+      .columns.is-multiline.is-mobile
+        .column.is-narrow
+          +sharedInfoProp('shoeSize', 'PROFILE_SHOE_SIZE')
+          +sharedInfoProp('ringSize', 'PROFILE_RING_SIZE')
+          +sharedInfoProp('dressSize', 'PROFILE_DRESS_SIZE')
+        .column.is-narrow
+          +sharedInfoProp('sweaterSize', 'PROFILE_SWEATER_SIZE')
+          +sharedInfoProp('shirtSize', 'PROFILE_SHIRT_SIZE')
+          +sharedInfoProp('pantsSize', 'PROFILE_PANTS_SIZE')
+        .column.is-narrow
+          +sharedInfoProp('coatSize', 'PROFILE_COAT_SIZE')
+          +sharedInfoProp('hatSize', 'PROFILE_HAT_SIZE')
+          +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
 
   h2= lang('PROFILE_SECURITY')
   a.button.is-primary(href=`${_CC.config.base}profile/password`)
