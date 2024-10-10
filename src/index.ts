@@ -61,7 +61,7 @@ if ( config.googleSSOEnabled ) {
   passport.use('google-login', new GoogleStrategy({
       clientID: config.googleSSOClientId,
       clientSecret: config.googleSSOClientSecret,
-      callbackURL: '/auth/google/redirect',
+      callbackURL: config.googleSignInRedirect,
     },
     async (issuer, profile, done) => {
       const username = profile.emails[0].value.trim();
@@ -90,7 +90,7 @@ if ( config.googleSSOEnabled ) {
   passport.use('google-link', new GoogleStrategy({
     clientID: config.googleSSOClientId,
     clientSecret: config.googleSSOClientSecret,
-    callbackURL: '/auth/google/link/redirect',
+    callbackURL: config.googleLinkRedirect,
     passReqToCallback: true
   },
     async (req, issuer, profile, done) => {

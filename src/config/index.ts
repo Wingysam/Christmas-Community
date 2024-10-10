@@ -24,7 +24,9 @@ const config = {
   updateCheck: process.env.UPDATE_CHECK !== 'false',
   googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
   googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
-  googleSSOEnabled: false
+  googleSSOEnabled: false,
+  googleSignInRedirect: process.env.GOOGLE_SIGNIN_REDIRECT || '/auth/google/redirect',
+  googleLinkRedirect: process.env.GOOGLE_LINK_REDIRECT || '/auth/google/link/redirect'
 }
 
 if (config.guestPassword) config.wishlist.public = false
