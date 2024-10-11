@@ -64,11 +64,11 @@ if ( config.googleSSOEnabled ) {
       callbackURL: config.googleSignInRedirect,
     },
     async (issuer, profile, done) => {
-      const username = profile.emails[0].value.trim();
+      const googleId = profile.id.trim();  // Get Google id
       try {
         // Try to get the user from the database
         let docs = await db.find({
-            selector: { "oauthConnections.google": { $eq: username } }
+            selector: { "oauthConnections.google": { $eq: googleId } }
         });
         if (docs.docs.length == 1 ){
             return done(null, docs.docs[0])
@@ -94,10 +94,10 @@ if ( config.googleSSOEnabled ) {
     passReqToCallback: true
   },
     async (req, issuer, profile, done) => {
-      const googleEmail = profile.emails[0].value.trim();  // Get Google email
+      const googleId = profile.id.trim();  // Get Google id
 
       let docs = await db.find({
-          selector: { "oauthConnections.google": { $eq: googleEmail } }
+          selector: { "oauthConnections.google": { $eq: googleId } }
       });
       if (docs.docs.length == 1 ){
         req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
@@ -106,11 +106,11 @@ if ( config.googleSSOEnabled ) {
         try {
           const doc = await db.get(req.session.passport.user)
           if (doc.oauthConnections) {
-            doc.oauthConnections.google = googleEmail
+            doc.oauthConnections.google = googleId
           }
           else {
             doc.oauthConnections = {} // handle migration from 1.35 and earlier releases
-            doc.oauthConnections.google = googleEmail
+            doc.oauthConnections.google = googleId
           }
           await db.put(doc)
           req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS') )

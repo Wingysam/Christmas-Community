@@ -5,7 +5,7 @@ export default function ({db}) {
   const router = express.Router()
 
   router.get('/', passport.authenticate('google-login', {
-    scope: ['openid', 'profile', 'email']
+    scope: ['openid', 'profile']
   }));
   
   // Callback route once Google has authenticated the user
@@ -19,7 +19,7 @@ export default function ({db}) {
   );
 
   router.get('/link', passport.authenticate('google-link', {
-    scope: ['email']
+    scope: ['profile']
   }));
 
   router.get('/link/redirect', 
