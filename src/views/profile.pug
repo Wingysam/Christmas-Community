@@ -59,7 +59,7 @@ block content
     span= lang('PROFILE_SECURITY_CHANGE_PASSWORD')
   | &nbsp;
   if _CC.config.googleSSOEnabled
-    if  req.user.oauthConnections && req.user.oauthConnections.google
+    if req.user.oauthConnections && req.user.oauthConnections.google
       a.button.is-danger(href=`${_CC.config.base}auth/google/unlink`)
         span.icon
           i.fab.fa-google 
