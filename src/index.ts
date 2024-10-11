@@ -105,13 +105,8 @@ if ( config.googleSSOEnabled ) {
       } else {
         try {
           const doc = await db.get(req.session.passport.user)
-          if (doc.oauthConnections) {
-            doc.oauthConnections.google = googleId
-          }
-          else {
-            doc.oauthConnections = {} // handle migration from 1.35 and earlier releases
-            doc.oauthConnections.google = googleId
-          }
+          doc.oauthConnections ??= {}
+          doc.oauthConnections.google = googleId
           await db.put(doc)
           req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS') )
           return done(null, doc);
