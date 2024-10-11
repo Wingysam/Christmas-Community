@@ -201,5 +201,7 @@ export const strings = {
   WISHLIST_URL_REQUIRED: 'Item URL or Name is required',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
+  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`,
+  YES: 'Yes',
+  NO: 'No'
 } as const
