@@ -13,7 +13,8 @@ export default function ({ db }) {
     passport.authenticate('google-login', {
       successRedirect: '/',
       failureRedirect: '/login',
-      failureMessage: 'Unable to sign-in using Google'
+      failureMessage: 'Unable to sign-in using Google',
+      failureFlash: true
     })
 
   )
@@ -23,7 +24,7 @@ export default function ({ db }) {
   }))
 
   router.get('/link/redirect',
-    passport.authenticate('google-link', { failureRedirect: '/profile' }),
+    passport.authenticate('google-link', { failureRedirect: '/profile', failureFlash: true }),
     (req, res) => {
       res.redirect('/profile')
     }
