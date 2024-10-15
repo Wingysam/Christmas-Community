@@ -88,8 +88,9 @@ SESSION_MAX_AGE=604800000
 SITE_TITLE=Christmas Community
 # Used when shared to home screen
 SHORT_TITLE=Christmas
-# The root path for forms, CSS, and a small amount of JS. Useful when proxying.
-ROOT_PATH=/
+# The root URL for forms, CSS, and a small amount of JS. Useful when proxying or using SSO.
+# If not using SSO, this can be a relative path.
+ROOT_URL=/
 # Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
 TRUST_PROXY=loopback
 # Any theme from https://jenil.github.io/bulmaswatch
@@ -126,6 +127,16 @@ MARKDOWN=false
 # If you wish to include a custom stylesheet you can add the filename in the variable here.
 # Remember to add the stylesheet to the filesystem at `static/css/custom.css`. In docker, mount `/usr/src/app/src/static/css/custom.css`.
 # CUSTOM_CSS=custom.css
+
+## Google Client Details
+# You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
+# Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
+# GOOGLE_CLIENT_ID=abc123
+# GOOGLE_CLIENT_SECRET=123abc
+# When running in docker, you may face issues with the protocol or URL that is redirecting the call, override that by specifying the full redirect URL in the below variables
+# GOOGLE_SIGNIN_REDIRECT=https://wishlist.example.com/auth/google/redirect
+# GOOGLE_LINK_REDIRECT=https://wishlist.example.com/auth/google/link/redirect
+
 ```
 
 ## Default Profile Pictures
@@ -158,10 +169,10 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/Wingysam">
-            <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
+        <a href="https://github.com/cj13579">
+            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
             <br />
-            <sub><b>Wingysam</b></sub>
+            <sub><b>cj13579</b></sub>
         </a>
     </td></tr>
 </table>
