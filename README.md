@@ -133,10 +133,6 @@ MARKDOWN=false
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
 # GOOGLE_CLIENT_ID=abc123
 # GOOGLE_CLIENT_SECRET=123abc
-# When running in docker, you may face issues with the protocol or URL that is redirecting the call, override that by specifying the full redirect URL in the below variables
-# GOOGLE_SIGNIN_REDIRECT=https://wishlist.example.com/auth/google/redirect
-# GOOGLE_LINK_REDIRECT=https://wishlist.example.com/auth/google/link/redirect
-
 ```
 
 ## Default Profile Pictures
