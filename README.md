@@ -88,8 +88,9 @@ SESSION_MAX_AGE=604800000
 SITE_TITLE=Christmas Community
 # Used when shared to home screen
 SHORT_TITLE=Christmas
-# The root path for forms, CSS, and a small amount of JS. Useful when proxying.
-ROOT_PATH=/
+# The root URL for forms, CSS, and a small amount of JS. Useful when proxying or using SSO.
+# If not using SSO, this can be a relative path.
+ROOT_URL=/
 # Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
 TRUST_PROXY=loopback
 # Any theme from https://jenil.github.io/bulmaswatch
