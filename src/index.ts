@@ -53,39 +53,38 @@ passport.use('local', new LocalStrategy(
       .catch(err => {
         if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
         return done(err)
-      })  
+      })
   }
 ))
 
-if ( config.googleSSOEnabled ) {
+if (config.googleSSOEnabled) {
   passport.use('google-login', new GoogleStrategy({
-      clientID: config.googleSSOClientId,
-      clientSecret: config.googleSSOClientSecret,
-      callbackURL: config.googleSignInRedirect,
-    },
-    async (issuer, profile, done) => {
-      const googleId = profile.id.trim();  // Get Google id
-      try {
-        // Try to get the user from the database
-        let docs = await db.find({
-            selector: { "oauthConnections.google": { $eq: googleId } }
-        });
-        if (docs.docs.length == 1 ){
-            return done(null, docs.docs[0])
-        } else {
-            // Handle other errors, including missing user
-            return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
-        }
+    clientID: config.googleSSOClientId,
+    clientSecret: config.googleSSOClientSecret,
+    callbackURL: config.googleSignInRedirect
+  },
+  async (issuer, profile, done) => {
+    const googleId = profile.id.trim() // Get Google id
+    try {
+      // Try to get the user from the database
+      const docs = await db.find({
+        selector: { 'oauthConnections.google': { $eq: googleId } }
+      })
+      if (docs.docs.length === 1) {
+        return done(null, docs.docs[0])
+      } else {
+        // Handle other errors, including missing user
+        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
       }
-      catch (err) {
-          // Handle other errors, including missing user
-          if (err.message === 'missing') {
-              return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') });
-          }
-          return done(err);
+    } catch (err) {
+      // Handle other errors, including missing user
+      if (err.message === 'missing') {
+        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
       }
+      return done(err)
     }
-  ));
+  }
+  ))
 
   passport.use('google-link', new GoogleStrategy({
     clientID: config.googleSSOClientId,
@@ -93,32 +92,31 @@ if ( config.googleSSOEnabled ) {
     callbackURL: config.googleLinkRedirect,
     passReqToCallback: true
   },
-    async (req, issuer, profile, done) => {
-      const googleId = profile.id.trim();  // Get Google id
+  async (req, issuer, profile, done) => {
+    const googleId = profile.id.trim() // Get Google id
 
-      let docs = await db.find({
-          selector: { "oauthConnections.google": { $eq: googleId } }
-      });
-      if (docs.docs.length == 1 ){
-        req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
-        return done(null)
-      } else {
-        try {
-          const doc = await db.get(req.session.passport.user)
-          doc.oauthConnections ??= {}
-          doc.oauthConnections.google = googleId
-          await db.put(doc)
-          req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS') )
-          return done(null, doc);
-        } catch (err) {
-          req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
-          return done(err);
-        }
+    const docs = await db.find({
+      selector: { 'oauthConnections.google': { $eq: googleId } }
+    })
+    if (docs.docs.length === 1) {
+      req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
+      return done(null)
+    } else {
+      try {
+        const doc = await db.get(req.session.passport.user)
+        doc.oauthConnections ??= {}
+        doc.oauthConnections.google = googleId
+        await db.put(doc)
+        req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS'))
+        return done(null, doc)
+      } catch (err) {
+        req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
+        return done(err)
       }
     }
-  ));
+  }
+  ))
 }
-
 
 passport.serializeUser((user, callback) => callback(null, user._id))
 
