@@ -161,6 +161,7 @@ export const strings = {
     <span>Latest: ${latest}</span>
     <span class="has-text-info" style="float: right;">This message is only visible to admins</span>`,
   WISHLIST_ADD: 'Add item to wishlist',
+  WISHLIST_ADD_NEW: 'Add item',
   WISHLIST_ADDED_BY_USER: addedBy => `Added by: ${addedBy}`,
   WISHLIST_ADDED_BY: 'Added By',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Added item to wishlist.',
