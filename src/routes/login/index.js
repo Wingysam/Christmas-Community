@@ -1,7 +1,7 @@
 import passport from 'passport'
 import express from 'express'
 
-export default function () {
+export default function ({ config }) {
   const router = express.Router()
 
   router.get('/',
@@ -9,7 +9,7 @@ export default function () {
       if (req.isAuthenticated()) {
         res.redirect('/')
       } else {
-        res.render('login')
+        res.render('login', { googleSSOEnabled: config.googleSSOEnabled })
       }
     }
   )

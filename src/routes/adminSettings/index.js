@@ -52,6 +52,7 @@ export default function ({ db, ensurePfp }) {
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
       expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
     })
+
     await ensurePfp(username)
     res.redirect(`/admin-settings/edit/${req.body.newUserUsername.trim()}`)
   })
