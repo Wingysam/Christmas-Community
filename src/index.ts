@@ -4,6 +4,7 @@ import './CC.js'
 import PouchSession from 'session-pouchdb-store'
 import { Strategy as LocalStrategy } from 'passport-local'
 import GoogleStrategy from 'passport-google-oidc'
+import { Strategy as HeaderStrategy } from 'passport-http-header-strategy'
 import session from 'express-session'
 import bcrypt from 'bcrypt-nodejs'
 import flash from 'connect-flash'
@@ -52,7 +53,7 @@ passport.use('local', new LocalStrategy(
       })
       .catch(err => {
         if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
-        return done(err)
+        return done(null, false, { message: err })
       })
   }
 ))
@@ -116,6 +117,23 @@ if (config.googleSSOEnabled) {
     }
   }
   ))
+}
+
+if (config.headerSSOEnabled){
+  passport.use('header', new HeaderStrategy({header: config.headerSSOName, passReqToCallback: true},
+    (req, username, done) => {
+      db.get(username)
+        .then((doc) => {
+            return done(null, doc);
+        })
+        .catch(err => {
+        if (err.message === 'missing')
+            return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') });
+        return done(null, false, { message: err });
+      });
+    }
+  ));
+  
 }
 
 passport.serializeUser((user, callback) => callback(null, user._id))

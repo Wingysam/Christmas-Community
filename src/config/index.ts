@@ -24,6 +24,9 @@ const config = {
   googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
   googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
   googleSSOEnabled: false,
+  headerSSOEnabled: false,
+  headerSSOName: process.env.SSO_HEADER_NAME || null,
+  headerSSORedirect: process.env.SSO_HEADER_REDIRECT || null,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '' // automatically set below
 }
@@ -36,6 +39,10 @@ if (config.guestPassword === 'ReplaceWithYourGuestPassword') {
 
 if (config.googleSSOClientId != null && config.googleSSOClientSecret != null) {
   config.googleSSOEnabled = true
+}
+
+if (config.headerSSOName != null && config.headerSSORedirect != null ) {
+  config.headerSSOEnabled = true
 }
 
 // The base path is used in HTML templates rather than the fully qualified path, mostly for legacy reasons. It also has the following advantages:
