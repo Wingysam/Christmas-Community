@@ -15,7 +15,6 @@ import Profile from './profile/index.js'
 import AdminSettings from './adminSettings/index.js'
 import ManifestJson from './manifest.json/index.js'
 import Google from './google-auth/index.js'
-import Header from './header-auth/index.js'
 
 export default ({ db, config }) => {
   async function ensurePfp (username) {
@@ -63,13 +62,7 @@ export default ({ db, config }) => {
 
   router.use('/setup', Setup({ db, ensurePfp }))
 
-  console.log(config)
-  if (config.headerSSOEnabled) {
-    router.use('/login', Header({config}))
-  } else {
-    router.use('/login', Login({ config }))
-  }
-  
+  router.use('/login', Login({ config }))
   router.use('/logout', Logout())
   router.use('/resetpw', ResetPw(db))
   router.use('/confirm-account', ConfirmAccount(db))
