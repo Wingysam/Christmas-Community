@@ -19,9 +19,9 @@ block content
         input.button.is-primary(type='submit' value=lang('LOGIN_BUTTON'))
   br
   p
-    if googleSSOEnabled
-      a.button.is-primary(href="/auth/google")
-        i.fab.fa-google 
-        |&nbsp;&nbsp;#{lang('LOGIN_GOOGLE_BUTTON')}
+    if oidcEnabled
+      a.button.is-primary(href="/auth/oidc")
+        i.fas.fa-key
+        |&nbsp;&nbsp;#{lang('LOGIN_OIDC_BUTTON')}
   if _CC.config.customHtml.login
     div!= _CC.config.customHtml.login
