@@ -52,8 +52,6 @@ env: []
   # LISTS_PUBLIC: false
   # # Defaults to true. Set to false for legacy cards view.
   # TABLE: true
-  # # Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice. Defaults to true.
-  # SMILE: true
   # # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
   # MARKDOWN: false
 
