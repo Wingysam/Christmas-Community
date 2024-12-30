@@ -55,7 +55,7 @@ block content
     if req.user._id !== '_CCUNKNOWN'
       li
         .box
-          a(href=`${_CC.config.base}wishlist/${req.user._id}`, style='color: #4a4a4a;')
+          a(href=`${_CC.config.base}wishlist/${req.user._id}`)
             .columns.is-mobile
               if config.pfp
                 .column.is-1(style='overflow: hidden; padding: 0 0.5rem 0 0;')
@@ -70,7 +70,7 @@ block content
       if req.user._id !== user.id
         li
           .box
-            a(href=`${_CC.config.base}wishlist/${user.id}`, style='color: #4a4a4a;')
+            a(href=`${_CC.config.base}wishlist/${user.id}`)
               .columns.is-mobile
                 if config.pfp
                   .column.is-1(style='overflow: hidden; padding: 0 0.5rem 0 0;')

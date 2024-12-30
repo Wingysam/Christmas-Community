@@ -65,3 +65,6 @@ img.logo-image {
 .print-gift:last-child {
 	margin-bottom: 0;
 }
+ul li div.box a {
+    color: #4a4a4a;
+}
