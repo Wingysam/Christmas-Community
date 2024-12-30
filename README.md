@@ -50,6 +50,9 @@ services:
     restart: always
 ```
 
+## Unraid
+Unraid users can install Christmas Community by searching for "Christmas Community" in the Community Apps store and installing it from grtgbln's repository. Note that this is an unofficial distribution not controlled by the maintainer of Christmas Community.
+
 ## Install
 
 ```sh
