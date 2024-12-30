@@ -111,10 +111,6 @@ spec:
             - name: TABLE
               value: {{ .Values.env.TABLE }}
             {{- end}}
-            {{- if .Values.env.SMILE }}
-            - name: SMILE
-              value: {{ .Values.env.SMILE }}
-            {{- end}}
             {{- if .Values.env.MARKDOWN }}
             - name: MARKDOWN
               value: {{ .Values.env.MARKDOWN }}
