@@ -53,7 +53,7 @@ export class Wishlist {
     return await addedBySelfAtTop(this.items)
   }
 
-  async add ({ itemUrlOrName, suggest, note, addedBy }) {
+  async add ({ itemUrlOrName, suggest, note, price, addedBy }) {
     if (!itemUrlOrName) {
       throw new Error(_CC.lang('WISHLIST_URL_REQUIRED'))
     }
@@ -73,7 +73,7 @@ export class Wishlist {
 
     item.id = u64.encode(new Date().getTime().toString())
     item.name = (productData ? productData.name : '')
-    item.price = productData?.price
+    item.price = price || productData?.price
     item.image = productData?.image
     item.addedBy = addedBy
     item.pledgedBy = (addedBy === this.username || suggest ? undefined : addedBy)
