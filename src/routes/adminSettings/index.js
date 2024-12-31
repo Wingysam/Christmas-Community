@@ -153,6 +153,7 @@ export default function ({ db, ensurePfp }) {
     try {
       await db.put(userDoc)
       await _CC.wishlistManager.clearCache()
+      return res.redirect(`/admin-settings/edit/${req.params.userToChange}`)
     } catch (error) {
       req.flash('error', error.message)
       return res.redirect(`/admin-settings/edit/${req.params.userToChange}`)
