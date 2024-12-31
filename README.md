@@ -128,6 +128,12 @@ MARKDOWN=false
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
 # GOOGLE_CLIENT_ID=abc123
 # GOOGLE_CLIENT_SECRET=123abc
+
+# Set to false to disable pledge only users from being able to suggest items to another user's list
+PLEDGE_SUGGEST=true
+
+# Set to false to disable all users from being able to suggest items to another users's list
+SUGGESTIONS_ENABLED=true
 ```
 
 ## Default Profile Pictures
@@ -160,10 +166,10 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/Wingysam">
-            <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
+        <a href="https://github.com/cj13579">
+            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
             <br />
-            <sub><b>Wingysam</b></sub>
+            <sub><b>cj13579</b></sub>
         </a>
     </td></tr>
 </table>
@@ -196,6 +202,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/jskiddie">
+            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
+            <br />
+            <sub><b>jskiddie</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/dbarenholz">
             <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
             <br />
@@ -208,20 +221,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>Laeborg</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/LarsStegman">
             <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
             <br />
             <sub><b>LarsStegman</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jskiddie">
-            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
-            <br />
-            <sub><b>jskiddie</b></sub>
         </a>
     </td>
     <td align="center">

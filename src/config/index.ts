@@ -25,7 +25,9 @@ const config = {
   googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
   googleSSOEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
-  base: '' // automatically set below
+  base: '', // automatically set below
+  pledgeSuggest: process.env.PLEDGE_SUGGEST === 'true' ? true : process.env.PLEDGE_SUGGEST || true,
+  suggestionsEnabled: process.env.SUGGESTIONS_ENABLED === 'true' ? true : process.env.SUGGESTIONS_ENABLED || true
 }
 
 if (config.guestPassword) config.wishlist.public = false
