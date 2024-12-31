@@ -36,7 +36,7 @@ block content
                       button.button.is-primary(type='submit')
                         span.icon
                           i.fas.fa-save
-  if req.user.pledgeOnly != true
+  if !req.user.pledgeOnly
     h2= lang('PROFILE_SHARED_INFORMATION')
     form(action=`${_CC.config.base}profile/info`, method='POST')
       .columns.is-multiline.is-mobile
