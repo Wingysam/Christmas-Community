@@ -58,3 +58,15 @@ block content
     span.icon
       i.fas.fa-shield-alt
     span= lang('PROFILE_SECURITY_CHANGE_PASSWORD')
+  | &nbsp;
+  if _CC.config.googleSSOEnabled
+    if req.user.oauthConnections && req.user.oauthConnections.google
+      a.button.is-danger(href=`${_CC.config.base}auth/google/unlink`)
+        span.icon
+          i.fab.fa-google 
+        span= lang('PROFILE_SECURITY_UNLINK_GOOGLE')
+    else
+      a.button.is-primary(href=`${_CC.config.base}auth/google/link`)
+        span.icon
+          i.fab.fa-google 
+        span= lang('PROFILE_SECURITY_LINK_GOOGLE')
