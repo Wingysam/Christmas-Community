@@ -24,6 +24,7 @@ const config = {
   googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
   googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
   googleSSOEnabled: false,
+  pfpUploadMaxSize: process.env.UPLOAD_PFP_MAX_SIZE || 5,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '' // automatically set below
 }

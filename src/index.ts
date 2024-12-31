@@ -15,6 +15,10 @@ import BodyParser from 'body-parser'
 import CookieParser from 'cookie-parser'
 import ExpressPouchDB from 'express-pouchdb'
 import { customAlphabet } from 'nanoid'
+import fileUpload from 'express-fileupload'
+import fs from 'fs'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
@@ -36,6 +40,14 @@ app.use((req, res, next) => {
   if (!req.session?.passport || Object.keys(req.session?.passport)?.length === 0) { res.clearCookie('christmas_community.connect.sid', { path: '/wishlist' }) }
   next()
 })
+
+app.use(fileUpload())
+const __dirname = dirname(fileURLToPath(import.meta.url));
+_CC.uploadDir = path.join(__dirname, 'uploads/profile_pictures');
+if (!fs.existsSync(_CC.uploadDir)) {
+    fs.mkdirSync(_CC.uploadDir, { recursive: true });
+}
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const db = _CC.usersDb
 
