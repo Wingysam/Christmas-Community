@@ -256,8 +256,8 @@ block content
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
   
-  if ! global._CC.config.guestSuggest && req.user.pledgeOnly
-    .notification.is-info= lang('WISHLIST_GUEST_SUGGEST_DISABLED')
+  if ((!global._CC.config.pledgeSuggest && req.user.pledgeOnly) || !global._CC.config.suggestionsEnabled || req.user._id !== req.params.user)
+    .notification.is-info= lang('WISHLIST_SUGGESTIONS_DISABLED')
   else 
     form(method='POST')
       .field
