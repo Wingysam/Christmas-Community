@@ -130,7 +130,10 @@ MARKDOWN=false
 # GOOGLE_CLIENT_SECRET=123abc
 
 # Set to false to disable pledge only users from being able to suggest items to another user's list
-GUEST_SUGGEST=true
+PLEDGE_SUGGEST=true
+
+# Set to false to disable all users from being able to suggest items to another users's list
+SUGGESTIONS_ENABLED=true
 ```
 
 ## Default Profile Pictures
