@@ -1,6 +1,7 @@
 import verifyAuth from '../../middlewares/verifyAuth.js'
 import bcrypt from 'bcrypt-nodejs'
 import express from 'express'
+import path from 'path'
 
 export default function ({ db, config, ensurePfp }) {
   const router = express.Router()
@@ -45,6 +46,7 @@ export default function ({ db, config, ensurePfp }) {
     await ensurePfp(req.user._id)
     res.render('profile-password', { title: _CC.lang('PROFILE_PASSWORD_TITLE', req.user._id) })
   })
+
   router.post('/password', verifyAuth(), (req, res) => {
     if (!req.body.oldPassword) {
       req.flash('error', _CC.lang('PROFILE_PASSWORD_REQUIRED_OLD'))
@@ -76,6 +78,49 @@ export default function ({ db, config, ensurePfp }) {
         res.redirect('/profile/password')
       }
     })
+  })
+
+  router.post('/upload-pfp', verifyAuth(), async (req, res) => {
+
+    // Check that a file was uploaded
+    if (!req.files || !req.files.profilePicture) {
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_NO_FILE'));
+      return res.redirect('/profile');
+  }
+
+    const profilePicture = req.files.profilePicture;
+    const allowedExtensions = /png|jpg|jpeg/;
+    const extName = path.extname(profilePicture.name).toLowerCase();
+
+    // Validate file type
+    if (!allowedExtensions.test(path.extname(profilePicture.name).toLowerCase()) || !allowedExtensions.test(profilePicture.mimetype)) {
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_TYPE'));
+      return res.redirect('/profile');
+  }
+
+    // Validate file size (e.g., 2 MB limit)
+    const maxSize = _CC.config.pfpUploadMaxSize * 1024 * 1024; // 2 MB
+    if (profilePicture.size > maxSize) {
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_SIZE'));
+      return res.redirect('/profile');
+    }
+
+    // Generate unique filename and save file
+    const fileName = `${Date.now()}${extName}`;
+    const uploadPath = path.join(_CC.uploadDir, fileName);
+    try {
+        await profilePicture.mv(uploadPath);
+        // Save the file path to the user's profile in the database (example)
+        const filePath = `/uploads/profile_pictures/${fileName}`;
+        req.user.pfp = filePath;
+        await db.put(req.user);
+        req.flash('success', _CC.lang('PROFILE_PFP_UPLOAD_SUCCESS'));
+    }
+    catch (err) {
+        console.error(err);
+        req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_ERROR'));
+    }
+    res.redirect('/profile')
   })
 
   return router

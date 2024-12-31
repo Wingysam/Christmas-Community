@@ -36,6 +36,16 @@ block content
                       button.button.is-primary(type='submit')
                         span.icon
                           i.fas.fa-save
+                br
+                form(action=`${_CC.config.base}profile/upload-pfp` method="POST" enctype="multipart/form-data")
+                  label.label= lang('PROFILE_PFP_UPLOAD')
+                  .field.has-addons 
+                    .control
+                      input(type="file" name="profilePicture")
+                    .control
+                      button.button.is-primary(type='submit')
+                        span.icon
+                          i.fas.fa-upload
   h2= lang('PROFILE_SHARED_INFORMATION')
   form(action=`${_CC.config.base}profile/info`, method='POST')
     .columns.is-multiline.is-mobile

@@ -128,6 +128,9 @@ MARKDOWN=false
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
 # GOOGLE_CLIENT_ID=abc123
 # GOOGLE_CLIENT_SECRET=123abc
+
+# Profile picture upload max size in MB
+UPLOAD_PFP_MAX_SIZE=5
 ```
 
 ## Default Profile Pictures
