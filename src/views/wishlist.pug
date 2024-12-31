@@ -39,13 +39,16 @@ block content
         +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
   if global._CC.config.wishlist.table
     .box
-      table.table.has-mobile-cards
+      table.table.has-mobile-cards#wishlist-table
         thead
           th #
           th(style='width: 15%;')= lang('WISHLIST_IMAGE')
           th(style='width: 25%;')= lang('WISHLIST_NAME')
           th(style='width: 50%;')= lang('WISHLIST_NOTE')
-          th(style='width: 10%;')= lang('WISHLIST_PRICE')
+          th(style='width: 10%;')
+            a(href="#", id="sort-price")= lang('WISHLIST_PRICE')
+            |&nbsp; 
+            span#price-arrow
           th= lang('WISHLIST_EDIT_ITEM')
           th= lang('WISHLIST_ADDED_BY')
           if req.params.user === req.user._id
@@ -90,7 +93,7 @@ block content
                   div!= compiledNotes[item.id]
               else
                 td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
-              td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
+              td.price.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
               td(data-label=lang('WISHLIST_EDIT_ITEM'))
                 form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                   .field.inline
