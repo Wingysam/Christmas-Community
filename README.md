@@ -128,6 +128,9 @@ MARKDOWN=false
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
 # GOOGLE_CLIENT_ID=abc123
 # GOOGLE_CLIENT_SECRET=123abc
+
+# Set to false to disable pledge only users from being able to suggest items to another user's list
+GUEST_SUGGEST=true
 ```
 
 ## Default Profile Pictures
