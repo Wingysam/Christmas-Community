@@ -13,8 +13,8 @@ block content
       each user in users
         tr(id=user.id)
           td=user.id
-          td=user.doc.admin
-          td=user.doc.pledgeOnly
+          td=user.doc.admin ? lang('YES') : lang('NO')
+          td=user.doc.pledgeOnly ? lang('YES') : lang('NO')
           td=Object.keys(user.doc.wishlist).length
           td
             a(href=`${_CC.config.base}admin-settings/edit/${user.id}`)
