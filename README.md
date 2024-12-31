@@ -196,6 +196,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/jskiddie">
+            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
+            <br />
+            <sub><b>jskiddie</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/dbarenholz">
             <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
             <br />
@@ -208,20 +215,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>Laeborg</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/LarsStegman">
             <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
             <br />
             <sub><b>LarsStegman</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jskiddie">
-            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
-            <br />
-            <sub><b>jskiddie</b></sub>
         </a>
     </td>
     <td align="center">
