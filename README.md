@@ -15,9 +15,6 @@ To create a simple place for your entire family to use to find gifts that people
 ![Screenshot](screenshots/link-not-required.png)
 ![Screenshot](screenshots/name-from-link.png)
 
-## Amazon Smile
-By default, Christmas Community converts www.amazon.com links to smile.amazon.com. If you do not want this, set the environment variable SMILE to false (if you are using Docker Compose, make sure to put "false" in quotes).
-
 ## Root URL
 If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_URL` to that path. For legacy reasons, `ROOT_PATH` also does this. `ROOT_URL` takes precedence over `ROOT_PATH`.
 
@@ -40,9 +37,6 @@ services:
       # use - 8080:80 instead of
       - 80:80
     environment:
-      # Amazon Smile, set to 'false' to disable www.amazon.com links
-      # turning into smile.amazon.com
-      SMILE: 'true'
       # Table mode, set to 'false' to revert to box mode
       TABLE: 'true'
       # Single list mode
@@ -55,6 +49,9 @@ services:
       #NODE_OPTIONS: "--max-http-header-size=32768"
     restart: always
 ```
+
+## Unraid
+Unraid users can install Christmas Community by searching for "Christmas Community" in the Community Apps store and installing it from grtgbln's repository. Note that this is an unofficial distribution not controlled by the maintainer of Christmas Community.
 
 ## Install
 
@@ -112,8 +109,6 @@ SINGLE_LIST=false
 LISTS_PUBLIC=false
 # Defaults to true. Set to false for legacy cards view.
 TABLE=true
-# Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice. Defaults to true.
-SMILE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
 
@@ -244,6 +239,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/JadElClemens">
+            <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
+            <br />
+            <sub><b>JadElClemens</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/FlatDudeInVR">
             <img src="https://avatars.githubusercontent.com/u/1240124?v=4" width="100;" alt="FlatDudeInVR"/>
             <br />
@@ -256,15 +258,15 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>IvySaskia</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/mtrunt">
             <img src="https://avatars.githubusercontent.com/u/1170107?v=4" width="100;" alt="mtrunt"/>
             <br />
             <sub><b>mtrunt</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/Na0mir">
             <img src="https://avatars.githubusercontent.com/u/6453724?v=4" width="100;" alt="Na0mir"/>
@@ -299,15 +301,15 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>RonnyAL</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/CantisW">
             <img src="https://avatars.githubusercontent.com/u/57926741?v=4" width="100;" alt="CantisW"/>
             <br />
             <sub><b>CantisW</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/StS82">
             <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
