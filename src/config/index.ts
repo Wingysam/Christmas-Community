@@ -21,9 +21,13 @@ const config = {
   },
   customCSS: process.env.CUSTOM_CSS || null,
   updateCheck: process.env.UPDATE_CHECK !== 'false',
-  googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
-  googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
-  googleSSOEnabled: false,
+  oidcIssuer: process.env.OIDC_ISSUER || null,
+  oidcAuthorizationURL: process.env.OIDC_AUTHORIZATION_URL || null,
+  oidcTokenURL: process.env.OIDC_TOKEN_URL || null,
+  oidcUserInfoURL: process.env.OIDC_USERINFO_URL || null,
+  oidcClientId: process.env.OIDC_CLIENT_ID || null,
+  oidcClientSecret: process.env.OIDC_CLIENT_SECRET || null,
+  oidcEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '' // automatically set below
 }
@@ -34,8 +38,8 @@ if (config.guestPassword === 'ReplaceWithYourGuestPassword') {
   process.exit(1)
 }
 
-if (config.googleSSOClientId != null && config.googleSSOClientSecret != null) {
-  config.googleSSOEnabled = true
+if (config.oidcClientId != null && config.oidcClientSecret != null && config.oidcAuthorizationURL != null && config.oidcIssuer != null && config.oidcTokenURL != null ) {
+  config.oidcEnabled = true
 }
 
 // The base path is used in HTML templates rather than the fully qualified path, mostly for legacy reasons. It also has the following advantages:

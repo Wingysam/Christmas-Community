@@ -9,7 +9,7 @@ export default function ({ config }) {
       if (req.isAuthenticated()) {
         res.redirect('/')
       } else {
-        res.render('login', { googleSSOEnabled: config.googleSSOEnabled })
+        res.render('login', { oidcEnabled: config.oidcEnabled })
       }
     }
   )
