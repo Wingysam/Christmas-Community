@@ -128,6 +128,12 @@ MARKDOWN=false
 # Remember to add the stylesheet to the filesystem at `static/css/custom.css`. In docker, mount `/usr/src/app/src/static/css/custom.css`.
 # CUSTOM_CSS=custom.css
 
+## Google Client Details
+# You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
+# Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
+# GOOGLE_CLIENT_ID=abc123
+# GOOGLE_CLIENT_SECRET=123abc
+
 ## OIDC Provider Details
 # You can configure single sign-on to your Christmas Community instance using any OIDC provider. 
 # Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
