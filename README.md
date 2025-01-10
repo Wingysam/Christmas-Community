@@ -131,17 +131,18 @@ MARKDOWN=false
 ## Google Client Details
 # You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
-# GOOGLE_CLIENT_ID=abc123
-# GOOGLE_CLIENT_SECRET=123abc
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
 
 ## OIDC Provider Details
 # You can configure single sign-on to your Christmas Community instance using any OIDC provider. 
 # Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
-# OIDC_CLIENT_ID=abc123
-# OIDC_CLIENT_SECRET=123abc
+# OIDC_CLIENT_ID=
+# OIDC_CLIENT_SECRET=
 # OIDC_AUTHORIZATION_URL=https://accounts.google.com/o/oauth2/auth
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
+# OIDC_PROVIDER_NAME=Google
 ```
 
 ## Default Profile Pictures

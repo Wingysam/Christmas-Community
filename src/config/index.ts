@@ -27,6 +27,7 @@ const config = {
   oidcUserInfoURL: process.env.OIDC_USERINFO_URL || null,
   oidcClientId: process.env.OIDC_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || null,
   oidcClientSecret: process.env.OIDC_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET || null,
+  oidcProviderName: process.env.OIDC_PROVIDER_NAME || 'Google',
   oidcEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '' // automatically set below
