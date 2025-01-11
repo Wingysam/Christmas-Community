@@ -213,20 +213,27 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/JadElClemens">
+            <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
+            <br />
+            <sub><b>JadElClemens</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/dbarenholz">
             <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
             <br />
             <sub><b>dbarenholz</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Laeborg">
             <img src="https://avatars.githubusercontent.com/u/4494264?v=4" width="100;" alt="Laeborg"/>
             <br />
             <sub><b>Laeborg</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/LarsStegman">
             <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
@@ -246,13 +253,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <img src="https://avatars.githubusercontent.com/u/64020530?v=4" width="100;" alt="BootVirtual"/>
             <br />
             <sub><b>BootVirtual</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/JadElClemens">
-            <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
-            <br />
-            <sub><b>JadElClemens</b></sub>
         </a>
     </td>
     <td align="center">
