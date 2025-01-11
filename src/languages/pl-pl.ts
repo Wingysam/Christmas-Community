@@ -1,6 +1,6 @@
 export const momentLocale = 'pl' as const
 
-export const notTranslated = englishString => `${englishString} (not yet translated into English)`
+export const notTranslated = englishString => `${englishString} (jeszcze nie przetłumaczone na język Polski)`
 
 export const strings = {
 	ADMIN_CLEAR_WISHLISTS_BUTTON: 'Usuń wszystkie listy życzeń',
