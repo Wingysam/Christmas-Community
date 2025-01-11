@@ -31,7 +31,6 @@ helm install christmas-community <helm repo>/christmas-community
 | env.SHORT_TITLE | string | `"Christmas"` | `Used when shared to home screen` |
 | env.SINGLE_LIST | bool | `false` | `Set to true to not allow users to have their own lists. You may want this for a birthday or wedding.` |
 | env.SITE_TITLE | string | `"Christmas Community"` | `The name of the site in the <title> and navigation bar` |
-| env.SMILE | bool | `true` | `Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice.` |
 | env.TABLE | bool | `true` | `Defaults to true. Set to false for legacy cards view.` |
 | env.TRUST_PROXY | string | `"loopback"` | `Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.` |
 | env.UPDATE_CHECK | bool | `true` | `Set to false to disable update notices` |
