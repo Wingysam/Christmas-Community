@@ -1,7 +1,8 @@
-export const momentLocale = 'ru'
+export const momentLocale = 'ru' as const
+
+export const notTranslated = englishString => `${englishString} (ещё не переведено на русский язык)`
 
 export const strings = {
-  _NOT_LOCALIZED: key => `${key} ещё не переведено на русский язык.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Очистить все списки желаний',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Это мгновенно и <b>безвозвратно удалит все списки желаний!</b> Рекомендуется сделать резервную копию базы данных перед использованием этой функции.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Удаление списков желаний',
