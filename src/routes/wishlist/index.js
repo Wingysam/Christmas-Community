@@ -81,6 +81,7 @@ export default function (db) {
         itemUrlOrName: req.body.itemUrlOrName,
         suggest: req.body.suggest,
         note: req.body.note,
+        price: req.body.price,
         addedBy: req.user._id
       })
 
