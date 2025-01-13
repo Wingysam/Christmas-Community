@@ -126,8 +126,18 @@ MARKDOWN=false
 ## Google Client Details
 # You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
-# GOOGLE_CLIENT_ID=abc123
-# GOOGLE_CLIENT_SECRET=123abc
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
+
+## OIDC Provider Details
+# You can configure single sign-on to your Christmas Community instance using any OIDC provider. 
+# Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
+# OIDC_CLIENT_ID=
+# OIDC_CLIENT_SECRET=
+# OIDC_AUTHORIZATION_URL=https://accounts.google.com/o/oauth2/auth
+# OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
+# OIDC_ISSUER=https://accounts.google.com
+# OIDC_PROVIDER_NAME=Google
 ```
 
 ## Default Profile Pictures
@@ -203,12 +213,20 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/JadElClemens">
+            <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
+            <br />
+            <sub><b>JadElClemens</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/dbarenholz">
             <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
             <br />
             <sub><b>dbarenholz</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Laeborg">
             <img src="https://avatars.githubusercontent.com/u/4494264?v=4" width="100;" alt="Laeborg"/>
@@ -236,13 +254,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <img src="https://avatars.githubusercontent.com/u/64020530?v=4" width="100;" alt="BootVirtual"/>
             <br />
             <sub><b>BootVirtual</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/JadElClemens">
-            <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
-            <br />
-            <sub><b>JadElClemens</b></sub>
         </a>
     </td>
     <td align="center">

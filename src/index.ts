@@ -3,7 +3,7 @@ import './CC.js'
 
 import PouchSession from 'session-pouchdb-store'
 import { Strategy as LocalStrategy } from 'passport-local'
-import GoogleStrategy from 'passport-google-oidc'
+import OpenIDConnectStrategy from 'passport-openidconnect'
 import session from 'express-session'
 import bcrypt from 'bcrypt-nodejs'
 import flash from 'connect-flash'
@@ -57,18 +57,22 @@ passport.use('local', new LocalStrategy(
   }
 ))
 
-if (config.googleSSOEnabled) {
-  passport.use('google-login', new GoogleStrategy({
-    clientID: config.googleSSOClientId,
-    clientSecret: config.googleSSOClientSecret,
-    callbackURL: config.rootUrl + 'auth/google/redirect'
+if (config.oidcEnabled) {
+  passport.use('oidc-login', new OpenIDConnectStrategy({
+    issuer: config.oidcIssuer ,
+    authorizationURL: config.oidcAuthorizationURL,
+    tokenURL: config.oidcTokenURL,
+    userInfoURL: config.oidcUserInfoURL,
+    clientID: config.oidcClientId,
+    clientSecret: config.oidcClientSecret,
+    callbackURL: config.rootUrl + 'auth/oidc/redirect'
   },
   async (issuer, profile, done) => {
-    const googleId = profile.id.trim() // Get Google id
+    const oidcId = profile.id.trim() // Get OIDC id
     try {
       // Try to get the user from the database
       const docs = await db.find({
-        selector: { 'oauthConnections.google': { $eq: googleId } }
+        selector: { 'oauthConnections.oidc': { $eq: oidcId } }
       })
       if (docs.docs.length === 1) {
         return done(null, docs.docs[0])
@@ -86,17 +90,21 @@ if (config.googleSSOEnabled) {
   }
   ))
 
-  passport.use('google-link', new GoogleStrategy({
-    clientID: config.googleSSOClientId,
-    clientSecret: config.googleSSOClientSecret,
-    callbackURL: config.rootUrl + 'auth/google/link/redirect',
+  passport.use('oidc-link', new OpenIDConnectStrategy({
+    issuer: config.oidcIssuer ,
+    authorizationURL: config.oidcAuthorizationURL,
+    tokenURL: config.oidcTokenURL,
+    userInfoURL: config.oidcUserInfoURL,
+    clientID: config.oidcClientId,
+    clientSecret: config.oidcClientSecret,
+    callbackURL: config.rootUrl + 'auth/oidc/link/redirect',
     passReqToCallback: true
   },
   async (req, issuer, profile, done) => {
-    const googleId = profile.id.trim() // Get Google id
+    const oidcId = profile.id.trim() // Get OIDC id
 
     const docs = await db.find({
-      selector: { 'oauthConnections.google': { $eq: googleId } }
+      selector: { 'oauthConnections.oidc': { $eq: oidcId } }
     })
     if (docs.docs.length === 1) {
       req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
@@ -105,7 +113,7 @@ if (config.googleSSOEnabled) {
       try {
         const doc = await db.get(req.session.passport.user)
         doc.oauthConnections ??= {}
-        doc.oauthConnections.google = googleId
+        doc.oauthConnections.oidc = oidcId
         await db.put(doc)
         req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS'))
         return done(null, doc)
