@@ -334,6 +334,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/alyoro">
+            <img src="https://avatars.githubusercontent.com/u/43644634?v=4" width="100;" alt="alyoro"/>
+            <br />
+            <sub><b>alyoro</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/toastie89">
             <img src="https://avatars.githubusercontent.com/u/19393929?v=4" width="100;" alt="toastie89"/>
             <br />
