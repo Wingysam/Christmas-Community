@@ -2,6 +2,7 @@ import verifyAuth from '../../middlewares/verifyAuth.js'
 import bcrypt from 'bcrypt-nodejs'
 import express from 'express'
 import path from 'path'
+import fs from 'fs';
 
 export default function ({ db, config, ensurePfp }) {
   const router = express.Router()
@@ -91,6 +92,7 @@ export default function ({ db, config, ensurePfp }) {
     const profilePicture = req.files.profilePicture;
     const allowedExtensions = /png|jpg|jpeg/;
     const extName = path.extname(profilePicture.name).toLowerCase();
+    const oldPfp = req.user.pfp;
 
     // Validate file type
     if (!allowedExtensions.test(path.extname(profilePicture.name).toLowerCase()) || !allowedExtensions.test(profilePicture.mimetype)) {
@@ -120,6 +122,25 @@ export default function ({ db, config, ensurePfp }) {
         console.error(err);
         req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_ERROR'));
     }
+
+    // Check if file exists before deleting
+    const oldPfpPath = path.join(_CC.uploadDir, path.basename(oldPfp));
+    fs.access(oldPfpPath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error(`File not found: ${oldPfpPath}`);
+        }
+        else {
+            fs.unlink(oldPfpPath, (err) => {
+                if (err) {
+                    console.error(`Error deleting file: ${err}`);
+                }
+                else {
+                    console.log(`File deleted: ${oldPfpPath}`);
+                }
+            });
+        }
+    });
+    
     res.redirect('/profile')
   })
 
