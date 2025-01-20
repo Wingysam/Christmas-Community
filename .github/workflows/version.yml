@@ -5,6 +5,7 @@ on:
       - master
     paths-ignore:
       - 'package.json'
+      - 'README.md'
 
 jobs:
   version-app:
