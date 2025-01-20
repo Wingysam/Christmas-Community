@@ -7,7 +7,7 @@ on:
       - 'package.json'
 
 jobs:
-  build:
+  version:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
