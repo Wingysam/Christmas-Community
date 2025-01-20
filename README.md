@@ -126,6 +126,7 @@ MARKDOWN=false
 ## Google Client Details
 # You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
+
 # GOOGLE_CLIENT_ID=
 # GOOGLE_CLIENT_SECRET=
 
@@ -138,6 +139,10 @@ MARKDOWN=false
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
+
+
+# Profile picture upload max size in MB
+UPLOAD_PFP_MAX_SIZE=5
 ```
 
 ## Default Profile Pictures
@@ -170,10 +175,10 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/Wingysam">
-            <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
+        <a href="https://github.com/cj13579">
+            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
             <br />
-            <sub><b>Wingysam</b></sub>
+            <sub><b>cj13579</b></sub>
         </a>
     </td></tr>
 </table>
@@ -233,7 +238,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <br />
             <sub><b>Laeborg</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/LarsStegman">
             <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
@@ -325,6 +331,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
             <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
             <br />
             <sub><b>StS82</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/alyoro">
+            <img src="https://avatars.githubusercontent.com/u/43644634?v=4" width="100;" alt="alyoro"/>
+            <br />
+            <sub><b>alyoro</b></sub>
         </a>
     </td>
     <td align="center">
