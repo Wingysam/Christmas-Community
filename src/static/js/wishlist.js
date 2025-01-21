@@ -51,6 +51,7 @@ function listen(element, upOrDown) {
         },
       )
 
+
       await Promise.all([
         animateCSS(tr, 'zoomOut', animationDuration),
         animateCSS(otherTr, 'zoomOut', animationDuration)
