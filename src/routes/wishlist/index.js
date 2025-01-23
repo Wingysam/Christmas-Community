@@ -12,11 +12,15 @@ const DOMPurify = createDOMPurify(window)
 const totals = wishlist => {
   let unpledged = 0
   let pledged = 0
+  let active = 0
+  let archived = 0
   wishlist.forEach(wishItem => {
     if (wishItem.pledgedBy) pledged += 1
     else unpledged += 1
+    if (wishItem.archived) archived += 1
+    else active += 1
   })
-  return { unpledged, pledged }
+  return { unpledged, pledged, active, archived }
 }
 
 export default function (db) {

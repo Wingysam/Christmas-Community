@@ -98,6 +98,10 @@ export class Wishlist {
   async pledge (id, user) {
     const item = await this.get(id)
     item.pledgedBy = user
+
+    if (_CC.config.autoArchivePledges) {
+      item.archived = true
+    }
     await this.save()
   }
 

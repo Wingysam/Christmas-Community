@@ -30,6 +30,7 @@ const config = {
   oidcProviderName: process.env.OIDC_PROVIDER_NAME || 'Google',
   oidcEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
+  autoArchivePledges: process.env.AUTO_ARCHIVE_PLEDGES || false,
   base: '' // automatically set below
 }
 
