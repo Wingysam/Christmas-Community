@@ -170,7 +170,8 @@ block content
               td(data-label='Delete Item')
                 form.inline(
                   method='POST',
-                  action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`
+                  action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`,
+                  onsubmit=`return confirm("${lang('WISHLIST_DELETE_CONFIRM')}")`
                 )
                   .field.inline
                     .control.inline
@@ -207,7 +208,7 @@ block content
                             span.icon
                               i.fas.fa-archive
   else
-    each item, index in items
+    each item, index in items.filter(item => !item.archived)
       if req.user._id === item.addedBy || req.params.user !== req.user._id
         .box
           if item.price
@@ -264,10 +265,10 @@ block content
                   .control.inline
                     input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
             if req.user._id === req.params.user
-              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`)
+              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`, onsubmit=`return confirm("${lang('WISHLIST_DELETE_CONFIRM')}")`)
                 .field.inline
                   .control.inline
-                    input.inline.button.is-warning(type='submit' value=lang('WISHLIST_DELETE'))
+                    input.inline.button.is-danger(type='submit' value=lang('WISHLIST_DELETE'))
             if req.user._id === req.params.user || req.user._id === item.addedBy
               form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
                 .field.inline
@@ -288,6 +289,11 @@ block content
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
+            if req.user._id === req.params.user
+              form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
+                .field.inline
+                  .control.inline
+                    input.inline.button.is-warning(type='submit' value=lang('WISHLIST_ARCHIVE'))
   form(method='POST')#addWishlistItem
     .field
       label.label!=lang('WISHLIST_URL_LABEL')
@@ -374,8 +380,63 @@ block content
                         )
                           span.icon
                             i.fas.fa-undo
-
-
+    else 
+      each item, index in items.filter(item => item.archived)
+        if req.user._id === item.addedBy || req.params.user !== req.user._id
+          .box
+            if item.price
+              .tag
+                i.fas.fa-tag(style='margin-right: .5em;')
+                span= item.price
+            span.overflowWrap
+              if item.price
+                span= ' '
+              if item.url
+                if item.pledgedBy && item.addedBy != req.user._id
+                  strike
+                    a(
+                      href=item.url,
+                      rel='noopener noreferrer',
+                      target='_blank'
+                    )= (item.name ? item.name : item.url)
+                else
+                  a(
+                    href=item.url,
+                    rel='noopener noreferrer',
+                    target='_blank'
+                  )= (item.name ? item.name : item.url)
+              else
+                if item.pledgedBy && item.addedBy != req.user._id
+                  strike
+                    span= item.name
+                else
+                  span= item.name
+            hr
+            if item.note || item.image
+              .columns
+                if item.image
+                  .column
+                    figure(style='width: 100%; padding: 2em;')
+                      img(src=item.image, style='width: 100%;')
+                .column.is-three-quarters
+                  if item.note
+                    textarea.textarea.has-fixed-size(
+                      style='height: 100%;'
+                      readonly
+                    )= item.note
+            hr
+            div
+              if req.user._id === req.params.user
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`, onsubmit=`return confirm("${lang('WISHLIST_DELETE_CONFIRM')}")`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button.is-danger(type='submit' value=lang('WISHLIST_DELETE'))
+              span= ' '
+              if req.user._id === req.params.user
+                form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/restore/${item.id}`)
+                  .field.inline
+                    .control.inline
+                      input.inline.button.is-success(type='submit' value=lang('WISHLIST_RESTORE'))
 
 block print
   h1 #{req.params.user}'s Wishlist
