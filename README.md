@@ -138,6 +138,9 @@ MARKDOWN=false
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
+
+## Auto archive pledges
+AUTO_ARCHIVE_PLEDGES=false
 ```
 
 ## Default Profile Pictures
