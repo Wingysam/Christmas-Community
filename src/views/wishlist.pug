@@ -333,7 +333,8 @@ block content
               th(style='width: 25%;')= lang('WISHLIST_NAME')
               th(style='width: 50%;')= lang('WISHLIST_NOTE')
               th(style='width: 10%;')= lang('WISHLIST_PRICE')
-              th(style='width: 10%;')= lang('WISHLIST_RESTORE')
+              th(style='width: 5%;')= lang('WISHLIST_DELETE')
+              th(style='width: 5%;')= lang('WISHLIST_RESTORE')
           tbody
             each item, index in items.filter(item => item.archived)
               tr(id=item.id)
@@ -363,12 +364,27 @@ block content
                         span= item.name
                     else 
                       span= item.name
-                td= item.price
                 if _CC.config.wishlist.note.markdown
                   td.ugc(data-label=lang('WISHLIST_NOTE'))
                     div!= compiledNotes[item.id]
                 else
                   td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
+                td= item.price
+                td(data-label='Delete Item')
+                  form.inline(
+                    method='POST',
+                    action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`,
+                    onsubmit=`return confirm("${lang('WISHLIST_DELETE_CONFIRM')}")`
+                  )
+                    .field.inline
+                      .control.inline
+                        button.button.is-text(
+                          type='submit',
+                          style='text-decoration: none;',
+                          disabled=item.addedBy !== req.user._id
+                        )
+                          span.icon
+                            i.fas.fa-trash
                 td
                   form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/restore/${item.id}`)
                     .field.inline
