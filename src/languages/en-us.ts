@@ -218,5 +218,5 @@ export const strings = {
   WISHLIST_DELETE_CONFIRM: 'Are you sure you want to delete this item?',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`,
+  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
 } as const
