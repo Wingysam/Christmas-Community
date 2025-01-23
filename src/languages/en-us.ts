@@ -208,7 +208,14 @@ export const strings = {
   WISHLIST_URL_LABEL: `Item URL or Name (<a href="${_CC.config.base}supported-sites">Supported Sites</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Item URL or Name is required',
+  WISHLIST_ARCHIVE: 'Archive',
+  WISHLIST_RESTORE: 'Restore',
+  WISHLIST_ARCHIVED_ITEMS: 'Archived Items',
+  WISHLIST_ARCHIVE_SUCCESS : 'Successfully archived item.',
+  WISHLIST_RESTORE_SUCCESS : 'Successfully restored item.',
+  WISHLIST_ARCHIVE_GUARD: 'You are not allowed to archive this item',
+  WISHLIST_RESTORE_GUARD: 'You are not allowed to restore this item',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
+  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`,
 } as const

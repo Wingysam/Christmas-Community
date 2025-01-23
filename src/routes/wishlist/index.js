@@ -239,5 +239,47 @@ export default function (db) {
     res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
   })
 
+  router.post('/:user/archive/:itemId', verifyAuth(), async (req, res) => {
+    try {
+      const wishlist = await wishlistManager.get(req.params.user)
+      const item = await wishlist.get(req.params.itemId)
+
+      const isOwnWishlist = req.user._id === wishlist.username
+      const addedByUser = item.addedBy === req.user._id
+      if (!isOwnWishlist && !addedByUser) {
+        throw new Error(_CC.lang('WISHLIST_ARCHIVE_GUARD'))
+      }
+
+      await wishlist.archive(item.id)
+
+      req.flash('success', _CC.lang('WISHLIST_ARCHIVE_SUCCESS'))
+    } catch (error) {
+      req.flash('error', `${error}`)
+    }
+
+    res.redirect(`/wishlist/${req.params.user}`)
+  })
+
+  router.post('/:user/restore/:itemId', verifyAuth(), async (req, res) => {
+    try {
+      const wishlist = await wishlistManager.get(req.params.user)
+      const item = await wishlist.get(req.params.itemId)
+
+      const isOwnWishlist = req.user._id === wishlist.username
+      const addedByUser = item.addedBy === req.user._id
+      if (!isOwnWishlist && !addedByUser) {
+        throw new Error(_CC.lang('WISHLIST_RESTORE_GUARD'))
+      }
+
+      await wishlist.restore(item.id)
+
+      req.flash('success', _CC.lang('WISHLIST_RESTORE_SUCCESS'))
+    } catch (error) {
+      req.flash('error', `${error}`)
+    }
+
+    res.redirect(`/wishlist/${req.params.user}`)
+  })
+
   return router
 }

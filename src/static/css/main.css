@@ -65,3 +65,12 @@ img.logo-image {
 .print-gift:last-child {
 	margin-bottom: 0;
 }
+
+summary{
+	font-weight: bold;
+	font-size: 18px;
+  }
+
+summary:hover {
+  cursor: pointer;
+}
