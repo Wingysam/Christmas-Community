@@ -214,17 +214,17 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/jskiddie">
-                    <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
-                    <br />
-                    <sub><b>jskiddie</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/JadElClemens">
                     <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
                     <br />
                     <sub><b>JadElClemens</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/jskiddie">
+                    <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
+                    <br />
+                    <sub><b>jskiddie</b></sub>
                 </a>
             </td>
             <td align="center">
