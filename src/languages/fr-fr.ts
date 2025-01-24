@@ -1,7 +1,8 @@
 export const momentLocale = 'fr'
 
+export const notTranslated = englishString => `${englishString} (not yet translated into French)`
+
 export const strings = {
-  _NOT_LOCALIZED: key => `${key} n'a pas encore été traduite en français.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Effacer toutes les listes d\'envies',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Cela supprimera instantanément et de manière <b>irréversible toutes les listes d\'envies!</b> Pensez à faire une sauvegarde de la base de données avant d\'utiliser cette option.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Suppression de la liste d\'envie',
@@ -161,7 +162,7 @@ export const strings = {
   WISHLIST_PLEDGE_SUCCESS: "L'article a été promis avec succès!",
   WISHLIST_PLEDGE: "Je l'offre",
   WISHLIST_PLEDGED: pledgedBy => `Promis par ${pledgedBy}`,
-  WISHLIST_PLEDGED_GUEST: "Promis par un invité"
+  WISHLIST_PLEDGED_GUEST: 'Promis par un invité',
   WISHLIST_PRICE: 'Prix',
   WISHLIST_REFRESH_GUARD: 'Utilisateur invalide',
   WISHLIST_REFRESH_NO_URL: "L'article n'a pas d'URL.",
