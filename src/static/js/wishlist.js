@@ -92,52 +92,60 @@ setTimeout(() => {
   document.querySelectorAll('.downForm').forEach(element => { listen(element, 'down') })
 }, 0)
 
-function priceToFloat(input) {
-  let cleanedInput = input.replace(/[^\d.,-]/g, '');
+function priceToFloat (input) {
+  let cleanedInput = input.replace(/[^\d.,-]/g, '')
 
   // Handle European decimal format where comma is used as decimal separator
   if (cleanedInput.includes(',')) {
     if (cleanedInput.includes('.')) {
       // If both comma and dot exist, assume dot is for thousands and comma is for decimals
-      cleanedInput = cleanedInput.replace(/\./g, '').replace(',', '.');
+      cleanedInput = cleanedInput.replace(/\./g, '').replace(',', '.')
     } else {
       // If only comma exists, replace it with a dot for decimal conversion
-      cleanedInput = cleanedInput.replace(',', '.');
+      cleanedInput = cleanedInput.replace(',', '.')
     }
   }
   // Parse and convert to float
-  let result = parseFloat(cleanedInput);
+  const result = parseFloat(cleanedInput)
   // Return NaN if the result is not a valid number
-  return isNaN(result) ? null : result;
+  return isNaN(result) ? null : result
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  let sortOrderPrice = 'asc';
-  const priceArrow = document.getElementById('price-arrow');
-  const sortByPrice = document.getElementById('sort-price');
+  let sortBy = 'rank'
+  const priceArrow = document.getElementById('price-arrow')
+  const sortByPrice = document.getElementById('sort-price')
 
-  function updateArrow(column, order) {
+  function updateArrow (column, order) {
     if (column === 'price') {
-      priceArrow.className = order === 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+      priceArrow.className = order === 'rank' ? '' : 'fas fa-arrow-down'
     }
   }
 
-  sortByPrice.addEventListener('click', (e) => {
-    e.preventDefault();
+  sortByPrice.parentElement.addEventListener('click', (e) => {
+    e.preventDefault()
 
-    const table = document.getElementById('wishlist-table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    sortOrderPrice = sortOrderPrice === 'asc' ? 'desc' : 'asc';
+    const table = document.getElementById('wishlist-table')
+    const tbody = table.querySelector('tbody')
+    const rows = Array.from(tbody.querySelectorAll('tr'))
+    sortBy = sortBy === 'rank' ? 'price' : 'rank'
 
-    const sortedRows = rows.sort((a,b) => {
-      const priceA = priceToFloat(a.querySelector('.price').textContent)
-      const priceB = priceToFloat(b.querySelector('.price').textContent)
-      return sortOrderPrice === 'asc' ? priceA - priceB : priceB - priceA;
-    });
+    const sortedRows = rows.sort((a, b) => {
+      if (sortBy === 'rank') {
+        const rankA = Number(a.querySelector('.rank').textContent)
+        const rankB = Number(b.querySelector('.rank').textContent)
+        return rankA - rankB
+      } else if (sortBy === 'price') {
+        const priceA = priceToFloat(a.querySelector('.price').textContent)
+        const priceB = priceToFloat(b.querySelector('.price').textContent)
+        return priceB - priceA
+      } else {
+        throw new Error('Invalid sort order')
+      }
+    })
 
-    tbody.innerHTML = '';
-    sortedRows.forEach(row => tbody.appendChild(row));
-    updateArrow('price', sortOrderPrice);
+    tbody.innerHTML = ''
+    sortedRows.forEach(row => tbody.appendChild(row))
+    updateArrow('price', sortBy)
   })
 })
