@@ -30,6 +30,7 @@ function listen (element, upOrDown) {
 
       const tr = event.currentTarget.parentElement.parentElement
       const otherTr = upOrDown === 'up' ? tr.previousSibling : tr.nextSibling
+      const numItems = tr.parentElement.rows.length
 
       const res = fetch(`/api/wishlist/${document.querySelector('[type="data/user_id"]').textContent}/${tr.id}/move/${upOrDown}`, {
         method: 'post',
@@ -53,8 +54,6 @@ function listen (element, upOrDown) {
       const rankNum2 = Number(rankEl2.textContent)
       if (upOrDown === 'up') {
         moveUp(tr)
-        if (rankNum1 === 2) tr.querySelectorAll('.topForm button').disabled = true
-        else tr.querySelector('.topForm button').disabled = false
         rankEl1.textContent = rankNum1 - 1
         rankEl2.textContent = rankNum2 + 1
       } else if (upOrDown === 'down') {
@@ -63,12 +62,13 @@ function listen (element, upOrDown) {
         rankEl2.textContent = rankNum2 - 1
       }
 
-      for (const tr of document.querySelector('tbody').children) {
-        tr.querySelector('.upForm > div > div > button').disabled = !tr.previousElementSibling
-        tr.querySelector('.downForm > div > div > button').disabled = !tr.nextElementSibling
-        tr.querySelector('.topForm button').disabled = false
+      for (const tr of document.querySelector('tbody.wishlist-items').children) {
+        const rank = Number(tr.querySelector('.rank').textContent)
+        tr.querySelector('.upForm > div > div > button').disabled = rank === 1
+        tr.querySelector('.topForm > div > div > button').disabled = rank === 1
+        tr.querySelector('.downForm > div > div > button').disabled = rank === numItems
+        tr.querySelector('.bottomForm > div > div > button').disabled = rank === numItems
       }
-      document.querySelector('.topForm button').disabled = true
 
       tr.style.visibility = 'visible'
       otherTr.style.visibility = 'visible'

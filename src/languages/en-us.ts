@@ -3,6 +3,7 @@ export const momentLocale = 'en' as const
 export const notTranslated = englishString => `${englishString} (not yet translated into English)`
 
 export const strings = {
+
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Clear all wishlists',
   ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'This will instantly <b>irreversibly delete all wishlists!</b> Consider making a backup of the database before using this.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Wishlist Deletion',
@@ -68,10 +69,19 @@ export const strings = {
   CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hello ${name}! Please set your password here.`,
   CONFIRM_ACCOUNT_SUCCESS: `Welcome to ${_CC.config.siteTitle}!`,
   LOGIN_BUTTON: 'Log In',
+  LOGIN_OIDC_BUTTON: `Sign in with ${_CC.config.oidcProviderName}`,
   LOGIN_PASSWORD_PLACEHOLDER: 'pa$$word!',
   LOGIN_PASSWORD: 'Password',
   LOGIN_USERNAME_PLACEHOLDER: 'john',
   LOGIN_USERNAME: 'Username',
+  LOGIN_INCORRECT_USERNAME: 'Incorrect username',
+  LOGIN_INCORRECT_PASSWORD: 'Incorrect password',
+  LOGIN_SSO_UNKNOWN_USER: 'Unknown user',
+  LOGIN_SSO_LINK_SUCCESS: 'Successfully linked account',
+  LOGIN_SSO_LINK_FAILURE: 'Unable to link account',
+  LOGIN_SSO_UNLINK_SUCCESS: 'Successfully unlinked account',
+  LOGIN_SSO_UNLINK_FAILURE: 'Failed to unlink account',
+  LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS: 'The external account is already linked to another account on this site!',
   LOGOUT_BUTTON: 'Log Out',
   NAVBAR_ADMIN: 'Admin Settings',
   NAVBAR_LOGIN: 'Log In',
@@ -114,6 +124,8 @@ export const strings = {
   PROFILE_SAVE_PFP_SUCCESS: 'Saved profile picture!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Change Password',
   PROFILE_SECURITY: 'Security',
+  PROFILE_SECURITY_LINK_OIDC: `Link ${_CC.config.oidcProviderName} account`,
+  PROFILE_SECURITY_UNLINK_OIDC: `Unlink ${_CC.config.oidcProviderName} account`,
   PROFILE_SHARED_INFORMATION: 'Shared Information',
   PROFILE_SHIRT_SIZE: 'Shirt Size',
   PROFILE_SHOE_SIZE: 'Shoe Size',
@@ -150,6 +162,7 @@ export const strings = {
     <span>Latest: ${latest}</span>
     <span class="has-text-info" style="float: right;">This message is only visible to admins</span>`,
   WISHLIST_ADD: 'Add item to wishlist',
+  WISHLIST_ADD_NEW: 'Add item',
   WISHLIST_ADDED_BY_USER: addedBy => `Added by: ${addedBy}`,
   WISHLIST_ADDED_BY: 'Added By',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Added item to wishlist.',

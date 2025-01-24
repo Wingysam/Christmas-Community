@@ -1,6 +1,6 @@
 {
   "name": "christmas-community",
-  "version": "1.35.0",
+  "version": "1.37.1",
   "description": "Christmas lists for communities",
   "type": "module",
   "main": "built/index.js",
@@ -42,7 +42,9 @@
     "node-fetch": "^3.3.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "passport-openidconnect": "^0.1.2",
     "pouchdb": "^7.2.2",
+    "pouchdb-find": "^9.0.0",
     "pug": "^3.0.2",
     "session-pouchdb-store": "^0.4.1",
     "u64": "^1.0.1",
