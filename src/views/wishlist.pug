@@ -18,6 +18,9 @@ block title
           span= lang('WISHLIST_TITLE', name)
       .level-right
         .level-item 
+        if ((!global._CC.config.pledgeSuggest && req.user.pledgeOnly) || !global._CC.config.suggestionsEnabled)
+          span= " "
+        else 
           a(href="#addWishlistItem").button.button.is-primary.is-rounded
             span.icon
               i.fas.fa-plus
@@ -263,10 +266,10 @@ block content
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
 
-  if ((!global._CC.config.pledgeSuggest && req.user.pledgeOnly) || !global._CC.config.suggestionsEnabled || req.user._id !== req.params.user)
+  if ((!global._CC.config.pledgeSuggest && req.user.pledgeOnly) || !global._CC.config.suggestionsEnabled)
     .notification.is-info= lang('WISHLIST_SUGGESTIONS_DISABLED')
   else 
-    form(method='POST')
+    form(method='POST')#addWishlistItem
       .field
         label.label!=lang('WISHLIST_URL_LABEL')
         .control.has-icons-left
@@ -279,15 +282,6 @@ block content
             i.fas.fa-gift
       .field
         label.label= lang('WISHLIST_NOTE')
-      .control
-        textarea.textarea(
-          name='note',
-          placeholder=lang('WISHLIST_OPTIONAL')
-        )
-    .field.is-grouped
-      .control
-        input.button(type='submit' value=(req.user._id === req.params.user ? lang('WISHLIST_ADD') : lang('WISHLIST_PLEDGE_ITEM')))
-      if req.user._id !== req.params.user
         .control
           textarea.textarea(
             name='note',
