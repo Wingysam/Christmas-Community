@@ -3,11 +3,15 @@
 ![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/1323726693373837363?style=for-the-badge&logo=discord&label=Discord)](https://discord.gg/Dxjh68gFzV)
 
 Web app for your family's Christmas shopping
 
 ## Purpose
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
+
+## [Discord Server](https://discord.gg/Dxjh68gFzV)
+To discuss the use and development of Christmas Community, you can join the Discord server at [discord.gg/Dxjh68gFzV](https://discord.gg/Dxjh68gFzV). This is also a good place to get announcements of new updates.
 
 ## Screenshots
 ![Screenshot](screenshots/main.png)
