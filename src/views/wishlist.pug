@@ -20,7 +20,7 @@ block title
 block content
   script(type='data/user_id')= req.user._id
   table.table(style='width: fit-content;')
-    tbody(id="profile_attributes")
+    tbody
         +sharedInfoProp('shoeSize', 'PROFILE_SHOE_SIZE')
         +sharedInfoProp('ringSize', 'PROFILE_RING_SIZE')
         +sharedInfoProp('dressSize', 'PROFILE_DRESS_SIZE')
@@ -49,7 +49,7 @@ block content
           else
             th= lang('WISHLIST_PLEDGE')
           th= lang('WISHLIST_DELETE')
-        tbody(id="wishlist_items")
+        tbody.wishlist-items
           each item, index in items
             tr(id=item.id)
               td.rank= index + 1

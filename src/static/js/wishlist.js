@@ -62,12 +62,12 @@ function listen (element, upOrDown) {
         rankEl2.textContent = rankNum2 - 1
       }
 
-      for (const tr of document.querySelector('tbody#wishlist_items').children) {
+      for (const tr of document.querySelector('tbody.wishlist-items').children) {
         const rank = Number(tr.querySelector('.rank').textContent)
-        tr.querySelector('.upForm > div > div > button').disabled = rank == 1
-        tr.querySelector('.topForm > div > div > button').disabled = rank == 1
-        tr.querySelector('.downForm > div > div > button').disabled = rank == numItems
-        tr.querySelector('.bottomForm > div > div > button').disabled = rank == numItems
+        tr.querySelector('.upForm > div > div > button').disabled = rank === 1
+        tr.querySelector('.topForm > div > div > button').disabled = rank === 1
+        tr.querySelector('.downForm > div > div > button').disabled = rank === numItems
+        tr.querySelector('.bottomForm > div > div > button').disabled = rank === numItems
       }
 
       tr.style.visibility = 'visible'
