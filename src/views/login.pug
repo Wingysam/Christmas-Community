@@ -17,5 +17,11 @@ block content
     .field
       .control
         input.button.is-primary(type='submit' value=lang('LOGIN_BUTTON'))
+  br
+  p
+    if oidcEnabled
+      a.button.is-primary(href="/auth/oidc")
+        i.fas.fa-key
+        |&nbsp;&nbsp;#{lang('LOGIN_OIDC_BUTTON')}
   if _CC.config.customHtml.login
     div!= _CC.config.customHtml.login

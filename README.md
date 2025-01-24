@@ -3,11 +3,15 @@
 ![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-Node.JS-68A063?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/1323726693373837363?style=for-the-badge&logo=discord&label=Discord)](https://discord.gg/Dxjh68gFzV)
 
 Web app for your family's Christmas shopping
 
 ## Purpose
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
+
+## [Discord Server](https://discord.gg/Dxjh68gFzV)
+To discuss the use and development of Christmas Community, you can join the Discord server at [discord.gg/Dxjh68gFzV](https://discord.gg/Dxjh68gFzV). This is also a good place to get announcements of new updates.
 
 ## Screenshots
 ![Screenshot](screenshots/main.png)
@@ -15,11 +19,8 @@ To create a simple place for your entire family to use to find gifts that people
 ![Screenshot](screenshots/link-not-required.png)
 ![Screenshot](screenshots/name-from-link.png)
 
-## Amazon Smile
-By default, Christmas Community converts www.amazon.com links to smile.amazon.com. If you do not want this, set the environment variable SMILE to false (if you are using Docker Compose, make sure to put "false" in quotes).
-
-## Root Path
-If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_PATH` to that path.
+## Root URL
+If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_URL` to that path. For legacy reasons, `ROOT_PATH` also does this. `ROOT_URL` takes precedence over `ROOT_PATH`.
 
 ## Docker
 ```
@@ -40,9 +41,6 @@ services:
       # use - 8080:80 instead of
       - 80:80
     environment:
-      # Amazon Smile, set to 'false' to disable www.amazon.com links
-      # turning into smile.amazon.com
-      SMILE: 'true'
       # Table mode, set to 'false' to revert to box mode
       TABLE: 'true'
       # Single list mode
@@ -55,6 +53,9 @@ services:
       #NODE_OPTIONS: "--max-http-header-size=32768"
     restart: always
 ```
+
+## Unraid
+Unraid users can install Christmas Community by searching for "Christmas Community" in the Community Apps store and installing it from grtgbln's repository. Note that this is an unofficial distribution not controlled by the maintainer of Christmas Community.
 
 ## Install
 
@@ -88,8 +89,9 @@ SESSION_MAX_AGE=604800000
 SITE_TITLE=Christmas Community
 # Used when shared to home screen
 SHORT_TITLE=Christmas
-# The root path for forms, CSS, and a small amount of JS. Useful when proxying.
-ROOT_PATH=/
+# The root URL for forms, CSS, and a small amount of JS. Useful when proxying or using SSO.
+# If not using SSO, this can be a relative path.
+ROOT_URL=/
 # Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.
 TRUST_PROXY=loopback
 # Any theme from https://jenil.github.io/bulmaswatch
@@ -111,8 +113,6 @@ SINGLE_LIST=false
 LISTS_PUBLIC=false
 # Defaults to true. Set to false for legacy cards view.
 TABLE=true
-# Convert Amazon links to Amazon Smile links. A percentage of the profit goes to a charity of buyer's choice. Defaults to true.
-SMILE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
 
@@ -126,6 +126,22 @@ MARKDOWN=false
 # If you wish to include a custom stylesheet you can add the filename in the variable here.
 # Remember to add the stylesheet to the filesystem at `static/css/custom.css`. In docker, mount `/usr/src/app/src/static/css/custom.css`.
 # CUSTOM_CSS=custom.css
+
+## Google Client Details
+# You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
+# Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
+
+## OIDC Provider Details
+# You can configure single sign-on to your Christmas Community instance using any OIDC provider. 
+# Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
+# OIDC_CLIENT_ID=
+# OIDC_CLIENT_SECRET=
+# OIDC_AUTHORIZATION_URL=https://accounts.google.com/o/oauth2/auth
+# OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
+# OIDC_ISSUER=https://accounts.google.com
+# OIDC_PROVIDER_NAME=Google
 ```
 
 ## Default Profile Pictures
@@ -156,14 +172,17 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 
 <!-- readme: collaborators -start -->
 <table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/cj13579">
-            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
-            <br />
-            <sub><b>cj13579</b></sub>
-        </a>
-    </td></tr>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/Wingysam">
+                    <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
+                    <br />
+                    <sub><b>Wingysam</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
 </table>
 <!-- readme: collaborators -end -->
 
@@ -171,156 +190,183 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 
 <!-- readme: contributors -start -->
 <table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/Wingysam">
-            <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
-            <br />
-            <sub><b>Wingysam</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/PeteS4">
-            <img src="https://avatars.githubusercontent.com/u/6705244?v=4" width="100;" alt="PeteS4"/>
-            <br />
-            <sub><b>PeteS4</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/cj13579">
-            <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
-            <br />
-            <sub><b>cj13579</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/dbarenholz">
-            <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
-            <br />
-            <sub><b>dbarenholz</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Laeborg">
-            <img src="https://avatars.githubusercontent.com/u/4494264?v=4" width="100;" alt="Laeborg"/>
-            <br />
-            <sub><b>Laeborg</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/LarsStegman">
-            <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
-            <br />
-            <sub><b>LarsStegman</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jskiddie">
-            <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
-            <br />
-            <sub><b>jskiddie</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/bsiddans">
-            <img src="https://avatars.githubusercontent.com/u/96931223?v=4" width="100;" alt="bsiddans"/>
-            <br />
-            <sub><b>bsiddans</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/BootVirtual">
-            <img src="https://avatars.githubusercontent.com/u/64020530?v=4" width="100;" alt="BootVirtual"/>
-            <br />
-            <sub><b>BootVirtual</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/FlatDudeInVR">
-            <img src="https://avatars.githubusercontent.com/u/1240124?v=4" width="100;" alt="FlatDudeInVR"/>
-            <br />
-            <sub><b>FlatDudeInVR</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/IvySaskia">
-            <img src="https://avatars.githubusercontent.com/u/41027286?v=4" width="100;" alt="IvySaskia"/>
-            <br />
-            <sub><b>IvySaskia</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/mtrunt">
-            <img src="https://avatars.githubusercontent.com/u/1170107?v=4" width="100;" alt="mtrunt"/>
-            <br />
-            <sub><b>mtrunt</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/Na0mir">
-            <img src="https://avatars.githubusercontent.com/u/6453724?v=4" width="100;" alt="Na0mir"/>
-            <br />
-            <sub><b>Na0mir</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/ndlanier">
-            <img src="https://avatars.githubusercontent.com/u/14913926?v=4" width="100;" alt="ndlanier"/>
-            <br />
-            <sub><b>ndlanier</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/RestartFU">
-            <img src="https://avatars.githubusercontent.com/u/45609733?v=4" width="100;" alt="RestartFU"/>
-            <br />
-            <sub><b>RestartFU</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/dotromain">
-            <img src="https://avatars.githubusercontent.com/u/25564262?v=4" width="100;" alt="dotromain"/>
-            <br />
-            <sub><b>dotromain</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/RonnyAL">
-            <img src="https://avatars.githubusercontent.com/u/26335298?v=4" width="100;" alt="RonnyAL"/>
-            <br />
-            <sub><b>RonnyAL</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/CantisW">
-            <img src="https://avatars.githubusercontent.com/u/57926741?v=4" width="100;" alt="CantisW"/>
-            <br />
-            <sub><b>CantisW</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/StS82">
-            <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
-            <br />
-            <sub><b>StS82</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/toastie89">
-            <img src="https://avatars.githubusercontent.com/u/19393929?v=4" width="100;" alt="toastie89"/>
-            <br />
-            <sub><b>toastie89</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/zethis">
-            <img src="https://avatars.githubusercontent.com/u/20169561?v=4" width="100;" alt="zethis"/>
-            <br />
-            <sub><b>zethis</b></sub>
-        </a>
-    </td></tr>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/Wingysam">
+                    <img src="https://avatars.githubusercontent.com/u/18403742?v=4" width="100;" alt="Wingysam"/>
+                    <br />
+                    <sub><b>Wingysam</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/cj13579">
+                    <img src="https://avatars.githubusercontent.com/u/1965454?v=4" width="100;" alt="cj13579"/>
+                    <br />
+                    <sub><b>cj13579</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/PeteS4">
+                    <img src="https://avatars.githubusercontent.com/u/6705244?v=4" width="100;" alt="PeteS4"/>
+                    <br />
+                    <sub><b>PeteS4</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/JadElClemens">
+                    <img src="https://avatars.githubusercontent.com/u/11086175?v=4" width="100;" alt="JadElClemens"/>
+                    <br />
+                    <sub><b>JadElClemens</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/jskiddie">
+                    <img src="https://avatars.githubusercontent.com/u/153759737?v=4" width="100;" alt="jskiddie"/>
+                    <br />
+                    <sub><b>jskiddie</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/dbarenholz">
+                    <img src="https://avatars.githubusercontent.com/u/25849034?v=4" width="100;" alt="dbarenholz"/>
+                    <br />
+                    <sub><b>dbarenholz</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/Laeborg">
+                    <img src="https://avatars.githubusercontent.com/u/4494264?v=4" width="100;" alt="Laeborg"/>
+                    <br />
+                    <sub><b>Laeborg</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/LarsStegman">
+                    <img src="https://avatars.githubusercontent.com/u/9332816?v=4" width="100;" alt="LarsStegman"/>
+                    <br />
+                    <sub><b>LarsStegman</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/bsiddans">
+                    <img src="https://avatars.githubusercontent.com/u/96931223?v=4" width="100;" alt="bsiddans"/>
+                    <br />
+                    <sub><b>bsiddans</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/BootVirtual">
+                    <img src="https://avatars.githubusercontent.com/u/64020530?v=4" width="100;" alt="BootVirtual"/>
+                    <br />
+                    <sub><b>BootVirtual</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/DanteMS">
+                    <img src="https://avatars.githubusercontent.com/u/8601667?v=4" width="100;" alt="DanteMS"/>
+                    <br />
+                    <sub><b>DanteMS</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/FlatDudeInVR">
+                    <img src="https://avatars.githubusercontent.com/u/1240124?v=4" width="100;" alt="FlatDudeInVR"/>
+                    <br />
+                    <sub><b>FlatDudeInVR</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/IvySaskia">
+                    <img src="https://avatars.githubusercontent.com/u/41027286?v=4" width="100;" alt="IvySaskia"/>
+                    <br />
+                    <sub><b>IvySaskia</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mtrunt">
+                    <img src="https://avatars.githubusercontent.com/u/1170107?v=4" width="100;" alt="mtrunt"/>
+                    <br />
+                    <sub><b>mtrunt</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Na0mir">
+                    <img src="https://avatars.githubusercontent.com/u/6453724?v=4" width="100;" alt="Na0mir"/>
+                    <br />
+                    <sub><b>Na0mir</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/ndlanier">
+                    <img src="https://avatars.githubusercontent.com/u/14913926?v=4" width="100;" alt="ndlanier"/>
+                    <br />
+                    <sub><b>ndlanier</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/RestartFU">
+                    <img src="https://avatars.githubusercontent.com/u/45609733?v=4" width="100;" alt="RestartFU"/>
+                    <br />
+                    <sub><b>RestartFU</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/dotromain">
+                    <img src="https://avatars.githubusercontent.com/u/25564262?v=4" width="100;" alt="dotromain"/>
+                    <br />
+                    <sub><b>dotromain</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/RonnyAL">
+                    <img src="https://avatars.githubusercontent.com/u/26335298?v=4" width="100;" alt="RonnyAL"/>
+                    <br />
+                    <sub><b>RonnyAL</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/CantisW">
+                    <img src="https://avatars.githubusercontent.com/u/57926741?v=4" width="100;" alt="CantisW"/>
+                    <br />
+                    <sub><b>CantisW</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/StS82">
+                    <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
+                    <br />
+                    <sub><b>StS82</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/alyoro">
+                    <img src="https://avatars.githubusercontent.com/u/43644634?v=4" width="100;" alt="alyoro"/>
+                    <br />
+                    <sub><b>alyoro</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/toastie89">
+                    <img src="https://avatars.githubusercontent.com/u/19393929?v=4" width="100;" alt="toastie89"/>
+                    <br />
+                    <sub><b>toastie89</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/zethis">
+                    <img src="https://avatars.githubusercontent.com/u/20169561?v=4" width="100;" alt="zethis"/>
+                    <br />
+                    <sub><b>zethis</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
 </table>
 <!-- readme: contributors -end -->

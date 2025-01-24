@@ -57,3 +57,15 @@ block content
     span.icon
       i.fas.fa-shield-alt
     span= lang('PROFILE_SECURITY_CHANGE_PASSWORD')
+  | &nbsp;
+  if _CC.config.oidcEnabled
+    if req.user.oauthConnections && req.user.oauthConnections.oidc
+      a.button.is-danger(href=`${_CC.config.base}auth/oidc/unlink`)
+        span.icon
+          i.fas.fa-link
+        span= lang('PROFILE_SECURITY_UNLINK_OIDC')
+    else
+      a.button.is-primary(href=`${_CC.config.base}auth/oidc/link`)
+        span.icon
+          i.fas.fa-link
+        span= lang('PROFILE_SECURITY_LINK_OIDC')

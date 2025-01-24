@@ -3,6 +3,7 @@ import './CC.js'
 
 import PouchSession from 'session-pouchdb-store'
 import { Strategy as LocalStrategy } from 'passport-local'
+import OpenIDConnectStrategy from 'passport-openidconnect'
 import session from 'express-session'
 import bcrypt from 'bcrypt-nodejs'
 import flash from 'connect-flash'
@@ -45,16 +46,85 @@ passport.use('local', new LocalStrategy(
       .then((doc: any) => {
         bcrypt.compare(password, doc.password, (err, correct) => {
           if (err) return done(err)
-          if (!correct) return done(null, false, { message: 'Incorrect password' })
+          if (!correct) return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_PASSWORD') })
           if (correct) return done(null, doc)
         })
       })
       .catch(err => {
-        if (err.message === 'missing') return done(null, false, { message: 'Incorrect username.' })
+        if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
         return done(err)
       })
   }
 ))
+
+if (config.oidcEnabled) {
+  passport.use('oidc-login', new OpenIDConnectStrategy({
+    issuer: config.oidcIssuer ,
+    authorizationURL: config.oidcAuthorizationURL,
+    tokenURL: config.oidcTokenURL,
+    userInfoURL: config.oidcUserInfoURL,
+    clientID: config.oidcClientId,
+    clientSecret: config.oidcClientSecret,
+    callbackURL: config.rootUrl + 'auth/oidc/redirect'
+  },
+  async (issuer, profile, done) => {
+    const oidcId = profile.id.trim() // Get OIDC id
+    try {
+      // Try to get the user from the database
+      const docs = await db.find({
+        selector: { 'oauthConnections.oidc': { $eq: oidcId } }
+      })
+      if (docs.docs.length === 1) {
+        return done(null, docs.docs[0])
+      } else {
+        // Handle other errors, including missing user
+        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
+      }
+    } catch (err) {
+      // Handle other errors, including missing user
+      if (err.message === 'missing') {
+        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
+      }
+      return done(err)
+    }
+  }
+  ))
+
+  passport.use('oidc-link', new OpenIDConnectStrategy({
+    issuer: config.oidcIssuer ,
+    authorizationURL: config.oidcAuthorizationURL,
+    tokenURL: config.oidcTokenURL,
+    userInfoURL: config.oidcUserInfoURL,
+    clientID: config.oidcClientId,
+    clientSecret: config.oidcClientSecret,
+    callbackURL: config.rootUrl + 'auth/oidc/link/redirect',
+    passReqToCallback: true
+  },
+  async (req, issuer, profile, done) => {
+    const oidcId = profile.id.trim() // Get OIDC id
+
+    const docs = await db.find({
+      selector: { 'oauthConnections.oidc': { $eq: oidcId } }
+    })
+    if (docs.docs.length === 1) {
+      req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
+      return done(null)
+    } else {
+      try {
+        const doc = await db.get(req.session.passport.user)
+        doc.oauthConnections ??= {}
+        doc.oauthConnections.oidc = oidcId
+        await db.put(doc)
+        req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS'))
+        return done(null, doc)
+      } catch (err) {
+        req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
+        return done(err)
+      }
+    }
+  }
+  ))
+}
 
 passport.serializeUser((user, callback) => callback(null, user._id))
 

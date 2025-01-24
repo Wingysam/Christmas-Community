@@ -16,6 +16,13 @@ block title
               i.fas.fa-sync-alt
         .level-item
           span= lang('WISHLIST_TITLE', name)
+      .level-right
+        .level-item 
+          a(href="#addWishlistItem").button.button.is-primary.is-rounded
+            span.icon
+              i.fas.fa-plus
+            span= lang('WISHLIST_ADD_NEW')
+              
 
 block content
   script(type='data/user_id')= req.user._id
@@ -49,7 +56,7 @@ block content
           else
             th= lang('WISHLIST_PLEDGE')
           th= lang('WISHLIST_DELETE')
-        tbody
+        tbody.wishlist-items
           each item, index in items
             tr(id=item.id)
               td.rank= index + 1
@@ -255,7 +262,7 @@ block content
                   .field.inline
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
-  form(method='POST')
+  form(method='POST')#addWishlistItem
     .field
       label.label!=lang('WISHLIST_URL_LABEL')
       .control.has-icons-left
