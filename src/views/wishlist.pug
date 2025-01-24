@@ -56,7 +56,7 @@ block content
           else
             th= lang('WISHLIST_PLEDGE')
           th= lang('WISHLIST_DELETE')
-        tbody
+        tbody.wishlist-items
           each item, index in items
             tr(id=item.id)
               td.rank= index + 1
