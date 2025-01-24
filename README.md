@@ -142,6 +142,12 @@ MARKDOWN=false
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
+
+# Set to false to disable pledge only users from being able to suggest items to another user's list
+PLEDGE_SUGGEST=true
+
+# Set to false to disable all users from being able to suggest items to another users's list
+SUGGESTIONS_ENABLED=true
 ```
 
 ## Default Profile Pictures

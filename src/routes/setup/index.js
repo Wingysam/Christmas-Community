@@ -28,7 +28,8 @@ export default function ({ db, ensurePfp }) {
               password: adminPasswordHash,
               admin: true,
               wishlist: [],
-              oauthConnections: {}
+              oauthConnections: {},
+              pledgeOnly: false
             })
             resolve()
           })

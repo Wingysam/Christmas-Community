@@ -30,7 +30,9 @@ const config = {
   oidcProviderName: process.env.OIDC_PROVIDER_NAME || 'Google',
   oidcEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
-  base: '' // automatically set below
+  base: '', // automatically set below
+  pledgeSuggest: (process.env.PLEDGE_SUGGEST === 'true'),
+  suggestionsEnabled: (process.env.SUGGESTIONS_ENABLED === 'true')
 }
 
 if (config.guestPassword) config.wishlist.public = false

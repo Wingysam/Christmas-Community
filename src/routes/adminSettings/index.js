@@ -44,10 +44,14 @@ export default function ({ db, ensurePfp }) {
         })
     }
 
+    const pledgeOnlyValue = req.body.newPledgeOnlyUser
+    const pledgeOnly =  pledgeOnlyValue === 'on'
+
     await db.put({
       _id: username,
       admin: false,
       wishlist: [],
+      pledgeOnly: pledgeOnly,
 
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
       expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
@@ -136,6 +140,23 @@ export default function ({ db, ensurePfp }) {
     } catch (error) {
       req.flash('error', error.message)
       return res.redirect(`/admin-settings/edit/${oldName}`)
+    }
+  })
+
+  router.post('/edit/pledgeOnly/:userToChange', verifyAuth(), async (req, res) => {
+
+    const newPledgeValue = req.body.editPledgeOnlyUser
+    const newPledge = newPledgeValue === 'on'
+
+    const userDoc = await db.get(req.params.userToChange)
+    userDoc.pledgeOnly = newPledge
+    try {
+      await db.put(userDoc)
+      await _CC.wishlistManager.clearCache()
+      return res.redirect(`/admin-settings/edit/${req.params.userToChange}`)
+    } catch (error) {
+      req.flash('error', error.message)
+      return res.redirect(`/admin-settings/edit/${req.params.userToChange}`)
     }
   })
 
