@@ -21,9 +21,14 @@ const config = {
   },
   customCSS: process.env.CUSTOM_CSS || null,
   updateCheck: process.env.UPDATE_CHECK !== 'false',
-  googleSSOClientId: process.env.GOOGLE_CLIENT_ID || null,
-  googleSSOClientSecret: process.env.GOOGLE_CLIENT_SECRET || null,
-  googleSSOEnabled: false,
+  oidcIssuer: process.env.OIDC_ISSUER || 'https://accounts.google.com',
+  oidcAuthorizationURL: process.env.OIDC_AUTHORIZATION_URL || 'https://accounts.google.com/o/oauth2/auth',
+  oidcTokenURL: process.env.OIDC_TOKEN_URL || 'https://oauth2.googleapis.com/token',
+  oidcUserInfoURL: process.env.OIDC_USERINFO_URL || null,
+  oidcClientId: process.env.OIDC_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || null,
+  oidcClientSecret: process.env.OIDC_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET || null,
+  oidcProviderName: process.env.OIDC_PROVIDER_NAME || 'Google',
+  oidcEnabled: false,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '', // automatically set below
   pledgeSuggest: process.env.PLEDGE_SUGGEST === 'true' ? true : process.env.PLEDGE_SUGGEST || true,
@@ -36,8 +41,8 @@ if (config.guestPassword === 'ReplaceWithYourGuestPassword') {
   process.exit(1)
 }
 
-if (config.googleSSOClientId != null && config.googleSSOClientSecret != null) {
-  config.googleSSOEnabled = true
+if ( config.oidcClientId != null && config.oidcClientSecret != null ) {
+  config.oidcEnabled = true
 }
 
 // The base path is used in HTML templates rather than the fully qualified path, mostly for legacy reasons. It also has the following advantages:

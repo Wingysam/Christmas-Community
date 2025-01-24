@@ -183,9 +183,6 @@ export class Wishlist {
 function parseURL (string) {
   try {
     const url = new URL(string)
-    if (_CC.config.wishlist.smile) {
-      if (url.hostname === 'www.amazon.com') url.hostname = 'smile.amazon.com'
-    }
     if (url) return url
   } catch {}
 }
