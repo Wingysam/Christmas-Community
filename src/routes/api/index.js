@@ -3,18 +3,18 @@ import Wishlist from './wishlist/index.js'
 import verifyAuth from '../../middlewares/verifyAuth.js'
 import express from 'express'
 
-export default function ({ db, config }) {
+export default function () {
   const router = express.Router()
 
   router.use(verifyAuth())
 
-  router.get('/', (req, res) => {
+  router.get('/', (_req, res) => {
     res.send({
-      api: true
+      api: true,
     })
   })
 
-  router.use('/wishlist', Wishlist({ db }))
+  router.use('/wishlist', Wishlist())
 
   return router
 }

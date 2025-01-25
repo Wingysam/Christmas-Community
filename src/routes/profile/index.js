@@ -5,7 +5,7 @@ import express from 'express'
 import path from 'path'
 import fs from 'fs'
 
-export default function ({ db, config, ensurePfp }) {
+export default function ({ db, ensurePfp }) {
   const router = express.Router()
 
   router.get('/', verifyAuth(), async (req, res) => {
@@ -14,9 +14,15 @@ export default function ({ db, config, ensurePfp }) {
   })
 
   const INFO_KEYS = [
-    'shoeSize', 'ringSize', 'dressSize',
-    'sweaterSize', 'shirtSize', 'pantsSize',
-    'coatSize', 'hatSize', 'phoneModel'
+    'shoeSize',
+    'ringSize',
+    'dressSize',
+    'sweaterSize',
+    'shirtSize',
+    'pantsSize',
+    'coatSize',
+    'hatSize',
+    'phoneModel',
   ]
   router.post('/info', verifyAuth(), async (req, res) => {
     if (!req.user.info) {
@@ -34,7 +40,9 @@ export default function ({ db, config, ensurePfp }) {
 
   router.get('/password', verifyAuth(), async (req, res) => {
     await ensurePfp(req.user._id)
-    res.render('profile-password', { title: _CC.lang('PROFILE_PASSWORD_TITLE', req.user._id) })
+    res.render('profile-password', {
+      title: _CC.lang('PROFILE_PASSWORD_TITLE', req.user._id),
+    })
   })
 
   router.post('/password', verifyAuth(), (req, res) => {
@@ -52,16 +60,20 @@ export default function ({ db, config, ensurePfp }) {
         bcrypt.hash(req.body.newPassword, null, null, (err, hash) => {
           if (err) throw err
           db.get(req.user._id)
-            .then(doc => {
+            .then((doc) => {
               doc.password = hash
               db.put(doc)
                 .then(() => {
                   req.flash('success', _CC.lang('PROFILE_PASSWORD_SUCCESS'))
                   res.redirect('/profile/password')
                 })
-                .catch(err => { throw err })
+                .catch((err) => {
+                  throw err
+                })
             })
-            .catch(err => { throw err })
+            .catch((err) => {
+              throw err
+            })
         })
       } else {
         req.flash('error', _CC.lang('PROFILE_PASSWORD_OLD_MISMATCH'))
@@ -83,7 +95,12 @@ export default function ({ db, config, ensurePfp }) {
     const oldPfp = req.user.pfp
 
     // Validate file type
-    if (!allowedExtensions.test(path.extname(profilePicture.name).toLowerCase()) || !allowedExtensions.test(profilePicture.mimetype)) {
+    if (
+      !allowedExtensions.test(
+        path.extname(profilePicture.name).toLowerCase(),
+      ) ||
+      !allowedExtensions.test(profilePicture.mimetype)
+    ) {
       req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_TYPE'))
       return res.redirect('/profile')
     }
@@ -113,7 +130,9 @@ export default function ({ db, config, ensurePfp }) {
       try {
         // Delete old profile picture if it exists
         await fs.promises.unlink(path.join(_CC.uploadDir, oldPfp.file))
-      } catch {}
+      } catch {
+        // Probably didn't exist
+      }
     }
 
     res.redirect('/profile')

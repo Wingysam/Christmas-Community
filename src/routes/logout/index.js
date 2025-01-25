@@ -4,7 +4,7 @@ import express from 'express'
 export default function () {
   const router = express.Router()
 
-  router.get('/', verifyAuth(), (req, res) => res.render('logout'))
+  router.get('/', verifyAuth(), (_req, res) => res.render('logout'))
   router.post('/', (req, res) => {
     req.logout()
     res.redirect('/')

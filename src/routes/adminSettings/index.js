@@ -17,10 +17,15 @@ export default function ({ db, ensurePfp }) {
   router.get('/', verifyAuth(), (req, res) => {
     if (!req.user.admin) return res.redirect('/')
     db.allDocs({ include_docs: true })
-      .then(docs => {
-        res.render('adminSettings', { title: _CC.lang('ADMIN_SETTINGS_HEADER'), users: docs.rows })
+      .then((docs) => {
+        res.render('adminSettings', {
+          title: _CC.lang('ADMIN_SETTINGS_HEADER'),
+          users: docs.rows,
+        })
       })
-      .catch(err => { throw err })
+      .catch((err) => {
+        throw err
+      })
   })
 
   router.post('/add', verifyAuth(), async (req, res) => {
@@ -33,10 +38,10 @@ export default function ({ db, ensurePfp }) {
         .then((docs) => {
           res.render('adminSettings', {
             add_user_error: _CC.lang(
-              'ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY'
+              'ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY',
             ),
             title: _CC.lang('ADMIN_SETTINGS_HEADER'),
-            users: docs.rows
+            users: docs.rows,
           })
         })
         .catch((err) => {
@@ -50,7 +55,7 @@ export default function ({ db, ensurePfp }) {
       wishlist: [],
 
       signupToken: nanoid(SECRET_TOKEN_LENGTH),
-      expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME
+      expiry: new Date().getTime() + SECRET_TOKEN_LIFETIME,
     })
 
     await ensurePfp(username)
@@ -64,14 +69,18 @@ export default function ({ db, ensurePfp }) {
     res.render('admin-user-edit', { user: doc })
   })
 
-  router.post('/edit/refresh-signup-token/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
-    doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
-    doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
-    await db.put(doc)
-    return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
-  })
+  router.post(
+    '/edit/refresh-signup-token/:userToEdit',
+    verifyAuth(),
+    async (req, res) => {
+      if (!req.user.admin) return res.redirect('/')
+      const doc = await db.get(req.params.userToEdit)
+      doc.signupToken = nanoid(SECRET_TOKEN_LENGTH)
+      doc.expiry = new Date().getTime() + SECRET_TOKEN_LIFETIME
+      await db.put(doc)
+      return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+    },
+  )
 
   router.post('/edit/resetpw/:userToEdit', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
@@ -82,19 +91,27 @@ export default function ({ db, ensurePfp }) {
     return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
   })
 
-  router.post('/edit/cancelresetpw/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/')
-    const doc = await db.get(req.params.userToEdit)
-    delete doc.pwToken
-    delete doc.pwExpiry
-    await db.put(doc)
-    return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
-  })
+  router.post(
+    '/edit/cancelresetpw/:userToEdit',
+    verifyAuth(),
+    async (req, res) => {
+      if (!req.user.admin) return res.redirect('/')
+      const doc = await db.get(req.params.userToEdit)
+      delete doc.pwToken
+      delete doc.pwExpiry
+      await db.put(doc)
+      return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+    },
+  )
 
   router.post('/edit/rename/:userToRename', verifyAuth(), async (req, res) => {
-    if (!req.user.admin && req.user._id !== req.params.userToRename) return res.redirect('/')
+    if (!req.user.admin && req.user._id !== req.params.userToRename)
+      return res.redirect('/')
     if (!req.body.newUsername) {
-      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED'))
+      req.flash(
+        'error',
+        _CC.lang('ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED'),
+      )
       return res.redirect(`/admin-settings/edit/${req.params.userToRename}`)
     }
     if (req.body.newUsername === req.params.userToRename) {
@@ -139,36 +156,59 @@ export default function ({ db, ensurePfp }) {
     }
   })
 
-  router.post('/edit/impersonate/:userToEdit', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/')
-    req.login({ _id: req.params.userToEdit }, err => {
-      if (err) {
-        req.flash('error', err.message)
-        return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+  router.post(
+    '/edit/impersonate/:userToEdit',
+    verifyAuth(),
+    async (req, res) => {
+      if (!req.user.admin) return res.redirect('/')
+      req.login({ _id: req.params.userToEdit }, (err) => {
+        if (err) {
+          req.flash('error', err.message)
+          return res.redirect(`/admin-settings/edit/${req.params.userToEdit}`)
+        }
+        req.flash(
+          'success',
+          _CC.lang(
+            'ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS',
+            req.params.userToEdit,
+          ),
+        )
+        res.redirect('/')
+      })
+    },
+  )
+
+  router.post(
+    '/edit/promote/:userToPromote',
+    verifyAuth(),
+    async (req, res) => {
+      if (!req.user.admin) return res.redirect('/')
+      const user = await db.get(req.params.userToPromote)
+      if (!user) {
+        req.flash(
+          'error',
+          _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'),
+        )
+        return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
       }
-      req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS', req.params.userToEdit))
-      res.redirect('/')
-    })
-  })
+      if (user.admin) {
+        req.flash(
+          'error',
+          _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN'),
+        )
+        return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
+      }
 
-  router.post('/edit/promote/:userToPromote', verifyAuth(), async (req, res) => {
-    if (!req.user.admin) return res.redirect('/')
-    const user = await db.get(req.params.userToPromote)
-    if (!user) {
-      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'))
+      user.admin = true
+      await db.put(user)
+
+      req.flash(
+        'success',
+        _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS', user._id),
+      )
       return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
-    }
-    if (user.admin) {
-      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN'))
-      return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
-    }
-
-    user.admin = true
-    await db.put(user)
-
-    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS', user._id))
-    return res.redirect(`/admin-settings/edit/${req.params.userToPromote}`)
-  })
+    },
+  )
 
   router.post('/edit/demote/:userToDemote', verifyAuth(), async (req, res) => {
     if (!req.user.admin) return res.redirect('/')
@@ -180,7 +220,10 @@ export default function ({ db, ensurePfp }) {
     const user = await db.get(req.params.userToDemote)
 
     if (!user) {
-      req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'))
+      req.flash(
+        'error',
+        _CC.lang('ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND'),
+      )
       return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
     }
     if (!user.admin) {
@@ -191,7 +234,10 @@ export default function ({ db, ensurePfp }) {
     user.admin = false
     await db.put(user)
 
-    req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS', user._id))
+    req.flash(
+      'success',
+      _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS', user._id),
+    )
     return res.redirect(`/admin-settings/edit/${req.params.userToDemote}`)
   })
 
@@ -201,7 +247,10 @@ export default function ({ db, ensurePfp }) {
 
       const userToRemove = await db.get(req.params.userToRemove)
       if (userToRemove.admin) {
-        req.flash('error', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'))
+        req.flash(
+          'error',
+          _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN'),
+        )
         return res.redirect('/admin-settings')
       }
       await db.remove(userToRemove)
@@ -218,7 +267,13 @@ export default function ({ db, ensurePfp }) {
         }
       }
 
-      req.flash('success', _CC.lang('ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS', req.params.userToRemove))
+      req.flash(
+        'success',
+        _CC.lang(
+          'ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS',
+          req.params.userToRemove,
+        ),
+      )
     } catch (error) {
       req.flash('error', `${error}`)
     }
