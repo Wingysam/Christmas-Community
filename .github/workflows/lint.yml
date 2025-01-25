@@ -10,12 +10,13 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Check out Git repository
