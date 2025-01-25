@@ -17,8 +17,6 @@ import ExpressPouchDB from 'express-pouchdb'
 import { customAlphabet } from 'nanoid'
 import fileUpload from 'express-fileupload'
 import fs from 'fs'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
@@ -42,12 +40,11 @@ app.use((req, res, next) => {
 })
 
 app.use(fileUpload())
-const __dirname = dirname(fileURLToPath(import.meta.url));
-_CC.uploadDir = path.join(__dirname, 'uploads/profile_pictures');
+_CC.uploadDir = path.join(config.dbPrefix, 'uploads');
 if (!fs.existsSync(_CC.uploadDir)) {
     fs.mkdirSync(_CC.uploadDir, { recursive: true });
 }
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(_CC.uploadDir));
 
 const db = _CC.usersDb
 

@@ -113,7 +113,7 @@ export default function ({ db, config, ensurePfp }) {
     try {
         await profilePicture.mv(uploadPath);
         // Update the user object
-        const filePath = `/uploads/profile_pictures/${fileName}`;
+        const filePath = `/uploads/${fileName}`;
         req.user.pfp = filePath;
         await db.put(req.user);
         req.flash('success', _CC.lang('PROFILE_PFP_UPLOAD_SUCCESS'));
