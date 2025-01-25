@@ -32,6 +32,10 @@ export const strings = {
   ADMIN_SETTINGS_USERS_EDIT: 'Edit',
   ADMIN_SETTINGS_USERS_HEADER: 'Users',
   ADMIN_SETTINGS_VERSION_INFO: 'Version Info',
+  ADMIN_SETTINGS_TABLE_USERNAME: 'Username',
+  ADMIN_SETTINGS_TABLE_ADMIN_USER: 'Admin',
+  ADMIN_SETTINGS_TABLE_WISHLIST_COUNT: 'Wishlist items',
+  ADMIN_SETTINGS_TABLE_EDIT: 'Edit',
   ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "This account hasn't been confirmed.",
   ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} is an admin.`,
   ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} is not an admin.`,
@@ -218,5 +222,7 @@ export const strings = {
   WISHLIST_DELETE_CONFIRM: 'Are you sure you want to delete this item?',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`
+  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`,
+  YES: 'Yes',
+  NO: 'No'
 } as const

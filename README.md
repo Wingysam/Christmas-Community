@@ -312,12 +312,21 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Nespouique">
+                    <img src="https://avatars.githubusercontent.com/u/18187969?v=4" width="100;" alt="Nespouique"/>
+                    <br />
+                    <sub><b>Nespouique</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/RestartFU">
                     <img src="https://avatars.githubusercontent.com/u/45609733?v=4" width="100;" alt="RestartFU"/>
                     <br />
                     <sub><b>RestartFU</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/dotromain">
                     <img src="https://avatars.githubusercontent.com/u/25564262?v=4" width="100;" alt="dotromain"/>
@@ -325,8 +334,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>dotromain</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/RonnyAL">
                     <img src="https://avatars.githubusercontent.com/u/26335298?v=4" width="100;" alt="RonnyAL"/>
@@ -362,6 +369,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>toastie89</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/zethis">
                     <img src="https://avatars.githubusercontent.com/u/20169561?v=4" width="100;" alt="zethis"/>
