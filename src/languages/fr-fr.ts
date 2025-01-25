@@ -140,6 +140,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Ce message n'est visible que par les administrateurs</span>`,
   WISHLIST_ADD: "Ajouter un article à la liste d'envies",
   WISHLIST_ADDED_BY_USER: addedBy => `Ajouté par: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Utilisateur Invité",
   WISHLIST_ADDED_BY: 'Ajouté par',
   WISHLIST_CONFLICT: 'Les éléments ont été ajoutés trop rapidement. Veuillez réessayer.',
   WISHLIST_DELETE: 'Supprimer',

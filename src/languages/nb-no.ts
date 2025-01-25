@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Denne meldingen er kun synlig for administratorer</span>`,
   WISHLIST_ADD: 'Legg til element i ønskelisten',
   WISHLIST_ADDED_BY_USER: addedBy => `Lagt til av: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Gjestebruker",
   WISHLIST_ADDED_BY: 'Lagt til av',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Elementet ble lagt til i ønskelisten.',
   WISHLIST_CONFLICT: 'Elementer blir lagt til for fort. Vennligst prøv igjen.',

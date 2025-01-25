@@ -168,6 +168,7 @@ export const strings = {
   WISHLIST_ADD: 'Add item to wishlist',
   WISHLIST_ADD_NEW: 'Add item',
   WISHLIST_ADDED_BY_USER: addedBy => `Added by: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Guest User",
   WISHLIST_ADDED_BY: 'Added By',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Added item to wishlist.',
   WISHLIST_CONFLICT: 'Items are being added too quickly. Please try again.',

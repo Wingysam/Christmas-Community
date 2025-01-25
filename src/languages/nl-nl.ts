@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Dit bericht is alleen zichtbaar voor administrators</span>`,
   WISHLIST_ADD: 'Voeg item toe aan verlanglijst',
   WISHLIST_ADDED_BY_USER: addedBy => `Toegevoegd door: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Gastgebruiker",
   WISHLIST_ADDED_BY: 'Toegevoegd door',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Item toegevoegd aan verlanglijst.',
   WISHLIST_CONFLICT: 'Items worden te snel toegevoegd. Probeer het nog een keer.',

@@ -79,7 +79,10 @@ mixin wishlistTable(items, archived)
                       )
                         span.icon
                           i.far.fa-edit
-            td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
+            if item.addedBy === '_CCUNKNOWN'
+              td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= lang('WISHLIST_ADDED_BY_GUEST')
+            else 
+              td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
             if req.params.user === req.user._id && !archived
               td(data-label=lang('WISHLIST_MOVE_ITEM_TOP'))
                 form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
@@ -228,7 +231,10 @@ mixin wishlistBox(items, archived)
                   style='height: 100%;'
                   readonly
                 )= item.note
-        span.overflowWrap=lang('WISHLIST_ADDED_BY_USER', item.addedBy)
+        if item.addedBy === '_CCUNKNOWN'
+          span.overflowWrap=lang('WISHLIST_ADDED_BY', lang('WISHLIST_ADDED_BY_GUEST'))
+        else 
+          span.overflowWrap=lang('WISHLIST_ADDED_BY', item.addedBy)
         hr
         div
           if req.params.user !== req.user._id && !item.pledgedBy
