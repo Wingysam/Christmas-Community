@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Este mensaje sólo es accesible para administradores</span>`,
   WISHLIST_ADD: 'Agregar producto a la lista de deseos',
   WISHLIST_ADDED_BY_USER: addedBy => `Agregado por: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Usuario Invitado",
   WISHLIST_ADDED_BY: 'Agregado por',
   WISHLIST_CONFLICT: 'Los productos se están agregando desmasiado rápido. Por favor intenta otra vez.',
   WISHLIST_DELETE: 'Borrar',

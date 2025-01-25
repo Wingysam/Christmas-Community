@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">This message is only visible to admins</span>`,
   WISHLIST_ADD: 'Tilføj ønske',
   WISHLIST_ADDED_BY_USER: addedBy => `Tilføjet af: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Gæstebruger",
   WISHLIST_ADDED_BY: 'Tilføjet af',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Ønsket er tilføjet.',
   WISHLIST_CONFLICT: 'Gaver tilføjet for hurtigt. Prøv igen om lidt.',
