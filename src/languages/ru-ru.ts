@@ -116,7 +116,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Требуется старый пароль',
   PROFILE_PASSWORD_SUCCESS: 'Изменения успешно сохранены!',
   PROFILE_PASSWORD_TITLE: name => `Настройки профиля - Пароль - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'URL изображения',
   PROFILE_PHONE_MODEL: 'Модель телефона',
   PROFILE_RING_SIZE: 'Размер кольца',
   PROFILE_SAVE_PFP_DISABLED: 'Изображения профиля отключены.',

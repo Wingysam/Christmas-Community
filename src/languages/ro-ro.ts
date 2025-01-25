@@ -102,7 +102,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Parola veche trebuie completată',
   PROFILE_PASSWORD_SUCCESS: 'Modificările au fost salvate cu succes!',
   PROFILE_PASSWORD_TITLE: name => `Setări Profil - Parolă - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'URL Imagine',
   PROFILE_SAVE_PFP_DISABLED: 'Imaginile de profil au fost dezactivate.',
   PROFILE_SAVE_PFP_SUCCESS: 'Imagine de profil salvată!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Schimbare parolă',

@@ -19,31 +19,31 @@ block content
         .column.is-narrow
           .box
             .columns
-              .column
-                figure.image.is-square(style='display: inline-block; width: 100%;')
+              .column.is-narrow(style='width: 10em;')
+                .image.is-square(style='display: inline-block; width: 100%;')
                   img.is-rounded(src=req.user.pfp, style='object-fit: cover;')
               .column.is-narrow
               .column
                 span.is-size-3= req.user._id
-                //- form(action=`${_CC.config.base}profile/pfp`, method='POST')
-                //-   label.label= lang('PROFILE_PFP_IMAGE_URL')
-                //-   .field.has-addons
-                //-     .control
-                //-       input.input(name='image', value=req.user.pfp)
-                //-     .control
-                //-       button.button.is-primary(type='submit')
-                //-         span.icon
-                //-           i.fas.fa-save
-                br
                 form(action=`${_CC.config.base}profile/upload-pfp` method="POST" enctype="multipart/form-data")
-                  label.label= lang('PROFILE_PFP_UPLOAD')
-                  .field.has-addons 
-                    .control
-                      input(type="file" name="profilePicture")
-                    .control
-                      button.button.is-primary(type='submit')
-                        span.icon
-                          i.fas.fa-upload
+                  .upload-pfp-no-js
+                    label.label= lang('PROFILE_PFP_UPLOAD')
+                    .field.has-addons
+                      .control
+                        input.input(type="file" name="profilePicture")
+                      .control
+                        button.button.is-primary(type='submit')
+                          span.icon
+                            i.fas.fa-upload
+                  .upload-pfp-yes-js.is-hidden
+                    br
+                    .field.has-addons
+                      .control
+                        label.button(for='profilePicture')
+                          span.icon
+                            i.fas.fa-upload
+                          span= lang('PROFILE_PFP_UPLOAD')
+                        input.input.is-hidden#profilePicture(type="file" name="profilePicture")
   h2= lang('PROFILE_SHARED_INFORMATION')
   form(action=`${_CC.config.base}profile/info`, method='POST')
     .columns.is-multiline.is-mobile
@@ -77,3 +77,5 @@ block content
         span.icon
           i.fas.fa-link
         span= lang('PROFILE_SECURITY_LINK_OIDC')
+
+  script(src=`${_CC.config.base}js/profile.js`)
