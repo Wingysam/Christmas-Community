@@ -40,7 +40,7 @@ if (config.guestPassword === 'ReplaceWithYourGuestPassword') {
   process.exit(1)
 }
 
-if ( config.oidcClientId != null && config.oidcClientSecret != null ) {
+if (config.oidcClientId != null && config.oidcClientSecret != null) {
   config.oidcEnabled = true
 }
 
@@ -54,6 +54,14 @@ try {
 } catch {
   config.base = config.rootUrl
 }
+
+try {
+  // Abusing the URL constructor to prevent the following code from erroring if we have a non-URL.
+  // eslint-disable-next-line no-new
+  new URL(config.dbPrefix)
+  console.error('Error: Christmas Community no longer supports external CouchDB instances. DB_PREFIX must be a local path.')
+  process.exit(1)
+} catch {}
 
 function appendSlash (path: string) {
   if (path.endsWith('/')) return path

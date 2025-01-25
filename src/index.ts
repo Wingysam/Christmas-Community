@@ -16,7 +16,6 @@ import CookieParser from 'cookie-parser'
 import ExpressPouchDB from 'express-pouchdb'
 import { customAlphabet } from 'nanoid'
 import fileUpload from 'express-fileupload'
-import fs from 'fs'
 
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
@@ -25,9 +24,9 @@ import logger from './logger.js'
 // from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
 const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
 
-if (!config.dbPrefix.startsWith('http')) {
-  await mkdirp(config.dbPrefix)
-}
+await mkdirp(config.dbPrefix)
+_CC.uploadDir = path.join(config.dbPrefix, 'uploads')
+await mkdirp(_CC.uploadDir)
 
 const app = express()
 app.set('base', config.base)
@@ -40,11 +39,7 @@ app.use((req, res, next) => {
 })
 
 app.use(fileUpload())
-_CC.uploadDir = path.join(config.dbPrefix, 'uploads');
-if (!fs.existsSync(_CC.uploadDir)) {
-    fs.mkdirSync(_CC.uploadDir, { recursive: true });
-}
-app.use('/uploads', express.static(_CC.uploadDir));
+app.use('/uploads', express.static(_CC.uploadDir))
 
 const db = _CC.usersDb
 
@@ -68,7 +63,7 @@ passport.use('local', new LocalStrategy(
 
 if (config.oidcEnabled) {
   passport.use('oidc-login', new OpenIDConnectStrategy({
-    issuer: config.oidcIssuer ,
+    issuer: config.oidcIssuer,
     authorizationURL: config.oidcAuthorizationURL,
     tokenURL: config.oidcTokenURL,
     userInfoURL: config.oidcUserInfoURL,
@@ -100,7 +95,7 @@ if (config.oidcEnabled) {
   ))
 
   passport.use('oidc-link', new OpenIDConnectStrategy({
-    issuer: config.oidcIssuer ,
+    issuer: config.oidcIssuer,
     authorizationURL: config.oidcAuthorizationURL,
     tokenURL: config.oidcTokenURL,
     userInfoURL: config.oidcUserInfoURL,
