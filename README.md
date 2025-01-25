@@ -251,6 +251,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Nespouique">
+                    <img src="https://avatars.githubusercontent.com/u/18187969?v=4" width="100;" alt="Nespouique"/>
+                    <br />
+                    <sub><b>Nespouique</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/bsiddans">
                     <img src="https://avatars.githubusercontent.com/u/96931223?v=4" width="100;" alt="bsiddans"/>
                     <br />
@@ -271,6 +278,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>DanteMS</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/FlatDudeInVR">
                     <img src="https://avatars.githubusercontent.com/u/1240124?v=4" width="100;" alt="FlatDudeInVR"/>
@@ -278,8 +287,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>FlatDudeInVR</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/IvySaskia">
                     <img src="https://avatars.githubusercontent.com/u/41027286?v=4" width="100;" alt="IvySaskia"/>
@@ -306,13 +313,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <img src="https://avatars.githubusercontent.com/u/14913926?v=4" width="100;" alt="ndlanier"/>
                     <br />
                     <sub><b>ndlanier</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/Nespouique">
-                    <img src="https://avatars.githubusercontent.com/u/18187969?v=4" width="100;" alt="Nespouique"/>
-                    <br />
-                    <sub><b>Nespouique</b></sub>
                 </a>
             </td>
             <td align="center">
