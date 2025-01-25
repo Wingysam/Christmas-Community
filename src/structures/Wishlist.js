@@ -2,17 +2,17 @@ import getProductData from 'get-product-name'
 import u64 from 'u64'
 
 export class Wishlist {
-  static async new (username) {
+  static async new(username) {
     const instance = new this({ username })
     await instance.fetch()
     return instance
   }
 
-  constructor (opts) {
+  constructor(opts) {
     this.username = opts.username
   }
 
-  async fetch () {
+  async fetch() {
     try {
       this.doc = await _CC.usersDb.get(this.username)
     } catch {
@@ -21,7 +21,7 @@ export class Wishlist {
     this.items = this.doc.wishlist
   }
 
-  async save () {
+  async save() {
     try {
       const { rev } = await _CC.usersDb.put(this.doc)
       this.doc._rev = rev
@@ -31,29 +31,28 @@ export class Wishlist {
     }
   }
 
-  async get (id) {
-    const item = this.items.find(item => item.id === id)
+  async get(id) {
+    const item = this.items.find((item) => item.id === id)
     if (!item) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
     return item
   }
 
-  async itemsVisibleToUser (username) {
+  async itemsVisibleToUser(username) {
     const addedBySelfAtTop = async (items) => {
       return [
-        ...items.filter(item => item.addedBy === this.username),
-        ...items.filter(item => item.addedBy !== this.username)
+        ...items.filter((item) => item.addedBy === this.username),
+        ...items.filter((item) => item.addedBy !== this.username),
       ]
     }
 
     if (this.username === username) {
-      return this.items
-        .filter(item => item.addedBy === username)
+      return this.items.filter((item) => item.addedBy === username)
     }
 
     return await addedBySelfAtTop(this.items)
   }
 
-  async add ({ itemUrlOrName, suggest, note, addedBy }) {
+  async add({ itemUrlOrName, suggest, note, addedBy }) {
     if (!itemUrlOrName) {
       throw new Error(_CC.lang('WISHLIST_URL_REQUIRED'))
     }
@@ -72,11 +71,11 @@ export class Wishlist {
     }
 
     item.id = u64.encode(new Date().getTime().toString())
-    item.name = (productData ? productData.name : '')
+    item.name = productData ? productData.name : ''
     item.price = productData?.price
     item.image = productData?.image
     item.addedBy = addedBy
-    item.pledgedBy = (addedBy === this.username || suggest ? undefined : addedBy)
+    item.pledgedBy = addedBy === this.username || suggest ? undefined : addedBy
     item.note = note
 
     if (url) item.url = url
@@ -88,14 +87,14 @@ export class Wishlist {
     return { nonFatalErrors }
   }
 
-  async remove (id) {
-    const index = this.items.findIndex(item => item.id === id)
+  async remove(id) {
+    const index = this.items.findIndex((item) => item.id === id)
     if (index === -1) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
     this.items.splice(index, 1)
     await this.save()
   }
 
-  async pledge (id, user) {
+  async pledge(id, user) {
     const item = await this.get(id)
     item.pledgedBy = user
 
@@ -105,26 +104,34 @@ export class Wishlist {
     await this.save()
   }
 
-  async unpledge (id) {
+  async unpledge(id) {
     const item = await this.get(id)
     item.pledgedBy = undefined
     await this.save()
   }
 
-  async move (id, places) {
+  async move(id, places) {
     if (places === 0) throw new Error('places should never be 0')
 
-    const index = this.items.findIndex(item => item.id === id)
+    const index = this.items.findIndex((item) => item.id === id)
     if (index === -1) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
 
-    while (this.items[index + places] && this.items[index + places].addedBy !== this.username) {
+    while (
+      this.items[index + places] &&
+      this.items[index + places].addedBy !== this.username
+    ) {
       if (places < 0) {
         places--
       } else {
         places++
       }
     }
-    if (index < 0 || index >= this.items.length || index + places < 0 || index + places >= this.items.length) {
+    if (
+      index < 0 ||
+      index >= this.items.length ||
+      index + places < 0 ||
+      index + places >= this.items.length
+    ) {
       throw new Error(_CC.lang('WISHLIST_MOVE_INVALID'))
     }
 
@@ -133,8 +140,8 @@ export class Wishlist {
     await this.save()
   }
 
-  async moveTop (id) {
-    const index = this.items.findIndex(item => item.id === id)
+  async moveTop(id) {
+    const index = this.items.findIndex((item) => item.id === id)
     if (index === -1) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
 
     const item = this.items.splice(index, 1)[0]
@@ -142,8 +149,8 @@ export class Wishlist {
     await this.save()
   }
 
-  async moveBottom (id) {
-    const index = this.items.findIndex(item => item.id === id)
+  async moveBottom(id) {
+    const index = this.items.findIndex((item) => item.id === id)
     if (index === -1) throw new Error(_CC.lang('WISHLIST_ITEM_MISSING'))
 
     const item = this.items.splice(index, 1)[0]
@@ -151,12 +158,10 @@ export class Wishlist {
     await this.save()
   }
 
-  async setItemData (id, data) {
+  async setItemData(id, data) {
     const item = await this.get(id)
 
-    for (const key of [
-      'name', 'note', 'url', 'price', 'image'
-    ]) {
+    for (const key of ['name', 'note', 'url', 'price', 'image']) {
       if (!Object.prototype.hasOwnProperty.call(data, key)) {
         throw new Error(_CC.lang('NOTE_MISSING_PROP', key))
       }
@@ -166,7 +171,7 @@ export class Wishlist {
     await this.save()
   }
 
-  async refreshItemData (id) {
+  async refreshItemData(id) {
     const item = await this.get(id)
 
     if (!item.url) {
@@ -197,9 +202,11 @@ export class Wishlist {
 
 }
 
-function parseURL (string) {
+function parseURL(string) {
   try {
     const url = new URL(string)
     if (url) return url
-  } catch {}
+  } catch {
+    // Not a valid URL
+  }
 }

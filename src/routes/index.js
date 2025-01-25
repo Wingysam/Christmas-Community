@@ -17,7 +17,7 @@ import ManifestJson from './manifest.json/index.js'
 import OIDC from './oidc/index.js'
 
 export default ({ db, config }) => {
-  async function ensurePfp (username) {
+  async function ensurePfp(username) {
     if (!config.pfp) return
     const user = await db.get(username)
     if (user.pfp) return
@@ -25,10 +25,12 @@ export default ({ db, config }) => {
     const { rows } = await db.allDocs({ include_docs: true })
 
     const unfilteredPool = await fs.readdir('src/static/img/default-pfps')
-    const filteredPool = unfilteredPool.filter(file => !rows.find(row => row.doc.pfp === `${_CC.config.base}img/default-pfps/${file}`))
+    const filteredPool = unfilteredPool.filter(
+      (file) => !rows.find((row) => row.doc.pfp?.default === file),
+    )
     const pool = filteredPool.length ? filteredPool : unfilteredPool
 
-    user.pfp = `${_CC.config.base}img/default-pfps/${_CC._.sample(pool)}`
+    user.pfp = { default: _CC._.sample(pool) }
     await db.put(user)
   }
 
@@ -43,8 +45,9 @@ export default ({ db, config }) => {
 
   router.use('/', express.static(path.resolve('./src/static')))
 
-  router.get('/',
-    async (req, res, next) => {
+  router.get(
+    '/',
+    async (_req, res, next) => {
       const dbInfo = await db.info()
       if (dbInfo.doc_count === 0) {
         res.redirect('/setup')
@@ -53,12 +56,12 @@ export default ({ db, config }) => {
       }
     },
     publicRoute(),
-    (req, res) => {
+    (_req, res) => {
       res.redirect('/wishlist')
-    }
+    },
   )
 
-  router.use('/api', Api({ db }))
+  router.use('/api', Api())
 
   router.use('/setup', Setup({ db, ensurePfp }))
 

@@ -5,6 +5,6 @@ export default {
   public: yesNo(process.env.LISTS_PUBLIC || false),
   table: yesNo(process.env.TABLE || true),
   note: {
-    markdown: yesNo(process.env.MARKDOWN || false)
-  }
+    markdown: yesNo(process.env.MARKDOWN || false),
+  },
 }

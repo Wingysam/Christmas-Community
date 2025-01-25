@@ -11,11 +11,17 @@ export default function (options) {
       return res.send('auth fail')
     }
     if (authed) return next()
-    if (_CC.config.guestPassword && (req.query.pw === _CC.config.guestPassword || req.cookies[COOKIE_NAME] === _CC.config.guestPassword)) {
+    if (
+      _CC.config.guestPassword &&
+      (req.query.pw === _CC.config.guestPassword ||
+        req.cookies[COOKIE_NAME] === _CC.config.guestPassword)
+    ) {
       req.user = {
-        _id: '_CCUNKNOWN'
+        _id: '_CCUNKNOWN',
       }
-      res.cookie(COOKIE_NAME, _CC.config.guestPassword, { maxAge: ROUGHLY_ONE_YEAR_IN_MILLISECONDS })
+      res.cookie(COOKIE_NAME, _CC.config.guestPassword, {
+        maxAge: ROUGHLY_ONE_YEAR_IN_MILLISECONDS,
+      })
       return next()
     }
     res.redirect(options.failureRedirect || _CC.config.defaultFailureRedirect)
