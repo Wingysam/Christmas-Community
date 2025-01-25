@@ -3,7 +3,10 @@ import path from 'path'
 import fs from 'fs'
 import mkdirp from 'mkdirp'
 
-const secretFilePath = path.join((process.env.SECRET_DIRNAME ? process.env.SECRET_DIRNAME : 'dbs'), 'secret.txt')
+const secretFilePath = path.join(
+  process.env.SECRET_DIRNAME ? process.env.SECRET_DIRNAME : 'dbs',
+  'secret.txt',
+)
 
 let secret
 

@@ -10,28 +10,36 @@ const config = {
   siteTitle: process.env.SITE_TITLE || 'Christmas Community',
   shortTitle: process.env.SHORT_TITLE || 'Christmas',
   wishlist: (await import('./wishlist/index.js')).default,
-  trustProxy: process.env.TRUST_PROXY === 'true' ? true : process.env.TRUST_PROXY || 'loopback',
+  trustProxy:
+    process.env.TRUST_PROXY === 'true'
+      ? true
+      : process.env.TRUST_PROXY || 'loopback',
   bulmaswatch: (process.env.BULMASWATCH || 'default').toLowerCase(),
   pfp: process.env.PFP !== 'false',
   language: process.env.LANGUAGE?.toLowerCase() || 'en-us',
   guestPassword: process.env.GUEST_PASSWORD,
   customHtml: {
     wishlists: process.env.CUSTOM_HTML_WISHLISTS,
-    login: process.env.CUSTOM_HTML_LOGIN
+    login: process.env.CUSTOM_HTML_LOGIN,
   },
   customCSS: process.env.CUSTOM_CSS || null,
   updateCheck: process.env.UPDATE_CHECK !== 'false',
   oidcIssuer: process.env.OIDC_ISSUER || 'https://accounts.google.com',
-  oidcAuthorizationURL: process.env.OIDC_AUTHORIZATION_URL || 'https://accounts.google.com/o/oauth2/auth',
-  oidcTokenURL: process.env.OIDC_TOKEN_URL || 'https://oauth2.googleapis.com/token',
+  oidcAuthorizationURL:
+    process.env.OIDC_AUTHORIZATION_URL ||
+    'https://accounts.google.com/o/oauth2/auth',
+  oidcTokenURL:
+    process.env.OIDC_TOKEN_URL || 'https://oauth2.googleapis.com/token',
   oidcUserInfoURL: process.env.OIDC_USERINFO_URL || null,
-  oidcClientId: process.env.OIDC_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || null,
-  oidcClientSecret: process.env.OIDC_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET || null,
+  oidcClientId:
+    process.env.OIDC_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || null,
+  oidcClientSecret:
+    process.env.OIDC_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET || null,
   oidcProviderName: process.env.OIDC_PROVIDER_NAME || 'Google',
   oidcEnabled: false,
   pfpUploadMaxSize: process.env.UPLOAD_PFP_MAX_SIZE || 5,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
-  base: '' // automatically set below
+  base: '', // automatically set below
 }
 
 if (config.guestPassword) config.wishlist.public = false
@@ -57,13 +65,16 @@ try {
 
 try {
   // Abusing the URL constructor to prevent the following code from erroring if we have a non-URL.
-  // eslint-disable-next-line no-new
   new URL(config.dbPrefix)
-  console.error('Error: Christmas Community no longer supports external CouchDB instances. DB_PREFIX must be a local path.')
+  console.error(
+    'Error: Christmas Community no longer supports external CouchDB instances. DB_PREFIX must be a local path.',
+  )
   process.exit(1)
-} catch {}
+} catch {
+  // Is not a valid URL, so we allow it
+}
 
-function appendSlash (path: string) {
+function appendSlash(path: string) {
   if (path.endsWith('/')) return path
   return path + '/'
 }

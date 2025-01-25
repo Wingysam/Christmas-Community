@@ -3,7 +3,7 @@ import express from 'express'
 export default function ({ config }) {
   const router = express.Router()
 
-  router.get('/', (req, res) => {
+  router.get('/', (_req, res) => {
     res.send({
       name: config.siteTitle,
       short_name: config.shortTitle,
@@ -15,9 +15,9 @@ export default function ({ config }) {
       icons: [
         {
           sizes: '1280x1280',
-          src: `${_CC.config.base}img/logo.png`
-        }
-      ]
+          src: `${_CC.config.base}img/logo.png`,
+        },
+      ],
     })
   })
 
