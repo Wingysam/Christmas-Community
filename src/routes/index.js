@@ -28,7 +28,7 @@ export default ({ db, config }) => {
     const filteredPool = unfilteredPool.filter(file => !rows.find(row => row.doc.pfp?.default === file))
     const pool = filteredPool.length ? filteredPool : unfilteredPool
 
-    user.pfp = { default: CC._.sample(pool) }
+    user.pfp = { default: _CC._.sample(pool) }
     await db.put(user)
   }
 
