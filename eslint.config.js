@@ -3,7 +3,7 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 
 /** @type {import('eslint').Linter.Config[]} */
- 
+
 export default [
   { ignores: ['src/static/libraries/**', 'built/**'] },
   {
@@ -38,4 +38,4 @@ export default [
       ],
     },
   },
-];
+]
