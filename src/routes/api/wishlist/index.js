@@ -1,11 +1,11 @@
 import express from 'express'
 
-export default function ({ db }) {
+export default function () {
   const router = express.Router()
 
-  router.get('/', (req, res) => {
+  router.get('/', (_req, res) => {
     res.send({
-      route: 'wishlist'
+      route: 'wishlist',
     })
   })
 

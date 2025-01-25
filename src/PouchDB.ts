@@ -4,5 +4,5 @@ import PouchFind from 'pouchdb-find'
 PouchDB.plugin(PouchFind)
 
 export default PouchDB.defaults({
-  prefix: config.dbPrefix
+  prefix: config.dbPrefix,
 })

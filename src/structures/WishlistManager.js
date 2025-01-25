@@ -1,11 +1,11 @@
 import { Wishlist } from './Wishlist.js'
 
 export class WishlistManager {
-  constructor () {
+  constructor() {
     this.wishlistsCache = new Map()
   }
 
-  async get (username) {
+  async get(username) {
     const cached = this.wishlistsCache.get(username)
     if (cached) return cached
 
@@ -14,7 +14,7 @@ export class WishlistManager {
     return wishlist
   }
 
-  async clearCache () {
+  async clearCache() {
     this.wishlistsCache = new Map()
   }
 }

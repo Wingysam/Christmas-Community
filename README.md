@@ -1,4 +1,5 @@
 # Christmas Community
+
 ![Docker Pulls](https://img.shields.io/docker/pulls/wingysam/christmas-community?style=for-the-badge)
 ![Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FWingysam%2FChristmas-Community%2Fmaster%2Fpackage.json&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-JavaScript-DDA000?style=for-the-badge)
@@ -8,29 +9,35 @@
 Web app for your family's Christmas shopping
 
 ## Purpose
+
 To create a simple place for your entire family to use to find gifts that people want, and to avoid double-gifting.
 
 ## [Discord Server](https://discord.gg/Dxjh68gFzV)
+
 To discuss the use and development of Christmas Community, you can join the Discord server at [discord.gg/Dxjh68gFzV](https://discord.gg/Dxjh68gFzV). This is also a good place to get announcements of new updates.
 
 ## Screenshots
+
 ![Screenshot](screenshots/main.png)
 ![Screenshot](screenshots/list.png)
 ![Screenshot](screenshots/link-not-required.png)
 ![Screenshot](screenshots/name-from-link.png)
 
 ## Root URL
+
 If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_URL` to that path. For legacy reasons, `ROOT_PATH` also does this. `ROOT_URL` takes precedence over `ROOT_PATH`.
 
 ## Docker
+
 ```
 docker run --detach --name christmas-community -p 80:80 --restart always wingysam/christmas-community
 ```
 
 ## Docker Compose
+
 ```yml
 ---
-version: "3"
+version: '3'
 services:
   christmas-community:
     image: wingysam/christmas-community
@@ -55,6 +62,7 @@ services:
 ```
 
 ## Unraid
+
 Unraid users can install Christmas Community by searching for "Christmas Community" in the Community Apps store and installing it from grtgbln's repository. Note that this is an unofficial distribution not controlled by the maintainer of Christmas Community.
 
 ## Install
@@ -66,7 +74,9 @@ npm install
 ```
 
 ## Configuration
+
 Add environment variables with a .env. Example:
+
 ```sh
 ## Core Settings
 # Where to store databases, can be a CouchDB compatible server or directory.
@@ -135,7 +145,7 @@ MARKDOWN=false
 # GOOGLE_CLIENT_SECRET=
 
 ## OIDC Provider Details
-# You can configure single sign-on to your Christmas Community instance using any OIDC provider. 
+# You can configure single sign-on to your Christmas Community instance using any OIDC provider.
 # Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
 # OIDC_CLIENT_ID=
 # OIDC_CLIENT_SECRET=
@@ -150,25 +160,31 @@ UPLOAD_PFP_MAX_SIZE=5
 ```
 
 ## Default Profile Pictures
+
 To replace the default snowman profile pictures, replace the files in `static/img/default-pfps`. In docker, mount `/usr/src/app/src/static/img/default-pfps`.
 
 ## Startup
+
 ```sh
 npm start
 ```
 
 ## Setup
+
 Visit `/` on the HTTP server to add an admin account.
 
 ## Adding Sites
+
 Christmas Community gets data about products automatically with [Wingysam/get-product-data](https://github.com/Wingysam/get-product-data). Please submit pull requests for new sites or fixes for changes to existing sites!
 
 ## Groups
+
 Christmas Community does not yet support having multiple families in one instance. This is a planned feature that will, for example, allow you to have one group for your mom's side of the family and one group for your dad's side of the family, where both groups can access your wishlist but not each others' wishlists. A fork of Christmas Community that has this feature does exist, but most likely will not receive all new features added to the main project. It was not merged into this project because the architecture of Christmas Community prevented implementing it in a maintainable way before some refactoring is done.
 
 [Christmas-Community-Groups](https://github.com/jskiddie/Christmas-Community-Groups)
 
 # About Developer
+
 Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev). Please [hire me](https://wingysam.xyz/hire).
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C2347HB)

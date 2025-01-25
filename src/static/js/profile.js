@@ -1,5 +1,4 @@
 document.querySelector('.upload-pfp-no-js').remove()
-
 ;(() => {
   const uploadPfp = document.querySelector('.upload-pfp-yes-js')
   uploadPfp.classList.remove('is-hidden')
