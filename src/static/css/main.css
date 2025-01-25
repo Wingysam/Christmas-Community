@@ -74,3 +74,25 @@ summary{
 summary:hover {
   cursor: pointer;
 }
+
+.hamburger {
+	font-size: 24px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.hidden-menu {
+	display: none;
+	margin-top: 10px;
+}
+
+.hidden-menu button {
+	display: block;
+	margin: 5px 0;
+}
+
+.hidden-menu.active {
+	display: block;
+}
+

@@ -35,6 +35,7 @@ export default function (db) {
         if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
       }
     }
+    console.log(docs)
     res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
   })
 
@@ -100,7 +101,6 @@ export default function (db) {
     } catch (error) {
       req.flash('error', `${error}`)
     }
-
     res.redirect(`/wishlist/${req.params.user}`)
   })
 

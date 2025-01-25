@@ -221,6 +221,7 @@ export const strings = {
   WISHLIST_ARCHIVE_GUARD: 'You are not allowed to archive this item',
   WISHLIST_RESTORE_GUARD: 'You are not allowed to restore this item',
   WISHLIST_DELETE_CONFIRM: 'Are you sure you want to delete this item?',
+  WISHLIST_ITEM_OPTIONS: 'Options',
   WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
   WISHLISTS_TITLE: `${_CC.config.siteTitle} - Wishlists`,

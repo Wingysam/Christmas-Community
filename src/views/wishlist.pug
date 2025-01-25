@@ -15,23 +15,17 @@ mixin wishlistTable(items, archived)
         th(style='width: 25%;')= lang('WISHLIST_NAME')
         th(style='width: 50%;')= lang('WISHLIST_NOTE')
         th(style='width: 10%;')= lang('WISHLIST_PRICE')
-        if req.params.user === req.user._id
-          th= lang('WISHLIST_EDIT_ITEM')
         th= lang('WISHLIST_ADDED_BY')
         if req.params.user === req.user._id && !archived
-          th= lang('WISHLIST_MOVE_TOP')
           th= lang('WISHLIST_MOVE_UP')
           th= lang('WISHLIST_MOVE_DOWN')
-          th= lang('WISHLIST_MOVE_BOTTOM')
         else
           if !archived
             th= lang('WISHLIST_PLEDGE')
-        if req.params.user === req.user._id
-          th= lang('WISHLIST_DELETE')
         if archived
-          th= lang('WISHLIST_RESTORE')
+          th= " "
         else
-          th= lang('WISHLIST_ARCHIVE')
+          th= " "
       tbody
         each item, index in items
           tr(id=item.id)
@@ -67,34 +61,11 @@ mixin wishlistTable(items, archived)
             else
               td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
             td.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
-            if req.params.user === req.user._id
-              td(data-label=lang('WISHLIST_EDIT_ITEM'))
-                form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;'
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.far.fa-edit
             if item.addedBy === '_CCUNKNOWN'
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= lang('WISHLIST_ADDED_BY_GUEST')
             else 
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
             if req.params.user === req.user._id && !archived
-              td(data-label=lang('WISHLIST_MOVE_ITEM_TOP'))
-                form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;',
-                        disabled=index === 0
-                      )
-                        span.icon
-                          i.fas.fa-angle-double-up
               td(data-label=lang('WISHLIST_MOVE_ITEM_UP'))
                 form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
@@ -117,17 +88,6 @@ mixin wishlistTable(items, archived)
                       )
                         span.icon
                           i.fas.fa-arrow-down
-              td(data-label=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
-                form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;',
-                        disabled=index === items.length - 1
-                      )
-                        span.icon
-                          i.fas.fa-angle-double-down
             else
               if !archived
                 td(data-label=lang('WISHLIST_PLEDGE'))
@@ -147,45 +107,86 @@ mixin wishlistTable(items, archived)
                     else
                       span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
             if req.params.user === req.user._id
-              td(data-label='Delete Item')
-                form.inline(
-                  method='POST',
-                  action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`,
-                  onsubmit=`return confirm("${lang('WISHLIST_DELETE_CONFIRM')}")`
-                )
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;',
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.fas.fa-trash
-              if archived
-                td(data-label='Unarchive Item')
-                  form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unarchive/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=item.addedBy !== req.user._id
-                        )
-                          span.icon
-                            i.fas.fa-undo
-              else
-                td(data-label='Archive Item')
-                  form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=item.addedBy !== req.user._id
-                        )
-                          span.icon
-                            i.fas.fa-archive
+              td(data-label=lang('WISHLIST_ITEM_OPTIONS'))
+                button.hamburger(onclick="toggleMenu(this)") &#9776;
+                //- Hidden menu of buttons
+                div.hidden-menu.hidden
+                  if req.params.user === req.user._id
+                    form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
+                      .field.inline
+                        .control.inline
+                          button.button.is-text(
+                            type='submit',
+                            style='text-decoration: none;'
+                            disabled=item.addedBy !== req.user._id
+                          )
+                            span.icon(title=lang('WISHLIST_EDIT_ITEM'))
+                              i.far.fa-edit
+                      if !archived
+                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=index === 0
+                              )
+                                span.icon(title=lang('WISHLIST_MOVE_ITEM_UP'))
+                                  i.fas.fa-arrow-up
+                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=index === items.length - 1
+                              )
+                                span.icon(title=lang('WISHLIST_MOVE_ITEM_DOWN'))
+                                  i.fas.fa-arrow-down 
+                      form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
+                        .field.inline
+                          .control.inline
+                            button.button.is-text(
+                              type='submit',
+                              style='text-decoration: none;',
+                              disabled=index === 0
+                            )
+                              span.icon(title=lang('WISHLIST_MOVE_ITEM_TOP'))
+                                i.fas.fa-angle-double-up
+                      form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                        .field.inline
+                          .control.inline
+                            button.button.is-text(
+                              type='submit',
+                              style='text-decoration: none;',
+                              disabled=index === items.length - 1
+                            )
+                              span.icon(title=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
+                                i.fas.fa-angle-double-down
+
+                      if !archived
+                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=item.addedBy !== req.user._id
+                              )
+                                span.icon(title=lang('WISHLIST_ARCHIVE'))
+                                  i.fas.fa-archive
+                      else
+                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/restore/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=item.addedBy !== req.user._id
+                              )
+                                span.icon(title=lang('WISHLIST_RESTORE'))
+                                  i.fas.fa-undo
+                  
 
 mixin wishlistBox(items, archived)
   each item, index in items
@@ -352,7 +353,7 @@ block content
   details
     summary= lang('WISHLIST_ARCHIVED_ITEMS')
     if global._CC.config.wishlist.table
-      +wishlistTable(items.filter(item => !item.archived), true)
+      +wishlistTable(items.filter(item => item.archived), true)
     else 
       +wishlistBox(items.filter(item => item.archived), true)
 
