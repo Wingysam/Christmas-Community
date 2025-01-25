@@ -30,7 +30,7 @@ block content
                     label.label= lang('PROFILE_PFP_UPLOAD')
                     .field.has-addons
                       .control
-                        input.input(type="file" name="profilePicture")
+                        input.input(type="file" name="profilePicture", accept="image/png, image/jpeg, image/jpg")
                       .control
                         button.button.is-primary(type='submit')
                           span.icon
@@ -43,7 +43,7 @@ block content
                           span.icon
                             i.fas.fa-upload
                           span= lang('PROFILE_PFP_UPLOAD')
-                        input.input.is-hidden#profilePicture(type="file" name="profilePicture")
+                        input.input.is-hidden#profilePicture(type="file" name="profilePicture", accept="image/png, image/jpeg, image/jpg")
   h2= lang('PROFILE_SHARED_INFORMATION')
   form(action=`${_CC.config.base}profile/info`, method='POST')
     .columns.is-multiline.is-mobile
