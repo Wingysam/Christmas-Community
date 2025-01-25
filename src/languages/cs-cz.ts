@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Tato notifikace se zobrazuje pouze správcům.</span>`,
   WISHLIST_ADD: 'Přidat položku na seznam přání',
   WISHLIST_ADDED_BY_USER: addedBy => `Přidáno: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Hostující Uživatel",
   WISHLIST_ADDED_BY: 'Přidáno',
   WISHLIST_CONFLICT: 'Položky byly přidány příliš rychle po sobě. Zkuste to znovu.',
   WISHLIST_DELETE: 'Odstranit',

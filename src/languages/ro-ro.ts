@@ -139,6 +139,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Acest mesaj poate fi văzut numai de administratori</span>`,
   WISHLIST_ADD: 'Adăugați articol la lista de dorințe',
   WISHLIST_ADDED_BY_USER: addedBy => `Adăugat de: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Utilizator Invitat",
   WISHLIST_ADDED_BY: 'Adăugat de',
   WISHLIST_CONFLICT: 'Prea multe articole sunt adăugate în același timp. Vă rugăm încercați mai târziu.',
   WISHLIST_DELETE: 'Ștergeți',

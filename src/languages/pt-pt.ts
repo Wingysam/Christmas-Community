@@ -162,6 +162,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Esta mensagem é apenas visivel para admins</span>`,
   WISHLIST_ADD: 'Adicionar item á lista',
   WISHLIST_ADDED_BY_USER: addedBy => `Adicionado por: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Utilizador Convidado",
   WISHLIST_ADDED_BY: 'Adicionado por',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Adicionado item à lista.',
   WISHLIST_CONFLICT: 'Items estão a ser adicionados demasiado rápido. Por favor tente novamente.',

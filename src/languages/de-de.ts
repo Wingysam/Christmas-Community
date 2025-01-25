@@ -150,6 +150,7 @@ export const strings = {
     <span class="has-text-info" style="float: right;">Diese Nachricht ist nur für Admins sichtbar</span>`,
   WISHLIST_ADD: 'Eintrag zur Wunschliste hinzufügen',
   WISHLIST_ADDED_BY_USER: addedBy => `Hinzugefügt von: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: "Gastbenutzer",
   WISHLIST_ADDED_BY: 'Hinzugefügt von',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Eintrag wurde zur Wunschliste hinzugefügt.',
   WISHLIST_CONFLICT: 'Einträge werden zu schnell hinzugefügt. Bitte probier es nocheinmal.',

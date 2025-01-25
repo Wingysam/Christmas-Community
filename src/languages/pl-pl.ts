@@ -162,6 +162,7 @@ export const strings = {
 	WISHLIST_ADD: 'Dodaj prezent do listy życzeń',
 	WISHLIST_ADD_NEW: 'Dodaj prezent',
 	WISHLIST_ADDED_BY_USER: addedBy => `Dodane przez: ${addedBy}`,
+	WISHLIST_ADDED_BY_GUEST: "Użytkownik Gość",
 	WISHLIST_ADDED_BY: 'Dodane przez',
 	WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Dodano przedmiot do lisy życzeń',
 	WISHLIST_CONFLICT: 'Przedmioty są dodawane za szybko. Spróbuj ponownie później.',
