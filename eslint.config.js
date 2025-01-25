@@ -3,7 +3,7 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 
 /** @type {import('eslint').Linter.Config[]} */
-//eslint-disable-line
+ 
 export default [
   { ignores: ['src/static/libraries/**', 'built/**'] },
   {
