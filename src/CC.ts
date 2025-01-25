@@ -24,4 +24,12 @@ CC.wishlistManager = new WishlistManager()
 
 CC.updateNotice = (await import('./UpdateNotice.js')).default
 
+CC.getUrlForPfp = pfp => {
+  if (pfp?.url) return pfp.url
+  if (pfp?.file) return `${CC.config.base}uploads/${pfp.file}`
+  if (pfp?.default) return `${CC.config.base}img/default-pfps/${pfp.default}`
+  console.error('Invalid pfp', pfp)
+  throw new Error('Invalid pfp')
+}
+
 export default CC

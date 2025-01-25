@@ -13,18 +13,6 @@ export default function ({ db, config, ensurePfp }) {
     res.render('profile', { title: _CC.lang('PROFILE_TITLE', req.user._id) })
   })
 
-  router.post('/pfp', verifyAuth(), async (req, res) => {
-    if (config.pfp) {
-      req.user.pfp = req.body.image
-      await db.put(req.user)
-      if (!req.user.pfp) await ensurePfp(req.user._id)
-      req.flash('success', _CC.lang('PROFILE_SAVE_PFP_SUCCESS'))
-    } else {
-      req.flash('error', _CC.lang('PROFILE_SAVE_PFP_DISABLED'))
-    }
-    res.redirect('/profile')
-  })
-
   const INFO_KEYS = [
     'shoeSize', 'ringSize', 'dressSize',
     'sweaterSize', 'shirtSize', 'pantsSize',
@@ -100,8 +88,8 @@ export default function ({ db, config, ensurePfp }) {
       return res.redirect('/profile')
     }
 
-    // Validate file size (e.g., 2 MB limit)
-    const maxSize = _CC.config.pfpUploadMaxSize * 1024 * 1024 // 2 MB
+    // Validate file size (e.g., n MB limit)
+    const maxSize = _CC.config.pfpUploadMaxSize * 1024 * 1024 // n MB
     if (profilePicture.size > maxSize) {
       req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_SIZE'))
       return res.redirect('/profile')
@@ -113,8 +101,7 @@ export default function ({ db, config, ensurePfp }) {
     try {
       await profilePicture.mv(uploadPath)
       // Update the user object
-      const filePath = `/uploads/${fileName}`
-      req.user.pfp = filePath
+      req.user.pfp = { file: fileName }
       await db.put(req.user)
       req.flash('success', _CC.lang('PROFILE_PFP_UPLOAD_SUCCESS'))
     } catch (err) {
@@ -122,21 +109,12 @@ export default function ({ db, config, ensurePfp }) {
       req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_ERROR'))
     }
 
-    // Check if file exists before deleting
-    const oldPfpPath = path.join(_CC.uploadDir, path.basename(oldPfp))
-    fs.access(oldPfpPath, fs.constants.F_OK, (err) => {
-      if (err) {
-        console.error(`File not found: ${oldPfpPath}`)
-      } else {
-        fs.unlink(oldPfpPath, (err) => {
-          if (err) {
-            console.error(`Error deleting file: ${err}`)
-          } else {
-            console.log(`File deleted: ${oldPfpPath}`)
-          }
-        })
-      }
-    })
+    if (oldPfp?.file) {
+      try {
+        // Delete old profile picture if it exists
+        await fs.promises.unlink(path.join(_CC.uploadDir, oldPfp.file))
+      } catch {}
+    }
 
     res.redirect('/profile')
   })

@@ -19,6 +19,7 @@ import { customAlphabet } from 'nanoid'
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
 import logger from './logger.js'
+import { doDbMigrations } from './dbMigration.js'
 
 // from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
 const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
@@ -26,6 +27,8 @@ const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVER
 await mkdirp(config.dbPrefix)
 _CC.uploadDir = path.join(config.dbPrefix, 'uploads')
 await mkdirp(_CC.uploadDir)
+
+await doDbMigrations()
 
 const app = express()
 app.set('base', config.base)

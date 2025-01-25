@@ -21,7 +21,7 @@ block content
             .columns
               .column.is-narrow(style='width: 10em;')
                 .image.is-square(style='display: inline-block; width: 100%;')
-                  img.is-rounded(src=req.user.pfp, style='object-fit: cover;')
+                  img.is-rounded(src=_CC.getUrlForPfp(req.user.pfp), style='object-fit: cover;')
               .column.is-narrow
               .column
                 span.is-size-3= req.user._id
