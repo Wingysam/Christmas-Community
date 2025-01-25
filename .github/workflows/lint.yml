@@ -29,7 +29,7 @@ jobs:
         run: npm install
 
       - name: Run linters
-        uses: rkuykendall/lint-action@v2
+        uses: rkuykendall/lint-action@master
         with:
           auto_fix: true
           eslint: true
