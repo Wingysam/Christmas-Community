@@ -125,6 +125,8 @@ LISTS_PUBLIC=false
 TABLE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
+# Auto archive pledges
+AUTO_ARCHIVE_PLEDGES=false
 
 ## Custom HTML Snippets
 # These are inserted into specific locations in the relevant page
@@ -153,7 +155,6 @@ MARKDOWN=false
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
-
 
 # Profile picture upload max size in MB
 UPLOAD_PFP_MAX_SIZE=5
