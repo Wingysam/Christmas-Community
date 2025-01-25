@@ -102,7 +102,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Nuværende adgangskode er påkrævet',
   PROFILE_PASSWORD_SUCCESS: 'Ændringerne er gemt.',
   PROFILE_PASSWORD_TITLE: name => `Profilindstillinger - Adgangskode - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'Billedlink',
   PROFILE_SAVE_PFP_DISABLED: 'Profilbilleder er deaktiveret',
   PROFILE_SAVE_PFP_SUCCESS: 'Profilbilledet er gemt.',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Ændre adgangskode',

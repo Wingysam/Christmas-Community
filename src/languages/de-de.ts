@@ -106,7 +106,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Altes Passwort wird benötigt',
   PROFILE_PASSWORD_SUCCESS: 'Passwort erfolgreich geändert!',
   PROFILE_PASSWORD_TITLE: name => `Profileinstellungen - Passwort - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'Bild-URL',
   PROFILE_PHONE_MODEL: 'Telefon-Modell',
   PROFILE_RING_SIZE: 'Ringgröße',
   PROFILE_SAVE_PFP_DISABLED: 'Profilbilder sind deaktiviert.',

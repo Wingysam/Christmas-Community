@@ -102,7 +102,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Oud wachtwoord is verplicht',
   PROFILE_PASSWORD_SUCCESS: 'Aanpassingen opgeslagen!',
   PROFILE_PASSWORD_TITLE: name => `Profielinstellingen - Wachtwoord - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'Foto URL',
   PROFILE_SAVE_PFP_DISABLED: 'Profielfoto\'s zijn uitgeschakeld.',
   PROFILE_SAVE_PFP_SUCCESS: 'Profielfoto opgeslagen!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Verander wachtwoord',

@@ -103,7 +103,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'L\'ancien mot de passe est requis',
   PROFILE_PASSWORD_SUCCESS: 'Les modifications on été enregistré avec succès!',
   PROFILE_PASSWORD_TITLE: name => `Paramètres de profil - Mot de passe - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'URL de l\'Image',
   PROFILE_SAVE_PFP_DISABLED: 'Les photos de profil sont désactivées.',
   PROFILE_SAVE_PFP_SUCCESS: 'Photo de profil enregistrée !',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Changer le mot de passe',

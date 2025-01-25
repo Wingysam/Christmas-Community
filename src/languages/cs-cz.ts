@@ -102,7 +102,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Nevyplněno původní heslo',
   PROFILE_PASSWORD_SUCCESS: 'Heslo úspěšně změněno!',
   PROFILE_PASSWORD_TITLE: name => `Nastavení profilu - Heslo - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'URL obrázku',
   PROFILE_SAVE_PFP_DISABLED: 'Profilové obrázky jsou zakázané',
   PROFILE_SAVE_PFP_SUCCESS: 'Profilový obrázek úspěšně uložen!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Změnit heslo',

@@ -116,7 +116,6 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_OLD: 'Password Anterior é necessária',
   PROFILE_PASSWORD_SUCCESS: 'Alterações gravadas com sucesso successfully!',
   PROFILE_PASSWORD_TITLE: name => `Opções de perfil - Password - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'URL de imagem',
   PROFILE_PHONE_MODEL: 'Modelo de telefone/telemóvel',
   PROFILE_RING_SIZE: 'Tamanho de anel',
   PROFILE_SAVE_PFP_DISABLED: 'Imagens de perfil estão desactivadas.',

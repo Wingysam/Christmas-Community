@@ -19,13 +19,16 @@ import { customAlphabet } from 'nanoid'
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
 import logger from './logger.js'
+import { doDbMigrations } from './dbMigration.js'
 
 // from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
 const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
 
-if (!config.dbPrefix.startsWith('http')) {
-  await mkdirp(config.dbPrefix)
-}
+await mkdirp(config.dbPrefix)
+_CC.uploadDir = path.join(config.dbPrefix, 'uploads')
+await mkdirp(_CC.uploadDir)
+
+await doDbMigrations()
 
 const app = express()
 app.set('base', config.base)
@@ -36,6 +39,8 @@ app.use((req, res, next) => {
   if (!req.session?.passport || Object.keys(req.session?.passport)?.length === 0) { res.clearCookie('christmas_community.connect.sid', { path: '/wishlist' }) }
   next()
 })
+
+app.use('/uploads', express.static(_CC.uploadDir))
 
 const db = _CC.usersDb
 
@@ -59,7 +64,7 @@ passport.use('local', new LocalStrategy(
 
 if (config.oidcEnabled) {
   passport.use('oidc-login', new OpenIDConnectStrategy({
-    issuer: config.oidcIssuer ,
+    issuer: config.oidcIssuer,
     authorizationURL: config.oidcAuthorizationURL,
     tokenURL: config.oidcTokenURL,
     userInfoURL: config.oidcUserInfoURL,
@@ -91,7 +96,7 @@ if (config.oidcEnabled) {
   ))
 
   passport.use('oidc-link', new OpenIDConnectStrategy({
-    issuer: config.oidcIssuer ,
+    issuer: config.oidcIssuer,
     authorizationURL: config.oidcAuthorizationURL,
     tokenURL: config.oidcTokenURL,
     userInfoURL: config.oidcUserInfoURL,

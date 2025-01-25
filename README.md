@@ -130,6 +130,7 @@ MARKDOWN=false
 ## Google Client Details
 # You can configure single sign-on to your Christmas Community instance using Google accounts. Read this guide for details of what to configure on the Google side: https://developers.google.com/identity/openid-connect/openid-connect
 # Once you've created a client ID and secret in your Google project use the below environment variables to enable SSO
+
 # GOOGLE_CLIENT_ID=
 # GOOGLE_CLIENT_SECRET=
 
@@ -142,6 +143,10 @@ MARKDOWN=false
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
+
+
+# Profile picture upload max size in MB
+UPLOAD_PFP_MAX_SIZE=5
 ```
 
 ## Default Profile Pictures
