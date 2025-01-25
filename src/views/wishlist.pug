@@ -22,10 +22,7 @@ mixin wishlistTable(items, archived)
         else
           if !archived
             th= lang('WISHLIST_PLEDGE')
-        if archived
-          th= " "
-        else
-          th= " "
+        th= lang('WISHLIST_ITEM_OPTIONS')
       tbody
         each item, index in items
           tr(id=item.id)
