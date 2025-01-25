@@ -8,7 +8,7 @@ mixin wishlistDetails(wishlist, onlyShowAddedByUser)
         i.fas.fa-chevron-down
     ul.wishlist-dropdown
       for item in wishlist
-        if !item.archived && onlyShowAddedByUser === undefined || item.addedBy === onlyShowAddedByUser
+        if (!item.archived && onlyShowAddedByUser === undefined) || item.addedBy === onlyShowAddedByUser
           li
             if item.pledgedBy && !onlyShowAddedByUser
               strike= item.name
