@@ -6,10 +6,10 @@ on:
 jobs:
     contrib-readme-job:
         runs-on: ubuntu-latest
-        name: A job to automate contrib in readme
+        name: Update README contributors
         if: github.repository_owner == 'Wingysam'
         steps:
-            - name: Contribute List
+            - name: Update contributor list
               uses: akhilmhdh/contributors-readme-action@v2.3.10
               with:
                   use_username: true
