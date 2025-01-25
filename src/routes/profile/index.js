@@ -1,8 +1,9 @@
 import verifyAuth from '../../middlewares/verifyAuth.js'
+import fileUpload from 'express-fileupload'
 import bcrypt from 'bcrypt-nodejs'
 import express from 'express'
 import path from 'path'
-import fs from 'fs';
+import fs from 'fs'
 
 export default function ({ db, config, ensurePfp }) {
   const router = express.Router()
@@ -81,66 +82,62 @@ export default function ({ db, config, ensurePfp }) {
     })
   })
 
-  router.post('/upload-pfp', verifyAuth(), async (req, res) => {
-
+  router.post('/upload-pfp', fileUpload(), verifyAuth(), async (req, res) => {
     // Check that a file was uploaded
-    if (!req.files || !req.files.profilePicture) {
-      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_NO_FILE'));
-      return res.redirect('/profile');
-  }
+    if (!req.files?.profilePicture) {
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_NO_FILE'))
+      return res.redirect('/profile')
+    }
 
-    const profilePicture = req.files.profilePicture;
-    const allowedExtensions = /png|jpg|jpeg/;
-    const extName = path.extname(profilePicture.name).toLowerCase();
-    const oldPfp = req.user.pfp;
+    const profilePicture = req.files.profilePicture
+    const allowedExtensions = /png|jpg|jpeg/
+    const extName = path.extname(profilePicture.name).toLowerCase()
+    const oldPfp = req.user.pfp
 
     // Validate file type
     if (!allowedExtensions.test(path.extname(profilePicture.name).toLowerCase()) || !allowedExtensions.test(profilePicture.mimetype)) {
-      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_TYPE'));
-      return res.redirect('/profile');
-  }
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_TYPE'))
+      return res.redirect('/profile')
+    }
 
     // Validate file size (e.g., 2 MB limit)
-    const maxSize = _CC.config.pfpUploadMaxSize * 1024 * 1024; // 2 MB
+    const maxSize = _CC.config.pfpUploadMaxSize * 1024 * 1024 // 2 MB
     if (profilePicture.size > maxSize) {
-      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_SIZE'));
-      return res.redirect('/profile');
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_FILE_SIZE'))
+      return res.redirect('/profile')
     }
 
     // Generate unique filename and save file
-    const fileName = `${Date.now()}${extName}`;
-    const uploadPath = path.join(_CC.uploadDir, fileName);
+    const fileName = `${Date.now()}${extName}`
+    const uploadPath = path.join(_CC.uploadDir, fileName)
     try {
-        await profilePicture.mv(uploadPath);
-        // Update the user object
-        const filePath = `/uploads/${fileName}`;
-        req.user.pfp = filePath;
-        await db.put(req.user);
-        req.flash('success', _CC.lang('PROFILE_PFP_UPLOAD_SUCCESS'));
-    }
-    catch (err) {
-        console.error(err);
-        req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_ERROR'));
+      await profilePicture.mv(uploadPath)
+      // Update the user object
+      const filePath = `/uploads/${fileName}`
+      req.user.pfp = filePath
+      await db.put(req.user)
+      req.flash('success', _CC.lang('PROFILE_PFP_UPLOAD_SUCCESS'))
+    } catch (err) {
+      console.error(err)
+      req.flash('error', _CC.lang('PROFILE_PFP_UPLOAD_ERROR'))
     }
 
     // Check if file exists before deleting
-    const oldPfpPath = path.join(_CC.uploadDir, path.basename(oldPfp));
+    const oldPfpPath = path.join(_CC.uploadDir, path.basename(oldPfp))
     fs.access(oldPfpPath, fs.constants.F_OK, (err) => {
-        if (err) {
-            console.error(`File not found: ${oldPfpPath}`);
-        }
-        else {
-            fs.unlink(oldPfpPath, (err) => {
-                if (err) {
-                    console.error(`Error deleting file: ${err}`);
-                }
-                else {
-                    console.log(`File deleted: ${oldPfpPath}`);
-                }
-            });
-        }
-    });
-    
+      if (err) {
+        console.error(`File not found: ${oldPfpPath}`)
+      } else {
+        fs.unlink(oldPfpPath, (err) => {
+          if (err) {
+            console.error(`Error deleting file: ${err}`)
+          } else {
+            console.log(`File deleted: ${oldPfpPath}`)
+          }
+        })
+      }
+    })
+
     res.redirect('/profile')
   })
 

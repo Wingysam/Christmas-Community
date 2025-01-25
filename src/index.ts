@@ -15,7 +15,6 @@ import BodyParser from 'body-parser'
 import CookieParser from 'cookie-parser'
 import ExpressPouchDB from 'express-pouchdb'
 import { customAlphabet } from 'nanoid'
-import fileUpload from 'express-fileupload'
 
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
@@ -38,7 +37,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(fileUpload())
 app.use('/uploads', express.static(_CC.uploadDir))
 
 const db = _CC.usersDb
