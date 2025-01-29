@@ -11,14 +11,15 @@ mixin wishlistTable(items, archived)
     table.table.has-mobile-cards
       thead
         th #
-        th(style='width: 15%;')= lang('WISHLIST_IMAGE')
-        th(style='width: 25%;')= lang('WISHLIST_NAME')
-        th(style='width: 50%;')= lang('WISHLIST_NOTE')
+        th(style='width: 10%;')= lang('WISHLIST_IMAGE')
+        th(style='width: 20%;')= lang('WISHLIST_NAME')
+        th(style='width: 30%;')= lang('WISHLIST_NOTE')
         th(style='width: 10%;')= lang('WISHLIST_PRICE')
         th= lang('WISHLIST_ADDED_BY')
-        if !req.params.user === req.user._id && !archived
-          th= lang('WISHLIST_PLEDGE')
-        th= lang('WISHLIST_ITEM_OPTIONS')
+        if !(req.params.user === req.user._id)
+          th(style='width: 10%;')= lang('WISHLIST_PLEDGE')
+        else
+          th(style='width: 10%;')= lang('WISHLIST_ITEM_OPTIONS')
       tbody
         each item, index in items
           tr(id=item.id)
@@ -58,9 +59,9 @@ mixin wishlistTable(items, archived)
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= lang('WISHLIST_ADDED_BY_GUEST')
             else 
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
-            if !req.params.user === req.user._id && !archived
+            if !(req.params.user === req.user._id)
               td(data-label=lang('WISHLIST_PLEDGE'))
-                if req.params.user !== req.user._id && !item.pledgedBy
+                if req.params.user !== req.user._id && !item.pledgedBy && !item.archived
                   form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
                     .field.inline
                       .control.inline
