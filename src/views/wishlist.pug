@@ -105,7 +105,7 @@ mixin wishlistTable(items, archived)
                       span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
             if req.params.user === req.user._id
               td(data-label=lang('WISHLIST_ITEM_OPTIONS'))
-                button.hamburger(onclick="toggleMenu(this)") &#9776;
+                button.hamburger(onclick="_toggleMenu(this)") &#9776;
                 //- Hidden menu of buttons
                 div.hidden-menu.hidden
                   if req.params.user === req.user._id

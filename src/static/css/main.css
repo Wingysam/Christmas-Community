@@ -110,36 +110,35 @@ img.logo-image {
 }
 
 .print-gift:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-summary{
-	font-weight: bold;
-	font-size: 18px;
-  }
+summary {
+  font-weight: bold;
+  font-size: 18px;
+}
 
 summary:hover {
   cursor: pointer;
 }
 
 .hamburger {
-	font-size: 24px;
-	background: none;
-	border: none;
-	cursor: pointer;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .hidden-menu {
-	display: none;
-	margin-top: 10px;
+  display: none;
+  margin-top: 10px;
 }
 
 .hidden-menu button {
-	display: block;
-	margin: 5px 0;
+  display: block;
+  margin: 5px 0;
 }
 
 .hidden-menu.active {
-	display: block;
+  display: block;
 }
-

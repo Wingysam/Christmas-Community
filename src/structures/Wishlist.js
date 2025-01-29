@@ -188,18 +188,17 @@ export class Wishlist {
     await this.save()
   }
 
-  async archive (id) {
+  async archive(id) {
     const item = await this.get(id)
     item.archived = true
     await this.save()
   }
 
-  async restore (id) {
+  async restore(id) {
     const item = await this.get(id)
     item.archived = false
     await this.save()
   }
-
 }
 
 function parseURL(string) {

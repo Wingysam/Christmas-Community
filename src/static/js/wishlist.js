@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-function toggleMenu(button) {
-  const menu = button.nextElementSibling;
-  menu.classList.toggle('active');
+function _toggleMenu(button) {
+  const menu = button.nextElementSibling
+  menu.classList.toggle('active')
 }
