@@ -142,3 +142,25 @@ summary:hover {
 .hidden-menu.active {
   display: block;
 }
+
+button.button.dropdown-item.is-text {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding-right: 10px; /* extra Spacing to push icons to the right a bunch */
+  text-decoration: none;
+}
+
+/* Ensure the text stays left-aligned */
+button.button.dropdown-item.is-text span {
+  grid-column: 1;
+  text-align: left;
+}
+
+/* Ensure the icon is pulled to the right */
+button.button.dropdown-item.is-text i {
+  grid-column: 3;
+  margin-left: auto;
+}
