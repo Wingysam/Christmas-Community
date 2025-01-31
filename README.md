@@ -381,14 +381,21 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/billboq">
+                    <img src="https://avatars.githubusercontent.com/u/139264339?v=4" width="100;" alt="billboq"/>
+                    <br />
+                    <sub><b>billboq</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/toastie89">
                     <img src="https://avatars.githubusercontent.com/u/19393929?v=4" width="100;" alt="toastie89"/>
                     <br />
                     <sub><b>toastie89</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/zethis">
                     <img src="https://avatars.githubusercontent.com/u/20169561?v=4" width="100;" alt="zethis"/>
