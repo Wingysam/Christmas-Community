@@ -163,3 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateArrow('price', sortBy)
   })
 })
+
+function _toggleMenu(button) {
+  const menu = button.nextElementSibling
+  menu.classList.toggle('active')
+}

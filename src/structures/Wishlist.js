@@ -97,6 +97,10 @@ export class Wishlist {
   async pledge(id, user) {
     const item = await this.get(id)
     item.pledgedBy = user
+
+    if (_CC.config.autoArchivePledges) {
+      item.archived = true
+    }
     await this.save()
   }
 
@@ -181,6 +185,18 @@ export class Wishlist {
       if (productData[key]) item[key] = productData[key]
     }
 
+    await this.save()
+  }
+
+  async archive(id) {
+    const item = await this.get(id)
+    item.archived = true
+    await this.save()
+  }
+
+  async restore(id) {
+    const item = await this.get(id)
+    item.archived = false
     await this.save()
   }
 }
