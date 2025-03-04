@@ -30,6 +30,7 @@ export default function ({ db, ensurePfp }) {
               admin: true,
               wishlist: [],
               oauthConnections: {},
+              pledgeOnly: false
             })
             resolve()
           },
