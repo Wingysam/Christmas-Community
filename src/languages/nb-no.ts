@@ -1,12 +1,14 @@
 export const momentLocale = 'nb'
 
 export const strings = {
-  _NOT_LOCALIZED: key => `${key} har ikke blitt oversatt til norsk enda.`,
+  _NOT_LOCALIZED: (key) => `${key} har ikke blitt oversatt til norsk enda.`,
   ADMIN_CLEAR_WISHLISTS_BUTTON: 'Tøm alle ønskelister',
-  ADMIN_CLEAR_WISHLISTS_DESCRIPTION: 'Dette vil umiddelbart og irreversibelt <b>slette alle ønskelister!</b> Vurder å ta en sikkerhetskopi av databasen før du bruker dette.',
+  ADMIN_CLEAR_WISHLISTS_DESCRIPTION:
+    'Dette vil umiddelbart og irreversibelt <b>slette alle ønskelister!</b> Vurder å ta en sikkerhetskopi av databasen før du bruker dette.',
   ADMIN_CLEAR_WISHLISTS_HEADER: 'Sletting av ønskelister',
   ADMIN_SETTINGS_CLEARDB_BUTTON: 'Tøm ønskelister',
-  ADMIN_SETTINGS_CLEARDB_DESCRIPTION: '<b>Advarsel</b>: Disse alternativene <b>ødelegger data</b>! Du bør ta en sikkerhetskopi av databasen før du bruker disse alternativene.',
+  ADMIN_SETTINGS_CLEARDB_DESCRIPTION:
+    '<b>Advarsel</b>: Disse alternativene <b>ødelegger data</b>! Du bør ta en sikkerhetskopi av databasen før du bruker disse alternativene.',
   ADMIN_SETTINGS_CLEARDB_HEADER: 'Dataødeleggelse',
   ADMIN_SETTINGS_CLEARDB_SUCCESS: 'Alle ønskelister ble tømt.',
   ADMIN_SETTINGS_HEADER: 'Administratorinnstillinger',
@@ -14,57 +16,74 @@ export const strings = {
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Legg til bruker',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'Ola',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: 'Brukernavn',
-  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY: 'Brukernavn kan ikke være tomt.',
-  ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN: 'Kunne ikke fjerne: bruker er administrator.',
-  ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: name => `Brukeren ${name} ble fjernet.`,
-  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN: 'brukeren er ikke en administrator',
+  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY:
+    'Brukernavn kan ikke være tomt.',
+  ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN:
+    'Kunne ikke fjerne: bruker er administrator.',
+  ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: (name) =>
+    `Brukeren ${name} ble fjernet.`,
+  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN:
+    'brukeren er ikke en administrator',
   ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SELF: 'Du kan ikke nedgradere egen konto.',
-  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS: name => `${name} er ikke lengre en administrator.`,
-  ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS: name => `Du er nå ${name}.`,
+  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS: (name) =>
+    `${name} er ikke lengre en administrator.`,
+  ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS: (name) => `Du er nå ${name}.`,
   ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED: 'Ingen brukernavn oppgitt',
-  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN: 'brukeren er allerede administrator',
-  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND: 'Brukeren ble ikke funnet.',
-  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS: name => `${name} er nå en administrator.`,
+  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN:
+    'brukeren er allerede administrator',
+  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND:
+    'Brukeren ble ikke funnet.',
+  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS: (name) =>
+    `${name} er nå en administrator.`,
   ADMIN_SETTINGS_USERS_EDIT_RENAMED_USER: 'Brukeren er omdøpt!',
-  ADMIN_SETTINGS_USERS_EDIT_SAME_NAME: 'Brukernavnet er det samme som det nye brukernavnet.',
+  ADMIN_SETTINGS_USERS_EDIT_SAME_NAME:
+    'Brukernavnet er det samme som det nye brukernavnet.',
   ADMIN_SETTINGS_USERS_EDIT: 'Rediger',
   ADMIN_SETTINGS_USERS_HEADER: 'Brukere',
   ADMIN_SETTINGS_VERSION_INFO: 'Versjonsinfo',
   ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: 'Denne kontoen er ikke bekreftet.',
-  ADMIN_USER_EDIT_ADMIN_ISADMIN: name => `${name} er en administrator.`,
-  ADMIN_USER_EDIT_ADMIN_NOTADMIN: name => `${name} er ikke en administrator.`,
+  ADMIN_USER_EDIT_ADMIN_ISADMIN: (name) => `${name} er en administrator.`,
+  ADMIN_USER_EDIT_ADMIN_NOTADMIN: (name) => `${name} er ikke en administrator.`,
   ADMIN_USER_EDIT_ADMIN: 'Administrator',
   ADMIN_USER_EDIT_CHANGE_NAME: 'Endre navn',
   ADMIN_USER_EDIT_CHANGE_USERNAME: 'Endre brukernavn',
   ADMIN_USER_EDIT_CONFIRMATION_LINK: 'Bekreftelseslenke',
   ADMIN_USER_EDIT_DELETE_ADMIN: 'Brukeren er administrator',
   ADMIN_USER_EDIT_DELETE_HEADER: 'Irreversibel sletting',
-  ADMIN_USER_EDIT_DELETE_USER: name => `Fjern bruker ${name}`,
+  ADMIN_USER_EDIT_DELETE_USER: (name) => `Fjern bruker ${name}`,
   ADMIN_USER_EDIT_DEMOTE_SELF: 'Du kan ikke nedgradere deg selv',
-  ADMIN_USER_EDIT_DEMOTE: name => `Nedgrader ${name}`,
-  ADMIN_USER_EDIT_EDITING_USER: name => `Redigerer bruker "${name}"`,
+  ADMIN_USER_EDIT_DEMOTE: (name) => `Nedgrader ${name}`,
+  ADMIN_USER_EDIT_EDITING_USER: (name) => `Redigerer bruker "${name}"`,
   ADMIN_USER_EDIT_GENERATE_NEW_LINK: 'Generer ny lenke',
-  ADMIN_USER_EDIT_IMPERSONATE_BUTTON: name => `Logg inn som ${name}`,
+  ADMIN_USER_EDIT_IMPERSONATE_BUTTON: (name) => `Logg inn som ${name}`,
   ADMIN_USER_EDIT_IMPERSONATE_HEADER: 'Logg inn som',
-  ADMIN_USER_EDIT_LINK_EXPIRY_FUTURE: fromNow => `Følgende lenke utløper ${fromNow}`, // fromNow is localized by moment
-  ADMIN_USER_EDIT_LINK_EXPIRY_PAST: fromNow => `Følgende lenke utløp ${fromNow}`,
-  ADMIN_USER_EDIT_PROMOTE: name => `Promoter ${name}`,
-  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_FUTURE: fromNow => `Den utløper ${fromNow}`,
-  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_PAST: fromNow => `Den utløp ${fromNow}`,
-  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK: 'Det finnes en gjennopprettingslenke for denne brukeren.',
+  ADMIN_USER_EDIT_LINK_EXPIRY_FUTURE: (fromNow) =>
+    `Følgende lenke utløper ${fromNow}`, // fromNow is localized by moment
+  ADMIN_USER_EDIT_LINK_EXPIRY_PAST: (fromNow) =>
+    `Følgende lenke utløp ${fromNow}`,
+  ADMIN_USER_EDIT_PROMOTE: (name) => `Promoter ${name}`,
+  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_FUTURE: (fromNow) =>
+    `Den utløper ${fromNow}`,
+  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK_EXPIRY_PAST: (fromNow) =>
+    `Den utløp ${fromNow}`,
+  ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK:
+    'Det finnes en gjennopprettingslenke for denne brukeren.',
   ADMIN_USER_EDIT_RESET_PASSWORD_HEADER: 'Nullstill passord',
   ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CANCEL: 'Slett gjennopprettingslenke',
   ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CREATE: 'Opprett gjennopprettingslenke',
   ADMIN_USER_EDIT_RESET_PASSWORD_LINK_REFRESH: 'Oppdater gjennopprettingslenke',
   ADMIN_USER_EDIT_USERNAME: 'Brukernavn',
   BACK_BUTTON: 'Tilbake',
-  CONFIRM_ACCOUNT_EXPIRED: 'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
+  CONFIRM_ACCOUNT_EXPIRED:
+    'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
   CONFIRM_ACCOUNT_HEADER_INVALID: `${_CC.config.siteTitle} | Ugyldig bekreftelseslenke`,
   CONFIRM_ACCOUNT_HEADER_VALID: `${_CC.config.siteTitle} | Bekreft konto`,
-  CONFIRM_ACCOUNT_INVALID: 'Denne bekreftelseslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
+  CONFIRM_ACCOUNT_INVALID:
+    'Denne bekreftelseslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
   CONFIRM_ACCOUNT_SET_PW_BUTTON: `Bli medlem av ${_CC.config.siteTitle}`,
   CONFIRM_ACCOUNT_SET_PW_PLACEHOLDER: 'pa$$ord!',
-  CONFIRM_ACCOUNT_SET_PW_TEXT: name => `Hei, ${name}! Vennligst sett ditt passord her.`,
+  CONFIRM_ACCOUNT_SET_PW_TEXT: (name) =>
+    `Hei, ${name}! Vennligst sett ditt passord her.`,
   CONFIRM_ACCOUNT_SUCCESS: `Velkommen til ${_CC.config.siteTitle}!`,
   LOGIN_BUTTON: 'Logg inn',
   LOGIN_PASSWORD_PLACEHOLDER: 'pa$$ord!',
@@ -77,11 +96,11 @@ export const strings = {
   NAVBAR_LOGOUT: 'Logg ut',
   NAVBAR_PROFILE: 'Profil',
   NAVBAR_WISHLIST: 'Min ønskeliste',
-  NOTE_BACK: name => `Tilbake til ${name}s ønskeliste`,
+  NOTE_BACK: (name) => `Tilbake til ${name}s ønskeliste`,
   NOTE_GET_PRODUCT_DATA: 'Hent produktdata',
   NOTE_GUARD: 'Ugyldig bruker',
   NOTE_IMAGE_URL: 'Bildelenke',
-  NOTE_MISSING_PROP: prop => `Mangler egenskap ${prop}`, // not really possible to localize this unfortunately
+  NOTE_MISSING_PROP: (prop) => `Mangler egenskap ${prop}`, // not really possible to localize this unfortunately
   NOTE_NAME: 'Navn',
   NOTE_NOTE: 'Notat',
   NOTE_PRICE: 'Pris',
@@ -101,17 +120,19 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_NEW: 'Nytt passord er påkrevd',
   PROFILE_PASSWORD_REQUIRED_OLD: 'Gammelt passord er påkrevd',
   PROFILE_PASSWORD_SUCCESS: 'Endringer ble lagret!',
-  PROFILE_PASSWORD_TITLE: name => `Profilinnstillinger - Passord - ${name}`,
-  PROFILE_PFP_IMAGE_URL: 'Bildelenke',
+  PROFILE_PASSWORD_TITLE: (name) => `Profilinnstillinger - Passord - ${name}`,
   PROFILE_SAVE_PFP_DISABLED: 'Profilbilder er deaktivert.',
   PROFILE_SAVE_PFP_SUCCESS: 'Profilbilde ble lagret!',
   PROFILE_SECURITY_CHANGE_PASSWORD: 'Endre passord',
   PROFILE_SECURITY: 'Sikkerhet',
-  PROFILE_TITLE: name => `Profilinnstillinger - ${name}`,
+  PROFILE_TITLE: (name) => `Profilinnstillinger - ${name}`,
   RESET_PASSWORD_BUTTON: 'Tilbakestill passord',
-  RESET_PASSWORD_GREETING_EXPIRED: 'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
-  RESET_PASSWORD_GREETING_INVALID: 'Denne gjenopprettingslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
-  RESET_PASSWORD_GREETING_VALID: name => `Hei, ${name}! Vennligst sett ditt passord her.`,
+  RESET_PASSWORD_GREETING_EXPIRED:
+    'Din gjenopprettingslenke er utløpt. Vennligst be om en ny.',
+  RESET_PASSWORD_GREETING_INVALID:
+    'Denne gjenopprettingslenken er ugyldig. Kanskje er den slettet, eller det mangler tegn på slutten av den?',
+  RESET_PASSWORD_GREETING_VALID: (name) =>
+    `Hei, ${name}! Vennligst sett ditt passord her.`,
   RESET_PASSWORD_HEADER_INVALID: `${_CC.config.siteTitle} | Ugyldig gjenopprettingslenke`,
   RESET_PASSWORD_HEADER_VALID: `${_CC.config.siteTitle} | Nullstill passord`,
   RESET_PASSWORD_PASSWORD_PLACEHOLDER: 'pa$$ord!',
@@ -125,7 +146,8 @@ export const strings = {
   SETUP_USERNAME_PLACEHOLDER: 'Ola',
   SETUP_USERNAME: 'Brukernavn',
   SUPPORTED_SITES_HEADER: 'Støttede nettsteder',
-  SUPPORTED_SITES_TEXT: 'Mangler en nettsted, eller har problemer? Skriv en feilrapport <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">her</a>! :)',
+  SUPPORTED_SITES_TEXT:
+    'Mangler en nettsted, eller har problemer? Skriv en feilrapport <a href="https://gitlab.com/wingysam/get-product-name/-/issues/new">her</a>! :)',
   UPDATE_NOTICE: (current, latest) => `
     <span class="has-text-danger is-size-4 has-text-weight-bold">
       Christmas Community er utdatert. Det kan være nye funksjoner og feilrettinger. Vurder å oppdatere! :)
@@ -138,7 +160,8 @@ export const strings = {
     <span>Siste: ${latest}</span>
     <span class="has-text-info" style="float: right;">Denne meldingen er kun synlig for administratorer</span>`,
   WISHLIST_ADD: 'Legg til element i ønskelisten',
-  WISHLIST_ADDED_BY_USER: addedBy => `Lagt til av: ${addedBy}`,
+  WISHLIST_ADDED_BY_USER: (addedBy) => `Lagt til av: ${addedBy}`,
+  WISHLIST_ADDED_BY_GUEST: 'Gjestebruker',
   WISHLIST_ADDED_BY: 'Lagt til av',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: 'Elementet ble lagt til i ønskelisten.',
   WISHLIST_CONFLICT: 'Elementer blir lagt til for fort. Vennligst prøv igjen.',
@@ -164,9 +187,9 @@ export const strings = {
   WISHLIST_PLEDGE_ITEM: 'Reserver element',
   WISHLIST_PLEDGE_SUCCESS: 'Elementet ble reservert!',
   WISHLIST_PLEDGE: 'Reserver',
-  WISHLIST_PLEDGED: pledgedBy => `Reservert av ${pledgedBy}`,
+  WISHLIST_PLEDGED: (pledgedBy) => `Reservert av ${pledgedBy}`,
   WISHLIST_PLEDGED_GUEST: 'Reservert av gjestebruker',
-  WISHLIST_PLEDGED_ITEM_FOR_USER: user => `Reserverte elementet for ${user}.`,
+  WISHLIST_PLEDGED_ITEM_FOR_USER: (user) => `Reserverte elementet for ${user}.`,
   WISHLIST_PRICE: 'Pris',
   WISHLIST_REFRESH_GUARD: 'Ugyldig bruker',
   WISHLIST_REFRESH_NO_URL: 'Elementet har ingen lenke.',
@@ -174,14 +197,14 @@ export const strings = {
   WISHLIST_REMOVE_GUARD: 'Feil bruker',
   WISHLIST_REMOVE_SUCCESS: 'Fjernet fra ønskeliste',
   WISHLIST_SUGGEST: 'Foreslå element',
-  WISHLIST_TITLE: name => `${_CC.config.siteTitle} - Ønskeliste - ${name}`,
+  WISHLIST_TITLE: (name) => `${_CC.config.siteTitle} - Ønskeliste - ${name}`,
   WISHLIST_UNPLEDGE_GUARD: 'Du har ikke reservert dette elementet', // should never happen unless someone makes their own http requests
   WISHLIST_UNPLEDGE_SUCCESS: 'Reservasjonen for elementet ble trukket!',
   WISHLIST_UNPLEDGE: 'Trekk reservasjon',
   WISHLIST_URL_LABEL: `Elementlenke eller navn (<a href="${_CC.config.base}supported-sites">Støttede nettsteder</a>)`,
   WISHLIST_URL_PLACEHOLDER: 'https://www.amazon.com/dp/B00ZV9RDKK',
   WISHLIST_URL_REQUIRED: 'Elementlenke eller navn er påkrevd',
-  WISHLISTS_COUNTS_SELF: name => `${name}: ???/???`,
+  WISHLISTS_COUNTS_SELF: (name) => `${name}: ???/???`,
   WISHLISTS_COUNTS: (name, pledged, total) => `${name}: ${pledged}/${total}`,
-  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Ønskeliste`
+  WISHLISTS_TITLE: `${_CC.config.siteTitle} - Ønskeliste`,
 } as const

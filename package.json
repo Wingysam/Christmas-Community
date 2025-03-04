@@ -1,6 +1,6 @@
 {
   "name": "christmas-community",
-  "version": "1.37.1",
+  "version": "1.40.2",
   "description": "Christmas lists for communities",
   "type": "module",
   "main": "built/index.js",
@@ -29,6 +29,7 @@
     "dompurify": "^2.3.1",
     "dotenv": "^10.0.0",
     "express": "4.17.1",
+    "express-fileupload": "^1.5.1",
     "express-pouchdb": "^4.2.0",
     "express-session": "^1.17.2",
     "get-product-name": "1",
@@ -51,18 +52,17 @@
     "yes-no": "^0.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.4",
     "@types/node-fetch": "^3.0.2",
     "@types/pouchdb": "^6.4.2",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "eslint": "^8.56.0",
-    "eslint-config-standard-with-typescript": "^43.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.4.0",
-    "eslint-plugin-promise": "^6.1.1",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
     "node-jq": "^4.2.2",
     "nodemon": "^2.0.12",
-    "typescript": "^5.3.3"
+    "prettier": "^3.4.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.21.0"
   }
 }
