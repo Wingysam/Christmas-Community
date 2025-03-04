@@ -110,5 +110,10 @@ img.logo-image {
 }
 
 .print-gift:last-child {
-  margin-bottom: 0;
+	margin-bottom: 0;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
 }

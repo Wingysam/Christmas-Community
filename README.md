@@ -157,6 +157,12 @@ MARKDOWN=false
 
 # Profile picture upload max size in MB
 UPLOAD_PFP_MAX_SIZE=5
+
+# Set to false to disable pledge only users from being able to suggest items to another user's list
+PLEDGE_SUGGEST=true
+
+# Set to false to disable all users from being able to suggest items to another users's list
+SUGGESTIONS_ENABLED=true
 ```
 
 ## Default Profile Pictures

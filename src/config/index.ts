@@ -40,6 +40,8 @@ const config = {
   pfpUploadMaxSize: process.env.UPLOAD_PFP_MAX_SIZE || 5,
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   base: '', // automatically set below
+  pledgeSuggest: (process.env.PLEDGE_SUGGEST === 'true'),
+  suggestionsEnabled: (process.env.SUGGESTIONS_ENABLED === 'true')
 }
 
 if (config.guestPassword) config.wishlist.public = false
