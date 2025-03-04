@@ -1,5 +1,7 @@
 mixin navBarLink(href, title)
-  if href === req.path
+  //- Requests at routers' base URLs (e.g. /profile) have req.path as '/'
+  - var fullPath = req.baseUrl + req.path
+  if href === fullPath || href + '/' === fullPath
     a.is-active.navbar-item(href=href)= title
   else
     a.navbar-item(href=href)= title

@@ -9,10 +9,10 @@ import verifyAuth from '../../middlewares/verifyAuth.js'
 const window = new JSDOM('').window
 const DOMPurify = createDOMPurify(window)
 
-const totals = wishlist => {
+const totals = (wishlist) => {
   let unpledged = 0
   let pledged = 0
-  wishlist.forEach(wishItem => {
+  wishlist.forEach((wishItem) => {
     if (wishItem.pledgedBy) pledged += 1
     else unpledged += 1
   })
@@ -24,17 +24,21 @@ export default function (db) {
 
   const wishlistManager = _CC.wishlistManager
 
-  router.get('/', publicRoute(), async (req, res) => {
+  router.get('/', publicRoute(), async (_req, res) => {
     const docs = await db.allDocs({ include_docs: true })
     if (global._CC.config.wishlist.singleList) {
       for (const row of docs.rows) {
         if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
       }
     }
-    res.render('wishlists', { title: _CC.lang('WISHLISTS_TITLE'), users: docs.rows, totals })
+    res.render('wishlists', {
+      title: _CC.lang('WISHLISTS_TITLE'),
+      users: docs.rows,
+      totals,
+    })
   })
 
-  async function redirectIfSingleUserMode (req, res, next) {
+  async function redirectIfSingleUserMode(req, res, next) {
     const dbUser = await db.get(req.params.user)
     if (_CC.config.wishlist.singleList) {
       if (!dbUser.admin) {
@@ -47,31 +51,36 @@ export default function (db) {
     next()
   }
 
-  router.get('/:user', publicRoute(), redirectIfSingleUserMode, async (req, res) => {
-    try {
-      const wishlist = await wishlistManager.get(req.params.user)
-      await wishlist.fetch()
-      const items = await wishlist.itemsVisibleToUser(req.user._id)
+  router.get(
+    '/:user',
+    publicRoute(),
+    redirectIfSingleUserMode,
+    async (req, res) => {
+      try {
+        const wishlist = await wishlistManager.get(req.params.user)
+        await wishlist.fetch()
+        const items = await wishlist.itemsVisibleToUser(req.user._id)
 
-      const compiledNotes = {}
-      if (_CC.config.wishlist.note.markdown) {
-        for (const item of items) {
-          compiledNotes[item.id] = DOMPurify.sanitize(marked(item.note))
+        const compiledNotes = {}
+        if (_CC.config.wishlist.note.markdown) {
+          for (const item of items) {
+            compiledNotes[item.id] = DOMPurify.sanitize(marked(item.note))
+          }
         }
-      }
 
-      res.render('wishlist', {
-        title: _CC.lang('WISHLIST_TITLE', wishlist.username),
-        name: wishlist.username,
-        items,
-        compiledNotes,
-        sharedInfo: wishlist.doc?.info ?? {}
-      })
-    } catch (error) {
-      req.flash('error', error)
-      return res.redirect('/wishlist')
-    }
-  })
+        res.render('wishlist', {
+          title: _CC.lang('WISHLIST_TITLE', wishlist.username),
+          name: wishlist.username,
+          items,
+          compiledNotes,
+          sharedInfo: wishlist.doc?.info ?? {},
+        })
+      } catch (error) {
+        req.flash('error', error)
+        return res.redirect('/wishlist')
+      }
+    },
+  )
 
   router.post('/:user', verifyAuth(), async (req, res) => {
     try {
@@ -81,17 +90,18 @@ export default function (db) {
         itemUrlOrName: req.body.itemUrlOrName,
         suggest: req.body.suggest,
         note: req.body.note,
-        addedBy: req.user._id
+        addedBy: req.user._id,
       })
 
       for (const error of nonFatalErrors) {
         req.flash('error', error)
       }
 
-      req.flash('success',
+      req.flash(
+        'success',
         req.user._id === req.params.user
           ? _CC.lang('WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST')
-          : _CC.lang('WISHLIST_PLEDGED_ITEM_FOR_USER', req.params.user)
+          : _CC.lang('WISHLIST_PLEDGED_ITEM_FOR_USER', req.params.user),
       )
     } catch (error) {
       req.flash('error', `${error}`)
@@ -158,33 +168,37 @@ export default function (db) {
     res.redirect(`/wishlist/${req.params.user}`)
   })
 
-  router.post('/:user/move/:direction/:itemId', verifyAuth(), async (req, res) => {
-    try {
-      if (req.user._id !== req.params.user) {
-        throw new Error(_CC.lang('WISHLIST_MOVE_GUARD'))
+  router.post(
+    '/:user/move/:direction/:itemId',
+    verifyAuth(),
+    async (req, res) => {
+      try {
+        if (req.user._id !== req.params.user) {
+          throw new Error(_CC.lang('WISHLIST_MOVE_GUARD'))
+        }
+
+        const wishlist = await wishlistManager.get(req.params.user)
+
+        if (req.params.direction === 'top') {
+          await wishlist.moveTop(req.params.itemId)
+        } else if (req.params.direction === 'bottom') {
+          await wishlist.moveBottom(req.params.itemId)
+        } else if (req.params.direction === 'up') {
+          await wishlist.move(req.params.itemId, -1)
+        } else if (req.params.direction === 'down') {
+          await wishlist.move(req.params.itemId, 1)
+        } else {
+          throw new Error(_CC.lang('WISHLIST_MOVE_UNKNOWN_DIRECTION'))
+        }
+
+        req.flash('success', _CC.lang('WISHLIST_MOVE_SUCCESS'))
+      } catch (error) {
+        req.flash('error', `${error}`)
       }
 
-      const wishlist = await wishlistManager.get(req.params.user)
-
-      if (req.params.direction === 'top') {
-        await wishlist.moveTop(req.params.itemId)
-      } else if (req.params.direction === 'bottom') {
-        await wishlist.moveBottom(req.params.itemId)
-      } else if (req.params.direction === 'up') {
-        await wishlist.move(req.params.itemId, -1)
-      } else if (req.params.direction === 'down') {
-        await wishlist.move(req.params.itemId, 1)
-      } else {
-        throw new Error(_CC.lang('WISHLIST_MOVE_UNKNOWN_DIRECTION'))
-      }
-
-      req.flash('success', _CC.lang('WISHLIST_MOVE_SUCCESS'))
-    } catch (error) {
-      req.flash('error', `${error}`)
-    }
-
-    res.redirect(`/wishlist/${req.params.user}`)
-  })
+      res.redirect(`/wishlist/${req.params.user}`)
+    },
+  )
 
   router.get('/:user/note/:id', verifyAuth(), async (req, res) => {
     try {

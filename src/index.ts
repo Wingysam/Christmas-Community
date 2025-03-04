@@ -3,7 +3,7 @@ import './CC.js'
 
 import PouchSession from 'session-pouchdb-store'
 import { Strategy as LocalStrategy } from 'passport-local'
-import GoogleStrategy from 'passport-google-oidc'
+import OpenIDConnectStrategy from 'passport-openidconnect'
 import session from 'express-session'
 import bcrypt from 'bcrypt-nodejs'
 import flash from 'connect-flash'
@@ -19,13 +19,18 @@ import { customAlphabet } from 'nanoid'
 import config from './config/index.js'
 import PouchDB from './PouchDB.js'
 import logger from './logger.js'
+import { doDbMigrations } from './dbMigration.js'
 
 // from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
-const nanoidWithoutUnderscores = customAlphabet('useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict')
+const nanoidWithoutUnderscores = customAlphabet(
+  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLFGQZbfghjklqvwyzrict',
+)
 
-if (!config.dbPrefix.startsWith('http')) {
-  await mkdirp(config.dbPrefix)
-}
+await mkdirp(config.dbPrefix)
+_CC.uploadDir = path.join(config.dbPrefix, 'uploads')
+await mkdirp(_CC.uploadDir)
+
+await doDbMigrations()
 
 const app = express()
 app.set('base', config.base)
@@ -33,101 +38,135 @@ app.set('trust proxy', config.trustProxy)
 
 // https://github.com/Wingysam/Christmas-Community/issues/17#issuecomment-1824863081
 app.use((req, res, next) => {
-  if (!req.session?.passport || Object.keys(req.session?.passport)?.length === 0) { res.clearCookie('christmas_community.connect.sid', { path: '/wishlist' }) }
+  if (
+    !req.session?.passport ||
+    Object.keys(req.session?.passport)?.length === 0
+  ) {
+    res.clearCookie('christmas_community.connect.sid', { path: '/wishlist' })
+  }
   next()
 })
 
+app.use('/uploads', express.static(_CC.uploadDir))
+
 const db = _CC.usersDb
 
-passport.use('local', new LocalStrategy(
-  (username, password, done) => {
+passport.use(
+  'local',
+  new LocalStrategy((username, password, done) => {
     username = username.trim()
     db.get(username)
       .then((doc: any) => {
         bcrypt.compare(password, doc.password, (err, correct) => {
           if (err) return done(err)
-          if (!correct) return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_PASSWORD') })
+          if (!correct)
+            return done(null, false, {
+              message: _CC.lang('LOGIN_INCORRECT_PASSWORD'),
+            })
           if (correct) return done(null, doc)
         })
       })
-      .catch(err => {
-        if (err.message === 'missing') return done(null, false, { message: _CC.lang('LOGIN_INCORRECT_USERNAME') })
+      .catch((err) => {
+        if (err.message === 'missing')
+          return done(null, false, {
+            message: _CC.lang('LOGIN_INCORRECT_USERNAME'),
+          })
         return done(err)
       })
-  }
-))
+  }),
+)
 
-if (config.googleSSOEnabled) {
-  passport.use('google-login', new GoogleStrategy({
-    clientID: config.googleSSOClientId,
-    clientSecret: config.googleSSOClientSecret,
-    callbackURL: config.rootUrl + 'auth/google/redirect'
-  },
-  async (issuer, profile, done) => {
-    const googleId = profile.id.trim() // Get Google id
-    try {
-      // Try to get the user from the database
-      const docs = await db.find({
-        selector: { 'oauthConnections.google': { $eq: googleId } }
-      })
-      if (docs.docs.length === 1) {
-        return done(null, docs.docs[0])
-      } else {
-        // Handle other errors, including missing user
-        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
-      }
-    } catch (err) {
-      // Handle other errors, including missing user
-      if (err.message === 'missing') {
-        return done(null, false, { message: _CC.lang('LOGIN_SSO_UNKNOWN_USER') })
-      }
-      return done(err)
-    }
-  }
-  ))
+if (config.oidcEnabled) {
+  passport.use(
+    'oidc-login',
+    new OpenIDConnectStrategy(
+      {
+        issuer: config.oidcIssuer,
+        authorizationURL: config.oidcAuthorizationURL,
+        tokenURL: config.oidcTokenURL,
+        userInfoURL: config.oidcUserInfoURL,
+        clientID: config.oidcClientId,
+        clientSecret: config.oidcClientSecret,
+        callbackURL: config.rootUrl + 'auth/oidc/redirect',
+      },
+      async (_issuer, profile, done) => {
+        const oidcId = profile.id.trim() // Get OIDC id
+        try {
+          // Try to get the user from the database
+          const docs = await db.find({
+            selector: { 'oauthConnections.oidc': { $eq: oidcId } },
+          })
+          if (docs.docs.length === 1) {
+            return done(null, docs.docs[0])
+          } else {
+            // Handle other errors, including missing user
+            return done(null, false, {
+              message: _CC.lang('LOGIN_SSO_UNKNOWN_USER'),
+            })
+          }
+        } catch (err) {
+          // Handle other errors, including missing user
+          if (err.message === 'missing') {
+            return done(null, false, {
+              message: _CC.lang('LOGIN_SSO_UNKNOWN_USER'),
+            })
+          }
+          return done(err)
+        }
+      },
+    ),
+  )
 
-  passport.use('google-link', new GoogleStrategy({
-    clientID: config.googleSSOClientId,
-    clientSecret: config.googleSSOClientSecret,
-    callbackURL: config.rootUrl + 'auth/google/link/redirect',
-    passReqToCallback: true
-  },
-  async (req, issuer, profile, done) => {
-    const googleId = profile.id.trim() // Get Google id
+  passport.use(
+    'oidc-link',
+    new OpenIDConnectStrategy(
+      {
+        issuer: config.oidcIssuer,
+        authorizationURL: config.oidcAuthorizationURL,
+        tokenURL: config.oidcTokenURL,
+        userInfoURL: config.oidcUserInfoURL,
+        clientID: config.oidcClientId,
+        clientSecret: config.oidcClientSecret,
+        callbackURL: config.rootUrl + 'auth/oidc/link/redirect',
+        passReqToCallback: true,
+      },
+      async (req, _issuer, profile, done) => {
+        const oidcId = profile.id.trim() // Get OIDC id
 
-    const docs = await db.find({
-      selector: { 'oauthConnections.google': { $eq: googleId } }
-    })
-    if (docs.docs.length === 1) {
-      req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
-      return done(null)
-    } else {
-      try {
-        const doc = await db.get(req.session.passport.user)
-        doc.oauthConnections ??= {}
-        doc.oauthConnections.google = googleId
-        await db.put(doc)
-        req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS'))
-        return done(null, doc)
-      } catch (err) {
-        req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
-        return done(err)
-      }
-    }
-  }
-  ))
+        const docs = await db.find({
+          selector: { 'oauthConnections.oidc': { $eq: oidcId } },
+        })
+        if (docs.docs.length === 1) {
+          req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS'))
+          return done(null)
+        } else {
+          try {
+            const doc = await db.get(req.session.passport.user)
+            doc.oauthConnections ??= {}
+            doc.oauthConnections.oidc = oidcId
+            await db.put(doc)
+            req.flash('success', _CC.lang('LOGIN_SSO_LINK_SUCCESS'))
+            return done(null, doc)
+          } catch (err) {
+            req.flash('error', _CC.lang('LOGIN_SSO_LINK_FAILURE'))
+            return done(err)
+          }
+        }
+      },
+    ),
+  )
 }
 
 passport.serializeUser((user, callback) => callback(null, user._id))
 
 passport.deserializeUser((user, callback) => {
   db.get(user)
-    .then(dbUser => callback(null, dbUser))
+    .then((dbUser) => callback(null, dbUser))
     .catch(() => callback(null, null))
 })
 
 // https://stackoverflow.com/a/54426950
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   const redirector = res.redirect
   res.redirect = function (url) {
     const base = this.req.app.set('base')
@@ -139,17 +178,19 @@ app.use((req, res, next) => {
 
 app.use(BodyParser.urlencoded({ extended: true }))
 app.use(CookieParser())
-app.use(session({
-  secret: config.secret,
-  resave: false,
-  saveUninitialized: true,
-  store: new PouchSession(new PouchDB('sessions')),
-  cookie: {
-    maxAge: config.sessionMaxAge
-  },
-  name: 'christmas_community.connect.sid',
-  genid: () => nanoidWithoutUnderscores()
-}))
+app.use(
+  session({
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: true,
+    store: new PouchSession(new PouchDB('sessions')),
+    cookie: {
+      maxAge: config.sessionMaxAge,
+    },
+    name: 'christmas_community.connect.sid',
+    genid: () => nanoidWithoutUnderscores(),
+  }),
+)
 app.use((req, res, next) => {
   const basepath = req.path.substring(0, req.path.lastIndexOf('/'))
 
@@ -166,20 +207,35 @@ app.use(passport.session())
 
 app.use((await import('./middlewares/locals.js')).default)
 
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   logger.log('express', `${req.ip} - ${req.method} ${req.originalUrl}`)
   next()
 })
 
 app.set('view engine', 'pug')
 app.set('views', path.resolve('./src/views'))
-app.use(config.base, (await import('./routes/index.js')).default({ db, config }))
+app.use(
+  config.base,
+  (await import('./routes/index.js')).default({ db, config }),
+)
 
-app.listen(config.port, () => { logger.success('express', `Express server started on port ${config.port}!`) })
-
+app.listen(config.port, () => {
+  logger.success('express', `Express server started on port ${config.port}!`)
+})
 ;(() => {
   if (!config.dbExposePort) return
   const dbExposeApp = express()
-  dbExposeApp.use('/', ExpressPouchDB(PouchDB, { inMemoryConfig: true, logPath: config.dbLogFile }))
-  dbExposeApp.listen(config.dbExposePort, () => { logger.success('db expose', `DB has been exposed on port ${config.dbExposePort}`) })
+  dbExposeApp.use(
+    '/',
+    ExpressPouchDB(PouchDB, {
+      inMemoryConfig: true,
+      logPath: config.dbLogFile,
+    }),
+  )
+  dbExposeApp.listen(config.dbExposePort, () => {
+    logger.success(
+      'db expose',
+      `DB has been exposed on port ${config.dbExposePort}`,
+    )
+  })
 })()

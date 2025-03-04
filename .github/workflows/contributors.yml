@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  contrib-readme-job:
+    runs-on: ubuntu-latest
+    name: Update README contributors
+    if: github.repository_owner == 'Wingysam'
+    steps:
+      - name: Update contributor list
+        uses: akhilmhdh/contributors-readme-action@v2.3.10
+        with:
+          use_username: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
