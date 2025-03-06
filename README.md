@@ -280,6 +280,13 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/billboq">
+                    <img src="https://avatars.githubusercontent.com/u/139264339?v=4" width="100;" alt="billboq"/>
+                    <br />
+                    <sub><b>billboq</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/bsiddans">
                     <img src="https://avatars.githubusercontent.com/u/96931223?v=4" width="100;" alt="bsiddans"/>
                     <br />
@@ -293,6 +300,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>BootVirtual</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/DanteMS">
                     <img src="https://avatars.githubusercontent.com/u/8601667?v=4" width="100;" alt="DanteMS"/>
@@ -300,8 +309,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>DanteMS</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/FlatDudeInVR">
                     <img src="https://avatars.githubusercontent.com/u/1240124?v=4" width="100;" alt="FlatDudeInVR"/>
@@ -337,6 +344,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>ndlanier</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/RestartFU">
                     <img src="https://avatars.githubusercontent.com/u/45609733?v=4" width="100;" alt="RestartFU"/>
@@ -344,8 +353,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>RestartFU</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/dotromain">
                     <img src="https://avatars.githubusercontent.com/u/25564262?v=4" width="100;" alt="dotromain"/>
@@ -381,6 +388,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>alyoro</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/toastie89">
                     <img src="https://avatars.githubusercontent.com/u/19393929?v=4" width="100;" alt="toastie89"/>
@@ -388,8 +397,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>toastie89</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/zethis">
                     <img src="https://avatars.githubusercontent.com/u/20169561?v=4" width="100;" alt="zethis"/>

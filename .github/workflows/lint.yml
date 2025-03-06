@@ -10,9 +10,6 @@ on:
     branches:
       - master
 
-permissions:
-  contents: write
-
 jobs:
   run-linters:
     name: Run linters
