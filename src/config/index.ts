@@ -41,6 +41,7 @@ const config = {
   rootUrl: appendSlash(process.env.ROOT_URL ?? process.env.ROOT_PATH ?? '/'),
   autoArchivePledges: process.env.AUTO_ARCHIVE_PLEDGES === 'true',
   base: '', // automatically set below
+  superAdmins: process.env.SUPER_ADMINS === 'true',
 }
 
 if (config.guestPassword) config.wishlist.public = false

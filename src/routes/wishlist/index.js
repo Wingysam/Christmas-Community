@@ -63,8 +63,15 @@ export default function (db) {
     async (req, res) => {
       try {
         const wishlist = await wishlistManager.get(req.params.user)
+        var items = null
         await wishlist.fetch()
-        const items = await wishlist.itemsVisibleToUser(req.user._id)
+        if (req.user.admin && _CC.config.superAdmins) {
+          items = await wishlist.items
+        }
+        else {
+          items = await wishlist.itemsVisibleToUser(req.user._id)
+        }
+        
 
         const compiledNotes = {}
         if (_CC.config.wishlist.note.markdown) {

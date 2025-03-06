@@ -6,7 +6,93 @@ mixin sharedInfoProp(key, label)
       th= lang(label)
       td= sharedInfo[key]
 
-mixin wishlistTable(items, archived)
+mixin pledgeOptions(item)
+  td(data-label=lang('WISHLIST_PLEDGE'))
+    if req.params.user !== req.user._id && !item.pledgedBy && !item.archived
+      form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
+        .field.inline
+          .control.inline
+            input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE_ITEM'))
+    if item.pledgedBy === req.user._id
+      form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
+        .field.inline
+          .control.inline
+            input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
+    if item.pledgedBy && item.pledgedBy !== req.user._id
+      if item.pledgedBy === '_CCUNKNOWN'
+        span.ugc=lang('WISHLIST_PLEDGED_GUEST')
+      else
+        span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
+
+mixin adminOptions(index, item)
+  td(data-label=lang('WISHLIST_ITEM_OPTIONS'))
+    div.dropdown.is-right.is-hoverable
+      div.dropdown-trigger
+        button.button.is-primary(
+          aria-haspopup='true',
+          aria-controls=`dropdown-menu${index}`
+        )
+          span.icon
+            i.fas.fa-cog
+      div.dropdown-menu(id=`dropdown-menu${index}`, role='menu')
+        div.dropdown-content
+          form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
+            button.button.dropdown-item.is-text(
+              type='submit'
+            )
+              span= lang('WISHLIST_EDIT_ITEM')
+              i.far.fa-edit
+
+          if !item.archived
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
+              button.button.dropdown-item.is-text(
+                type='submit',
+                disabled=index === 0
+              )
+                span= lang('WISHLIST_MOVE_ITEM_UP')
+                i.fas.fa-arrow-up
+
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
+              button.button.dropdown-item.is-text(
+                type='submit',
+                disabled=index === items.length - 1
+              )
+                span= lang('WISHLIST_MOVE_ITEM_DOWN') 
+                i.fas.fa-arrow-down
+
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
+              button.button.dropdown-item.is-text(
+                type='submit',
+                disabled=index === 0
+              )
+                span= lang('WISHLIST_MOVE_ITEM_TOP') 
+                i.fas.fa-angle-double-up
+
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+              button.button.dropdown-item.is-text(
+                type='submit',
+                disabled=index === items.length - 1
+              )
+                span= lang('WISHLIST_MOVE_ITEM_BOTTOM') 
+                i.fas.fa-angle-double-down
+          
+          hr.dropdown-divider
+          if !item.archived
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
+              button.button.dropdown-item.is-text.has-text-danger(
+                type='submit'
+              )
+                span= lang('WISHLIST_ARCHIVE') 
+                i.fas.fa-archive
+          else
+            form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/restore/${item.id}`)
+              button.button.dropdown-item.is-text.has-text-success(
+                type='submit'
+              )
+                span= lang('WISHLIST_RESTORE') 
+                i.fas.fa-restore
+
+mixin wishlistTable(items)
   .box
     table.table.has-mobile-cards
       thead
@@ -18,7 +104,9 @@ mixin wishlistTable(items, archived)
         th= lang('WISHLIST_ADDED_BY')
         if !(req.params.user === req.user._id)
           th(style='width: 10%;')= lang('WISHLIST_PLEDGE')
+          th(style='width: 1%;')= ""
         else
+          th(style='width: 1%;')= ""
           th(style='width: 10%;')= lang('WISHLIST_ITEM_OPTIONS')
       tbody
         each item, index in items
@@ -59,93 +147,22 @@ mixin wishlistTable(items, archived)
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= lang('WISHLIST_ADDED_BY_GUEST')
             else 
               td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
-            if !(req.params.user === req.user._id)
-              td(data-label=lang('WISHLIST_PLEDGE'))
-                if req.params.user !== req.user._id && !item.pledgedBy && !item.archived
-                  form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE_ITEM'))
-                if item.pledgedBy === req.user._id
-                  form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
-                if item.pledgedBy && item.pledgedBy !== req.user._id
-                  if item.pledgedBy === '_CCUNKNOWN'
-                    span.ugc=lang('WISHLIST_PLEDGED_GUEST')
-                  else
-                    span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
+
+            //- if the user is the list owner show the admin options
             if req.params.user === req.user._id
-              td(data-label=lang('WISHLIST_ITEM_OPTIONS'))
-                div.dropdown.is-right.is-hoverable
-                  div.dropdown-trigger
-                    button.button.is-primary(
-                      aria-haspopup='true',
-                      aria-controls=`dropdown-menu${index}`
-                    )
-                      span.icon
-                        i.fas.fa-cog
-                  div.dropdown-menu(id=`dropdown-menu${index}`, role='menu')
-                    div.dropdown-content
-                      form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
-                        button.button.dropdown-item.is-text(
-                          type='submit'
-                        )
-                          span= lang('WISHLIST_EDIT_ITEM')
-                          i.far.fa-edit
+              td.ugc(data-label=lang('WISHLIST_PLEDGE'))=''
+              +adminOptions(index, item)
+            else 
+              //- show the pledge options
+              +pledgeOptions(item)
 
-                      if !archived
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
-                          button.button.dropdown-item.is-text(
-                            type='submit',
-                            disabled=index === 0
-                          )
-                            span= lang('WISHLIST_MOVE_ITEM_UP')
-                            i.fas.fa-arrow-up
+              //- if the user is an admin and super admins is true, show the admin options
+              if req.user.admin && _CC.config.superAdmins
+                +adminOptions(index, item)
+              else 
+                td.ugc(data-label='')=''
 
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
-                          button.button.dropdown-item.is-text(
-                            type='submit',
-                            disabled=index === items.length - 1
-                          )
-                            span= lang('WISHLIST_MOVE_ITEM_DOWN') 
-                            i.fas.fa-arrow-down
-
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
-                          button.button.dropdown-item.is-text(
-                            type='submit',
-                            disabled=index === 0
-                          )
-                            span= lang('WISHLIST_MOVE_ITEM_TOP') 
-                            i.fas.fa-angle-double-up
-
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
-                          button.button.dropdown-item.is-text(
-                            type='submit',
-                            disabled=index === items.length - 1
-                          )
-                            span= lang('WISHLIST_MOVE_ITEM_BOTTOM') 
-                            i.fas.fa-angle-double-down
-                      
-                      hr.dropdown-divider
-                      if !archived
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
-                          button.button.dropdown-item.is-text.has-text-danger(
-                            type='submit'
-                          )
-                            span= lang('WISHLIST_ARCHIVE') 
-                            i.fas.fa-archive
-                      else
-                        form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/restore/${item.id}`)
-                          button.button.dropdown-item.is-text.has-text-danger(
-                            type='submit'
-                          )
-                            span= lang('WISHLIST_RESTORE') 
-                            i.fas.fa-restore
-                  
-
-mixin wishlistBox(items, archived)
+mixin wishlistBox(items)
   each item, index in items
     if req.user._id === item.addedBy || req.params.user !== req.user._id
       .box
@@ -215,7 +232,7 @@ mixin wishlistBox(items, archived)
               .field.inline
                 .control.inline
                   input.inline.button(type='submit', value=lang('WISHLIST_EDIT_ITEM'))
-            if !archived
+            if !item.archived
               if index !== 0 && req.user._id === req.params.user
                 form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
                   .field.inline
@@ -232,7 +249,7 @@ mixin wishlistBox(items, archived)
                     .control.inline
                       input.inline.button(type='submit' value=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
           if req.user._id === req.params.user
-            if !archived
+            if !item.archived
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/archive/${item.id}`)
                 .field.inline
                   .control.inline
@@ -260,7 +277,6 @@ block title
               i.fas.fa-plus
             span= lang('WISHLIST_ADD_NEW')
               
-
 block content
   script(type='data/user_id')= req.user._id
   table.table(style='width: fit-content;')
@@ -276,9 +292,9 @@ block content
         +sharedInfoProp('phoneModel', 'PROFILE_PHONE_MODEL')
 
   if global._CC.config.wishlist.table
-    +wishlistTable(items.filter(item => !item.archived), false)        
+    +wishlistTable(items.filter(item => !item.archived))        
   else
-    +wishlistBox(items.filter(item => !item.archived), false)
+    +wishlistBox(items.filter(item => !item.archived))
   
   br
   form(method='POST')#addWishlistItem
@@ -310,9 +326,9 @@ block content
   details
     summary= lang('WISHLIST_ARCHIVED_ITEMS')
     if global._CC.config.wishlist.table
-      +wishlistTable(items.filter(item => item.archived), true)
+      +wishlistTable(items.filter(item => item.archived))
     else 
-      +wishlistBox(items.filter(item => item.archived), true)
+      +wishlistBox(items.filter(item => item.archived))
 
 block print
   h1 #{req.params.user}'s Wishlist
