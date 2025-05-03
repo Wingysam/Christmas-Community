@@ -112,3 +112,55 @@ img.logo-image {
 .print-gift:last-child {
   margin-bottom: 0;
 }
+
+summary {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+summary:hover {
+  cursor: pointer;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden-menu {
+  display: none;
+  margin-top: 10px;
+}
+
+.hidden-menu button {
+  display: block;
+  margin: 5px 0;
+}
+
+.hidden-menu.active {
+  display: block;
+}
+
+button.button.dropdown-item.is-text {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding-right: 10px; /* extra Spacing to push icons to the right a bunch */
+  text-decoration: none;
+}
+
+/* Ensure the text stays left-aligned */
+button.button.dropdown-item.is-text span {
+  grid-column: 1;
+  text-align: left;
+}
+
+/* Ensure the icon is pulled to the right */
+button.button.dropdown-item.is-text i {
+  grid-column: 3;
+  margin-left: auto;
+}
