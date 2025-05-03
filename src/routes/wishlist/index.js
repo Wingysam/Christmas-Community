@@ -69,7 +69,7 @@ export default function (db) {
           items = await wishlist.items
         }
         else {
-          items = await wishlist.itemsVisibleToUser(req.user._id)
+          items = await wishlist.itemsVisibleToUser(req.user)
         }
         
 

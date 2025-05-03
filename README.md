@@ -158,6 +158,9 @@ AUTO_ARCHIVE_PLEDGES=false
 
 # Profile picture upload max size in MB
 UPLOAD_PFP_MAX_SIZE=5
+
+# Allow administrators to see everything and manage any user's list.
+# SUPER_ADMINS=false
 ```
 
 ## Default Profile Pictures
