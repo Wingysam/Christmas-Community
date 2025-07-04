@@ -7,10 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node built/manager.js",
-    "dev": "nodemon --watch src -e ts,js --exec 'npm run build && node built/index.js'",
+    "dev": "nodemon --watch src -e ts,js,pug --exec 'npm run build && node built/index.js'",
     "postinstall": "node postinstall.cjs",
     "build": "tsc",
-    "release": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community -t wingysam/christmas-community:$(./node_modules/node-jq/bin/jq -r .version < package.json) --push"
+    "release": "docker buildx build . --platform linux/amd64,linux/arm64 -t wingysam/christmas-community -t wingysam/christmas-community:$(./node_modules/node-jq/bin/jq -r .version < package.json) --push",
+    "lint": "eslint src && prettier . --write"
   },
   "author": "Wingysam <wingysam+git@gmail.com>",
   "license": "AGPL-3.0",

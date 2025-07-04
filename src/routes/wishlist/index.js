@@ -12,11 +12,15 @@ const DOMPurify = createDOMPurify(window)
 const totals = (wishlist) => {
   let unpledged = 0
   let pledged = 0
+  let active = 0
+  let archived = 0
   wishlist.forEach((wishItem) => {
     if (wishItem.pledgedBy) pledged += 1
     else unpledged += 1
+    if (wishItem.archived) archived += 1
+    else active += 1
   })
-  return { unpledged, pledged }
+  return { unpledged, pledged, active, archived }
 }
 
 export default function (db) {
@@ -31,6 +35,7 @@ export default function (db) {
         if (row.doc.admin) return res.redirect(`/wishlist/${row.doc._id}`)
       }
     }
+    console.log(docs)
     res.render('wishlists', {
       title: _CC.lang('WISHLISTS_TITLE'),
       users: docs.rows,
@@ -106,7 +111,6 @@ export default function (db) {
     } catch (error) {
       req.flash('error', `${error}`)
     }
-
     res.redirect(`/wishlist/${req.params.user}`)
   })
 
@@ -154,7 +158,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === wishlist.username
       const addedByUser = item.addedBy === req.user._id
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('WISHLIST_REMOVE_GUARD'))
       }
 
@@ -173,7 +178,8 @@ export default function (db) {
     verifyAuth(),
     async (req, res) => {
       try {
-        if (req.user._id !== req.params.user) {
+        const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+        if (req.user._id !== req.params.user && !isAdmin) {
           throw new Error(_CC.lang('WISHLIST_MOVE_GUARD'))
         }
 
@@ -218,7 +224,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === req.params.user
       const addedByUser = req.user._id === item.addedBy
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('NOTE_GUARD'))
       }
 
@@ -251,6 +258,50 @@ export default function (db) {
     }
 
     res.redirect(`/wishlist/${req.params.user}/note/${req.params.id}`)
+  })
+
+  router.post('/:user/archive/:itemId', verifyAuth(), async (req, res) => {
+    try {
+      const wishlist = await wishlistManager.get(req.params.user)
+      const item = await wishlist.get(req.params.itemId)
+
+      const isOwnWishlist = req.user._id === wishlist.username
+      const addedByUser = item.addedBy === req.user._id
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
+        throw new Error(_CC.lang('WISHLIST_ARCHIVE_GUARD'))
+      }
+
+      await wishlist.archive(item.id)
+
+      req.flash('success', _CC.lang('WISHLIST_ARCHIVE_SUCCESS'))
+    } catch (error) {
+      req.flash('error', `${error}`)
+    }
+
+    res.redirect(`/wishlist/${req.params.user}`)
+  })
+
+  router.post('/:user/restore/:itemId', verifyAuth(), async (req, res) => {
+    try {
+      const wishlist = await wishlistManager.get(req.params.user)
+      const item = await wishlist.get(req.params.itemId)
+
+      const isOwnWishlist = req.user._id === wishlist.username
+      const addedByUser = item.addedBy === req.user._id
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
+        throw new Error(_CC.lang('WISHLIST_RESTORE_GUARD'))
+      }
+
+      await wishlist.restore(item.id)
+
+      req.flash('success', _CC.lang('WISHLIST_RESTORE_SUCCESS'))
+    } catch (error) {
+      req.flash('error', `${error}`)
+    }
+
+    res.redirect(`/wishlist/${req.params.user}`)
   })
 
   return router

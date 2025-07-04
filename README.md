@@ -125,6 +125,8 @@ LISTS_PUBLIC=false
 TABLE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
+# Auto archive pledges
+AUTO_ARCHIVE_PLEDGES=false
 
 ## Custom HTML Snippets
 # These are inserted into specific locations in the relevant page
@@ -147,16 +149,26 @@ MARKDOWN=false
 ## OIDC Provider Details
 # You can configure single sign-on to your Christmas Community instance using any OIDC provider.
 # Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
+# The values specified below are the defaults
 # OIDC_CLIENT_ID=
 # OIDC_CLIENT_SECRET=
 # OIDC_AUTHORIZATION_URL=https://accounts.google.com/o/oauth2/auth
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
-
+# OIDC_AUTO_CREATE_USER=false
 
 # Profile picture upload max size in MB
 UPLOAD_PFP_MAX_SIZE=5
+
+# Set to false to disable pledge only users from being able to suggest items to another user's list
+PLEDGE_SUGGEST=true
+
+# Set to false to disable all users from being able to suggest items to another users's list
+SUGGESTIONS_ENABLED=true
+
+## Admin users can optionally edit, archive, remove, and reorder any item on any wishlist when set to true (default: false).
+# ADMIN_CAN_EDIT_ALL_WISHLISTS=false
 ```
 
 ## Default Profile Pictures
@@ -406,4 +418,4 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
 		</tr>
 	<tbody>
 </table>
-<!-- readme: contributors -end -->
+<!-- readme: contributors -end --> 

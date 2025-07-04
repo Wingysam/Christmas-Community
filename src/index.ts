@@ -20,6 +20,7 @@ import config from './config/index.js'
 import PouchDB from './PouchDB.js'
 import logger from './logger.js'
 import { doDbMigrations } from './dbMigration.js'
+import ensurePfp from './utils/ensurePfp.js'
 
 // from https://github.com/ai/nanoid/blob/main/url-alphabet/index.js
 const nanoidWithoutUnderscores = customAlphabet(
@@ -98,6 +99,31 @@ if (config.oidcEnabled) {
           })
           if (docs.docs.length === 1) {
             return done(null, docs.docs[0])
+          } else if (config.oidcAutoCreateUser) {
+            // Auto-create user if enabled
+            const username =
+              profile.username ||
+              profile.displayName ||
+              profile.emails?.[0]?.value ||
+              oidcId
+            const newUser = {
+              _id: username,
+              username,
+              displayName: profile.displayName || username,
+              emails: profile.emails || [],
+              oauthConnections: { oidc: oidcId },
+              createdAt: new Date().toISOString(),
+              wishlist: [],
+              // Add any other required fields here
+            }
+            try {
+              await db.put(newUser)
+              await ensurePfp(db, config, username)
+              const createdUser = await db.get(username)
+              return done(null, createdUser)
+            } catch (err) {
+              return done(err)
+            }
           } else {
             // Handle other errors, including missing user
             return done(null, false, {
