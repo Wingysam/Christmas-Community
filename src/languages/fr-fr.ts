@@ -18,24 +18,30 @@ export const strings = {
   ADMIN_SETTINGS_USERS_ADD_HEADER: 'Ajouter un utilisateur',
   ADMIN_SETTINGS_USERS_ADD_PLACEHOLDER: 'jean',
   ADMIN_SETTINGS_USERS_ADD_USERNAME: "Nom d'utilisateur",
-  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY: "Le nom d'utilisateur ne peut pas être vide.",
+  ADMIN_SETTINGS_USERS_ADD_ERROR_USERNAME_EMPTY:
+    "Le nom d'utilisateur ne peut pas être vide.",
   ADMIN_SETTINGS_USERS_EDIT_DELETE_FAIL_ADMIN:
     "Échec de la suppression : l'utilisateur est un administrateur.",
   ADMIN_SETTINGS_USERS_EDIT_DELETE_SUCCESS: (name) =>
     `Utilisateur supprimé avec succès ${name}`,
-  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN: "l'utilisateur n'est pas un administrateur",
-  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SELF: 'Vous ne pouvez pas vous supprimer vous même.',
+  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_NOT_ADMIN:
+    "l'utilisateur n'est pas un administrateur",
+  ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SELF:
+    'Vous ne pouvez pas vous supprimer vous même.',
   ADMIN_SETTINGS_USERS_EDIT_DEMOTE_SUCCESS: (name) =>
     `${name} n'est plus un administrateur.`,
   ADMIN_SETTINGS_USERS_EDIT_IMPERSONATE_SUCCESS: (name) =>
     `Vous êtes maintenant ${name}.`,
-  ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED: "Aucun nom d'utilisateur fourni",
-  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN: 'cet utilisateur est déjà administrateur',
+  ADMIN_SETTINGS_USERS_EDIT_NO_USERNAME_PROVIDED:
+    "Aucun nom d'utilisateur fourni",
+  ADMIN_SETTINGS_USERS_EDIT_PROMOTE_ALREADY_ADMIN:
+    'cet utilisateur est déjà administrateur',
   ADMIN_SETTINGS_USERS_EDIT_PROMOTE_DEMOTE_NOT_FOUND: 'Utilisateur non trouvé.',
   ADMIN_SETTINGS_USERS_EDIT_PROMOTE_SUCCESS: (name) =>
     `${name} est maintenant un administrateur.`,
   ADMIN_SETTINGS_USERS_EDIT_RENAMED_USER: 'Utilisateur renommé!',
-  ADMIN_SETTINGS_USERS_EDIT_SAME_NAME: "L'ancien nom d'utilisateur est le même que le nouveau nom d'utilisateur.",
+  ADMIN_SETTINGS_USERS_EDIT_SAME_NAME:
+    "L'ancien nom d'utilisateur est le même que le nouveau nom d'utilisateur.",
   ADMIN_SETTINGS_USERS_EDIT: 'Modifier',
   ADMIN_SETTINGS_USERS_HEADER: 'Utilisateurs',
   ADMIN_SETTINGS_VERSION_INFO: 'Informations sur la version',
@@ -45,7 +51,8 @@ export const strings = {
   ADMIN_SETTINGS_TABLE_EDIT: 'Modifier',
   ADMIN_USER_EDIT_ACCOUNT_UNCONFIRMED: "Ce compte n'a pas été confirmé.",
   ADMIN_USER_EDIT_ADMIN_ISADMIN: (name) => `${name} est un administrateur.`,
-  ADMIN_USER_EDIT_ADMIN_NOTADMIN: (name) => `${name} n'est pas un administrateur.`,
+  ADMIN_USER_EDIT_ADMIN_NOTADMIN: (name) =>
+    `${name} n'est pas un administrateur.`,
   ADMIN_USER_EDIT_ADMIN: 'Admin',
   ADMIN_USER_EDIT_CHANGE_NAME: 'Changer de nom',
   ADMIN_USER_EDIT_CHANGE_USERNAME: "Changer de nom d'utilisateur",
@@ -55,9 +62,11 @@ export const strings = {
   ADMIN_USER_EDIT_DELETE_USER: (name) => `Supprimer l'utilisateur ${name}`,
   ADMIN_USER_EDIT_DEMOTE_SELF: 'Vous ne pouvez pas vous rétrograder',
   ADMIN_USER_EDIT_DEMOTE: (name) => `Rétrograder ${name}`,
-  ADMIN_USER_EDIT_EDITING_USER: (name) => `Modification de l'utilisateur "${name}"`,
+  ADMIN_USER_EDIT_EDITING_USER: (name) =>
+    `Modification de l'utilisateur "${name}"`,
   ADMIN_USER_EDIT_GENERATE_NEW_LINK: 'Générer un nouveau lien',
-  ADMIN_USER_EDIT_IMPERSONATE_BUTTON: (name) => `Se connecter en tant que ${name}`,
+  ADMIN_USER_EDIT_IMPERSONATE_BUTTON: (name) =>
+    `Se connecter en tant que ${name}`,
   ADMIN_USER_EDIT_IMPERSONATE_HEADER: 'se faire passer pour',
   ADMIN_USER_EDIT_LINK_EXPIRY_FUTURE: (fromNow) =>
     `Le lien suivant expire le ${fromNow}`, // fromNow is localized by moment
@@ -71,9 +80,12 @@ export const strings = {
   ADMIN_USER_EDIT_RESET_PASSWORD_HASLINK:
     'Il y a un lien de réinitialisation de mot de passe pour cet utilisateur.',
   ADMIN_USER_EDIT_RESET_PASSWORD_HEADER: 'Réinitialiser le mot de passe',
-  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CANCEL: 'Supprimer le lien de réinitialisation du mot de passe',
-  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CREATE: 'Créer un lien de réinitialisation de mot de passe',
-  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_REFRESH: 'Actualiser le lien de réinitialisation du mot de passe',
+  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CANCEL:
+    'Supprimer le lien de réinitialisation du mot de passe',
+  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_CREATE:
+    'Créer un lien de réinitialisation de mot de passe',
+  ADMIN_USER_EDIT_RESET_PASSWORD_LINK_REFRESH:
+    'Actualiser le lien de réinitialisation du mot de passe',
   ADMIN_USER_EDIT_USERNAME: "Nom d'utilisateur",
   BACK_BUTTON: 'Retour',
   CONFIRM_ACCOUNT_EXPIRED:
@@ -136,7 +148,8 @@ export const strings = {
   PROFILE_PASSWORD_REQUIRED_NEW: 'Un nouveau mot de passe est requis',
   PROFILE_PASSWORD_REQUIRED_OLD: "L'ancien mot de passe est requis",
   PROFILE_PASSWORD_SUCCESS: 'Les modifications on été enregistré avec succès!',
-  PROFILE_PASSWORD_TITLE: (name) => `Paramètres de profil - Mot de passe - ${name}`,
+  PROFILE_PASSWORD_TITLE: (name) =>
+    `Paramètres de profil - Mot de passe - ${name}`,
   PROFILE_PHONE_MODEL: 'Modèle de téléphone',
   PROFILE_RING_SIZE: 'Taille de bague',
   PROFILE_SAVE_PFP_DISABLED: 'Les photos de profil sont désactivées.',
@@ -197,10 +210,12 @@ export const strings = {
   WISHLIST_ADDED_BY_GUEST: 'Utilisateur Invité',
   WISHLIST_ADDED_BY: 'Ajouté par',
   WISHLIST_ADDED_ITEM_TO_OWN_WISHLIST: "Article ajouté à la listes d'envies.",
-  WISHLIST_CONFLICT: 'Les éléments ont été ajoutés trop rapidement. Veuillez réessayer.',
+  WISHLIST_CONFLICT:
+    'Les éléments ont été ajoutés trop rapidement. Veuillez réessayer.',
   WISHLIST_DELETE: 'Supprimer',
   WISHLIST_EDIT_ITEM: "Modifier l'article",
-  WISHLIST_FETCH_FAIL: "Échec de la récupération de la liste de souhaits : l'utilisateur existe-t-il ?",
+  WISHLIST_FETCH_FAIL:
+    "Échec de la récupération de la liste de souhaits : l'utilisateur existe-t-il ?",
   WISHLIST_IMAGE: 'Image',
   WISHLIST_ITEM_MISSING: "Impossible de trouver l'article",
   WISHLIST_MOVE_DOWN: 'Descendre',

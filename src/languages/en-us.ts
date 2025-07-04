@@ -102,6 +102,8 @@ export const strings = {
   LOGIN_SSO_UNLINK_FAILURE: 'Failed to unlink account',
   LOGIN_SSO_LINK_FAILURE_ACCOUNT_EXISTS:
     'The external account is already linked to another account on this site!',
+  LOGIN_SSO_CREATED_USER: (username) =>
+    `Congratulations, ${username}! You've been added and automatically logged in!`,
   LOGOUT_BUTTON: 'Log Out',
   NAVBAR_ADMIN: 'Admin Settings',
   NAVBAR_LOGIN: 'Log In',
