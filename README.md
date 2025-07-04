@@ -149,12 +149,14 @@ AUTO_ARCHIVE_PLEDGES=false
 ## OIDC Provider Details
 # You can configure single sign-on to your Christmas Community instance using any OIDC provider.
 # Once you've created a client ID and secret in your authentication provider use the below environment variables to enable single sign on.
+# The values specified below are the defaults
 # OIDC_CLIENT_ID=
 # OIDC_CLIENT_SECRET=
 # OIDC_AUTHORIZATION_URL=https://accounts.google.com/o/oauth2/auth
 # OIDC_TOKEN_URL=https://oauth2.googleapis.com/token
 # OIDC_ISSUER=https://accounts.google.com
 # OIDC_PROVIDER_NAME=Google
+# OIDC_AUTO_CREATE_USER=false
 
 # Profile picture upload max size in MB
 UPLOAD_PFP_MAX_SIZE=5

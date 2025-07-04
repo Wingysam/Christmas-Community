@@ -2,6 +2,7 @@ import publicRoute from '../middlewares/publicRoute.js'
 import express from 'express'
 import path from 'path'
 import fs from 'fs/promises'
+import ensurePfp from '../utils/ensurePfp.js'
 
 import Api from './api/index.js'
 import Setup from './setup/index.js'
@@ -17,27 +18,10 @@ import ManifestJson from './manifest.json/index.js'
 import OIDC from './oidc/index.js'
 
 export default ({ db, config }) => {
-  async function ensurePfp(username) {
-    if (!config.pfp) return
-    const user = await db.get(username)
-    if (user.pfp) return
-
-    const { rows } = await db.allDocs({ include_docs: true })
-
-    const unfilteredPool = await fs.readdir('src/static/img/default-pfps')
-    const filteredPool = unfilteredPool.filter(
-      (file) => !rows.find((row) => row.doc.pfp?.default === file),
-    )
-    const pool = filteredPool.length ? filteredPool : unfilteredPool
-
-    user.pfp = { default: _CC._.sample(pool) }
-    await db.put(user)
-  }
-
   ;(async () => {
     const { rows } = await db.allDocs({ include_docs: true })
     for (const row of rows) {
-      await ensurePfp(row.id)
+      await ensurePfp(db, config, row.id)
     }
   })()
 
@@ -63,7 +47,7 @@ export default ({ db, config }) => {
 
   router.use('/api', Api())
 
-  router.use('/setup', Setup({ db, ensurePfp }))
+  router.use('/setup', Setup({ db, ensurePfp: (username) => ensurePfp(db, config, username) }))
 
   router.use('/login', Login({ config }))
   router.use('/logout', Logout())
@@ -73,9 +57,9 @@ export default ({ db, config }) => {
   router.use('/wishlist', Wishlist(db))
   router.use('/supported-sites', SupportedSites())
 
-  router.use('/profile', Profile({ db, config, ensurePfp }))
+  router.use('/profile', Profile({ db, config, ensurePfp: (username) => ensurePfp(db, config, username) }))
 
-  router.use('/admin-settings', AdminSettings({ db, ensurePfp }))
+  router.use('/admin-settings', AdminSettings({ db, ensurePfp: (username) => ensurePfp(db, config, username) }))
 
   router.use('/manifest.json', ManifestJson({ config }))
 

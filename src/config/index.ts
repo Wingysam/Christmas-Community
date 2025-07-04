@@ -42,7 +42,8 @@ const config = {
   autoArchivePledges: process.env.AUTO_ARCHIVE_PLEDGES === 'true',
   base: '', // automatically set below
   pledgeSuggest: (process.env.PLEDGE_SUGGEST === 'true'),
-  suggestionsEnabled: (process.env.SUGGESTIONS_ENABLED === 'true')
+  suggestionsEnabled: (process.env.SUGGESTIONS_ENABLED === 'true'),
+  oidcAutoCreateUser: process.env.OIDC_AUTO_CREATE_USER || false,
 }
 
 if (config.guestPassword) config.wishlist.public = false
