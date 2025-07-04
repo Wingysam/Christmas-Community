@@ -47,7 +47,10 @@ export default ({ db, config }) => {
 
   router.use('/api', Api())
 
-  router.use('/setup', Setup({ db, ensurePfp: (username) => ensurePfp(db, config, username) }))
+  router.use(
+    '/setup',
+    Setup({ db, ensurePfp: (username) => ensurePfp(db, config, username) }),
+  )
 
   router.use('/login', Login({ config }))
   router.use('/logout', Logout())
@@ -57,9 +60,22 @@ export default ({ db, config }) => {
   router.use('/wishlist', Wishlist(db))
   router.use('/supported-sites', SupportedSites())
 
-  router.use('/profile', Profile({ db, config, ensurePfp: (username) => ensurePfp(db, config, username) }))
+  router.use(
+    '/profile',
+    Profile({
+      db,
+      config,
+      ensurePfp: (username) => ensurePfp(db, config, username),
+    }),
+  )
 
-  router.use('/admin-settings', AdminSettings({ db, ensurePfp: (username) => ensurePfp(db, config, username) }))
+  router.use(
+    '/admin-settings',
+    AdminSettings({
+      db,
+      ensurePfp: (username) => ensurePfp(db, config, username),
+    }),
+  )
 
   router.use('/manifest.json', ManifestJson({ config }))
 
