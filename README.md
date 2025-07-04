@@ -166,6 +166,9 @@ PLEDGE_SUGGEST=true
 
 # Set to false to disable all users from being able to suggest items to another users's list
 SUGGESTIONS_ENABLED=true
+
+## Admin users can optionally edit, archive, remove, and reorder any item on any wishlist when set to true (default: false).
+# ADMIN_CAN_EDIT_ALL_WISHLISTS=false
 ```
 
 ## Default Profile Pictures

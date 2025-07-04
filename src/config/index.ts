@@ -44,6 +44,7 @@ const config = {
   pledgeSuggest: (process.env.PLEDGE_SUGGEST === 'true'),
   suggestionsEnabled: (process.env.SUGGESTIONS_ENABLED === 'true'),
   oidcAutoCreateUser: process.env.OIDC_AUTO_CREATE_USER || false,
+  adminCanEditAllWishlists: process.env.ADMIN_CAN_EDIT_ALL_WISHLISTS|| false,
 }
 
 if (config.guestPassword) config.wishlist.public = false

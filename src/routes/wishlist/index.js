@@ -158,7 +158,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === wishlist.username
       const addedByUser = item.addedBy === req.user._id
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('WISHLIST_REMOVE_GUARD'))
       }
 
@@ -177,7 +178,8 @@ export default function (db) {
     verifyAuth(),
     async (req, res) => {
       try {
-        if (req.user._id !== req.params.user) {
+        const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+        if (req.user._id !== req.params.user && !isAdmin) {
           throw new Error(_CC.lang('WISHLIST_MOVE_GUARD'))
         }
 
@@ -222,7 +224,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === req.params.user
       const addedByUser = req.user._id === item.addedBy
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('NOTE_GUARD'))
       }
 
@@ -264,7 +267,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === wishlist.username
       const addedByUser = item.addedBy === req.user._id
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('WISHLIST_ARCHIVE_GUARD'))
       }
 
@@ -285,7 +289,8 @@ export default function (db) {
 
       const isOwnWishlist = req.user._id === wishlist.username
       const addedByUser = item.addedBy === req.user._id
-      if (!isOwnWishlist && !addedByUser) {
+      const isAdmin = req.user.admin && _CC.config.adminCanEditAllWishlists;
+      if (!isOwnWishlist && !addedByUser && !isAdmin) {
         throw new Error(_CC.lang('WISHLIST_RESTORE_GUARD'))
       }
 
