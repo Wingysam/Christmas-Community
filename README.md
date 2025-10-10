@@ -332,12 +332,21 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/lint-action">
+                    <img src="https://avatars.githubusercontent.com/u/59283862?v=4" width="100;" alt="lint-action"/>
+                    <br />
+                    <sub><b>lint-action</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/mtrunt">
                     <img src="https://avatars.githubusercontent.com/u/1170107?v=4" width="100;" alt="mtrunt"/>
                     <br />
                     <sub><b>mtrunt</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/Na0mir">
                     <img src="https://avatars.githubusercontent.com/u/6453724?v=4" width="100;" alt="Na0mir"/>
@@ -345,8 +354,6 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>Na0mir</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/ndlanier">
                     <img src="https://avatars.githubusercontent.com/u/14913926?v=4" width="100;" alt="ndlanier"/>
@@ -382,6 +389,8 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>CantisW</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/StS82">
                     <img src="https://avatars.githubusercontent.com/u/32516183?v=4" width="100;" alt="StS82"/>
@@ -389,13 +398,18 @@ Hi, I'm Wingy. I made this app. My website is [samwing.dev](https://samwing.dev)
                     <sub><b>StS82</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/alyoro">
                     <img src="https://avatars.githubusercontent.com/u/43644634?v=4" width="100;" alt="alyoro"/>
                     <br />
                     <sub><b>alyoro</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/ghtau">
+                    <img src="https://avatars.githubusercontent.com/u/92292040?v=4" width="100;" alt="ghtau"/>
+                    <br />
+                    <sub><b>ghtau</b></sub>
                 </a>
             </td>
             <td align="center">
