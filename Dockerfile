@@ -16,6 +16,7 @@ RUN npm install --silent && \
     npm run build && \
     rm -rf node_modules && \
     npm install --production --silent && \
+    npm cache clean --force && \
     mkdir -p /data/dbs
 
 EXPOSE 80
