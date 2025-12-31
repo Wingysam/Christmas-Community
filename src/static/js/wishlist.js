@@ -1,11 +1,17 @@
 /* eslint-env browser */
-async function animateCSS(node, animationName) {
+async function animateCSS(node, animationName, duration) {
   return await new Promise((resolve) => {
+    const oldStyle = node.style
     node.classList.add('animated', animationName)
+    if (duration) {
+      node.style.animationDuration = duration
+      node.style.faAnimationDuration = duration
+    }
 
     function handleAnimationEnd() {
       node.classList.remove('animated', animationName)
       node.removeEventListener('animationend', handleAnimationEnd)
+      node.style = oldStyle
 
       resolve()
     }
@@ -35,6 +41,7 @@ function listen(element, upOrDown) {
       const tr = event.currentTarget.parentElement.parentElement
       const otherTr = upOrDown === 'up' ? tr.previousSibling : tr.nextSibling
       const numItems = tr.parentElement.rows.length
+      const animationDuration = '0.45s'
 
       const res = fetch(
         `/api/wishlist/${document.querySelector('[type="data/user_id"]').textContent}/${tr.id}/move/${upOrDown}`,
@@ -45,8 +52,8 @@ function listen(element, upOrDown) {
       )
 
       await Promise.all([
-        animateCSS(tr, 'zoomOut'),
-        animateCSS(otherTr, 'zoomOut'),
+        animateCSS(tr, 'zoomOut', animationDuration),
+        animateCSS(otherTr, 'zoomOut', animationDuration),
       ])
 
       tr.style.visibility = 'hidden'
@@ -84,8 +91,8 @@ function listen(element, upOrDown) {
       otherTr.style.visibility = 'visible'
 
       await Promise.all([
-        animateCSS(tr, 'zoomIn'),
-        animateCSS(otherTr, 'zoomIn'),
+        animateCSS(tr, 'zoomIn', animationDuration),
+        animateCSS(otherTr, 'zoomIn', animationDuration),
       ])
 
       return false
