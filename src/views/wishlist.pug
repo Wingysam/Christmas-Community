@@ -284,14 +284,15 @@ block content
         )
         span.icon.is-small.is-left
           i.fas.fa-gift
-    .field
-      label.label= lang('WISHLIST_PRICE')
-      .control
-        input.input(
-          type='text',
-          name='price',
-          placeholder=lang('WISHLIST_OPTIONAL')
-        )
+    if global._CC.config.wishlist.priceField
+      .field
+        label.label= lang('WISHLIST_PRICE')
+        .control
+          input.input(
+            type='text',
+            name='price',
+            placeholder=lang('WISHLIST_OPTIONAL')
+          )
     .field
       label.label= lang('WISHLIST_NOTE')
       .control

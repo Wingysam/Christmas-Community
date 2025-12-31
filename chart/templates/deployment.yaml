@@ -115,6 +115,10 @@ spec:
             - name: MARKDOWN
               value: {{ .Values.env.MARKDOWN }}
             {{- end }}
+            {{- if .Values.env.WISHLIST_PRICE_FIELD }}
+            - name: WISHLIST_PRICE_FIELD
+              value: {{ .Values.env.WISHLIST_PRICE_FIELD }}
+            {{- end }}
           {{- end }}
           ports:
             - name: http

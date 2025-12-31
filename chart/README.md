@@ -34,6 +34,7 @@ helm install christmas-community <helm repo>/christmas-community
 | env.TABLE | bool | `true` | `Defaults to true. Set to false for legacy cards view.` |
 | env.TRUST_PROXY | string | `"loopback"` | `Where to trust the X-Forwarded-For header from. Defaults to "loopback". Useful for proxying to docker.` |
 | env.UPDATE_CHECK | bool | `true` | `Set to false to disable update notices` |
+| env.WISHLIST_PRICE_FIELD | bool | `false` | `Set to true to enable "Price" field in the new item dialog. Overrides the price detected from URL if filled.` |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"wingysam/christmas-community"` |  |
