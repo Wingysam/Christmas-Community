@@ -6,9 +6,37 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.css'
+      - '**.html'
+      - '**.js'
+      - '**.json'
+      - '**.jsx'
+      - '**.md'
+      - '**.sass'
+      - '**.scss'
+      - '**.ts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.yaml'
+      - '**.yml'
   pull_request:
     branches:
       - master
+    paths:
+      - '**.css'
+      - '**.html'
+      - '**.js'
+      - '**.json'
+      - '**.jsx'
+      - '**.md'
+      - '**.sass'
+      - '**.scss'
+      - '**.ts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.yaml'
+      - '**.yml'
 
 jobs:
   run-linters:
@@ -30,9 +58,18 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install
 
-      - name: Run linters
+      # If we are running for a push on the main repo, go ahead and auto-fix issues
+      - name: Lint and format
         uses: rkuykendall/lint-action@master
+        if: ${{ gitgub.repository == "Wingysam/Christmas-Community" && github.event.name == "push" }}
         with:
-          auto_fix: ${{ github.event.name == 'push' }}
+          auto_fix: true
           eslint: true
           prettier: true
+
+      # Otherwise, just fail the job if there are linter or formatter issues
+      - name: Lint and check format
+        if: ${{ github.event.name == "pull_request" || github.event.name == "pull_request_trigger" }}
+        run:
+          - npx eslint
+          - npx prettier . --check
