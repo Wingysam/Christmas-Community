@@ -125,6 +125,8 @@ LISTS_PUBLIC=false
 TABLE=true
 # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
 MARKDOWN=false
+# Enable "Price" field when entering a new item. Overrides the proce detected from URL if filled.
+WISHLIST_PRICE_FIELD=false
 
 ## Custom HTML Snippets
 # These are inserted into specific locations in the relevant page
