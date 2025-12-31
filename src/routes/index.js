@@ -1,7 +1,6 @@
 import publicRoute from '../middlewares/publicRoute.js'
 import express from 'express'
 import path from 'path'
-import fs from 'fs/promises'
 import ensurePfp from '../utils/ensurePfp.js'
 
 import Api from './api/index.js'
