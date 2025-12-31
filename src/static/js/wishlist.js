@@ -1,9 +1,9 @@
 /* eslint-env browser */
-async function animateCSS (node, animationName, duration) {
+async function animateCSS(node, animationName, duration) {
   return await new Promise((resolve) => {
     const oldStyle = node.style
     node.classList.add('animated', animationName)
-    if(duration) {
+    if (duration) {
       node.style.animationDuration = duration
       node.style.faAnimationDuration = duration
     }
@@ -51,10 +51,9 @@ function listen(element, upOrDown) {
         },
       )
 
-
       await Promise.all([
         animateCSS(tr, 'zoomOut', animationDuration),
-        animateCSS(otherTr, 'zoomOut', animationDuration)
+        animateCSS(otherTr, 'zoomOut', animationDuration),
       ])
 
       tr.style.visibility = 'hidden'
@@ -93,7 +92,7 @@ function listen(element, upOrDown) {
 
       await Promise.all([
         animateCSS(tr, 'zoomIn', animationDuration),
-        animateCSS(otherTr, 'zoomIn', animationDuration)
+        animateCSS(otherTr, 'zoomIn', animationDuration),
       ])
 
       return false
