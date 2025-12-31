@@ -6,14 +6,48 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.cjs'
+      - '**.css'
+      - '**.html'
+      - '**.js'
+      - '**.json'
+      - '**.jsx'
+      - '**.md'
+      - '**.mjs'
+      - '**.sass'
+      - '**.scss'
+      - '**.ts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.yaml'
+      - '**.yml'
   pull_request:
     branches:
       - master
+    paths:
+      - '**.cjs'
+      - '**.css'
+      - '**.html'
+      - '**.js'
+      - '**.json'
+      - '**.jsx'
+      - '**.md'
+      - '**.mjs'
+      - '**.sass'
+      - '**.scss'
+      - '**.ts'
+      - '**.tsx'
+      - '**.vue'
+      - '**.yaml'
+      - '**.yml'
 
 jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
 
     steps:
       - name: Check out Git repository
@@ -28,9 +62,18 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install
 
-      - name: Run linters
+      # If we are running for a push on the main repo, go ahead and auto-fix issues
+      - name: Lint and auto-format
         uses: rkuykendall/lint-action@master
+        if: ${{ github.repository == 'Wingysam/Christmas-Community' && github.event_name == 'push' }}
         with:
           auto_fix: true
           eslint: true
           prettier: true
+
+      # Otherwise, just fail the job if there are linter or formatter issues
+      - name: Lint and check format
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_trigger' }}
+        run: |
+          npx eslint
+          npx prettier . --check
