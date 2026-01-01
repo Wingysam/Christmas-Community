@@ -43,22 +43,15 @@ block content
         thead
           th #
           th(style='width: 15%;')= lang('WISHLIST_IMAGE')
-          th(style='width: 25%;')= lang('WISHLIST_NAME')
-          th(style='width: 50%;')= lang('WISHLIST_NOTE')
-          th(style='width: 10%; cursor: pointer')
+          th= lang('WISHLIST_NAME')
+          th(style='width: 40%;')= lang('WISHLIST_NOTE')
+          th(style='width: 7%; cursor: pointer')
             a(href="#", id="sort-price")= lang('WISHLIST_PRICE')
-            |&nbsp; 
+            |&nbsp;
             span#price-arrow
-          th= lang('WISHLIST_EDIT_ITEM')
-          th= lang('WISHLIST_ADDED_BY')
-          if req.params.user === req.user._id
-            th= lang('WISHLIST_MOVE_TOP')
-            th= lang('WISHLIST_MOVE_UP')
-            th= lang('WISHLIST_MOVE_DOWN')
-            th= lang('WISHLIST_MOVE_BOTTOM')
-          else
-            th= lang('WISHLIST_PLEDGE')
-          th= lang('WISHLIST_DELETE')
+          th(style='width: 7%;')= lang('WISHLIST_ADDED_BY')
+          //- Unlabled header to cover action buttons (pledge/unpledge, move, edit, delete)
+          th(style='width: 10%')
         tbody.wishlist-items
           each item, index in items
             tr(id=item.id)
@@ -94,98 +87,115 @@ block content
               else
                 td.ugc(data-label=lang('WISHLIST_NOTE'))= item.note
               td.price.ugc(data-label=lang('WISHLIST_PRICE'))= item.price
-              td(data-label=lang('WISHLIST_EDIT_ITEM'))
-                form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;'
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.far.fa-edit
               if item.addedBy === '_CCUNKNOWN'
                 td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= lang('WISHLIST_ADDED_BY_GUEST')
-              else 
-                td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
-              if req.params.user === req.user._id
-                td(data-label=lang('WISHLIST_MOVE_ITEM_TOP'))
-                  form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=index === 0
-                        )
-                          span.icon
-                            i.fas.fa-angle-double-up
-                td(data-label=lang('WISHLIST_MOVE_ITEM_UP'))
-                  form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=index === 0
-                        )
-                          span.icon
-                            i.fas.fa-arrow-up
-                td(data-label=lang('WISHLIST_MOVE_ITEM_DOWN'))
-                  form.downForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=index === items.length - 1
-                        )
-                          span.icon
-                            i.fas.fa-arrow-down
-                td(data-label=lang('WISHLIST_MOVE_ITEM_BOTTOM'))
-                  form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
-                    .field.inline
-                      .control.inline
-                        button.button.is-text(
-                          type='submit',
-                          style='text-decoration: none;',
-                          disabled=index === items.length - 1
-                        )
-                          span.icon
-                            i.fas.fa-angle-double-down
               else
-                td(data-label=lang('WISHLIST_PLEDGE'))
-                  if req.params.user !== req.user._id && !item.pledgedBy
-                    form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
-                      .field.inline
-                        .control.inline
-                          input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE_ITEM'))
-                  if item.pledgedBy === req.user._id
-                    form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
-                      .field.inline
-                        .control.inline
-                          input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
-                  if item.pledgedBy && item.pledgedBy !== req.user._id
-                    if item.pledgedBy === '_CCUNKNOWN'
-                      span.ugc=lang('WISHLIST_PLEDGED_GUEST')
-                    else
-                      span.ugc=lang('WISHLIST_PLEDGED', item.pledgedBy)
-              td(data-label='Delete Item')
-                form.inline(
-                  method='POST',
-                  action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`
-                )
-                  .field.inline
-                    .control.inline
-                      button.button.is-text(
-                        type='submit',
-                        style='text-decoration: none;',
-                        disabled=item.addedBy !== req.user._id
-                      )
-                        span.icon
-                          i.fas.fa-trash
-
+                td.ugc(data-label=lang('WISHLIST_ADDED_BY'))= item.addedBy
+              //- === Unified action button section ===
+              //- A couple of scenarios here:
+              //- 1. This is not our list and is an item pledged for by someone else. Only display "Pledged for by [xyz]"
+              //- 2. This is not our list and
+              //-   a. Is suggested by us. Display "pledge/unpledge" and edit + delete
+              //-   b. Is not suggested by us. Display "pledge/unpledge"
+              //- 3. This is our list. we will only see items added by us. Display all action buttons (move + edit + delete)
+              if (req.params.user !== req.user._id) && item.pledgedBy && (item.pledgedBy !== req.user._id)
+                //- Not our list and item is pledged for by somebody else.
+                td(style='text-align: center;')
+                  if item.pledgedBy === '_CCUNKNOWN'
+                    span.ugc(style='width: 100%;')=lang('WISHLIST_PLEDGED_GUEST')
+                  else
+                    span.ugc(style='width: 100%;')=lang('WISHLIST_PLEDGED', item.pledgedBy)
+              else
+                td
+                  div(style='display: grid; grid-template-columns: repeat(2, auto); width: 100%;')
+                    div(style='display: flex; justify-content: flex-start;')
+                      if req.params.user === req.user._id
+                        //- Our list
+                        //- Move to top
+                        form.topForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/top/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                 disabled=index === 0
+                              )
+                                span.icon
+                                  i.fas.fa-angle-double-up
+                        //- Move up
+                        form.upForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/up/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=index === 0
+                              )
+                                span.icon
+                                  i.fas.fa-arrow-up
+                        //- Move down
+                        form.downForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/down/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=index === items.length - 1
+                              )
+                                span.icon
+                                  i.fas.fa-arrow-down
+                        //- Move to bottom
+                        form.bottomForm.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/move/bottom/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=index === items.length - 1
+                              )
+                                span.icon
+                                  i.fas.fa-angle-double-down
+                      if item.addedBy === req.user._id
+                        //- We added this. Show edit/delete
+                        //- Edit
+                        form.inline(method='GET', action=`${_CC.config.base}wishlist/${req.params.user}/note/${item.id}`)
+                          .field.inline
+                            .control.inline
+                                button.button.is-text(
+                                  type='submit',
+                                  style='text-decoration: none;'
+                                  disabled=item.addedBy !== req.user._id
+                                )
+                                  span.icon
+                                    i.far.fa-edit
+                        //- Delete
+                        form.inline(
+                          method='POST',
+                          action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`
+                        )
+                          .field.inline
+                            .control.inline
+                              button.button.is-text(
+                                type='submit',
+                                style='text-decoration: none;',
+                                disabled=item.addedBy !== req.user._id
+                              )
+                                span.icon
+                                  i.fas.fa-trash
+                    if req.params.user !== req.user._id
+                      //- Not our list
+                      if !item.pledgedBy
+                        //- Pledge
+                        form.inline(style='justify-self: end;', method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/pledge/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              input.inline.button.is-primary(type='submit' value=lang('WISHLIST_PLEDGE'))
+                      else if item.pledgedBy === req.user._id
+                        //- Unpledge
+                        form.inline(style='justify-self: end;', method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
+                          .field.inline
+                            .control.inline
+                              input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
   else
     each item, index in items
       if req.user._id === item.addedBy || req.params.user !== req.user._id
@@ -242,7 +252,7 @@ block content
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/unpledge/${item.id}`)
                 .field.inline
                   .control.inline
-                    input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE'))
+                    input.inline.button(type='submit' value=lang('WISHLIST_UNPLEDGE_ITEM'))
             if req.user._id === req.params.user
               form.inline(method='POST', action=`${_CC.config.base}wishlist/${req.params.user}/remove/${item.id}`)
                 .field.inline
