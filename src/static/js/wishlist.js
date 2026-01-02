@@ -38,7 +38,7 @@ function listen(element, upOrDown) {
     try {
       event.preventDefault()
 
-      const tr = event.currentTarget.parentElement.parentElement
+      const tr = event.currentTarget.closest('tr')
       const otherTr = upOrDown === 'up' ? tr.previousSibling : tr.nextSibling
       const numItems = tr.parentElement.rows.length
       const animationDuration = '0.45s'
