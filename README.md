@@ -23,6 +23,14 @@ To discuss the use and development of Christmas Community, you can join the Disc
 ![Screenshot](screenshots/link-not-required.png)
 ![Screenshot](screenshots/name-from-link.png)
 
+## AI
+
+I consider myself an "agentic engineer". However, some of my projects have no LLM involvement to keep my pure software skills sharp. This project was built without AI and is maintained using only human-written code. Please do not submit LLM-generated pull requests.
+
+One exception: you may use LLMs/other ML tools to generate translations into your own language, provided you understand the results and have verified they are correct from the language perspective. No need to worry too much about the code syntax, I'll fix any JS problems once you post your translation PR.
+
+Aside from PRs, if English isn't your native language, you may translate issue descriptions with AI translation tools.
+
 ## Root URL
 
 If you want put Christmas Community on a subdirectory, such as `/christmas-community`, set `ROOT_URL` to that path. For legacy reasons, `ROOT_PATH` also does this. `ROOT_URL` takes precedence over `ROOT_PATH`.
