@@ -7,4 +7,4 @@ if [ -d /data/db ]; then
   echo "Migrated database"
 fi
 
-npm start
+exec npm start
