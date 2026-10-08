@@ -7,4 +7,5 @@ export default {
   note: {
     markdown: yesNo(process.env.MARKDOWN || false),
   },
+  priceField: yesNo(process.env.WISHLIST_PRICE_FIELD || false),
 }

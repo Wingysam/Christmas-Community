@@ -54,6 +54,8 @@ env: []
   # TABLE: true
   # # Allow Markdown in item notes. Does not work with TABLE=false. Defaults to false.
   # MARKDOWN: false
+  # # Show "Price" field when adding a new item. Overrides the detected price if the field is filled. Defaults to false.
+  # WISHLIST_PRICE_FIELD: false
 
 serviceAccount:
   # Specifies whether a service account should be created
